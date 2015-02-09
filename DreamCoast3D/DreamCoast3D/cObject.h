@@ -20,5 +20,6 @@ public:
 	int			GetRefCount(){ return m_nRefCount; }
 	std::string GetDesc() { return m_sDesc; }
 	void		SetDesc(std::string& s){ m_sDesc = s; }
+	void		SetDesc(char* szDesc){ m_sDesc = std::string(szDesc); }
 };
 

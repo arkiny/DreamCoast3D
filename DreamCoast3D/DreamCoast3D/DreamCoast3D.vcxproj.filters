@@ -20,6 +20,12 @@
     <Filter Include="Scene">
       <UniqueIdentifier>{e35dbe3a-ca98-4a4d-8803-49ea4e922ee3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Examples">
+      <UniqueIdentifier>{261727fd-7005-4ab4-9aea-57cedb664be4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Objects\Action">
+      <UniqueIdentifier>{326e6278-0318-4e33-8767-fbda449e167f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -67,7 +73,57 @@
     <ClInclude Include="cTransform.h">
       <Filter>Objects</Filter>
     </ClInclude>
-    <ClInclude Include="cSphere.h" />
+    <ClInclude Include="cSphere.h">
+      <Filter>Examples</Filter>
+    </ClInclude>
+    <ClInclude Include="cLightSource.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="cControlManager.h">
+      <Filter>Singletons</Filter>
+    </ClInclude>
+    <ClInclude Include="cCamera.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="cGameObjManager.h">
+      <Filter>Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="cFrustum.h">
+      <Filter>Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="cSceneExample.h">
+      <Filter>Examples</Filter>
+    </ClInclude>
+    <ClInclude Include="cGameActionObject.h">
+      <Filter>Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="iActionDelegate.h">
+      <Filter>Objects\Action</Filter>
+    </ClInclude>
+    <ClInclude Include="cAction.h">
+      <Filter>Objects\Action</Filter>
+    </ClInclude>
+    <ClInclude Include="cActionMove.h">
+      <Filter>Objects\Action</Filter>
+    </ClInclude>
+    <ClInclude Include="cActionSeq.h">
+      <Filter>Objects\Action</Filter>
+    </ClInclude>
+    <ClInclude Include="cActionRepeat.h">
+      <Filter>Objects\Action</Filter>
+    </ClInclude>
+    <ClInclude Include="cSphereAction.h">
+      <Filter>Examples</Filter>
+    </ClInclude>
+    <ClInclude Include="cFontManager.h">
+      <Filter>Singletons</Filter>
+    </ClInclude>
+    <ClInclude Include="cGameBillBoardingObject.h">
+      <Filter>Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="cBillingExample.h">
+      <Filter>Examples</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -106,7 +162,57 @@
     <ClCompile Include="cTransform.cpp">
       <Filter>Objects</Filter>
     </ClCompile>
-    <ClCompile Include="cSphere.cpp" />
+    <ClCompile Include="cSphere.cpp">
+      <Filter>Examples</Filter>
+    </ClCompile>
+    <ClCompile Include="cLightSource.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="cControlManager.cpp">
+      <Filter>Singletons</Filter>
+    </ClCompile>
+    <ClCompile Include="cCamera.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="cGameObjManager.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="cFrustum.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="cSceneExample.cpp">
+      <Filter>Examples</Filter>
+    </ClCompile>
+    <ClCompile Include="cGameActionObject.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="cAction.cpp">
+      <Filter>Objects\Action</Filter>
+    </ClCompile>
+    <ClCompile Include="iActionDelegate.cpp">
+      <Filter>Objects\Action</Filter>
+    </ClCompile>
+    <ClCompile Include="cActionMove.cpp">
+      <Filter>Objects\Action</Filter>
+    </ClCompile>
+    <ClCompile Include="cActionSeq.cpp">
+      <Filter>Objects\Action</Filter>
+    </ClCompile>
+    <ClCompile Include="cActionRepeat.cpp">
+      <Filter>Objects\Action</Filter>
+    </ClCompile>
+    <ClCompile Include="cSphereAction.cpp">
+      <Filter>Examples</Filter>
+    </ClCompile>
+    <ClCompile Include="cFontManager.cpp">
+      <Filter>Singletons</Filter>
+    </ClCompile>
+    <ClCompile Include="cGameBillBoardingObject.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="cBillingExample.cpp">
+      <Filter>Examples</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="DreamCoast3D.rc">

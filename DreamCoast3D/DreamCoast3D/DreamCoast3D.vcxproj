@@ -79,34 +79,66 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="cAction.h" />
+    <ClInclude Include="cActionMove.h" />
+    <ClInclude Include="cActionRepeat.h" />
+    <ClInclude Include="cActionSeq.h" />
+    <ClInclude Include="cBillingExample.h" />
+    <ClInclude Include="cCamera.h" />
+    <ClInclude Include="cControlManager.h" />
     <ClInclude Include="cDeviceManager.h" />
+    <ClInclude Include="cFontManager.h" />
+    <ClInclude Include="cFrustum.h" />
+    <ClInclude Include="cGameActionObject.h" />
+    <ClInclude Include="cGameBillBoardingObject.h" />
     <ClInclude Include="cGameCore.h" />
     <ClInclude Include="cGameObject.h" />
+    <ClInclude Include="cGameObjManager.h" />
     <ClInclude Include="cGameTimer.h" />
+    <ClInclude Include="cLightSource.h" />
     <ClInclude Include="cObject.h" />
     <ClInclude Include="cObjectManager.h" />
     <ClInclude Include="cScene.h" />
+    <ClInclude Include="cSceneExample.h" />
     <ClInclude Include="cSceneManager.h" />
     <ClInclude Include="cSphere.h" />
+    <ClInclude Include="cSphereAction.h" />
     <ClInclude Include="cTransform.h" />
     <ClInclude Include="DreamCoast3D.h" />
+    <ClInclude Include="iActionDelegate.h" />
     <ClInclude Include="iSceneDelegate.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="cAction.cpp" />
+    <ClCompile Include="cActionMove.cpp" />
+    <ClCompile Include="cActionRepeat.cpp" />
+    <ClCompile Include="cActionSeq.cpp" />
+    <ClCompile Include="cBillingExample.cpp" />
+    <ClCompile Include="cCamera.cpp" />
+    <ClCompile Include="cControlManager.cpp" />
     <ClCompile Include="cDeviceManager.cpp" />
+    <ClCompile Include="cFontManager.cpp" />
+    <ClCompile Include="cFrustum.cpp" />
+    <ClCompile Include="cGameActionObject.cpp" />
+    <ClCompile Include="cGameBillBoardingObject.cpp" />
     <ClCompile Include="cGameCore.cpp" />
     <ClCompile Include="cGameObject.cpp" />
+    <ClCompile Include="cGameObjManager.cpp" />
     <ClCompile Include="cGameTimer.cpp" />
+    <ClCompile Include="cLightSource.cpp" />
     <ClCompile Include="cObject.cpp" />
     <ClCompile Include="cObjectManager.cpp" />
     <ClCompile Include="cScene.cpp" />
+    <ClCompile Include="cSceneExample.cpp" />
     <ClCompile Include="cSceneManager.cpp" />
     <ClCompile Include="cSphere.cpp" />
+    <ClCompile Include="cSphereAction.cpp" />
     <ClCompile Include="cTransform.cpp" />
     <ClCompile Include="DreamCoast3D.cpp" />
+    <ClCompile Include="iActionDelegate.cpp" />
     <ClCompile Include="iSceneDelegate.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

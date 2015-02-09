@@ -2,9 +2,8 @@
 #include "cGameObject.h"
 #include "cTransform.h"
 
-cGameObject::cGameObject() 
-	: m_vCenter(0,0,0)
-	, m_fRadius(0.0f)
+cGameObject::cGameObject()
+	:m_stBoundingSphere()
 {
 	m_pTransform = new cTransform;
 }
@@ -32,6 +31,9 @@ void cGameObject::Render(){
 }
 
 
+ST_BOUNDING_SPHERE*	cGameObject::GetBoundingSphere(){
+	return &m_stBoundingSphere;
+}
 
 cTransform*	cGameObject::GetTransform(){
 	return m_pTransform;

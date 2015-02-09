@@ -15,4 +15,3 @@ public:
 	void RemoveObject(cObject* pObject);
 	void Destroy();
 };
-

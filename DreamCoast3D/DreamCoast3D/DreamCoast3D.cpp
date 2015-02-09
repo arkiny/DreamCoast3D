@@ -95,7 +95,7 @@ int APIENTRY _tWinMain(_In_ HINSTANCE hInstance,
 	SAFE_RELEASE(g_pGameCore);
 
 	g_pObjectManager->Destroy();
-
+	g_pControlManager->Destroy();
 	return (int) msg.wParam;
 }
 
@@ -202,6 +202,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	int wmId, wmEvent;
 	PAINTSTRUCT ps;
 	HDC hdc;
+
+	g_pControlManager->WndProc(hWnd, message, wParam, lParam);
 
 	switch (message)
 	{

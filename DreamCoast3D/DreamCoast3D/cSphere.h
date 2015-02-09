@@ -1,7 +1,6 @@
 #pragma once
 
 // 게임 오브젝트 사용을 위한 예시클래스
-
 class cSphere : public cGameObject
 {
 private:

@@ -8,10 +8,9 @@ class cTransform;
 
 class cGameObject : public cObject
 {
-private:
-	D3DXVECTOR3		m_vCenter; // 스피어를 이루는 캐릭터의 중심 
-	float			m_fRadius;
-	cTransform*		m_pTransform;
+protected:
+	ST_BOUNDING_SPHERE	m_stBoundingSphere;
+	cTransform*			m_pTransform;
 
 public:
 	cGameObject();
@@ -23,10 +22,13 @@ public:
 
 	virtual cTransform*			GetTransform();
 	virtual D3DXMATRIXA16*		GetTransformMatrix();
+	virtual ST_BOUNDING_SPHERE*	GetBoundingSphere();
+
 	virtual void				SetPosition(D3DXVECTOR3& newPos);
 	virtual void				SetScale(D3DXVECTOR3& newScale);
 	virtual void				SetXangle(float fAngleRad);
 	virtual void				SetYangle(float fAngleRad);
 	virtual void				SetZangle(float fAngleRad);
+	
 };
 

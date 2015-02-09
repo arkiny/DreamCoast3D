@@ -1,62 +1,43 @@
-========================================================================
-    WIN32 APPLICATION : DreamCoast3D Project Overview
-========================================================================
+Filter 디렉토리별 클래스 설명
+_STDAFX
+- 사전 컴파일 될 헤더
 
-AppWizard has created this DreamCoast3D application for you.
+Core
+- DreamCoast3D : WinApi Entry
+- cGameCore : cMainGame과 같은 역할을 하는 게임 매니저
+- cGameTimer : 전체 게임 타이머 // 싱글톤 처리를 할수 있으나, Update의 인자로 받아서 내려가는 걸 프레임워크 작성자가 선호
+- Resource : WinApi 리소스
+- Targetver : ???
 
-This file contains a summary of what you will find in each of the files that
-make up your DreamCoast3D application.
+Singletons
+- cDeviceManager : Direct3D 디바이스 매니저, 디스트로이 콜시 COM객체가 남아있나 확인한다, 남아있을 시 Assert Fail 호출
+- cObjectManager : cObject 인스탄스들을 관리하는 매니저, 디스트로이 콜시 cObject 인스탄스들이 남아있나 확인한다. 남아있을 시 Assert Fail 호출
+- cControlManager : 입출력 장치, 인풋 컨트롤 정보들을 관리하는 싱글턴 클래스. 모든 입출력 정보는 여기에서 저장되고 여기서 확인한다.
+- cFontManager : 폰트 매니저, 폰트를 콜시 해당 폰트가 없으면 생성 리턴, 있으면 찾아서 리턴해준다.
 
+Object
+- cObject : 오브젝트 인스탄싱 베이스 클래스
+	- cGameObjManager : cGameObject들을 가지고, 관리하는 매니저, Frustom Culling을 여기서 처리, 차후 GameObj 델리게이트(충돌처리)도 여기서 처리할까 생각중
+		- cGameObject : 위치와 렌더를 가지는 모든 오브젝트의 베이스 클래스
+			- cTransForm : 위치를 가지는 오브젝트를 위한 트랜스폼 클래스
+			- cFrustum : 프러스텀 컬링을 위한 클래스, 각 GameObjManager는 해당 클래스를 하나씩 가지고 컬링한다.
+		- cGameActionObject : 움직이거나 입력된 방식에 따라 행동이 실시되는 게임 오브젝트(캐릭터, 몬스터 등등)
+			- Action 
+				- cAction : 차후 모든 오브젝트 행동에 대한 베이스 클래스
+				- cActionMove : 사전에 입력된 시작점과 끝점에 대해서 이동
+				- cActionSeq : 액션들을 가지고 있으며, 한 행동이 끝나면 다른 행동을 실시할수 있는 액션 시퀀스
+				- cActionRepeat : 위의 액션 시퀀스나 한개의 액션을 반복
+		- cGameBillBoardingObject : 항상 화면을 정면으로 바라보는 오브젝트
 
-DreamCoast3D.vcxproj
-    This is the main project file for VC++ projects generated using an Application Wizard.
-    It contains information about the version of Visual C++ that generated the file, and
-    information about the platforms, configurations, and project features selected with the
-    Application Wizard.
+Scene
+- iSceneDelegate : 씬들간의 이동에 쓰일 델리게이트 인터페이스
+- cScene : 씬, cGameObjManager와 cCamera, cLightSource를 가지고 처리한다.
+- cSceneManager : 씬들을 관리하는 매니저, 씬델리게이트는 여기서 처리
+- cCamera : 씬을 비추는 카메라, 각 씬은 두개 이상의 카메라를 가지고 있을 수 있으나, 우선 1개만 처리
+- cLightSource : 씬의 광원, 광원은 D3DX9 광원 제한량에 따라 8개까지 쓸수 있으므로 따로 클래스로 관리
 
-DreamCoast3D.vcxproj.filters
-    This is the filters file for VC++ projects generated using an Application Wizard. 
-    It contains information about the association between the files in your project 
-    and the filters. This association is used in the IDE to show grouping of files with
-    similar extensions under a specific node (for e.g. ".cpp" files are associated with the
-    "Source Files" filter).
-
-DreamCoast3D.cpp
-    This is the main application source file.
-
-/////////////////////////////////////////////////////////////////////////////
-AppWizard has created the following resources:
-
-DreamCoast3D.rc
-    This is a listing of all of the Microsoft Windows resources that the
-    program uses.  It includes the icons, bitmaps, and cursors that are stored
-    in the RES subdirectory.  This file can be directly edited in Microsoft
-    Visual C++.
-
-Resource.h
-    This is the standard header file, which defines new resource IDs.
-    Microsoft Visual C++ reads and updates this file.
-
-DreamCoast3D.ico
-    This is an icon file, which is used as the application's icon (32x32).
-    This icon is included by the main resource file DreamCoast3D.rc.
-
-small.ico
-    This is an icon file, which contains a smaller version (16x16)
-    of the application's icon. This icon is included by the main resource
-    file DreamCoast3D.rc.
-
-/////////////////////////////////////////////////////////////////////////////
-Other standard files:
-
-StdAfx.h, StdAfx.cpp
-    These files are used to build a precompiled header (PCH) file
-    named DreamCoast3D.pch and a precompiled types file named StdAfx.obj.
-
-/////////////////////////////////////////////////////////////////////////////
-Other notes:
-
-AppWizard uses "TODO:" comments to indicate parts of the source code you
-should add to or customize.
-
-/////////////////////////////////////////////////////////////////////////////
+Examples - 프레임웤 예제들
+- cSphere : cGameObject를 상속받은 클래스의 사용예제
+- cSphereAction : cGameActionObject를 상속받은 클래스의 사용예제, 응용에 따라 컨트롤이 가능한 게임오브젝트도 생성가능(@TODO: 차후 예제 추가)
+- cBillingExample : cGameBillBoardingObject를 상속받은 클래스의 사용예제
+- cSceneExample : cScene을 상속받은 클래스의 사용예제, cActionMove, cActionRepeat, cActionSeq의 사용예제

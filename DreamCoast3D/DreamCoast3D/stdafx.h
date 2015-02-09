@@ -107,15 +107,26 @@ struct ST_PN_VERTEX{
 	enum { FVF = D3DFVF_XYZ | D3DFVF_NORMAL };
 };
 
+struct ST_BOUNDING_SPHERE{
+	D3DXVECTOR3		m_vCenter; // 스피어를 이루는 캐릭터의 중심 
+	float			m_fRadius;
+	ST_BOUNDING_SPHERE() : m_vCenter(0, 0, 0), m_fRadius(0.0f){};
+	ST_BOUNDING_SPHERE(D3DXVECTOR3& vCenter, float fRadius) : m_vCenter(vCenter), m_fRadius(fRadius){};
+};
+
 // 인터페이스들
 #include "iSceneDelegate.h"
+#include "iActionDelegate.h"
 
 // 모두가 알아야 하는 클래스들
 #include "cObject.h"
 #include "cGameObject.h"
+#include "cGameActionObject.h"
 
 // Singletone ManagerClasses
 #include "cDeviceManager.h"
 #include "cObjectManager.h"
+#include "cControlManager.h"
+#include "cFontManager.h"
 
 #include "cGameTimer.h"

@@ -12,6 +12,7 @@ cGameCore::cGameCore()
 cGameCore::~cGameCore()
 {
 	m_pSceneManager->Destroy();
+	g_pFontManager->Destroy();
 }
 
 void cGameCore::Setup(){
