@@ -27,3 +27,4 @@ void cSphere::Render(){
 	g_pD3DDevice->SetTexture(0, NULL);
 	m_pMesh->DrawSubset(0);
 }
+//
