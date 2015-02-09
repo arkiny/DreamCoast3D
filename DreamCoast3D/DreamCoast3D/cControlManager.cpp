@@ -20,7 +20,7 @@ cControlManager::~cControlManager()
 {
 }
 
-// @HACK: 민우가 인풋컨트롤에 대해선 더 나은 방법을 알고 있을수 있다.
+//  HACK : 민우가 인풋컨트롤에 대해선 더 나은 방법을 알고 있을수 있다.
 void cControlManager::WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam){
 	switch (message)
 	{

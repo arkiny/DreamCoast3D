@@ -13,7 +13,7 @@ public:
 	~cSceneManager();
 
 	// 각 씬에 대한 정보는 파일에서 불러온다.
-	// TODO: 씬정보 저장 파일 포멧 논의
+	// TODO : 씬정보 저장 파일 포멧 논의
 	void Setup(std::string sFilePath);
 	void Update(float delta);
 	void Render();

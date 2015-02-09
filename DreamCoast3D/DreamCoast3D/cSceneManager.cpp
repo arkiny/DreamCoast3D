@@ -11,12 +11,11 @@ cSceneManager::cSceneManager()
 
 cSceneManager::~cSceneManager()
 {
-	cDeviceManager* pDevice = cDeviceManager::GetInstance();
-	pDevice->Destroy();
+	
 }
 
 void cSceneManager::Setup(std::string sFilePath){	
-	// @TODO : 씬매니저 예시, 차후 삭제
+	//  TODO : 씬매니저 예시, 차후 삭제
 	// cScene을 상속받은 cSceneExample을 이용해 화면을 새로 만들었다.
 	cSceneExample* pScene = new cSceneExample;
 	pScene->Setup(std::string(""));
@@ -49,7 +48,7 @@ void cSceneManager::Destroy(){
 	this->Release();
 }
 
-//@TODO: 해당 씬이 종료되었을때 행동 양식
+// TODO : 해당 씬이 종료되었을때 행동 양식
 void cSceneManager::SceneFinished(cScene* pSender){
 	if (pSender->GetNextScene()){
 		m_pCurrentScene = pSender->GetNextScene();

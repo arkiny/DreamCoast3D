@@ -18,7 +18,7 @@
 #include <tchar.h>
 
 
-// TODO: reference additional headers your program requires here
+// HACK : reference additional headers your program requires here
 #include <vector>
 #include <list>
 #include <map>
@@ -114,19 +114,43 @@ struct ST_BOUNDING_SPHERE{
 	ST_BOUNDING_SPHERE(D3DXVECTOR3& vCenter, float fRadius) : m_vCenter(vCenter), m_fRadius(fRadius){};
 };
 
+struct ST_POS_SAMPLE
+{
+	int				nKey;
+	D3DXVECTOR3		v;
+};
+
+struct ST_ROT_SAMPLE
+{
+	int				nKey;
+	D3DXQUATERNION	q;
+};
+
+struct ST_SIZE
+{
+	float fWidth;
+	float fHeight;
+
+	ST_SIZE() : fWidth(0), fHeight(0) {}
+	ST_SIZE(float _fWidth, float _fHeight) : fWidth(_fWidth), fHeight(_fHeight) {}
+};
+
 // 인터페이스들
 #include "iSceneDelegate.h"
 #include "iActionDelegate.h"
+#include "iButtonDelegate.h"
 
 // 모두가 알아야 하는 클래스들
 #include "cObject.h"
 #include "cGameObject.h"
 #include "cGameActionObject.h"
+#include "cUIObject.h"
 
-// Singletone ManagerClasses
+// Singletone Manager Classes
 #include "cDeviceManager.h"
 #include "cObjectManager.h"
 #include "cControlManager.h"
 #include "cFontManager.h"
+#include "cTextureManager.h"
 
 #include "cGameTimer.h"

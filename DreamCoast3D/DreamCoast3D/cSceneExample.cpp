@@ -13,9 +13,12 @@
 #include "cSphereAction.h"
 #include "cBillingExample.h"
 
+#include "cMapExample.h"
+
+#include "cUIExample.h"
 
 cSceneExample::cSceneExample()
-	:cScene() // 부모클래스 초기화
+	:cScene() // 베이스클래스 초기화
 {
 }
 
@@ -27,7 +30,7 @@ void cSceneExample::Setup(std::string sFilePath){
 	cScene::Setup(sFilePath);
 
 	//1. 각 씬은 광원이 다를 수 있으므로 상속 받은 곳에서 설정한다.
-	//@HACK: LightSource 매니저를 따로 뽑을 건지 고민
+	// HACK : LightSource 매니저를 따로 뽑을 건지 고민
 	D3DLIGHT9 stLight;
 	D3DXVECTOR3 vDir = D3DXVECTOR3(1.5, -1, 1);
 
@@ -44,7 +47,7 @@ void cSceneExample::Setup(std::string sFilePath){
 	pLightSource->SetDesc("Light Source Example1");
 	m_vecLightSources.push_back(pLightSource);
 
-	// @TODO: 차후 각 씬은 sFilePath에서 로딩할 오브젝트 정보를 받아와서 로딩하도록 한다.
+	// TODO : 차후 각 씬은 sFilePath에서 로딩할 오브젝트 정보를 받아와서 로딩하도록 한다.
 	// 로딩화면 처리는 음.... 나중에 생각해보자
 
 	// 게임 오브젝트 추가 예시
@@ -101,6 +104,18 @@ void cSceneExample::Setup(std::string sFilePath){
 	pBillingExample->SetDesc("BillBoarding Object Example");
 	m_pGameObjManager->AddGameObj(pBillingExample);
 	SAFE_RELEASE(pBillingExample);
+
+	// 3. 맵 로딩
+
+	cMapExample* pGameMapExample = new cMapExample;
+	pGameMapExample->Setup(30, 1);
+	cScene::AddMap(pGameMapExample);
+	cScene::SetCurrentMap(0);
+
+	cUIExample* pUIExample = new cUIExample;
+	pUIExample->Setup();
+	cScene::AddUIObj(pUIExample);
+	SAFE_RELEASE(pUIExample);
 }
 
 void cSceneExample::Update(float delta){

@@ -2,8 +2,9 @@
 
 class cCamera;
 class cLightSource;
-class cGameObject;
 class cGameObjManager;
+class cUIObjManager;
+class cGameMapObject;
 
 // 앞으로의 모든 씬은 cScene을 상속받아서 만들어진다.
 class cScene : public cObject
@@ -13,14 +14,23 @@ protected:
 	SYNTHESIZE(cScene*, m_pNextScene, NextScene);
 
 	// 게임 오브젝트들을 가지고 처리해주는 매니저
-	cGameObjManager*			m_pGameObjManager;
+	// 각 씬마다 변경시 갱신해줘야 한다.
+	cGameObjManager*					m_pGameObjManager;
+	
+	// 각씬은 여러개의 UI를 가질수 있다.
+	cUIObjManager*						m_pUIObjManager;	
+
+	// 맵은 Seamless(타일형) 일수도 있으므로 각 씬당 여러개를 가질수도 있다.
+	std::vector<cGameMapObject*>		m_vecGameMaps;
+	cGameMapObject*						m_pCurrentMap;
+
 
 	// 한개의 씬은 여러개의 광원(최대 8개)을 가질수 있다.
-	std::vector<cLightSource*>	m_vecLightSources;
+	std::vector<cLightSource*>			m_vecLightSources;
 
 	// 각 씬은 각 씬에 맞는 다른 카메라를 가지고 있다.
 	// 여러개의 카메라를 가지는 것은 차후 고민해서 추가
-	cCamera*					m_pCamera;
+	cCamera*							m_pCamera;
 	
 
 public:
@@ -35,6 +45,12 @@ public:
 	virtual void Render();
 
 	virtual void AddGameObj(cGameObject* pGameObj);
+	virtual void AddUIObj(cUIObject* pUIObj);
+
+	// 맵은 한번 애드되면 고정되있기로 한다.
+	virtual void AddMap(cGameMapObject* pGameMap);
+	virtual void SetCurrentMap(int nIndex);
+
 	virtual void Destroy();
 };
 

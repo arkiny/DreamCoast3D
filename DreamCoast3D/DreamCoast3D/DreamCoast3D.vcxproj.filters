@@ -20,11 +20,23 @@
     <Filter Include="Scene">
       <UniqueIdentifier>{e35dbe3a-ca98-4a4d-8803-49ea4e922ee3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Examples">
-      <UniqueIdentifier>{261727fd-7005-4ab4-9aea-57cedb664be4}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Objects\Action">
       <UniqueIdentifier>{326e6278-0318-4e33-8767-fbda449e167f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Objects\GameObjects">
+      <UniqueIdentifier>{383401fb-0878-400c-80d2-d1e2faeb96ba}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Objects\GamMapObjects">
+      <UniqueIdentifier>{9afe40f6-2693-455f-8256-c237132e93d0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Objects\UIObject">
+      <UniqueIdentifier>{578b53a4-78cc-4efc-9f17-aa26be250020}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Objects\BaseObject">
+      <UniqueIdentifier>{7b2e22e8-24d8-45ea-9692-ac837703101f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="_Examples">
+      <UniqueIdentifier>{261727fd-7005-4ab4-9aea-57cedb664be4}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -52,17 +64,11 @@
     <ClInclude Include="cObjectManager.h">
       <Filter>Singletons</Filter>
     </ClInclude>
-    <ClInclude Include="cObject.h">
-      <Filter>Objects</Filter>
-    </ClInclude>
     <ClInclude Include="cScene.h">
       <Filter>Scene</Filter>
     </ClInclude>
     <ClInclude Include="cSceneManager.h">
       <Filter>Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="cGameObject.h">
-      <Filter>Objects</Filter>
     </ClInclude>
     <ClInclude Include="iSceneDelegate.h">
       <Filter>Scene</Filter>
@@ -70,11 +76,8 @@
     <ClInclude Include="cGameCore.h">
       <Filter>Core</Filter>
     </ClInclude>
-    <ClInclude Include="cTransform.h">
-      <Filter>Objects</Filter>
-    </ClInclude>
     <ClInclude Include="cSphere.h">
-      <Filter>Examples</Filter>
+      <Filter>_Examples</Filter>
     </ClInclude>
     <ClInclude Include="cLightSource.h">
       <Filter>Scene</Filter>
@@ -85,17 +88,8 @@
     <ClInclude Include="cCamera.h">
       <Filter>Scene</Filter>
     </ClInclude>
-    <ClInclude Include="cGameObjManager.h">
-      <Filter>Objects</Filter>
-    </ClInclude>
-    <ClInclude Include="cFrustum.h">
-      <Filter>Objects</Filter>
-    </ClInclude>
     <ClInclude Include="cSceneExample.h">
-      <Filter>Examples</Filter>
-    </ClInclude>
-    <ClInclude Include="cGameActionObject.h">
-      <Filter>Objects</Filter>
+      <Filter>_Examples</Filter>
     </ClInclude>
     <ClInclude Include="iActionDelegate.h">
       <Filter>Objects\Action</Filter>
@@ -113,16 +107,67 @@
       <Filter>Objects\Action</Filter>
     </ClInclude>
     <ClInclude Include="cSphereAction.h">
-      <Filter>Examples</Filter>
+      <Filter>_Examples</Filter>
     </ClInclude>
     <ClInclude Include="cFontManager.h">
       <Filter>Singletons</Filter>
     </ClInclude>
-    <ClInclude Include="cGameBillBoardingObject.h">
+    <ClInclude Include="cBillingExample.h">
+      <Filter>_Examples</Filter>
+    </ClInclude>
+    <ClInclude Include="cMapExample.h">
+      <Filter>_Examples</Filter>
+    </ClInclude>
+    <ClInclude Include="cTextureManager.h">
+      <Filter>Singletons</Filter>
+    </ClInclude>
+    <ClInclude Include="cGameObjManager.h">
       <Filter>Objects</Filter>
     </ClInclude>
-    <ClInclude Include="cBillingExample.h">
-      <Filter>Examples</Filter>
+    <ClInclude Include="cGameBillBoardingObject.h">
+      <Filter>Objects\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="cGameObject.h">
+      <Filter>Objects\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="cTransform.h">
+      <Filter>Objects\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="cGameActionObject.h">
+      <Filter>Objects\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="cGameMapObject.h">
+      <Filter>Objects\GamMapObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="iMap.h">
+      <Filter>Objects\GamMapObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="cUIObject.h">
+      <Filter>Objects\UIObject</Filter>
+    </ClInclude>
+    <ClInclude Include="cUIImageView.h">
+      <Filter>Objects\UIObject</Filter>
+    </ClInclude>
+    <ClInclude Include="cUITextView.h">
+      <Filter>Objects\UIObject</Filter>
+    </ClInclude>
+    <ClInclude Include="cUIImageButton.h">
+      <Filter>Objects\UIObject</Filter>
+    </ClInclude>
+    <ClInclude Include="cUIExample.h">
+      <Filter>_Examples</Filter>
+    </ClInclude>
+    <ClInclude Include="cUIObjManager.h">
+      <Filter>Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="iButtonDelegate.h">
+      <Filter>Objects\UIObject</Filter>
+    </ClInclude>
+    <ClInclude Include="cObject.h">
+      <Filter>Objects\BaseObject</Filter>
+    </ClInclude>
+    <ClInclude Include="cFrustum.h">
+      <Filter>Objects\BaseObject</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -141,17 +186,11 @@
     <ClCompile Include="cObjectManager.cpp">
       <Filter>Singletons</Filter>
     </ClCompile>
-    <ClCompile Include="cObject.cpp">
-      <Filter>Objects</Filter>
-    </ClCompile>
     <ClCompile Include="cScene.cpp">
       <Filter>Scene</Filter>
     </ClCompile>
     <ClCompile Include="cSceneManager.cpp">
       <Filter>Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="cGameObject.cpp">
-      <Filter>Objects</Filter>
     </ClCompile>
     <ClCompile Include="iSceneDelegate.cpp">
       <Filter>Scene</Filter>
@@ -159,11 +198,8 @@
     <ClCompile Include="cGameCore.cpp">
       <Filter>Core</Filter>
     </ClCompile>
-    <ClCompile Include="cTransform.cpp">
-      <Filter>Objects</Filter>
-    </ClCompile>
     <ClCompile Include="cSphere.cpp">
-      <Filter>Examples</Filter>
+      <Filter>_Examples</Filter>
     </ClCompile>
     <ClCompile Include="cLightSource.cpp">
       <Filter>Scene</Filter>
@@ -174,17 +210,8 @@
     <ClCompile Include="cCamera.cpp">
       <Filter>Scene</Filter>
     </ClCompile>
-    <ClCompile Include="cGameObjManager.cpp">
-      <Filter>Objects</Filter>
-    </ClCompile>
-    <ClCompile Include="cFrustum.cpp">
-      <Filter>Objects</Filter>
-    </ClCompile>
     <ClCompile Include="cSceneExample.cpp">
-      <Filter>Examples</Filter>
-    </ClCompile>
-    <ClCompile Include="cGameActionObject.cpp">
-      <Filter>Objects</Filter>
+      <Filter>_Examples</Filter>
     </ClCompile>
     <ClCompile Include="cAction.cpp">
       <Filter>Objects\Action</Filter>
@@ -202,16 +229,67 @@
       <Filter>Objects\Action</Filter>
     </ClCompile>
     <ClCompile Include="cSphereAction.cpp">
-      <Filter>Examples</Filter>
+      <Filter>_Examples</Filter>
     </ClCompile>
     <ClCompile Include="cFontManager.cpp">
       <Filter>Singletons</Filter>
     </ClCompile>
-    <ClCompile Include="cGameBillBoardingObject.cpp">
+    <ClCompile Include="cBillingExample.cpp">
+      <Filter>_Examples</Filter>
+    </ClCompile>
+    <ClCompile Include="cMapExample.cpp">
+      <Filter>_Examples</Filter>
+    </ClCompile>
+    <ClCompile Include="cTextureManager.cpp">
+      <Filter>Singletons</Filter>
+    </ClCompile>
+    <ClCompile Include="cGameObjManager.cpp">
       <Filter>Objects</Filter>
     </ClCompile>
-    <ClCompile Include="cBillingExample.cpp">
-      <Filter>Examples</Filter>
+    <ClCompile Include="cGameBillBoardingObject.cpp">
+      <Filter>Objects\GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="cGameObject.cpp">
+      <Filter>Objects\GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="cTransform.cpp">
+      <Filter>Objects\GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="cGameActionObject.cpp">
+      <Filter>Objects\GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="cGameMapObject.cpp">
+      <Filter>Objects\GamMapObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="iMap.cpp">
+      <Filter>Objects\GamMapObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="cUIObject.cpp">
+      <Filter>Objects\UIObject</Filter>
+    </ClCompile>
+    <ClCompile Include="cUIImageView.cpp">
+      <Filter>Objects\UIObject</Filter>
+    </ClCompile>
+    <ClCompile Include="cUITextView.cpp">
+      <Filter>Objects\UIObject</Filter>
+    </ClCompile>
+    <ClCompile Include="cUIImageButton.cpp">
+      <Filter>Objects\UIObject</Filter>
+    </ClCompile>
+    <ClCompile Include="cUIExample.cpp">
+      <Filter>_Examples</Filter>
+    </ClCompile>
+    <ClCompile Include="cUIObjManager.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="iButtonDelegate.cpp">
+      <Filter>Objects\UIObject</Filter>
+    </ClCompile>
+    <ClCompile Include="cObject.cpp">
+      <Filter>Objects\BaseObject</Filter>
+    </ClCompile>
+    <ClCompile Include="cFrustum.cpp">
+      <Filter>Objects\BaseObject</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

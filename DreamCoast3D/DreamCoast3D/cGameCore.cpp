@@ -13,6 +13,10 @@ cGameCore::~cGameCore()
 {
 	m_pSceneManager->Destroy();
 	g_pFontManager->Destroy();
+	g_pTextureManager->Destroy();
+
+	cDeviceManager* pDevice = cDeviceManager::GetInstance();
+	pDevice->Destroy();
 }
 
 void cGameCore::Setup(){

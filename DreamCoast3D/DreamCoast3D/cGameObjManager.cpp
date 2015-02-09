@@ -1,6 +1,8 @@
 #include "stdafx.h"
 #include "cGameObjManager.h"
 #include "cFrustum.h"
+#include "cTransform.h"
+#include "cGameMapObject.h"
 
 cGameObjManager::cGameObjManager()
 	:m_pFrustum(NULL)
@@ -14,7 +16,7 @@ cGameObjManager::~cGameObjManager()
 }
 
 void cGameObjManager::Setup(){
-	//@HACK : Scene매니저에서 하나만 만들어서 돌려가면서 쓸수 있게 생각해보자.
+	// HACK : Scene매니저에서 하나만 만들어서 돌려가면서 쓸수 있게 생각해보자.
 	m_pFrustum = new cFrustum;
 	m_pFrustum->Setup();
 	m_pFrustum->SetDesc("Frustom For Example1");
@@ -62,4 +64,15 @@ void cGameObjManager::Destroy(){
 		SAFE_RELEASE(p);
 	}
 	this->Release(); 
+}
+
+void cGameObjManager::AdjustYPositionByHeightMap(cGameMapObject* pMap){
+	// 높이맵의 높이에 따라 Y좌표를 수정해준다.
+	for (auto p : m_setGameObjects){
+		bool bIsLand = false;
+		float yPos = pMap->GetHeight(bIsLand, &p->GetTransform()->GetPosition());
+		if (bIsLand){
+			p->SetYPosition(yPos);
+		}
+	}
 }

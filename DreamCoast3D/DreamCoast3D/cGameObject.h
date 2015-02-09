@@ -2,7 +2,7 @@
 
 // 게임 오브젝트, 맵을 포함한 모든 렌더링 되는 오브젝트들은
 // 이 함수를 상속받아서 실시한다.
-// @TODO: 액션이 있는 캐릭터는 cGameActionObject를 상속받게 만들 예정
+//  HACK : 액션이 있는 캐릭터는 cGameActionObject를 상속받게 만들 예정
 
 class cTransform;
 
@@ -25,10 +25,13 @@ public:
 	virtual ST_BOUNDING_SPHERE*	GetBoundingSphere();
 
 	virtual void				SetPosition(D3DXVECTOR3& newPos);
+
+	// Height맵에 대한 편의를 위한 함수
+	virtual void				SetYPosition(float y);
+
 	virtual void				SetScale(D3DXVECTOR3& newScale);
 	virtual void				SetXangle(float fAngleRad);
 	virtual void				SetYangle(float fAngleRad);
 	virtual void				SetZangle(float fAngleRad);
-	
 };
 
