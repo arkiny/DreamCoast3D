@@ -1,0 +1,124 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="_STDAFX">
+      <UniqueIdentifier>{6473dc44-9f72-4efe-a6ab-bad256e5c61d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Core">
+      <UniqueIdentifier>{f627e0ee-14d7-4570-ab7a-b6c25acf79d1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Singletons">
+      <UniqueIdentifier>{0ade4b30-ba8d-48b7-9d86-e57b9b99c43f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Objects">
+      <UniqueIdentifier>{94c27b00-01fd-4503-977d-177414e08ab5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Scene">
+      <UniqueIdentifier>{e35dbe3a-ca98-4a4d-8803-49ea4e922ee3}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="stdafx.h">
+      <Filter>_STDAFX</Filter>
+    </ClInclude>
+    <ClInclude Include="cGameTimer.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="cDeviceManager.h">
+      <Filter>Singletons</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="DreamCoast3D.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="cObjectManager.h">
+      <Filter>Singletons</Filter>
+    </ClInclude>
+    <ClInclude Include="cObject.h">
+      <Filter>Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="cScene.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="cSceneManager.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="cGameObject.h">
+      <Filter>Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="iSceneDelegate.h">
+      <Filter>Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="cGameCore.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="cTransform.h">
+      <Filter>Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="cSphere.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>_STDAFX</Filter>
+    </ClCompile>
+    <ClCompile Include="cGameTimer.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="cDeviceManager.cpp">
+      <Filter>Singletons</Filter>
+    </ClCompile>
+    <ClCompile Include="DreamCoast3D.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="cObjectManager.cpp">
+      <Filter>Singletons</Filter>
+    </ClCompile>
+    <ClCompile Include="cObject.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="cScene.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="cSceneManager.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="cGameObject.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="iSceneDelegate.cpp">
+      <Filter>Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="cGameCore.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="cTransform.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="cSphere.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="DreamCoast3D.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="small.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="DreamCoast3D.ico">
+      <Filter>Resource Files</Filter>
+    </Image>
+  </ItemGroup>
+</Project>
