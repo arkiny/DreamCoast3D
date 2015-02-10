@@ -169,6 +169,17 @@
     <ClInclude Include="cFrustum.h">
       <Filter>Objects\BaseObject</Filter>
     </ClInclude>
+    <ClInclude Include="cGameActionSkinnedMeshObj.h" />
+    <ClInclude Include="cSkinnedMeshManager.h">
+      <Filter>Singletons</Filter>
+    </ClInclude>
+    <ClInclude Include="cAllocateHierarchy.h" />
+    <ClInclude Include="cMtlTex.h" />
+    <ClInclude Include="cAnimationSet.h" />
+    <ClInclude Include="cSkinnedMesh.h" />
+    <ClInclude Include="cZealot.h">
+      <Filter>_Examples</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -290,6 +301,17 @@
     </ClCompile>
     <ClCompile Include="cFrustum.cpp">
       <Filter>Objects\BaseObject</Filter>
+    </ClCompile>
+    <ClCompile Include="cGameActionSkinnedMeshObj.cpp" />
+    <ClCompile Include="cSkinnedMeshManager.cpp">
+      <Filter>Singletons</Filter>
+    </ClCompile>
+    <ClCompile Include="cAllocateHierarchy.cpp" />
+    <ClCompile Include="cMtlTex.cpp" />
+    <ClCompile Include="cAnimationSet.cpp" />
+    <ClCompile Include="cSkinnedMesh.cpp" />
+    <ClCompile Include="cZealot.cpp">
+      <Filter>_Examples</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

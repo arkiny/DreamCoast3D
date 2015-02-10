@@ -16,6 +16,7 @@
 #include "cMapExample.h"
 
 #include "cUIExample.h"
+#include "cZealot.h"
 
 cSceneExample::cSceneExample()
 	:cScene() // 베이스클래스 초기화
@@ -116,6 +117,31 @@ void cSceneExample::Setup(std::string sFilePath){
 	pUIExample->Setup();
 	cScene::AddUIObj(pUIExample);
 	SAFE_RELEASE(pUIExample);
+
+	// 메쉬 오브젝트
+	cZealot* pZealotExample = new cZealot;
+	pZealotExample->Setup(std::string("../Resources/Char/Zealot/"), std::string("zealot.X"));
+	pZealotExample->SetAnimationLoop(0, false);
+	pZealotExample->SetAnimationLoop(1, false);
+	pZealotExample->SetAnimationLoop(2, false);
+	pZealotExample->SetAnimationLoop(3, true);
+	pZealotExample->SetAnimationLoop(4, true);
+	pZealotExample->SetAnimation(4);
+	m_pGameObjManager->AddGameObj(pZealotExample);
+	SAFE_RELEASE(pZealotExample);
+
+	// 메쉬 오브젝트
+	pZealotExample = new cZealot;
+	pZealotExample->Setup(std::string("../Resources/Char/Zealot/"), std::string("zealot.X"));
+	pZealotExample->SetAnimationLoop(0, false);
+	pZealotExample->SetAnimationLoop(1, false);
+	pZealotExample->SetAnimationLoop(2, false);
+	pZealotExample->SetAnimationLoop(3, true);
+	pZealotExample->SetAnimationLoop(4, true);
+	pZealotExample->SetAnimation(4);
+	pZealotExample->SetPosition(D3DXVECTOR3(-4.0f, 0.0f, 2.0f));
+	m_pGameObjManager->AddGameObj(pZealotExample);
+	SAFE_RELEASE(pZealotExample);
 }
 
 void cSceneExample::Update(float delta){

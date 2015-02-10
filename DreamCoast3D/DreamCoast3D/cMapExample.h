@@ -9,7 +9,7 @@ private:
 		LPDIRECT3DVERTEXBUFFER9		m_pVB;
 		int							m_nNumTri;
 		D3DXMATRIXA16				m_matWorld;
-
+		
 	public:
 		cPyramid() : m_pVB(NULL), m_nNumTri(0) {}
 		~cPyramid()
@@ -20,6 +20,7 @@ private:
 		void Render();
 	};
 
+	D3DMATERIAL9				m_stMaterial;
 	LPDIRECT3DVERTEXBUFFER9		m_pVB;
 	int							m_nNumLine;
 	std::vector<cPyramid*>		m_vecPyramid;

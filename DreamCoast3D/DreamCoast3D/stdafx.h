@@ -33,6 +33,7 @@
 // Macro
 #define SAFE_RELEASE(p) if(p){p->Release(); p = NULL;}
 #define SAFE_DELETE(p) if(p){delete p; p = NULL;}
+#define SAFE_DELETE_ARRAY(p) if(p){delete [] p; p = NULL;}
 #define SAFE_RENDER(p) if(p){p->Render();}
 
 #define SINGLETONE(class_name) private: class_name(void); ~class_name(void); \
@@ -152,5 +153,6 @@ struct ST_SIZE
 #include "cControlManager.h"
 #include "cFontManager.h"
 #include "cTextureManager.h"
+#include "cSkinnedMeshManager.h"
 
 #include "cGameTimer.h"

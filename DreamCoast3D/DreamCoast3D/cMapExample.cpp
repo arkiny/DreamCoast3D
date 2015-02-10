@@ -93,6 +93,7 @@ cMapExample::cMapExample()
 	: m_pVB(NULL)
 	, m_nNumLine(0)
 {
+	ZeroMemory(&m_stMaterial, sizeof(D3DMATERIAL9));
 }
 
 
@@ -223,6 +224,7 @@ void cMapExample::Render(){
 	g_pD3DDevice->SetTransform(D3DTS_WORLD, &matWorld);
 	g_pD3DDevice->SetFVF(ST_PC_VERTEX::FVF);
 	g_pD3DDevice->SetTexture(0, 0);
+	g_pD3DDevice->SetRenderState(D3DRS_LIGHTING, false);
 	g_pD3DDevice->SetStreamSource(0, m_pVB, 0, sizeof(ST_PC_VERTEX));
 	g_pD3DDevice->DrawPrimitive(D3DPT_LINELIST, 0, m_nNumLine);
 
@@ -230,6 +232,8 @@ void cMapExample::Render(){
 	{
 		p->Render();
 	}
+
+	g_pD3DDevice->SetRenderState(D3DRS_LIGHTING, true);
 }
 
 float cMapExample::GetHeight(OUT bool& isLand, IN D3DXVECTOR3* pvPosition){

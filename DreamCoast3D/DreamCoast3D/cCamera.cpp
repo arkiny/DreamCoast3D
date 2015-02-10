@@ -60,6 +60,10 @@ void cCamera::Update(float delta)
 		m_ptPrevMouse = ptCurrMouse;
 	}
 
+	if (g_pControlManager->GetInputInfo(VK_RBUTTON) == false && m_isRButtonDown == true){
+		m_isRButtonDown = false;
+	}
+
 	float wheelMove = g_pControlManager->GetWheelMoveDist();
 	if (wheelMove != 0.0f){
 		m_fDist -= wheelMove / 100.f;
