@@ -196,9 +196,15 @@
     <ClInclude Include="cMtlTex.h">
       <Filter>Objects</Filter>
     </ClInclude>
-    <ClInclude Include="cLoader.h" />
-    <ClInclude Include="cGameLoader.h" />
-    <ClInclude Include="cGameObjLoader.h" />
+    <ClInclude Include="cLoader.h">
+      <Filter>ParseAndLoader</Filter>
+    </ClInclude>
+    <ClInclude Include="cGameLoader.h">
+      <Filter>ParseAndLoader</Filter>
+    </ClInclude>
+    <ClInclude Include="cGameObjLoader.h">
+      <Filter>ParseAndLoader</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -342,9 +348,15 @@
     <ClCompile Include="cMtlTex.cpp">
       <Filter>Objects</Filter>
     </ClCompile>
-    <ClCompile Include="cLoader.cpp" />
-    <ClCompile Include="cGameLoader.cpp" />
-    <ClCompile Include="cGameObjLoader.cpp" />
+    <ClCompile Include="cGameLoader.cpp">
+      <Filter>ParseAndLoader</Filter>
+    </ClCompile>
+    <ClCompile Include="cGameObjLoader.cpp">
+      <Filter>ParseAndLoader</Filter>
+    </ClCompile>
+    <ClCompile Include="cLoader.cpp">
+      <Filter>ParseAndLoader</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="DreamCoast3D.rc">
