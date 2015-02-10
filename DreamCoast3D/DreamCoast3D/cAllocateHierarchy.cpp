@@ -84,7 +84,7 @@ STDMETHODIMP cAllocateHierarchy::CreateMeshContainer(
 			pBoneMesh->pCurrentBoneMatrices = new D3DXMATRIX[dwNumBones];
 
 			// step 4. 동적 할당된 pBoneOffsetMatrices 매트릭스에 값 저장.
-			for (int i = 0; i < dwNumBones; ++i)
+			for (DWORD i = 0; i < dwNumBones; ++i)
 			{
 				pBoneMesh->pBoneOffsetMatrices[i] = *(pSkinInfo->GetBoneOffsetMatrix(i));
 			}

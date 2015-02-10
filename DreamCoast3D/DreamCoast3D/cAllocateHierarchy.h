@@ -2,7 +2,7 @@
 
 class cMtlTex;
 
-struct ST_BONE : public D3DXFRAME
+_declspec(align(16)) struct ST_BONE : public D3DXFRAME
 {
 	D3DXMATRIXA16 matWorldTM;
 };

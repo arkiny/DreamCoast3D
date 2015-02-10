@@ -3,7 +3,7 @@
 class cMapExample : public cGameMapObject
 {
 private:
-	class cPyramid
+	_declspec(align(16))  class cPyramid
 	{
 	private:
 		LPDIRECT3DVERTEXBUFFER9		m_pVB;
@@ -16,6 +16,17 @@ private:
 		{
 			SAFE_RELEASE(m_pVB);
 		}
+
+		void* operator new(size_t i)
+		{
+			return _mm_malloc(i, 16);
+		}
+
+			void operator delete(void* p)
+		{
+			_mm_free(p);
+		}
+
 		void Setup(D3DXMATRIXA16& mat, D3DCOLOR c);
 		void Render();
 	};

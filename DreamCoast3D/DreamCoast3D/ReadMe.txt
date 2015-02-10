@@ -22,10 +22,17 @@ Singletons
 	모든 입출력 정보는 여기에서 저장되고 여기서 확인한다.
 - cFontManager 
 	폰트 매니저, 폰트를 콜시 해당 폰트가 없으면 생성 리턴, 있으면 찾아서 리턴해준다.
+- cSkinnedMeshManager
+	스킨드 메쉬 매니저, 스킨드 메쉬의 D3DXFRAME을 생성하여 인스탄싱한다. 
+	애니메이션 컨트롤은 본래 컨트롤을 클로닝(Deep Copy)해서 넘겨준다.
+	- cAllocateHierarchy 
+		ID3DXAllocateHierarchy를 상속해서 확장한 클래스. 
+		XXX : D3DXMESH를 확장한 ST_BONE 및 D3DXMESHCONTAINER를 확장한 ST_BONE_MESH를 저장한다.
 
 Object
 - cObject
-	오브젝트 인스탄싱 베이스 클래스
+	오브젝트 베이스 클래스
+
 	- cGameObjManager 
 		cGameObject들을 가지고, 관리하는 매니저, Frustom Culling을 여기서 처리, 
 		차후 GameObj 델리게이트(충돌처리)도 여기서 처리할까 생각중
@@ -51,8 +58,16 @@ Object
 				- cActionRepeat
 					위의 액션 시퀀스나 한개의 액션을 반복
 
+			- cGameActionSkinnedMeshObj
+				cGameActionObject를 상속받고, D3DXFRAME을 통한 SkinnedMesh 애니메이션을 가지는 게임오브젝트
+				 - cSkinnedMesh
+					- D3DXFRAME과 Animation Control을 가지고 실제 캐릭터 애니메이션을 실시하는 오브젝트
+					- TODO : 차후 스피어를 노드에 붙일때 여기서 붙여서 cGameActionSkinnedMeshObj로 리턴하는 방안을 고민
+				 - cAnimationSet
+					- 애니메이션 컨트롤을 통해 애니메이션을 실시할 세트
+
 		- cGameBillBoardingObject
-			항상 화면을 정면으로 바라보는 오브젝트
+			항상 화면을 정면으로 바라보는 오브젝트			
 
 		- cGameMapObject 
 			iMap 인터페이스를 상속받은 게임맵오브젝트, 근접맵 정보를 설정해주면, 
@@ -91,23 +106,36 @@ Scene
 - cLightSource 
 	씬의 광원, 광원은 D3DX9 광원 제한량에 따라 8개까지 쓸수 있으므로 따로 클래스로 관리
 
+ParseAndLaoder
+- cLoader
+	ASE파서의 로더를 약간 트윜한 클래스, 차후 모든 로더 클래스의 베이스 클래스가 된다.
+- cGameLoader
+	로더들이 다 구현되면 최종적으로 모든 리소스를 하나의 정보파일로부터 로딩해올 클래스
+- cGameObjLoader
+	게임 오브젝트 로더, 현재는 cGamActionSkinnedMeshObject로딩만 구현되어 있다.
+
 Examples - 프레임웤 예제들
 - cSphere 
 	cGameObject를 상속받은 클래스의 사용예제
 
 - cSphereAction	
 	cGameActionObject를 상속받은 클래스의 사용예제, 
-	응용에 따라 컨트롤이 가능한 게임오브젝트도 생성가능( HACK : 차후 예제 추가)
+	응용에 따라 컨트롤이 가능한 게임오브젝트도 생성가능( HACK : 차후 예제 추가 )
 
 - cBillingExample 
 	cGameBillBoardingObject를 상속받은 클래스의 사용예제
 
 - cMapExample 
-	cGameMapObject를 상속받은 클래스의 사용예제겸 그리드맵
+	cGameMapObject를 상속받은 클래스의 사용예제 겸 그리드맵
 
 - cUIExample
 	간단한 퀘스트 박스 제작으로 만들어본 cUIObject 사용 예제
-	좀더 개선히 필요해 보인다.
+	좀더 개선이 필요해 보인다.
+
+- cZealot
+	cGameActionSkinnedMeshObj를 상속받은 클래스의 사용예제
 
 - cSceneExample 
 	cScene을 상속받은 클래스의 사용예제, cActionMove, cActionRepeat, cActionSeq의 사용예제
+	cZealot이 같은 프레임을 인스탄싱 받아서 활용하는 부분이 여기 나와있다.
+	또한 cGameObjLoader를 이용해 리소스를 로딩하는 예시 역시 여기 포함되었다.

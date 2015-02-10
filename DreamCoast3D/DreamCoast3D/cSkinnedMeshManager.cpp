@@ -13,25 +13,7 @@ cSkinnedMeshManager::~cSkinnedMeshManager()
 }
 
 D3DXFRAME* cSkinnedMeshManager::GetSkinnedMesh(std::string sFolder, std::string sFile){
-	D3DXFRAME*					pFrame;
-	
-	cAllocateHierarchy Alloc;
-	Alloc.SetFolder(sFolder);
-	HRESULT hr = D3DXLoadMeshHierarchyFromX(
-		(sFolder + sFile).c_str(),
-		D3DXMESH_MANAGED,
-		g_pD3DDevice,
-		&Alloc,
-		NULL,
-		&pFrame,
-		NULL);
-	_ASSERT(hr == S_OK);
-
-	SetupBoneMatrixPtrs(pFrame, pFrame);
-
-	return pFrame;
-
-	/*if (m_mapAnimationControl.find(sFolder + sFile) == m_mapAnimationControl.end() ||
+	if (m_mapAnimationControl.find(sFolder + sFile) == m_mapAnimationControl.end() ||
 		m_mapSkinnedMeshes.find(sFolder + sFile) == m_mapSkinnedMeshes.end())
 	{
 		D3DXFRAME*					pFrame;
@@ -39,6 +21,7 @@ D3DXFRAME* cSkinnedMeshManager::GetSkinnedMesh(std::string sFolder, std::string 
 
 		cAllocateHierarchy Alloc;
 		Alloc.SetFolder(sFolder);
+
 		HRESULT hr = D3DXLoadMeshHierarchyFromX(
 			(sFolder + sFile).c_str(),
 			D3DXMESH_MANAGED,
@@ -48,15 +31,12 @@ D3DXFRAME* cSkinnedMeshManager::GetSkinnedMesh(std::string sFolder, std::string 
 			&pFrame,
 			&pAnimCon);
 		_ASSERT(hr == S_OK);
-
 		SetupBoneMatrixPtrs(pFrame, pFrame);
 		m_mapSkinnedMeshes[sFolder + sFile] = pFrame;
 		m_mapAnimationControl[sFolder + sFile] = pAnimCon;
 	}
 
-	return m_mapSkinnedMeshes[sFolder + sFile];*/
-
-
+	return m_mapSkinnedMeshes[sFolder + sFile];
 }
 
 D3DXFRAME* cSkinnedMeshManager::GetSkinnedMesh(char* szFolder, char* szFile){
@@ -65,11 +45,12 @@ D3DXFRAME* cSkinnedMeshManager::GetSkinnedMesh(char* szFolder, char* szFile){
 
 D3DXFRAME* cSkinnedMeshManager::GetSkinnedMesh(std::string sFolder, std::string sFile, LPD3DXANIMATIONCONTROLLER* _pAnimCon){
 
-	//if (m_mapAnimationControl.find(sFolder + sFile) == m_mapAnimationControl.end() ||
-	//	m_mapSkinnedMeshes.find(sFolder + sFile) == m_mapSkinnedMeshes.end())
-	//{
+	if (m_mapAnimationControl.find(sFolder + sFile) == m_mapAnimationControl.end() ||
+		m_mapSkinnedMeshes.find(sFolder + sFile) == m_mapSkinnedMeshes.end())
+	{
 
  	D3DXFRAME*					pFrame;
+	LPD3DXANIMATIONCONTROLLER	pAnimCon;
 
 	cAllocateHierarchy Alloc;
 	Alloc.SetFolder(sFolder);
@@ -87,24 +68,24 @@ D3DXFRAME* cSkinnedMeshManager::GetSkinnedMesh(std::string sFolder, std::string 
 
 	return pFrame;
 
-	//m_mapSkinnedMeshes[sFolder + sFile] = pFrame;
-	//m_mapAnimationControl[sFolder + sFile] = pAnimCon;
-	//}
+	m_mapSkinnedMeshes[sFolder + sFile] = pFrame;
+	m_mapAnimationControl[sFolder + sFile] = pAnimCon;
+	}
 	// 프레임 정보는 그대로 쓰지만,
 	// 애니메이션 컨트롤러는 각각 다른 컴객체기 때문에 클론해준다.
 	// 는 불가능 하기에 현 매니저는 프로토타입 패턴으로 이용한다.
-	//LPD3DXANIMATIONCONTROLLER retClone 
-	//	= m_mapAnimationControl[sFolder + sFile];
-	//LPD3DXANIMATIONCONTROLLER pCloned;
-	//
-	//retClone->CloneAnimationController(
-	//	retClone->GetMaxNumAnimationOutputs(), 
-	//	retClone->GetMaxNumAnimationSets(), 
-	//	retClone->GetMaxNumTracks(), 
-	//	retClone->GetMaxNumEvents(), 
-	//	&pCloned);
-	//(*_pAnimCon) = pCloned;
-	//return m_mapSkinnedMeshes[sFolder + sFile];
+	LPD3DXANIMATIONCONTROLLER retClone 
+		= m_mapAnimationControl[sFolder + sFile];
+	LPD3DXANIMATIONCONTROLLER pCloned;
+	
+	retClone->CloneAnimationController(
+		retClone->GetMaxNumAnimationOutputs(), 
+		retClone->GetMaxNumAnimationSets(), 
+		retClone->GetMaxNumTracks(), 
+		retClone->GetMaxNumEvents(), 
+		&pCloned);
+	(*_pAnimCon) = pCloned;
+	return m_mapSkinnedMeshes[sFolder + sFile];
 }
 
 D3DXFRAME* cSkinnedMeshManager::GetSkinnedMesh(char* szFolder, char* szFile, LPD3DXANIMATIONCONTROLLER* pAnimCon){

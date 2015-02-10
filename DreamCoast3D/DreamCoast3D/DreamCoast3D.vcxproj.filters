@@ -38,6 +38,12 @@
     <Filter Include="_Examples">
       <UniqueIdentifier>{261727fd-7005-4ab4-9aea-57cedb664be4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Objects\SkinnedMesh">
+      <UniqueIdentifier>{ce152797-142e-467b-a4a7-bcf09542f6fb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ParseAndLoader">
+      <UniqueIdentifier>{e411ee6f-738f-42b4-926d-e23a16bebd26}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -169,17 +175,30 @@
     <ClInclude Include="cFrustum.h">
       <Filter>Objects\BaseObject</Filter>
     </ClInclude>
-    <ClInclude Include="cGameActionSkinnedMeshObj.h" />
     <ClInclude Include="cSkinnedMeshManager.h">
       <Filter>Singletons</Filter>
     </ClInclude>
-    <ClInclude Include="cAllocateHierarchy.h" />
-    <ClInclude Include="cMtlTex.h" />
-    <ClInclude Include="cAnimationSet.h" />
-    <ClInclude Include="cSkinnedMesh.h" />
     <ClInclude Include="cZealot.h">
       <Filter>_Examples</Filter>
     </ClInclude>
+    <ClInclude Include="cSkinnedMesh.h">
+      <Filter>Objects\SkinnedMesh</Filter>
+    </ClInclude>
+    <ClInclude Include="cGameActionSkinnedMeshObj.h">
+      <Filter>Objects\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="cAnimationSet.h">
+      <Filter>Objects\SkinnedMesh</Filter>
+    </ClInclude>
+    <ClInclude Include="cAllocateHierarchy.h">
+      <Filter>Objects\SkinnedMesh</Filter>
+    </ClInclude>
+    <ClInclude Include="cMtlTex.h">
+      <Filter>Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="cLoader.h" />
+    <ClInclude Include="cGameLoader.h" />
+    <ClInclude Include="cGameObjLoader.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -302,17 +321,30 @@
     <ClCompile Include="cFrustum.cpp">
       <Filter>Objects\BaseObject</Filter>
     </ClCompile>
-    <ClCompile Include="cGameActionSkinnedMeshObj.cpp" />
     <ClCompile Include="cSkinnedMeshManager.cpp">
       <Filter>Singletons</Filter>
     </ClCompile>
-    <ClCompile Include="cAllocateHierarchy.cpp" />
-    <ClCompile Include="cMtlTex.cpp" />
-    <ClCompile Include="cAnimationSet.cpp" />
-    <ClCompile Include="cSkinnedMesh.cpp" />
     <ClCompile Include="cZealot.cpp">
       <Filter>_Examples</Filter>
     </ClCompile>
+    <ClCompile Include="cSkinnedMesh.cpp">
+      <Filter>Objects\SkinnedMesh</Filter>
+    </ClCompile>
+    <ClCompile Include="cGameActionSkinnedMeshObj.cpp">
+      <Filter>Objects\GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="cAllocateHierarchy.cpp">
+      <Filter>Objects\SkinnedMesh</Filter>
+    </ClCompile>
+    <ClCompile Include="cAnimationSet.cpp">
+      <Filter>Objects\SkinnedMesh</Filter>
+    </ClCompile>
+    <ClCompile Include="cMtlTex.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="cLoader.cpp" />
+    <ClCompile Include="cGameLoader.cpp" />
+    <ClCompile Include="cGameObjLoader.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="DreamCoast3D.rc">

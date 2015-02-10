@@ -1,7 +1,7 @@
 #pragma once
 
 // UI에 쓰일 스프라이트 오브젝트들
-class cUIObject : public cObject
+_declspec(align(16)) class cUIObject : public cObject
 {
 protected:
 	D3DXMATRIXA16			m_matWorld;
@@ -17,8 +17,18 @@ protected:
 public:
 	cUIObject();
 	cUIObject(LPD3DXSPRITE pSprite);
-	virtual ~cUIObject();
 
+	void* operator new(size_t i)
+	{
+		return _mm_malloc(i, 16);
+	}
+
+		void operator delete(void* p)
+	{
+		_mm_free(p);
+	}
+
+	virtual ~cUIObject();
 
 	virtual void AddChild(cUIObject* pChild);
 	virtual void Update(float fDelta);

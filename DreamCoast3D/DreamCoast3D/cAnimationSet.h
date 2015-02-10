@@ -7,7 +7,7 @@ public:
 	virtual void OnFinishAnimation(cAnimationSet* pSender) = 0;
 };
 
-class cAnimationSet
+class cAnimationSet : public cObject
 {
 protected:
 	SYNTHESIZE_ADD_REF(LPD3DXANIMATIONSET, m_pAnimationSet, AnimationSet);

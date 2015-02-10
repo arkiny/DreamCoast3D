@@ -22,13 +22,15 @@ cSkinnedMesh::~cSkinnedMesh(void)
 		cAllocateHierarchy Alloc;
 		D3DXFrameDestroy(m_pRootFrame, &Alloc);
 	}
+	SAFE_RELEASE(m_pAnimControl);
+	for (auto p : m_vecAnimationSet){
+		SAFE_RELEASE(p);
+	}
 }
 
 void cSkinnedMesh::Setup(std::string sFolder, std::string sFile)
 {
-	// 딥카피로 클론을 떠서 넘겨줘야함
-	//D3DXFRAME* pFrame = g_pSkinnedMeshManager->GetSkinnedMesh(sFolder, sFile, &m_pAnimControl);
-
+	// 인스탄싱을 마친 D3DXFRAME을 루트로 넘겨줌
 	m_pRootFrame = g_pSkinnedMeshManager->GetSkinnedMesh(sFolder, sFile, &m_pAnimControl);
 	
 	UINT uiNumAnim = m_pAnimControl->GetNumAnimationSets();

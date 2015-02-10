@@ -95,10 +95,13 @@
     <ClInclude Include="cGameActionSkinnedMeshObj.h" />
     <ClInclude Include="cGameBillBoardingObject.h" />
     <ClInclude Include="cGameCore.h" />
+    <ClInclude Include="cGameLoader.h" />
     <ClInclude Include="cGameMapObject.h" />
     <ClInclude Include="cGameObject.h" />
+    <ClInclude Include="cGameObjLoader.h" />
     <ClInclude Include="cGameObjManager.h" />
     <ClInclude Include="cGameTimer.h" />
+    <ClInclude Include="cLoader.h" />
     <ClInclude Include="cMtlTex.h" />
     <ClInclude Include="cSkinnedMesh.h" />
     <ClInclude Include="cSkinnedMeshManager.h" />
@@ -146,10 +149,13 @@
     <ClCompile Include="cGameActionSkinnedMeshObj.cpp" />
     <ClCompile Include="cGameBillBoardingObject.cpp" />
     <ClCompile Include="cGameCore.cpp" />
+    <ClCompile Include="cGameLoader.cpp" />
     <ClCompile Include="cGameMapObject.cpp" />
     <ClCompile Include="cGameObject.cpp" />
+    <ClCompile Include="cGameObjLoader.cpp" />
     <ClCompile Include="cGameObjManager.cpp" />
     <ClCompile Include="cGameTimer.cpp" />
+    <ClCompile Include="cLoader.cpp" />
     <ClCompile Include="cMtlTex.cpp" />
     <ClCompile Include="cSkinnedMesh.cpp" />
     <ClCompile Include="cSkinnedMeshManager.cpp" />
