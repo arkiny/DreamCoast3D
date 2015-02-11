@@ -14,6 +14,7 @@ cGameCore::~cGameCore()
 	m_pSceneManager->Destroy();
 	g_pFontManager->Destroy();
 	g_pTextureManager->Destroy();
+	g_pSkinnedMeshManager->Destroy();
 
 	cDeviceManager* pDevice = cDeviceManager::GetInstance();
 	pDevice->Destroy();

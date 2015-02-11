@@ -43,7 +43,7 @@ D3DXFRAME* cSkinnedMeshManager::GetSkinnedMesh(char* szFolder, char* szFile){
 	return GetSkinnedMesh(std::string(szFolder), std::string(szFile));
 }
 
-D3DXFRAME* cSkinnedMeshManager::GetSkinnedMesh(std::string sFolder, std::string sFile, LPD3DXANIMATIONCONTROLLER* _pAnimCon){
+D3DXFRAME* cSkinnedMeshManager::GetSkinnedMesh(std::string sFolder, std::string sFile, LPD3DXANIMATIONCONTROLLER& _pAnimCon){
 	if (m_mapAnimationControl.find(sFolder + sFile) == m_mapAnimationControl.end() ||
 		m_mapSkinnedMeshes.find(sFolder + sFile) == m_mapSkinnedMeshes.end())
 	{
@@ -71,23 +71,28 @@ D3DXFRAME* cSkinnedMeshManager::GetSkinnedMesh(std::string sFolder, std::string 
 	// 프레임 정보는 그대로 쓰지만,
 	// 애니메이션 컨트롤러는 각각 다른 컴객체기 때문에 클론해준다.
 	// 는 불가능 하기에 현 매니저는 프로토타입 패턴으로 이용한다.
-	m_mapAnimationControl[sFolder + sFile]->CloneAnimationController(
-		m_mapAnimationControl[sFolder + sFile]->GetMaxNumAnimationOutputs(), 
-		m_mapAnimationControl[sFolder + sFile]->GetMaxNumAnimationSets(), 
-		m_mapAnimationControl[sFolder + sFile]->GetMaxNumTracks(), 
-		m_mapAnimationControl[sFolder + sFile]->GetMaxNumEvents(), 
-		_pAnimCon);
+	LPD3DXANIMATIONCONTROLLER ret(NULL);
+	HRESULT hr = m_mapAnimationControl[sFolder + sFile]->CloneAnimationController(
+					m_mapAnimationControl[sFolder + sFile]->GetMaxNumAnimationOutputs(), 
+					m_mapAnimationControl[sFolder + sFile]->GetMaxNumAnimationSets(), 
+					m_mapAnimationControl[sFolder + sFile]->GetMaxNumTracks(), 
+					m_mapAnimationControl[sFolder + sFile]->GetMaxNumEvents(), 
+					&ret);
+
+	_ASSERT(hr == S_OK);
+	_pAnimCon = ret;
 	return m_mapSkinnedMeshes[sFolder + sFile];
 }
 
-D3DXFRAME* cSkinnedMeshManager::GetSkinnedMesh(char* szFolder, char* szFile, LPD3DXANIMATIONCONTROLLER* pAnimCon){
+D3DXFRAME* cSkinnedMeshManager::GetSkinnedMesh(char* szFolder, char* szFile, LPD3DXANIMATIONCONTROLLER& pAnimCon){
 	return GetSkinnedMesh(std::string(szFolder), std::string(szFile), pAnimCon);
 }
 
 void cSkinnedMeshManager::Destroy(){
 	for each (auto p in m_mapSkinnedMeshes)
 	{
-		SAFE_DELETE(p.second);
+		cAllocateHierarchy Alloc;
+		D3DXFrameDestroy(p.second, &Alloc);
 	}
 
 	for each (auto p in m_mapAnimationControl)

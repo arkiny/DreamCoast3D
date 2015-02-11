@@ -17,11 +17,6 @@ cSkinnedMesh::cSkinnedMesh(void)
 
 cSkinnedMesh::~cSkinnedMesh(void)
 {
-	if (m_pRootFrame)
-	{
-		cAllocateHierarchy Alloc;
-		D3DXFrameDestroy(m_pRootFrame, &Alloc);
-	}
 	SAFE_RELEASE(m_pAnimControl);
 	for (auto p : m_vecAnimationSet){
 		SAFE_RELEASE(p);
@@ -31,7 +26,7 @@ cSkinnedMesh::~cSkinnedMesh(void)
 void cSkinnedMesh::Setup(std::string sFolder, std::string sFile)
 {
 	// 인스탄싱을 마친 D3DXFRAME을 루트로 넘겨줌
-	m_pRootFrame = g_pSkinnedMeshManager->GetSkinnedMesh(sFolder, sFile, &m_pAnimControl);
+	m_pRootFrame = g_pSkinnedMeshManager->GetSkinnedMesh(sFolder, sFile, m_pAnimControl);
 	
 	UINT uiNumAnim = m_pAnimControl->GetNumAnimationSets();
 	for (UINT i = 0; i < uiNumAnim; ++i)
@@ -49,11 +44,17 @@ void cSkinnedMesh::Setup(std::string sFolder, std::string sFile)
 
 void cSkinnedMesh::Update(float fDelta)
 {
-	m_vecAnimationSet[m_nCurrentAnimation]->Update(fDelta);
+	// TODO : 스킨드 매쉬를 인스탄싱해서 쓰려면,
+	//        특이 경우로 렌더직전에 업데이트 해줘야한다.
+}
+
+void cSkinnedMesh::Render(D3DXMATRIXA16* pParentWorldTM)
+{
+	m_vecAnimationSet[m_nCurrentAnimation]->Update(g_pTimer->DeltaTime());
 
 	if (m_isAnimationBlending)
 	{
-		m_fPassedBlendTime += fDelta;
+		m_fPassedBlendTime += g_pTimer->DeltaTime();
 		if (m_fPassedBlendTime >= m_fAnimationBlendTime)
 		{
 			m_isAnimationBlending = false;
@@ -68,15 +69,12 @@ void cSkinnedMesh::Update(float fDelta)
 			m_pAnimControl->SetTrackWeight(1, 1.0f - fWeight);
 		}
 	}
-	m_pAnimControl->AdvanceTime(fDelta, NULL);
+
+	m_pAnimControl->AdvanceTime(g_pTimer->DeltaTime(), NULL);
 
 	UpdateWorldMatrix(m_pRootFrame, NULL);
-
 	UpdateSkinnedMesh(m_pRootFrame);
-}
 
-void cSkinnedMesh::Render(D3DXMATRIXA16* pParentWorldTM)
-{
 	Render(m_pRootFrame, pParentWorldTM);
 }
 
@@ -188,7 +186,6 @@ void cSkinnedMesh::SetAnimationLoop(DWORD dwIndex, bool isLoop)
 
 void cSkinnedMesh::UpdateSkinnedMesh(D3DXFRAME* pFrame)
 {
-
 	if (pFrame->pMeshContainer)
 	{
 		ST_BONE_MESH* pBoneMesh = (ST_BONE_MESH*)pFrame->pMeshContainer;

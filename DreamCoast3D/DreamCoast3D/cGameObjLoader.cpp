@@ -51,6 +51,8 @@ void cGameObjLoader::LoadGameObjectsFromFile(cGameObjManager* pGameManager, std:
 			SkipBlock();
 		}
 	}
+
+	fclose(m_fp);
 }
 
 cGameObject* cGameObjLoader::ParseGameActionSkinnedMeshObj(){
@@ -78,14 +80,19 @@ cGameObject* cGameObjLoader::ParseGameActionSkinnedMeshObj(){
 		}
 		else if (isEqual(szToken, "*SETINITANIMATION")){
 			int nIndex = GetInteger();
-			for (int i = 0; i < 5; i++){
-				if (i != nIndex){
-					ret->GetSkinnedMesh()->SetAnimationLoop(i, false);
-				}
-				else{
-					ret->GetSkinnedMesh()->SetAnimationLoop(i, true);
-				}
-			}
+			//for (int i = 0; i < 5; i++){
+			//	if (i != nIndex){
+			//		ret->GetSkinnedMesh()->SetAnimationLoop(i, false);
+			//	}
+			//	else{
+			//		ret->GetSkinnedMesh()->SetAnimationLoop(i, true);
+			//	}
+			//}
+			ret->GetSkinnedMesh()->SetAnimationLoop(0, false);
+			ret->GetSkinnedMesh()->SetAnimationLoop(1, false);
+			ret->GetSkinnedMesh()->SetAnimationLoop(2, false);
+			ret->GetSkinnedMesh()->SetAnimationLoop(3, true);
+			ret->GetSkinnedMesh()->SetAnimationLoop(4, true);
 			ret->GetSkinnedMesh()->SetAnimationIndex(nIndex);
 		}
 	} while (nLevel > 0);
@@ -118,7 +125,7 @@ void cGameObjLoader::ParseAndLoadSkinnedMeshList(){
 void cGameObjLoader::ParseAndLoadSkinnedMeshtoManager(int nIndex){
 	std::string sFolder;
 	std::string sFile;
-
+	
 	int nLevel = 0;
 	do{
 		char* szToken = GetToken();

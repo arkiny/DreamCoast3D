@@ -116,3 +116,7 @@ void cGameTimer::Tick(){
 		m_dDeltaTime = 0.0;
 	}
 }
+
+void cGameTimer::Destroy(){
+	//delete this;
+}

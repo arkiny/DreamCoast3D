@@ -16,7 +16,7 @@ TCHAR szWindowClass[MAX_LOADSTRING];			// the main window class name
 
 ///
 HWND g_hWnd;
-cGameTimer* g_pTimer;
+//cGameTimer* g_pTimerr;
 cGameCore* g_pGameCore;
 std::string g_sMainWndCaption;
 ///
@@ -60,8 +60,8 @@ int APIENTRY _tWinMain(_In_ HINSTANCE hInstance,
 	g_pGameCore->SetDesc(std::string("Game Core, Actually Game Main"));
 	//
 
-	g_pTimer = new cGameTimer;
-	g_pTimer->SetDesc(std::string("Total Game Timer"));
+	//g_pTimerr = new cGameTimer;
+	//g_pTimerr->SetDesc(std::string("Total Game Timer"));
 	g_pTimer->Reset();
 
 
@@ -91,9 +91,9 @@ int APIENTRY _tWinMain(_In_ HINSTANCE hInstance,
 		}
 	}
 
-	SAFE_RELEASE(g_pTimer);
 	SAFE_RELEASE(g_pGameCore);
 
+	g_pTimer->Destroy();
 	g_pObjectManager->Destroy();
 	g_pControlManager->Destroy();
 	return (int) msg.wParam;

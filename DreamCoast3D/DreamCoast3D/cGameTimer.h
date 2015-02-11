@@ -1,10 +1,15 @@
 #pragma once
 // 타이머 코드 출처: Intro to DX11 by Frank D. Luna 속칭 물방울책
-class cGameTimer : public cObject
+
+#define g_pTimer cGameTimer::GetInstance()
+
+class cGameTimer 
 {
+	SINGLETONE(cGameTimer);
+
 public:
-	cGameTimer();
-	virtual ~cGameTimer();
+	//cGameTimer();
+	//virtual ~cGameTimer();
 
 	float GameTime() const;		// in sec
 	float DeltaTime() const;	// in sec
@@ -14,6 +19,7 @@ public:
 	void Start(); // call when unpuased, 게임타이머가 정지후 재시작
 	void Stop(); // call when paused 게임타이머 정지
 	void Tick(); // Call every Frame 매 프레임마다 콜
+	void Destroy();
 
 private:
 	double m_dSecondsPerCount;

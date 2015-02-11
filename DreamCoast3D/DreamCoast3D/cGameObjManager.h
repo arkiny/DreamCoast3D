@@ -15,7 +15,7 @@ private:
 
 public:
 	cGameObjManager();
-	~cGameObjManager();
+	virtual ~cGameObjManager();
 
 	void Setup();
 	void Update(float fDelta);

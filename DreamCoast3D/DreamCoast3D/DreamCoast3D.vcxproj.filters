@@ -205,6 +205,12 @@
     <ClInclude Include="cGameObjLoader.h">
       <Filter>ParseAndLoader</Filter>
     </ClInclude>
+    <ClInclude Include="cMapLoader.h">
+      <Filter>ParseAndLoader</Filter>
+    </ClInclude>
+    <ClInclude Include="cGameMapHeight.h">
+      <Filter>Objects\GamMapObjects</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -356,6 +362,12 @@
     </ClCompile>
     <ClCompile Include="cLoader.cpp">
       <Filter>ParseAndLoader</Filter>
+    </ClCompile>
+    <ClCompile Include="cMapLoader.cpp">
+      <Filter>ParseAndLoader</Filter>
+    </ClCompile>
+    <ClCompile Include="cGameMapHeight.cpp">
+      <Filter>Objects\GamMapObjects</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

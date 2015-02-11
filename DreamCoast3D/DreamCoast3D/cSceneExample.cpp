@@ -19,6 +19,7 @@
 #include "cZealot.h"
 
 #include "cGameObjLoader.h"
+#include "cMapLoader.h"
 
 cSceneExample::cSceneExample()
 	:cScene() // 베이스클래스 초기화
@@ -110,10 +111,9 @@ void cSceneExample::Setup(std::string sFilePath){
 
 	// 3. 맵 로딩
 
-	cMapExample* pGameMapExample = new cMapExample;
-	pGameMapExample->Setup(30, 1);
-	cScene::AddMap(pGameMapExample);
-	cScene::SetCurrentMap(0);
+	//cMapExample* pGameMapExample = new cMapExample;
+	//pGameMapExample->Setup(30, 1);
+	//cScene::AddMap(pGameMapExample);
 
 	cUIExample* pUIExample = new cUIExample;
 	pUIExample->Setup();
@@ -148,6 +148,10 @@ void cSceneExample::Setup(std::string sFilePath){
 
 	cGameObjLoader cGOL;
 	cGOL.LoadGameObjectsFromFile(m_pGameObjManager, std::string("../Resources/"), std::string("SCENE1_GAMEOBJDATA.txt"));
+
+	cMapLoader cML;
+	cML.LoadGameMapFromFile(this, std::string("../Resources/"), std::string("SCENE1_MAPDATA.txt"));
+	SetCurrentMap(m_vecGameMaps.size()-1);
 }
 
 void cSceneExample::Update(float delta){

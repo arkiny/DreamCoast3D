@@ -19,8 +19,8 @@ public:
 	D3DXFRAME* GetSkinnedMesh(std::string sFolder, std::string sFile);
 	D3DXFRAME* GetSkinnedMesh(char* szFolder, char* szFile);
 
-	D3DXFRAME* GetSkinnedMesh(std::string sFolder, std::string sFile, LPD3DXANIMATIONCONTROLLER *pAnimCon);
-	D3DXFRAME* GetSkinnedMesh(char* szFolder, char* szFile, LPD3DXANIMATIONCONTROLLER *pAnimCon);
+	D3DXFRAME* GetSkinnedMesh(std::string sFolder, std::string sFile, LPD3DXANIMATIONCONTROLLER& pAnimCon);
+	D3DXFRAME* GetSkinnedMesh(char* szFolder, char* szFile, LPD3DXANIMATIONCONTROLLER& pAnimCon);
 
 	void Destroy();
 };

@@ -28,11 +28,9 @@ void cGameActionSkinnedMeshObj::Update(float fDelta){
 }
 
 void cGameActionSkinnedMeshObj::Render(){
-
 	if (m_pSkinnedMesh){
 		m_pSkinnedMesh->Render(GetTransformMatrix());
 	}
-
 }
 
 //UINT uiNumAnim = m_pAnimControl->GetNumAnimationSets();
