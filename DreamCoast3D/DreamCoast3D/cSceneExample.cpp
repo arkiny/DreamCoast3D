@@ -120,7 +120,7 @@ void cSceneExample::Setup(std::string sFilePath){
 	cScene::AddUIObj(pUIExample);
 	SAFE_RELEASE(pUIExample);
 
-	// 메쉬 오브젝트
+	//// 메쉬 오브젝트
 	//cZealot* pZealotExample = new cZealot;
 	//pZealotExample->Setup(std::string("../Resources/Char/Zealot/"), std::string("zealot.X"));
 	//pZealotExample->SetAnimationLoop(0, false);
@@ -132,18 +132,19 @@ void cSceneExample::Setup(std::string sFilePath){
 	//m_pGameObjManager->AddGameObj(pZealotExample);
 	//SAFE_RELEASE(pZealotExample);
 
-	//// 메쉬 오브젝트
-	//pZealotExample = new cZealot;
-	//pZealotExample->Setup(std::string("../Resources/Char/Zealot/"), std::string("zealot.X"));
-	//pZealotExample->SetAnimationLoop(0, false);
-	//pZealotExample->SetAnimationLoop(1, false);
-	//pZealotExample->SetAnimationLoop(2, false);
-	//pZealotExample->SetAnimationLoop(3, true);
-	//pZealotExample->SetAnimationLoop(4, false);
-	//pZealotExample->SetAnimation(3);
-	//pZealotExample->SetPosition(D3DXVECTOR3(-4.0f, 0.0f, 2.0f));
-	//m_pGameObjManager->AddGameObj(pZealotExample);
-	//SAFE_RELEASE(pZealotExample);
+	// 메쉬 오브젝트
+	/*cZealot* pZealotExample = new cZealot;
+	pZealotExample = new cZealot;
+	pZealotExample->Setup(std::string("../Resources/Char/Zealot/"), std::string("zealot.X"));
+	pZealotExample->SetAnimationLoop(0, false);
+	pZealotExample->SetAnimationLoop(1, false);
+	pZealotExample->SetAnimationLoop(2, false);
+	pZealotExample->SetAnimationLoop(3, true);
+	pZealotExample->SetAnimationLoop(4, true);
+	pZealotExample->SetAnimation(4);
+	pZealotExample->SetPosition(D3DXVECTOR3(-4.0f, 0.0f, 2.0f));
+	m_pGameObjManager->AddGameObj(pZealotExample);
+	SAFE_RELEASE(pZealotExample);*/
 
 	cGameObjLoader cGOL;
 	cGOL.LoadGameObjectsFromFile(m_pGameObjManager, std::string("../Resources/"), std::string("SCENE1_GAMEOBJDATA.txt"));

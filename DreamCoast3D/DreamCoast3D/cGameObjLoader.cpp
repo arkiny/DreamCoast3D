@@ -78,6 +78,14 @@ cGameObject* cGameObjLoader::ParseGameActionSkinnedMeshObj(){
 		}
 		else if (isEqual(szToken, "*SETINITANIMATION")){
 			int nIndex = GetInteger();
+			for (int i = 0; i < 5; i++){
+				if (i != nIndex){
+					ret->GetSkinnedMesh()->SetAnimationLoop(i, false);
+				}
+				else{
+					ret->GetSkinnedMesh()->SetAnimationLoop(i, true);
+				}
+			}
 			ret->GetSkinnedMesh()->SetAnimationIndex(nIndex);
 		}
 	} while (nLevel > 0);

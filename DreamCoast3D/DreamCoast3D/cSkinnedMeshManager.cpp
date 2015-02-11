@@ -44,47 +44,39 @@ D3DXFRAME* cSkinnedMeshManager::GetSkinnedMesh(char* szFolder, char* szFile){
 }
 
 D3DXFRAME* cSkinnedMeshManager::GetSkinnedMesh(std::string sFolder, std::string sFile, LPD3DXANIMATIONCONTROLLER* _pAnimCon){
-
 	if (m_mapAnimationControl.find(sFolder + sFile) == m_mapAnimationControl.end() ||
 		m_mapSkinnedMeshes.find(sFolder + sFile) == m_mapSkinnedMeshes.end())
 	{
+		D3DXFRAME*					pFrame;
+		LPD3DXANIMATIONCONTROLLER	pAnimCon;
 
- 	D3DXFRAME*					pFrame;
-	LPD3DXANIMATIONCONTROLLER	pAnimCon;
+		cAllocateHierarchy Alloc;
+		Alloc.SetFolder(sFolder);
+		HRESULT hr = D3DXLoadMeshHierarchyFromX(
+			(sFolder + sFile).c_str(),
+			D3DXMESH_MANAGED,
+			g_pD3DDevice,
+			&Alloc,
+			NULL,
+			&pFrame,
+			&pAnimCon);
+		_ASSERT(hr == S_OK);
 
-	cAllocateHierarchy Alloc;
-	Alloc.SetFolder(sFolder);
-	HRESULT hr = D3DXLoadMeshHierarchyFromX(
-		(sFolder + sFile).c_str(),
-		D3DXMESH_MANAGED,
-		g_pD3DDevice,
-		&Alloc,
-		NULL,
-		&pFrame,
-		_pAnimCon);
-	_ASSERT(hr == S_OK);
+		SetupBoneMatrixPtrs(pFrame, pFrame);
 
-	SetupBoneMatrixPtrs(pFrame, pFrame);
-
-	return pFrame;
-
-	m_mapSkinnedMeshes[sFolder + sFile] = pFrame;
-	m_mapAnimationControl[sFolder + sFile] = pAnimCon;
+		//return pFrame;
+		m_mapSkinnedMeshes[sFolder + sFile] = pFrame;
+		m_mapAnimationControl[sFolder + sFile] = pAnimCon;
 	}
 	// 프레임 정보는 그대로 쓰지만,
 	// 애니메이션 컨트롤러는 각각 다른 컴객체기 때문에 클론해준다.
 	// 는 불가능 하기에 현 매니저는 프로토타입 패턴으로 이용한다.
-	LPD3DXANIMATIONCONTROLLER retClone 
-		= m_mapAnimationControl[sFolder + sFile];
-	LPD3DXANIMATIONCONTROLLER pCloned;
-	
-	retClone->CloneAnimationController(
-		retClone->GetMaxNumAnimationOutputs(), 
-		retClone->GetMaxNumAnimationSets(), 
-		retClone->GetMaxNumTracks(), 
-		retClone->GetMaxNumEvents(), 
-		&pCloned);
-	(*_pAnimCon) = pCloned;
+	m_mapAnimationControl[sFolder + sFile]->CloneAnimationController(
+		m_mapAnimationControl[sFolder + sFile]->GetMaxNumAnimationOutputs(), 
+		m_mapAnimationControl[sFolder + sFile]->GetMaxNumAnimationSets(), 
+		m_mapAnimationControl[sFolder + sFile]->GetMaxNumTracks(), 
+		m_mapAnimationControl[sFolder + sFile]->GetMaxNumEvents(), 
+		_pAnimCon);
 	return m_mapSkinnedMeshes[sFolder + sFile];
 }
 
