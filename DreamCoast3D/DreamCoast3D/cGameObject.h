@@ -2,7 +2,8 @@
 
 // 게임 오브젝트, 맵을 포함한 모든 렌더링 되는 오브젝트들은
 // 이 함수를 상속받아서 실시한다.
-//  HACK : 액션이 있는 캐릭터는 cGameActionObject를 상속받게 만들 예정
+// TODO : 이동할때나 상황에 따라 바운딩 스피어가 움직이가 처리해야한다.
+//		  현재 함수는 바운딩 스피어의 Y축 이동이 불완전한 상태
 
 class cTransform;
 
@@ -25,8 +26,10 @@ public:
 	virtual ST_BOUNDING_SPHERE*	GetBoundingSphere();
 
 	virtual void				SetPosition(D3DXVECTOR3& newPos);
-
+	virtual D3DXVECTOR3&		GetPosition();
 	// Height맵에 대한 편의를 위한 함수
+	// TODO 차후 바운딩 스피어를 이동시켜야 한다. 끄앙
+	//		혹은 업데이트시때마다 수정하게 하는 걸로..?
 	virtual void				SetYPosition(float y);
 
 	virtual void				SetScale(D3DXVECTOR3& newScale);

@@ -30,9 +30,12 @@ cScene::~cScene()
 }
 
 void cScene::Setup(std::string sFilePath){
-	m_pCamera = new cCameraEditing;
-	m_pCamera->Setup();
-	m_pCamera->SetDesc(std::string("Camera For Scene Example1"));
+	
+	cCameraEditing* p = new cCameraEditing;
+	p->Setup();
+	p->SetDesc(std::string("Camera For Scene Example1"));
+	p->SetPosition(D3DXVECTOR3(128.0f, 0.0f, 128.0f));
+	m_pCamera = p;
 
 	m_pGameObjManager = new cGameObjManager;
 	m_pGameObjManager->Setup();

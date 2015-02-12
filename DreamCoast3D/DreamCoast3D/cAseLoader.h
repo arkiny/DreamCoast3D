@@ -1,6 +1,6 @@
 #pragma once
 
-class cGameObjectASE;
+class cASEInstance;
 class cMtlTex;
 
 class cAseLoader
@@ -8,17 +8,17 @@ class cAseLoader
 private:
 	FILE*		m_fp;
 	char		m_szToken[1024];
-	cGameObjectASE*		m_pRootFrame;
+	cASEInstance*		m_pRootFrame;
 	std::string	m_sFolder;
 
 	std::vector<cMtlTex*>			m_vecMtlTex;
-	std::map<std::string, cGameObjectASE*>	m_mapFrame;
+	std::map<std::string, cASEInstance*>	m_mapFrame;
 
 public:
 	cAseLoader(void);
 	~cAseLoader(void);
 
-	cGameObjectASE* Load(std::string& sFolder, std::string& sFileName);
+	cASEInstance* Load(std::string& sFolder, std::string& sFileName);
 
 private:
 	char*	GetToken();
@@ -31,9 +31,9 @@ private:
 	void	ProcessMaterialList();
 	void	ProcessMaterial(cMtlTex* pMtlTex);
 	void	ProcessMapDiffuse(cMtlTex* pMtlTex);
-	cGameObjectASE*	ProcessGeomObject();
-	void	ProcessNodeTM(cGameObjectASE* pFrame);
-	void	ProcessMesh(cGameObjectASE* pFrame);
+	cASEInstance*	ProcessGeomObject();
+	void	ProcessNodeTM(cASEInstance* pFrame);
+	void	ProcessMesh(cASEInstance* pFrame);
 	void	ProcessMeshVertexList(std::vector<D3DXVECTOR3>& vecV);
 	void	ProcessMeshFaceList(OUT std::vector<ST_PNT_VERTEX>& vecVertex, IN std::vector<D3DXVECTOR3>& vecV);
 	void	ProcessMeshTVertList(std::vector<D3DXVECTOR2>& vecVT);

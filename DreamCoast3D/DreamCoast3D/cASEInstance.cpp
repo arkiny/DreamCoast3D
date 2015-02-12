@@ -1,42 +1,43 @@
 #include "StdAfx.h"
-#include "cGameObjectASE.h"
+#include "cASEInstance.h"
 #include "cMtlTex.h"
 
 
-cGameObjectASE::cGameObjectASE(void)
-	: cGameObject()
-	, m_pMesh(NULL)
+cASEInstance::cASEInstance(void)
+	:  m_pMesh(NULL)
 	, m_pMtlTex(NULL)
+	//, m_pSphereMesh(NULL)
 {
 	D3DXMatrixIdentity(&m_matLocalTM);
 	D3DXMatrixIdentity(&m_matWorldTM);
 }
 
 
-cGameObjectASE::~cGameObjectASE(void)
+cASEInstance::~cASEInstance(void)
 {
 	SAFE_RELEASE(m_pMesh);
 	SAFE_RELEASE(m_pMtlTex);
+	//SAFE_RELEASE(m_pSphereMesh);
 	for each(auto pChild in m_vecChildren)
 	{
 		pChild->Release();
 	}
 }
 
-void cGameObjectASE::AddChild( cGameObjectASE* pChild )
+void cASEInstance::AddChild( cASEInstance* pChild )
 {
 	pChild->CalcLocalTM(&m_matWorldTM);
 	m_vecChildren.push_back(pChild);
 }
 
-void cGameObjectASE::CalcLocalTM( D3DXMATRIXA16* pParent )
+void cASEInstance::CalcLocalTM( D3DXMATRIXA16* pParent )
 {
 	D3DXMATRIXA16 matInvParent;
 	D3DXMatrixInverse(&matInvParent, 0, pParent);
 	m_matLocalTM = m_matWorldTM * matInvParent;
 }
 
-void cGameObjectASE::BuidlMesh( std::vector<ST_PNT_VERTEX>& vecVertex )
+void cASEInstance::BuidlMesh( std::vector<ST_PNT_VERTEX>& vecVertex )
 {
 	D3DXMATRIXA16 matInvWorld;
 	D3DXMatrixInverse(&matInvWorld, 0, &m_matWorldTM);
@@ -84,7 +85,7 @@ void cGameObjectASE::BuidlMesh( std::vector<ST_PNT_VERTEX>& vecVertex )
 		&vecAdjBuffer[0], 0, 0, 0);
 }
 
-void cGameObjectASE::SetMtlTex( cMtlTex* pMtlTex )
+void cASEInstance::SetMtlTex( cMtlTex* pMtlTex )
 {
 	if(!m_pMtlTex)
 	{
@@ -93,34 +94,52 @@ void cGameObjectASE::SetMtlTex( cMtlTex* pMtlTex )
 	}
 }
 
-void cGameObjectASE::Update( D3DXMATRIXA16* pmatParent )
+void cASEInstance::Update( D3DXMATRIXA16* pmatParent )
 {
-	m_matWorldTM = m_matLocalTM;
-	if(pmatParent)
-		m_matWorldTM *= (*pmatParent);
-	for each(auto pChild in m_vecChildren)
-	{
-		pChild->Update(&m_matWorldTM);
-	}
+	//m_matWorldTM = m_matLocalTM;
+	//if(pmatParent)
+	//	m_matWorldTM *= (*pmatParent);
+	//for each(auto pChild in m_vecChildren)
+	//{
+	//	pChild->Update(&m_matWorldTM);
+	//}
 }
 
-void cGameObjectASE::Render()
+void cASEInstance::Render(D3DXMATRIXA16* pMatrix)
 {
 	if(m_pMtlTex)
 	{
-		g_pD3DDevice->SetTransform(D3DTS_WORLD, GetTransformMatrix());
+		g_pD3DDevice->SetTransform(D3DTS_WORLD, pMatrix);
 		g_pD3DDevice->SetTexture(0, m_pMtlTex->pTex);
 		g_pD3DDevice->SetMaterial(&m_pMtlTex->stMtl);
 		m_pMesh->DrawSubset(0);
 	}
+
+	/*if (m_pSphereMesh){
+		g_pD3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
+		D3DXMATRIXA16 matTrans;
+		D3DXVECTOR3 pos = cGameObject::GetPosition();
+		D3DXMatrixTranslation(&matTrans,
+			0,
+			GetBoundingSphere()->m_vCenter.y,
+			0
+			);
+
+		matTrans = matTrans * *GetTransformMatrix();
+
+		g_pD3DDevice->SetTransform(D3DTS_WORLD, &matTrans);
+		g_pD3DDevice->SetTexture(0, NULL);
+		g_pD3DDevice->SetMaterial(&m_pMtlTex->stMtl);
+		m_pSphereMesh->DrawSubset(0);
+		g_pD3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
+	}*/
 	
 	for each(auto pChild in m_vecChildren)
 	{
-		pChild->Render();
+		pChild->Render(pMatrix);
 	}
 }
 
-void cGameObjectASE::Release()
-{
-	cGameObject::Release();
+void cASEInstance::Release(){
+	cObject::Release();
 }

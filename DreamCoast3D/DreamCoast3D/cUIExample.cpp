@@ -21,7 +21,7 @@ void cUIExample::Setup(){
 	D3DXCreateSprite(g_pD3DDevice, &m_pSprite);
 
 	cUIImageView* pImageView = new cUIImageView(m_pSprite);
-	pImageView->SetPosition(D3DXVECTOR3(200, 100, 0));
+	pImageView->SetPosition(D3DXVECTOR3(0, 0, 0));
 	//pImageView->SetScale(D3DXVECTOR3(0.5f, 0.5f, 0.5f));
 	pImageView->SetScale(D3DXVECTOR3(1.0f, 1.0f, 1.0f));
 	pImageView->SetTextureFilename(std::string("../Resources/UI/UI_basicBox.png"));

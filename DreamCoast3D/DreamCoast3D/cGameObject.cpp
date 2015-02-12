@@ -44,16 +44,28 @@ D3DXMATRIXA16* cGameObject::GetTransformMatrix(){
 }
 
 void cGameObject::SetPosition(D3DXVECTOR3& newPos){
+	//D3DXVECTOR3 pos = m_pTransform->GetPosition();
+	//float diff = (m_stBoundingSphere.m_vCenter.y - pos.y) * m_pTransform->GetScaling().y;
 	m_pTransform->SetPosition(newPos);
+	m_stBoundingSphere.m_vCenter = newPos;
+	//m_stBoundingSphere.m_vCenter.x = newPos.x;
+	//m_stBoundingSphere.m_vCenter.y = newPos.y + diff;
+	//m_stBoundingSphere.m_vCenter.z = newPos.z;
+}
+
+D3DXVECTOR3& cGameObject::GetPosition(){
+	return m_pTransform->GetPosition();
 }
 
 void cGameObject::SetYPosition(float y){
 	D3DXVECTOR3 curPos = m_pTransform->GetPosition();
 	m_pTransform->SetPosition(D3DXVECTOR3(curPos.x, y, curPos.z));
+	m_stBoundingSphere.m_vCenter = D3DXVECTOR3(curPos.x, m_stBoundingSphere.m_vCenter.y, curPos.z);
 }
 
 void cGameObject::SetScale(D3DXVECTOR3& newScale){
-	// TODO
+	m_pTransform->SetScaling(newScale);
+	m_stBoundingSphere.m_fRadius *= newScale.x;
 }
 
 void cGameObject::SetXangle(float fAngleRad){

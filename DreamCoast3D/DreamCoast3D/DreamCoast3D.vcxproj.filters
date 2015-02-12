@@ -220,7 +220,13 @@
     <ClInclude Include="Asciitok.h">
       <Filter>ParseAndLoader</Filter>
     </ClInclude>
-    <ClInclude Include="cGameObjectASE.h" />
+    <ClInclude Include="cAseManager.h">
+      <Filter>Singletons</Filter>
+    </ClInclude>
+    <ClInclude Include="cGameASEObject.h" />
+    <ClInclude Include="cASEInstance.h">
+      <Filter>Objects\GameObjects</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -385,7 +391,13 @@
     <ClCompile Include="cAseLoader.cpp">
       <Filter>ParseAndLoader</Filter>
     </ClCompile>
-    <ClCompile Include="cGameObjectASE.cpp" />
+    <ClCompile Include="cAseManager.cpp">
+      <Filter>Singletons</Filter>
+    </ClCompile>
+    <ClCompile Include="cGameASEObject.cpp" />
+    <ClCompile Include="cASEInstance.cpp">
+      <Filter>Objects\GameObjects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="DreamCoast3D.rc">

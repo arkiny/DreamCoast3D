@@ -6,7 +6,7 @@ Core
 - DreamCoast3D : WinApi Entry
 - cGameCore : cMainGame과 같은 역할을 하는 게임 매니저
 - cGameTimer : 전체 게임 타이머 // 싱글톤 처리를 할수 있으나, 
-				Update의 인자로 받아서 내려가는 걸 프레임워크 작성자가 선호
+				Update의 인자로 받아서 내려가는 걸 프레임워크 작성자가 선호 XXX : 현재 싱글턴화되어있음
 - Resource : WinApi 리소스
 - Targetver : ???
 
@@ -28,6 +28,8 @@ Singletons
 	- cAllocateHierarchy 
 		ID3DXAllocateHierarchy를 상속해서 확장한 클래스. 
 		XXX : D3DXMESH를 확장한 ST_BONE 및 D3DXMESHCONTAINER를 확장한 ST_BONE_MESH를 저장한다.
+- cAseManager
+	cAseInstance 클래스를 인스탄싱 작업해주는 클래스
 
 Object
 - cObject
@@ -74,6 +76,12 @@ Object
 			근접 맵주소를 가질수 있다.
 				-iMap : 맵의 높이를 리턴해주는 퓨어함수를 가진 인터페이스
 
+		- cGameAseObject
+			cASEInstance를 이용해 렌더하는 오브젝트
+				-cASEInstance
+					ASE파일해서 로딩해온 정보를 가지고 있는 클래스
+					cAseManager에 의해 최초 한번만 로딩하고 이후에는 가져다가 쓴다.
+
 	- cUIObjManager
 		UI오브젝트들을 관리하고 업데이트하거나 델리게이트를 실행해주는 매니저
 		제일 마지막에 렌더함으로서 가장 상위 레이어를 가진다
@@ -113,6 +121,10 @@ ParseAndLaoder
 	로더들이 다 구현되면 최종적으로 모든 리소스를 하나의 정보파일로부터 로딩해올 클래스
 - cGameObjLoader
 	게임 오브젝트 로더, 현재는 cGamActionSkinnedMeshObject로딩만 구현되어 있다.
+- cMapLoader
+	맵 파일을 불러와 맵오브젝트 및 맵에 관련된 정보를 로딩하는 클래스
+- cAseLoader
+	ASE파일을 불러와서 ASE파일을 cASEInstance로 가공해주는 클래스
 
 Examples - 프레임웤 예제들
 - cSphere 
@@ -135,7 +147,12 @@ Examples - 프레임웤 예제들
 - cZealot
 	cGameActionSkinnedMeshObj를 상속받은 클래스의 사용예제
 
+- cCameraEditing
+	에디팅용 카메라, 현재는 Chasing Camera의 원리를 사용하고 있다.
+
 - cSceneExample 
 	cScene을 상속받은 클래스의 사용예제, cActionMove, cActionRepeat, cActionSeq의 사용예제
 	cZealot이 같은 프레임을 인스탄싱 받아서 활용하는 부분이 여기 나와있다.
 	또한 cGameObjLoader를 이용해 리소스를 로딩하는 예시 역시 여기 포함되었다.
+	맵로더와 오브젝트로 로더의 이용예시 역시 여기 포함되어 있으며,
+	해당 양식은 각각 Resources\SCENE1_MAPDATA.txt와, Resources\SCENE1_GAMEOBJDATA.txt에 저장되어있다.

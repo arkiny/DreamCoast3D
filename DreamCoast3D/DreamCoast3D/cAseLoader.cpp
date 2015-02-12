@@ -1,7 +1,7 @@
 #include "StdAfx.h"
 #include "cAseLoader.h"
 #include "Asciitok.h"
-#include "cGameObjectASE.h"
+#include "cASEInstance.h"
 #include "cMtlTex.h"
 
 cAseLoader::cAseLoader(void)
@@ -13,7 +13,7 @@ cAseLoader::~cAseLoader(void)
 {
 }
 
-cGameObjectASE* cAseLoader::Load( std::string& sFolder, std::string& sFileName )
+cASEInstance* cAseLoader::Load( std::string& sFolder, std::string& sFileName )
 {
 	m_sFolder = sFolder;
 
@@ -30,7 +30,7 @@ cGameObjectASE* cAseLoader::Load( std::string& sFolder, std::string& sFileName )
 		}
 		else if(IsEqual(szToken, ID_GEOMETRY))
 		{
-			cGameObjectASE* pFrame = ProcessGeomObject();
+			cASEInstance* pFrame = ProcessGeomObject();
 			m_mapFrame[pFrame->m_sNodeName] = pFrame;
 			if(m_pRootFrame)
 			{
@@ -229,9 +229,9 @@ void cAseLoader::ProcessMapDiffuse(cMtlTex* pMtlTex)
 	} while (nLevel > 0);
 }
 
-cGameObjectASE* cAseLoader::ProcessGeomObject()
+cASEInstance* cAseLoader::ProcessGeomObject()
 {
-	cGameObjectASE* pFrame = new cGameObjectASE;
+	cASEInstance* pFrame = new cASEInstance;
 	int nLevel = 0;
 	do 
 	{
@@ -274,7 +274,7 @@ cGameObjectASE* cAseLoader::ProcessGeomObject()
 	return pFrame;
 }
 
-void cAseLoader::ProcessNodeTM( cGameObjectASE* pFrame )
+void cAseLoader::ProcessNodeTM( cASEInstance* pFrame )
 {
 	int nLevel = 0;
 	do 
@@ -319,7 +319,7 @@ void cAseLoader::ProcessNodeTM( cGameObjectASE* pFrame )
 	} while (nLevel > 0);
 }
 
-void cAseLoader::ProcessMesh( cGameObjectASE* pFrame )
+void cAseLoader::ProcessMesh( cASEInstance* pFrame )
 {
 	std::vector<D3DXVECTOR3>	vecV;
 	std::vector<D3DXVECTOR2>	vecVT;

@@ -18,5 +18,7 @@ public:
 	virtual void Setup();
 	virtual void Update(float fDelta);
 	virtual void Render();
+
+	virtual void SetPosition(D3DXVECTOR3& vecPos) { m_vPosition = vecPos; }
 };
 

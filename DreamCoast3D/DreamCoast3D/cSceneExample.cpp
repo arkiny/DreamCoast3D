@@ -21,8 +21,7 @@
 #include "cGameObjLoader.h"
 #include "cMapLoader.h"
 
-#include "cAseLoader.h"
-#include "cGameObjectASE.h"
+#include "cGameASEObject.h"
 
 cSceneExample::cSceneExample()
 	:cScene() // 베이스클래스 초기화
@@ -120,14 +119,26 @@ void cSceneExample::Setup(std::string sFilePath){
 
 	cUIExample* pUIExample = new cUIExample;
 	pUIExample->Setup();
+	//pUIExample->SetPosition(D3DXVECTOR3(0, 0, 0));
 	cScene::AddUIObj(pUIExample);
 	SAFE_RELEASE(pUIExample);
 
-	cAseLoader cAL;
-	cGameObjectASE* pASEObjectExample = cAL.Load(std::string("../Resources/Building/"), std::string("building.ASE"));
-	m_pGameObjManager->AddGameObj(pASEObjectExample);
-	pASEObjectExample->GetTransform()->SetPosition(D3DXVECTOR3(100,0,100));
-	SAFE_RELEASE(pASEObjectExample);
+
+	//cGameASEObject* pAseObject = new cGameASEObject;
+	//pAseObject->Setup(std::string("../Resources/Building/"), std::string("building.ASE"));
+	//m_pGameObjManager->AddGameObj(pAseObject);
+	//pAseObject->SetPosition(D3DXVECTOR3(100, 0, 100));
+	//pAseObject->SetScale(D3DXVECTOR3(0.1f, 0.1f, 0.1f));
+	//SAFE_RELEASE(pAseObject);
+
+
+	//pAseObject = new cGameASEObject;
+	//pAseObject->Setup(std::string("../Resources/Building/"), std::string("building.ASE"));
+	//m_pGameObjManager->AddGameObj(pAseObject);
+	//pAseObject->SetPosition(D3DXVECTOR3(150, 0, 150));
+	//pAseObject->SetScale(D3DXVECTOR3(0.1f, 0.1f, 0.1f));
+	//SAFE_RELEASE(pAseObject);
+
 
 	//// 메쉬 오브젝트
 	//cZealot* pZealotExample = new cZealot;

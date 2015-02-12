@@ -154,5 +154,6 @@ struct ST_SIZE
 #include "cFontManager.h"
 #include "cTextureManager.h"
 #include "cSkinnedMeshManager.h"
+#include "cAseManager.h"
 
 #include "cGameTimer.h"

@@ -11,6 +11,7 @@ protected:
 	SYNTHESIZE(float, m_fYAxisAngle, YAxisAngle);
 	SYNTHESIZE(float, m_fXAxisAngle, XAxisAngle);
 	SYNTHESIZE(float, m_fZAxisAngle, ZAxisAngle);
+	SYNTHESIZE_PASS_BY_REF(D3DXVECTOR3, m_vScale, Scaling);
 	D3DXMATRIXA16 m_matTransform;
 
 public:
