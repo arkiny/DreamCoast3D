@@ -211,6 +211,16 @@
     <ClInclude Include="cGameMapHeight.h">
       <Filter>Objects\GamMapObjects</Filter>
     </ClInclude>
+    <ClInclude Include="cCameraEditing.h">
+      <Filter>_Examples</Filter>
+    </ClInclude>
+    <ClInclude Include="cAseLoader.h">
+      <Filter>ParseAndLoader</Filter>
+    </ClInclude>
+    <ClInclude Include="Asciitok.h">
+      <Filter>ParseAndLoader</Filter>
+    </ClInclude>
+    <ClInclude Include="cGameObjectASE.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -369,6 +379,13 @@
     <ClCompile Include="cGameMapHeight.cpp">
       <Filter>Objects\GamMapObjects</Filter>
     </ClCompile>
+    <ClCompile Include="cCameraEditing.cpp">
+      <Filter>_Examples</Filter>
+    </ClCompile>
+    <ClCompile Include="cAseLoader.cpp">
+      <Filter>ParseAndLoader</Filter>
+    </ClCompile>
+    <ClCompile Include="cGameObjectASE.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="DreamCoast3D.rc">

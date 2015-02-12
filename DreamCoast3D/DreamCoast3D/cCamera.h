@@ -22,8 +22,10 @@ public:
 	cCamera(void);
 	~cCamera(void);
 
-	void Setup();
-	void Update(float delta);	
+	virtual void Setup();
+	virtual void Update(float delta);	
+	virtual void Render() {}
+	
 	void SetTarget(D3DXVECTOR3* pvTarget);
 	D3DXMATRIXA16& GetTransformMatrix();
 };

@@ -21,6 +21,9 @@
 #include "cGameObjLoader.h"
 #include "cMapLoader.h"
 
+#include "cAseLoader.h"
+#include "cGameObjectASE.h"
+
 cSceneExample::cSceneExample()
 	:cScene() // 베이스클래스 초기화
 {
@@ -119,6 +122,12 @@ void cSceneExample::Setup(std::string sFilePath){
 	pUIExample->Setup();
 	cScene::AddUIObj(pUIExample);
 	SAFE_RELEASE(pUIExample);
+
+	cAseLoader cAL;
+	cGameObjectASE* pASEObjectExample = cAL.Load(std::string("../Resources/Building/"), std::string("building.ASE"));
+	m_pGameObjManager->AddGameObj(pASEObjectExample);
+	pASEObjectExample->GetTransform()->SetPosition(D3DXVECTOR3(100,0,100));
+	SAFE_RELEASE(pASEObjectExample);
 
 	//// 메쉬 오브젝트
 	//cZealot* pZealotExample = new cZealot;

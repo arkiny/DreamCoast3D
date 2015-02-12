@@ -6,6 +6,7 @@
 #include "cGameMapObject.h"
 #include "cSphere.h"
 #include "cUIObjManager.h"
+#include "cCameraEditing.h"
 
 cScene::cScene() 
 	:m_pCamera(NULL)
@@ -29,7 +30,7 @@ cScene::~cScene()
 }
 
 void cScene::Setup(std::string sFilePath){
-	m_pCamera = new cCamera;
+	m_pCamera = new cCameraEditing;
 	m_pCamera->Setup();
 	m_pCamera->SetDesc(std::string("Camera For Scene Example1"));
 
@@ -71,6 +72,8 @@ void cScene::Render(){
 
 	SAFE_RENDER(m_pGameObjManager);
 	SAFE_RENDER(m_pUIObjManager);
+
+	SAFE_RENDER(m_pCamera);
 }
 
 void cScene::AddGameObj(cGameObject* pGameObj){

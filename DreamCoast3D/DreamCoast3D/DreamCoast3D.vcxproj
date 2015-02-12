@@ -79,17 +79,21 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Asciitok.h" />
     <ClInclude Include="cAction.h" />
     <ClInclude Include="cActionMove.h" />
     <ClInclude Include="cActionRepeat.h" />
     <ClInclude Include="cActionSeq.h" />
     <ClInclude Include="cAllocateHierarchy.h" />
     <ClInclude Include="cAnimationSet.h" />
+    <ClInclude Include="cAseLoader.h" />
     <ClInclude Include="cBillingExample.h" />
     <ClInclude Include="cCamera.h" />
+    <ClInclude Include="cCameraEditing.h" />
     <ClInclude Include="cControlManager.h" />
     <ClInclude Include="cDeviceManager.h" />
     <ClInclude Include="cFontManager.h" />
+    <ClInclude Include="cGameObjectASE.h" />
     <ClInclude Include="cFrustum.h" />
     <ClInclude Include="cGameActionObject.h" />
     <ClInclude Include="cGameActionSkinnedMeshObj.h" />
@@ -141,11 +145,14 @@
     <ClCompile Include="cActionSeq.cpp" />
     <ClCompile Include="cAllocateHierarchy.cpp" />
     <ClCompile Include="cAnimationSet.cpp" />
+    <ClCompile Include="cAseLoader.cpp" />
     <ClCompile Include="cBillingExample.cpp" />
     <ClCompile Include="cCamera.cpp" />
+    <ClCompile Include="cCameraEditing.cpp" />
     <ClCompile Include="cControlManager.cpp" />
     <ClCompile Include="cDeviceManager.cpp" />
     <ClCompile Include="cFontManager.cpp" />
+    <ClCompile Include="cGameObjectASE.cpp" />
     <ClCompile Include="cFrustum.cpp" />
     <ClCompile Include="cGameActionObject.cpp" />
     <ClCompile Include="cGameActionSkinnedMeshObj.cpp" />

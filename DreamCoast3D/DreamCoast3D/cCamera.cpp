@@ -36,14 +36,16 @@ void cCamera::Setup()
 
 void cCamera::Update(float delta)
 {
-	if (g_pControlManager->GetInputInfo(VK_RBUTTON) && m_isRButtonDown == false){
+	if (g_pControlManager->GetInputInfo(VK_MBUTTON) && m_isRButtonDown == false){
 		m_ptPrevMouse = g_pControlManager->GetCurrentCursorPosition();
 		m_isRButtonDown = true;
 	}
 
-	if (g_pControlManager->GetInputInfo(VK_RBUTTON) && m_isRButtonDown == true){
+	if (g_pControlManager->GetInputInfo(VK_MBUTTON) && m_isRButtonDown == true){
 		POINT ptCurrMouse;
-		ptCurrMouse = g_pControlManager->GetCurrentCursorPosition();
+		//ptCurrMouse = g_pControlManager->GetCurrentCursorPosition();
+		GetCursorPos(&ptCurrMouse);
+		ScreenToClient(g_hWnd, &ptCurrMouse);
 
 		float fDeltaX = (ptCurrMouse.x - m_ptPrevMouse.x) / 100.f;
 		float fDeltaY = (ptCurrMouse.y - m_ptPrevMouse.y) / 100.f;
@@ -60,7 +62,7 @@ void cCamera::Update(float delta)
 		m_ptPrevMouse = ptCurrMouse;
 	}
 
-	if (g_pControlManager->GetInputInfo(VK_RBUTTON) == false && m_isRButtonDown == true){
+	if (g_pControlManager->GetInputInfo(VK_MBUTTON) == false && m_isRButtonDown == true){
 		m_isRButtonDown = false;
 	}
 
@@ -71,14 +73,17 @@ void cCamera::Update(float delta)
 			m_fDist = 0.1f;
 	}
 	
-
 	m_vEye = D3DXVECTOR3(0, 0.0f, -m_fDist);
 
-	D3DXMATRIXA16 matRotX, matRotY;
+	D3DXMATRIXA16 matTrans, transZ, matRotX, matRotY;
+	D3DXMatrixIdentity(&matTrans);
+	D3DXMatrixIdentity(&transZ);
 	D3DXMatrixRotationX(&matRotX, m_fAngleX);
 	D3DXMatrixRotationY(&matRotY, m_fAngleY);
+
 	D3DXVec3TransformCoord(&m_vEye, &m_vEye, &matRotX);
 	D3DXVec3TransformCoord(&m_vEye, &m_vEye, &matRotY);
+
 	if (m_pvTarget)
 	{
 		m_vEye += (*m_pvTarget);
