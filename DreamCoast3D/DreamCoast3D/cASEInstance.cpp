@@ -109,10 +109,12 @@ void cASEInstance::Render(D3DXMATRIXA16* pMatrix)
 {
 	if(m_pMtlTex)
 	{
+		g_pD3DDevice->SetRenderState(D3DRS_NORMALIZENORMALS, true);
 		g_pD3DDevice->SetTransform(D3DTS_WORLD, pMatrix);
 		g_pD3DDevice->SetTexture(0, m_pMtlTex->pTex);
 		g_pD3DDevice->SetMaterial(&m_pMtlTex->stMtl);
 		m_pMesh->DrawSubset(0);
+		g_pD3DDevice->SetRenderState(D3DRS_NORMALIZENORMALS, false);
 	}
 
 	/*if (m_pSphereMesh){
