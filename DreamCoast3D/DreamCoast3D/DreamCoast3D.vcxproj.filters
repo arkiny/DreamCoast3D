@@ -220,7 +220,13 @@
     <ClInclude Include="Asciitok.h">
       <Filter>ParseAndLoader</Filter>
     </ClInclude>
-    <ClInclude Include="cGameObjectASE.h">
+    <ClInclude Include="cAseManager.h">
+      <Filter>Singletons</Filter>
+    </ClInclude>
+    <ClInclude Include="cASEInstance.h">
+      <Filter>Objects\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="cGameASEObject.h">
       <Filter>Objects\GameObjects</Filter>
     </ClInclude>
   </ItemGroup>
@@ -387,7 +393,13 @@
     <ClCompile Include="cAseLoader.cpp">
       <Filter>ParseAndLoader</Filter>
     </ClCompile>
-    <ClCompile Include="cGameObjectASE.cpp">
+    <ClCompile Include="cAseManager.cpp">
+      <Filter>Singletons</Filter>
+    </ClCompile>
+    <ClCompile Include="cASEInstance.cpp">
+      <Filter>Objects\GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="cGameASEObject.cpp">
       <Filter>Objects\GameObjects</Filter>
     </ClCompile>
   </ItemGroup>
