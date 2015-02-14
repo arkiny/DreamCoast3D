@@ -34,14 +34,14 @@ cGameObjLoader::~cGameObjLoader()
 {
 }
 
-void cGameObjLoader::LoadGameObjectsFromFile(cGameObjManager* pGameManager, std::string sFolder, std::string sFile){
-	fopen_s(&m_fp, (sFolder + sFile).c_str(), "r");
-	
+void cGameObjLoader::LoadGameObjectsFromFile(OUT cGameObjManager* pGameManager, IN std::string sPath){
+	fopen_s(&m_fp, sPath.c_str(), "r");
+
 	while (char* szToken = GetToken()){
 		if (isEqual(szToken, "*SKINNEDMESH_LIST")){
 			ParseAndLoadSkinnedMeshList();
 		}
-			
+
 		else if (isEqual(szToken, "*GAMEACTIONSKINNEDMESHOBJ")){
 			cGameObject* p = ParseGameActionSkinnedMeshObj();
 			pGameManager->AddGameObj(p);
@@ -53,6 +53,11 @@ void cGameObjLoader::LoadGameObjectsFromFile(cGameObjManager* pGameManager, std:
 	}
 
 	fclose(m_fp);
+}
+
+
+void cGameObjLoader::LoadGameObjectsFromFile(cGameObjManager* pGameManager, std::string sFolder, std::string sFile){
+	LoadGameObjectsFromFile(pGameManager, sFolder + sFile); 
 }
 
 cGameObject* cGameObjLoader::ParseGameActionSkinnedMeshObj(){

@@ -35,24 +35,6 @@ cSceneExample::~cSceneExample()
 void cSceneExample::Setup(std::string sFilePath){
 	cScene::Setup(sFilePath);
 
-	//1. 각 씬은 광원이 다를 수 있으므로 상속 받은 곳에서 설정한다.
-	// HACK : LightSource 매니저를 따로 뽑을 건지 고민
-	D3DLIGHT9 stLight;
-	D3DXVECTOR3 vDir = D3DXVECTOR3(1.5, -1, 1);
-
-	ZeroMemory(&stLight, sizeof(D3DLIGHT9));
-	stLight.Type = D3DLIGHT_DIRECTIONAL;
-	D3DXVec3Normalize(&vDir, &vDir);
-	stLight.Direction = vDir;
-	stLight.Ambient = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
-	stLight.Diffuse = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
-	stLight.Specular = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
-
-	cLightSource* pLightSource = new cLightSource;
-	pLightSource->Setup(stLight, vDir, m_vecLightSources.size());
-	pLightSource->SetDesc("Light Source Example1");
-	m_vecLightSources.push_back(pLightSource);
-
 	// TODO : 차후 각 씬은 sFilePath에서 로딩할 오브젝트 정보를 받아와서 로딩하도록 한다.
 	// 로딩화면 처리는 음.... 나중에 생각해보자
 

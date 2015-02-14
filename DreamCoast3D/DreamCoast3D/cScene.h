@@ -41,6 +41,9 @@ public:
 	// 로딩하는 데에 이용한다.
 	// 혹은 로딩화면을 위해 쓰인다.
 	virtual void Setup(std::string sFilePath);
+
+	virtual void Start();
+
 	virtual void Update(float delta);
 	virtual void Render();
 
@@ -50,6 +53,19 @@ public:
 	// 맵은 한번 애드되면 고정되있기로 한다.
 	virtual void AddMap(cGameMapObject* pGameMap);
 	virtual void SetCurrentMap(int nIndex);
+
+	//
+	virtual cGameObjManager* GetGameObjMng(){
+		_ASSERT(m_pGameObjManager);
+		return m_pGameObjManager;
+	}
+
+	virtual void SetCamera(cCamera* pCamera);
+	virtual void AddLightSrc(cLightSource* pLightSource);
+
+	virtual size_t GetLightSrcSize(){ return m_vecLightSources.size(); }
+	virtual size_t GetMapSize(){ return m_vecGameMaps.size(); }
+	
 
 	virtual void Destroy();
 };

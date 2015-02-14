@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "cGameCore.h"
 #include "cSceneManager.h"
-
+#include "cGameLoader.h"
 
 cGameCore::cGameCore()
 	: m_pSceneManager(NULL)
@@ -23,7 +23,10 @@ cGameCore::~cGameCore()
 
 void cGameCore::Setup(){
 	m_pSceneManager = new cSceneManager;
-	m_pSceneManager->Setup(std::string(""));
+	cGameLoader cGL;
+	cGL.LoadFromGameFile(m_pSceneManager, std::string("../Resources/MAINDATA.txt"));
+	m_pSceneManager->Setup(std::string(""), std::string(""));
+	m_pSceneManager->Start();
 }
 
 void cGameCore::Update(float fDelta){

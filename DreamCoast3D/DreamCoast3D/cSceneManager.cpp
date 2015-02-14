@@ -14,24 +14,38 @@ cSceneManager::~cSceneManager()
 	
 }
 
-void cSceneManager::Setup(std::string sFilePath){	
+void cSceneManager::Setup(std::string sFolder, std::string sFile){	
 	//  TODO : 씬매니저 예시, 차후 삭제
 	// cScene을 상속받은 cSceneExample을 이용해 화면을 새로 만들었다.
-	cSceneExample* pScene = new cSceneExample;
-	pScene->Setup(std::string(""));
-	pScene->SetDesc(std::string("Scene Example1"));
-
+	// cSceneExample* pScene = new cSceneExample;
+	// pScene->Setup(std::string(""));
+	// pScene->SetDesc(std::string("Scene Example1"));
 	// 씬 종료후 다음 씬 설정
-	pScene->SetNextScene(NULL);
-
-	m_vecScenes.push_back(pScene);
-	m_pCurrentScene = pScene;
+	// pScene->SetNextScene(NULL);
+	// m_setScenes.insert(pScene);
+	// m_pCurrentScene = pScene;
+	m_pCurrentScene = *m_setScenes.begin();
 }
 
 void cSceneManager::Update(float delta){
 	// 업데이트는 여기서
-	for (auto p : m_vecScenes){
-		p->Update(delta);
+	//for (auto p : m_setScenes){
+	if (m_pCurrentScene){
+		m_pCurrentScene->Update(delta);
+	}
+	//}
+}
+
+void cSceneManager::Start(){
+	m_pCurrentScene->Start();
+}
+
+void cSceneManager::AddScene(cScene* pScene){
+	if (pScene){
+		if (m_setScenes.find(pScene) == m_setScenes.end()){
+			SAFE_ADD_REF(pScene);
+			m_setScenes.insert(pScene);
+		}
 	}
 }
 
@@ -42,7 +56,7 @@ void cSceneManager::Render(){
 
 void cSceneManager::Destroy(){
 	// 여기서 가지고 있는 모든 씬들을 릴리즈해준다
-	for (auto p : m_vecScenes){
+	for (auto p : m_setScenes){
 		p->Destroy();
 	}
 	this->Release();

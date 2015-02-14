@@ -30,12 +30,30 @@ cScene::~cScene()
 }
 
 void cScene::Setup(std::string sFilePath){
-	
-	cCameraEditing* p = new cCameraEditing;
+	//1. 각 씬은 광원이 다를 수 있으므로 상속 받은 곳에서 설정한다.
+	// HACK : LightSource 매니저를 따로 뽑을 건지 고민
+	//D3DLIGHT9 stLight;
+	//D3DXVECTOR3 vDir = D3DXVECTOR3(1.5, -1, 1);
+
+	//ZeroMemory(&stLight, sizeof(D3DLIGHT9));
+	//stLight.Type = D3DLIGHT_DIRECTIONAL;
+	//D3DXVec3Normalize(&vDir, &vDir);
+	//stLight.Direction = vDir;
+	//stLight.Ambient = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+	//stLight.Diffuse = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+	//stLight.Specular = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+
+	//cLightSource* pLightSource = new cLightSource;
+	//pLightSource->Setup(stLight, vDir, m_vecLightSources.size());
+	//pLightSource->SetDesc("Light Source Example1");
+	//m_vecLightSources.push_back(pLightSource);
+
+	// 카메라 설정법인데, 이제는 파일에서 로딩 가능
+	/*cCameraEditing* p = new cCameraEditing;
 	p->Setup();
 	p->SetDesc(std::string("Camera For Scene Example1"));
 	p->SetPosition(D3DXVECTOR3(128.0f, 0.0f, 128.0f));
-	m_pCamera = p;
+	m_pCamera = p;*/
 
 	m_pGameObjManager = new cGameObjManager;
 	m_pGameObjManager->Setup();
@@ -44,9 +62,16 @@ void cScene::Setup(std::string sFilePath){
 	m_pUIObjManager = new cUIObjManager;
 	m_pUIObjManager->Setup();
 	m_pUIObjManager->SetDesc("UIObject Manager for Example1");
+}
 
+void cScene::Start(){
 	g_pD3DDevice->SetRenderState(D3DRS_NORMALIZENORMALS, true);
 	g_pD3DDevice->SetRenderState(D3DRS_LIGHTING, true);
+	
+	// 해당 씬의 라이트 적용
+	for (auto p : m_vecLightSources){
+		p->Start();
+	}
 }
 
 void cScene::Update(float delta){
@@ -123,4 +148,14 @@ void cScene::SetCurrentMap(int nIndex){
 		m_pCurrentMap = m_vecGameMaps[nIndex];
 		SAFE_ADD_REF(m_pCurrentMap);
 	}
+}
+
+void cScene::SetCamera(cCamera* pCamera) {
+	SAFE_ADD_REF(pCamera);
+	m_pCamera = pCamera;
+}
+
+void cScene::AddLightSrc(cLightSource* pLightSource){
+	SAFE_ADD_REF(pLightSource);
+	m_vecLightSources.push_back(pLightSource);
 }

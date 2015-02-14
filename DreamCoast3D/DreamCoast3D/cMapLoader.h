@@ -21,6 +21,7 @@ public:
 	cMapLoader();
 	virtual ~cMapLoader();
 
+	void LoadGameMapFromFile(OUT cScene* pScene, IN std::string sPath);
 	void LoadGameMapFromFile(OUT cScene* pScene, IN std::string sFolder, IN std::string sFile);
 };
 

@@ -18,6 +18,7 @@ public:
 	cGameObjLoader();
 	virtual ~cGameObjLoader();
 
+	void LoadGameObjectsFromFile(OUT cGameObjManager* pGameManager, IN std::string sPath);
 	void LoadGameObjectsFromFile(OUT cGameObjManager* pGameManager, IN std::string sFolder, IN std::string sFile);
 };
 

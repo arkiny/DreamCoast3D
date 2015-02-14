@@ -14,8 +14,8 @@ cMapLoader::~cMapLoader()
 {
 }
 
-void cMapLoader::LoadGameMapFromFile(OUT cScene* pScene, IN std::string sFolder, IN std::string sFile){
-	fopen_s(&m_fp, (sFolder + sFile).c_str(), "r");
+void cMapLoader::LoadGameMapFromFile(OUT cScene* pScene, IN std::string sPath){
+	fopen_s(&m_fp, sPath.c_str(), "r");
 
 	while (char* szToken = GetToken()){
 		if (isEqual(szToken, "*GAME_MAP_INFO")){
@@ -36,6 +36,10 @@ void cMapLoader::LoadGameMapFromFile(OUT cScene* pScene, IN std::string sFolder,
 		}
 	}
 	fclose(m_fp);
+}
+
+void cMapLoader::LoadGameMapFromFile(OUT cScene* pScene, IN std::string sFolder, IN std::string sFile){
+	LoadGameMapFromFile(pScene, (sFolder + sFile));
 }
 
 cGameASEObject* cMapLoader::ParseMapObjectAse(){
