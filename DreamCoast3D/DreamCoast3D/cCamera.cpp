@@ -34,6 +34,23 @@ void cCamera::Setup()
 	g_pD3DDevice->SetTransform(D3DTS_PROJECTION, &matProj);
 }
 
+void cCamera::Setup(
+		D3DXVECTOR3& vEye,
+		D3DXVECTOR3& vLookAt,
+		D3DXVECTOR3& vUp,
+		float fAngleX,
+		float fAngleY,
+		float fDist){
+	m_vEye = vEye;
+	m_vLookAt = vLookAt;
+	m_vUp = vUp;
+	m_fAngleX = fAngleX;
+	m_fAngleY = fAngleY;
+	m_fDist = fDist;
+
+	Setup();
+}
+
 void cCamera::Update(float delta)
 {
 	if (g_pControlManager->GetInputInfo(VK_MBUTTON) && m_isRButtonDown == false){

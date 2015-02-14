@@ -23,6 +23,14 @@ public:
 	~cCamera(void);
 
 	virtual void Setup();
+	virtual void Setup(
+		D3DXVECTOR3& vEye, 
+		D3DXVECTOR3& vLookAt,
+		D3DXVECTOR3& vUp,
+		float fAngleX,
+		float fAngleY,
+		float fDist);
+
 	virtual void Update(float delta);	
 	virtual void Render() {}
 	

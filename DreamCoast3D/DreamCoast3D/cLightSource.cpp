@@ -21,7 +21,9 @@ void cLightSource::Setup(D3DLIGHT9& stLight, D3DXVECTOR3& vDirection, int nIndex
 
 	// 광원 인덱스는 8보다 작아야 한다.
 	_ASSERT(m_nIndex < 8 && m_nIndex >= 0);
+}
 
+void cLightSource::Start(){
 	g_pD3DDevice->SetLight(m_nIndex, &m_stLight);
 	g_pD3DDevice->LightEnable(m_nIndex, true);
 }
