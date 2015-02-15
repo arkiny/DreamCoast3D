@@ -2,7 +2,7 @@
 
 class cMtlTex;
 
-class cASEInstance : cObject
+class cASEInstance : public cObject
 {
 	friend class cAseLoader;
 private:
