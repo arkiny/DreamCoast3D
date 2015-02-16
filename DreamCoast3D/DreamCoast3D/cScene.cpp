@@ -8,6 +8,7 @@
 #include "cUIObjManager.h"
 #include "cCameraEditing.h"
 #include "cUIStatWindow.h"
+#include "cUISkillShortCut.h"
 
 cScene::cScene() 
 	:m_pCamera(NULL)
@@ -68,6 +69,11 @@ void cScene::Setup(std::string sFilePath){
 	p->Setup();
 	m_pUIObjManager->AddUI(p);
 	SAFE_RELEASE(p);
+
+	cUISkillShortCut* p2 = new cUISkillShortCut;
+	p2->Setup();
+	m_pUIObjManager->AddUI(p2);
+	SAFE_RELEASE(p2);
 }
 
 void cScene::Start(){

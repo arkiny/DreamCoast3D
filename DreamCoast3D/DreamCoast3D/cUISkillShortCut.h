@@ -11,6 +11,8 @@ __interface iShortCutDragDropDeligate{
 // 후에 플레이어블 캐릭터가 델리게이트를 가지고 있으며,
 // 스킬 사용시 델리게이트를 이용해 처리
 // 혹은 스킬 사용시 쿨타임을 콜백으로 처리
+// 현재는 그려놓기만 한 UI, 차후 충돌범위등을
+// 재체크해서 드래그앤드롭에 맞게 수정해야한다.
 class cUISkillShortCut : public cUIObject, public iShortCutDragDropDeligate
 {
 protected:

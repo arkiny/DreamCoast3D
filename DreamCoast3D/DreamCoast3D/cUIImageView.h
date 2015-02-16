@@ -4,6 +4,7 @@ class cUIImageView : public cUIObject
 protected:
 	std::string m_sTextureFilename;
 	D3DXIMAGE_INFO	m_stImageInfo;
+	SYNTHESIZE(RECT, m_rectDrawArea, DrawArea);
 
 public:
 	cUIImageView(LPD3DXSPRITE pSprite);
