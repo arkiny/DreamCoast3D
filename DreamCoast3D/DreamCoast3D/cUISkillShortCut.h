@@ -14,11 +14,14 @@ __interface iShortCutDragDropDeligate{
 class cUISkillShortCut : public cUIObject, public iShortCutDragDropDeligate
 {
 protected:
-	std::vector<cUISkillIcon*> m_vecSkills;
+	RECT							m_rectClickArea;
+	LPD3DXSPRITE					m_pSprite;
+	cUIObject*						m_pUIRoot;
+	std::vector<cUISkillIcon*>		m_vecSkills;
 
 public:
 	cUISkillShortCut();
-	~cUISkillShortCut();
+	virtual ~cUISkillShortCut();
 
 	virtual void Setup();
 	virtual void Update(float fDelta);

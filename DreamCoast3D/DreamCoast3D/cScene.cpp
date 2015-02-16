@@ -152,6 +152,9 @@ void cScene::SetCurrentMap(int nIndex){
 	if (m_pCurrentMap != m_vecGameMaps[nIndex]){
 		SAFE_RELEASE(m_pCurrentMap);
 		m_pCurrentMap = m_vecGameMaps[nIndex];
+
+		m_pCamera->SetMap(m_pCurrentMap);
+		
 		SAFE_ADD_REF(m_pCurrentMap);
 	}
 }

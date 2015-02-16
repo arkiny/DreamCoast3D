@@ -3,14 +3,14 @@
 
 
 cUISkillShortCut::cUISkillShortCut()
+	:m_pSprite(NULL),
+	m_pUIRoot(NULL)
 {
-
 }
 
 
 cUISkillShortCut::~cUISkillShortCut()
 {
-
 }
 
 void cUISkillShortCut::Setup(){

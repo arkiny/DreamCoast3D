@@ -88,6 +88,8 @@ void cCamera::Update(float delta)
 	if (g_pControlManager->GetInputInfo(VK_MBUTTON) == false && m_isRButtonDown == true){
 		m_isRButtonDown = false;
 	}
+	//D3DXVECTOR3 prevEye = m_vEye;
+	//D3DXVECTOR3 prevLookAt = m_vLookAt;
 
 	float wheelMove = g_pControlManager->GetWheelMoveDist();
 	if (wheelMove != 0.0f){
@@ -115,6 +117,21 @@ void cCamera::Update(float delta)
 		m_vLookAt = (*m_pvTarget);
 	}
 
+	bool isLand;
+	float fHeight = m_pMap->GetHeight(isLand, &m_vEye);
+	
+	if (m_vEye.y < fHeight + 10.0f){
+		m_vEye.y = fHeight + 10.0f;
+	}
+
+	D3DXVECTOR3 dist = m_vEye - m_vLookAt;
+	float fAfterDist = D3DXVec3Length(&dist);
+
+	//if (fAfterDist > m_fMin && fAfterDist < m_fMax){
+	//	m_vEye = prevEye;
+	//	m_vLookAt = prevLookAt;
+	//}
+
 	D3DXMATRIXA16 matView;
 	D3DXMatrixLookAtLH(&matView, &m_vEye, &m_vLookAt, &m_vUp);
 	g_pD3DDevice->SetTransform(D3DTS_VIEW, &matView);
@@ -124,3 +141,11 @@ void cCamera::SetTarget(D3DXVECTOR3* pvTarget)
 {
 	m_pvTarget = pvTarget;
 }
+
+//void cCamera::AdjustYPositionByHeightMap(iMap* pMap){
+//	bool bIsLand = false;
+//	float yPos = pMap->GetHeight(bIsLand, &m_vEye);
+//	if (m_vEye.y < yPos){
+//		m_vEye.y = yPos;
+//	}
+//}

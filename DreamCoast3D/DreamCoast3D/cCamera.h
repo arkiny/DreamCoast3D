@@ -2,10 +2,11 @@
 
 // 일단 체이싱 카메라
 // 고정 카메라는 필요시 확장
-
+#include "iMap.h"
 class cCamera : public cObject
 {
 protected:
+	SYNTHESIZE(iMap*, m_pMap, Map);
 	D3DXVECTOR3		m_vEye;
 	D3DXVECTOR3		m_vLookAt;
 	D3DXVECTOR3		m_vUp;
@@ -40,5 +41,8 @@ public:
 	
 	void SetTarget(D3DXVECTOR3* pvTarget);
 	D3DXMATRIXA16& GetTransformMatrix();
+
+	//void AdjustYPositionByHeightMap(iMap* pMap);
+
 };
 
