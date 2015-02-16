@@ -14,6 +14,6 @@ public:
 	virtual void Update(float fDelta);
 	virtual void Render();
 
-	virtual ST_BOUNDING_BOX& GetBoundingBox();
+	virtual ST_BOUNDING_BOX GetBoundingBox();
 };
 
