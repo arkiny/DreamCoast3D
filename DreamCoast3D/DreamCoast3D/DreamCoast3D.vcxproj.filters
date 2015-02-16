@@ -44,6 +44,9 @@
     <Filter Include="ParseAndLoader">
       <UniqueIdentifier>{e411ee6f-738f-42b4-926d-e23a16bebd26}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Z_HeedongUIWork">
+      <UniqueIdentifier>{08efa0f8-cce9-4cf5-9036-54b94ce75d61}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -127,9 +130,6 @@
     <ClInclude Include="cTextureManager.h">
       <Filter>Singletons</Filter>
     </ClInclude>
-    <ClInclude Include="cGameObjManager.h">
-      <Filter>Objects</Filter>
-    </ClInclude>
     <ClInclude Include="cGameBillBoardingObject.h">
       <Filter>Objects\GameObjects</Filter>
     </ClInclude>
@@ -162,9 +162,6 @@
     </ClInclude>
     <ClInclude Include="cUIExample.h">
       <Filter>_Examples</Filter>
-    </ClInclude>
-    <ClInclude Include="cUIObjManager.h">
-      <Filter>Objects</Filter>
     </ClInclude>
     <ClInclude Include="iButtonDelegate.h">
       <Filter>Objects\UIObject</Filter>
@@ -228,6 +225,18 @@
     </ClInclude>
     <ClInclude Include="cGameASEObject.h">
       <Filter>Objects\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="cUIObjManager.h">
+      <Filter>Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="cGameObjManager.h">
+      <Filter>Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="cUIStatWindow.h">
+      <Filter>Z_HeedongUIWork</Filter>
+    </ClInclude>
+    <ClInclude Include="cUISkillShortCut.h">
+      <Filter>Z_HeedongUIWork</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -303,9 +312,6 @@
     <ClCompile Include="cTextureManager.cpp">
       <Filter>Singletons</Filter>
     </ClCompile>
-    <ClCompile Include="cGameObjManager.cpp">
-      <Filter>Objects</Filter>
-    </ClCompile>
     <ClCompile Include="cGameBillBoardingObject.cpp">
       <Filter>Objects\GameObjects</Filter>
     </ClCompile>
@@ -338,9 +344,6 @@
     </ClCompile>
     <ClCompile Include="cUIExample.cpp">
       <Filter>_Examples</Filter>
-    </ClCompile>
-    <ClCompile Include="cUIObjManager.cpp">
-      <Filter>Objects</Filter>
     </ClCompile>
     <ClCompile Include="iButtonDelegate.cpp">
       <Filter>Objects\UIObject</Filter>
@@ -402,6 +405,18 @@
     <ClCompile Include="cGameASEObject.cpp">
       <Filter>Objects\GameObjects</Filter>
     </ClCompile>
+    <ClCompile Include="cUIObjManager.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="cGameObjManager.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="cUIStatWindow.cpp">
+      <Filter>Z_HeedongUIWork</Filter>
+    </ClCompile>
+    <ClCompile Include="cUISkillShortCut.cpp">
+      <Filter>Z_HeedongUIWork</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="DreamCoast3D.rc">
@@ -415,5 +430,8 @@
     <Image Include="DreamCoast3D.ico">
       <Filter>Resource Files</Filter>
     </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="cObjectClassDiagram.cd" />
   </ItemGroup>
 </Project>

@@ -171,8 +171,20 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 
    hInst = hInstance; // Store instance handle in our global variable
 
-   hWnd = CreateWindow(szWindowClass, szTitle, WS_OVERLAPPEDWINDOW,
-      CW_USEDEFAULT, 0, CW_USEDEFAULT, 0, NULL, NULL, hInstance, NULL);
+   RECT _wndRect = { 0, 0, 1280, 720 };
+   ::AdjustWindowRect(&_wndRect, WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU, NULL);
+
+
+   hWnd = CreateWindow(szWindowClass, szTitle
+	   , WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU
+	   , CW_USEDEFAULT
+	   , 0
+	   , _wndRect.right - _wndRect.left
+	   , _wndRect.bottom - _wndRect.top
+	   , NULL
+	   , NULL
+	   , hInstance
+	   , NULL);
 
    if (!hWnd)
    {

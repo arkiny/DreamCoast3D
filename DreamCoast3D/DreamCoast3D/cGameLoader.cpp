@@ -223,7 +223,7 @@ cCamera* cGameLoader::ParseCamera(){
 	cCamera* pCamera = NULL;
 	D3DXVECTOR3 vEye(0,0,0), vLookAt(0,0,0), vUp(0,0,0), vPos(0,0,0);
 	int ntype = -1;
-	float fAngleX(0), fAngleY(0), fDist(0);
+	float fAngleX(0), fAngleY(0), fDist(0), fMin(5.0f), fMax(1000.0f);
 	int nLevel = 0;
 	do{
 		char* szToken = GetToken();
@@ -269,6 +269,12 @@ cCamera* cGameLoader::ParseCamera(){
 		else if (isEqual(szToken, "*CAMERA_DIST")){
 			fDist = GetFloat();
 		}
+		else if (isEqual(szToken, "*CAMERA_MIN")){
+			fMin = GetFloat();
+		}
+		else if (isEqual(szToken, "*CAMERA_MAX")){
+			fMax = GetFloat();
+		}
 		else if (isEqual(szToken, "*CAMERA_POS")){
 			float x = GetFloat();
 			float y = GetFloat();
@@ -279,12 +285,12 @@ cCamera* cGameLoader::ParseCamera(){
 
 	if (ntype == 1){
 		pCamera = new cCameraEditing;
-		pCamera->Setup(vEye, vLookAt, vUp, fAngleX, fAngleY, fDist);
+		pCamera->Setup(vEye, vLookAt, vUp, fAngleX, fAngleY, fDist, fMin, fMax);
 		((cCameraEditing*)pCamera)->SetPosition(vPos);
 	}
 	else{
 		pCamera = new cCamera;
-		pCamera->Setup(vEye, vLookAt, vUp, fAngleX, fAngleY, fDist);
+		pCamera->Setup(vEye, vLookAt, vUp, fAngleX, fAngleY, fDist, fMin, fMax);
 	}
 	return pCamera;
 }

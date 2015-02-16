@@ -5,7 +5,7 @@
 
 class cCamera : public cObject
 {
-private:
+protected:
 	D3DXVECTOR3		m_vEye;
 	D3DXVECTOR3		m_vLookAt;
 	D3DXVECTOR3		m_vUp;
@@ -17,6 +17,8 @@ private:
 	float			m_fAngleX;
 	float			m_fAngleY;
 	float			m_fDist;
+	float			m_fMin;
+	float			m_fMax;
 
 public:
 	cCamera(void);
@@ -24,12 +26,14 @@ public:
 
 	virtual void Setup();
 	virtual void Setup(
-		D3DXVECTOR3& vEye, 
+		D3DXVECTOR3& vEye,
 		D3DXVECTOR3& vLookAt,
 		D3DXVECTOR3& vUp,
 		float fAngleX,
 		float fAngleY,
-		float fDist);
+		float fDist,
+		float fMin,
+		float fMax);
 
 	virtual void Update(float delta);	
 	virtual void Render() {}

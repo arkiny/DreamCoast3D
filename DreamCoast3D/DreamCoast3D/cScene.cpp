@@ -7,6 +7,7 @@
 #include "cSphere.h"
 #include "cUIObjManager.h"
 #include "cCameraEditing.h"
+#include "cUIStatWindow.h"
 
 cScene::cScene() 
 	:m_pCamera(NULL)
@@ -62,6 +63,11 @@ void cScene::Setup(std::string sFilePath){
 	m_pUIObjManager = new cUIObjManager;
 	m_pUIObjManager->Setup();
 	m_pUIObjManager->SetDesc("UIObject Manager for Example1");
+
+	cUIStatWindow* p = new cUIStatWindow;
+	p->Setup();
+	m_pUIObjManager->AddUI(p);
+	SAFE_RELEASE(p);
 }
 
 void cScene::Start(){

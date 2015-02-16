@@ -11,6 +11,8 @@ cCamera::cCamera(void)
 	, m_isRButtonDown(false)
 	, m_pvTarget(NULL)
 	, m_fDist(5.0f)
+	, m_fMin(5.0f)
+	, m_fMax(400.0f)
 {
 	//m_fDist = D3DXVec3Length(&m_vEye);
 }
@@ -40,13 +42,17 @@ void cCamera::Setup(
 		D3DXVECTOR3& vUp,
 		float fAngleX,
 		float fAngleY,
-		float fDist){
+		float fDist,
+		float fMin,
+		float fMax){
 	m_vEye = vEye;
 	m_vLookAt = vLookAt;
 	m_vUp = vUp;
 	m_fAngleX = fAngleX;
 	m_fAngleY = fAngleY;
 	m_fDist = fDist;
+	m_fMin = fMin;
+	m_fMax = fMax;
 
 	Setup();
 }
@@ -86,8 +92,10 @@ void cCamera::Update(float delta)
 	float wheelMove = g_pControlManager->GetWheelMoveDist();
 	if (wheelMove != 0.0f){
 		m_fDist -= wheelMove / 100.f;
-		if (m_fDist < 0.1f)
-			m_fDist = 0.1f;
+		if (m_fDist < m_fMin)
+			m_fDist = m_fMin;
+		if (m_fDist > m_fMax)
+			m_fDist = m_fMax;
 	}
 	
 	m_vEye = D3DXVECTOR3(0, 0.0f, -m_fDist);

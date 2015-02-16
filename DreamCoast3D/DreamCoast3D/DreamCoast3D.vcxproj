@@ -111,6 +111,7 @@
     <ClInclude Include="cLoader.h" />
     <ClInclude Include="cMapLoader.h" />
     <ClInclude Include="cMtlTex.h" />
+    <ClInclude Include="cUISkillShortCut.h" />
     <ClInclude Include="cSkinnedMesh.h" />
     <ClInclude Include="cSkinnedMeshManager.h" />
     <ClInclude Include="cUIExample.h" />
@@ -129,6 +130,7 @@
     <ClInclude Include="cSphere.h" />
     <ClInclude Include="cSphereAction.h" />
     <ClInclude Include="cTransform.h" />
+    <ClInclude Include="cUIStatWindow.h" />
     <ClInclude Include="cUITextView.h" />
     <ClInclude Include="cZealot.h" />
     <ClInclude Include="DreamCoast3D.h" />
@@ -172,6 +174,7 @@
     <ClCompile Include="cLoader.cpp" />
     <ClCompile Include="cMapLoader.cpp" />
     <ClCompile Include="cMtlTex.cpp" />
+    <ClCompile Include="cUISkillShortCut.cpp" />
     <ClCompile Include="cSkinnedMesh.cpp" />
     <ClCompile Include="cSkinnedMeshManager.cpp" />
     <ClCompile Include="cUIExample.cpp" />
@@ -190,6 +193,7 @@
     <ClCompile Include="cSphere.cpp" />
     <ClCompile Include="cSphereAction.cpp" />
     <ClCompile Include="cTransform.cpp" />
+    <ClCompile Include="cUIStatWindow.cpp" />
     <ClCompile Include="cUITextView.cpp" />
     <ClCompile Include="cZealot.cpp" />
     <ClCompile Include="DreamCoast3D.cpp" />
@@ -208,6 +212,9 @@
   <ItemGroup>
     <Image Include="DreamCoast3D.ico" />
     <Image Include="small.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="cObjectClassDiagram.cd" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
