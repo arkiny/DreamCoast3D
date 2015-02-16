@@ -32,7 +32,6 @@ void cGameASEObject::Render(){
 	m_pASEInstance->Render(GetTransformMatrix());
 	if (m_pDebugBoxMesh){
 		g_pD3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
-		//D3DXMATRIXA16 matWorld ,matpreT, matS, matnextT;
 		g_pD3DDevice->SetTransform(D3DTS_WORLD, GetTransformMatrix());
 		m_pDebugBoxMesh->DrawSubset(0);
 		g_pD3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);

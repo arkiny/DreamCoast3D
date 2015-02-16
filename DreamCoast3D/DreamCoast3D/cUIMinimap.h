@@ -6,6 +6,10 @@ protected:
 
 public:
 	cUIMinimap();
-	~cUIMinimap();
+	virtual ~cUIMinimap();
+
+	virtual void Setup();
+	virtual void Update(float fDelta);
+	virtual void Render();
 };
 

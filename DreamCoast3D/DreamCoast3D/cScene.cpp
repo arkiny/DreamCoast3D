@@ -8,10 +8,13 @@
 #include "cUIObjManager.h"
 #include "cCameraEditing.h"
 
-//
+/// TODO
+// 차후 데이타 드리븐 완료후 삭제해야할것들
 #include "cUIStatWindow.h"
 #include "cUISkillShortCut.h"
 #include "cUIExpBar.h"
+#include "cUIMinimap.h"
+#include "cGameMapSkyObject.h"
 
 cScene::cScene() 
 	:m_pCamera(NULL)
@@ -68,6 +71,7 @@ void cScene::Setup(std::string sFilePath){
 	m_pUIObjManager->Setup();
 	m_pUIObjManager->SetDesc("UIObject Manager for Example1");
 
+	/// TODO 차후 UI 및 하늘 역시 DataDriven으로 처리된후 삭제
 	cUIStatWindow* p = new cUIStatWindow;
 	p->Setup();
 	m_pUIObjManager->AddUI(p);
@@ -83,6 +87,17 @@ void cScene::Setup(std::string sFilePath){
 	m_pUIObjManager->AddUI(p3);
 	SAFE_RELEASE(p3);
 
+	cUIMinimap* p4 = new cUIMinimap;
+	p4->Setup();
+	m_pUIObjManager->AddUI(p4);
+	SAFE_RELEASE(p4);
+
+	// Sky
+	cGameMapSkyObject* pGMSO = new cGameMapSkyObject;
+	pGMSO->Setup();
+	m_pGameObjManager->AddGameObj(pGMSO);
+	SAFE_RELEASE(pGMSO);
+	///
 }
 
 void cScene::Start(){

@@ -247,6 +247,9 @@
     <ClInclude Include="cUIWindow.h">
       <Filter>Z_HeedongUIWork</Filter>
     </ClInclude>
+    <ClInclude Include="cGameMapSkyObject.h">
+      <Filter>Objects\GamMapObjects</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -434,6 +437,9 @@
     </ClCompile>
     <ClCompile Include="cUIWindow.cpp">
       <Filter>Z_HeedongUIWork</Filter>
+    </ClCompile>
+    <ClCompile Include="cGameMapSkyObject.cpp">
+      <Filter>Objects\GamMapObjects</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

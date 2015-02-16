@@ -104,6 +104,7 @@
     <ClInclude Include="cGameLoader.h" />
     <ClInclude Include="cGameMapHeight.h" />
     <ClInclude Include="cGameMapObject.h" />
+    <ClInclude Include="cGameMapSkyObject.h" />
     <ClInclude Include="cGameObject.h" />
     <ClInclude Include="cGameObjLoader.h" />
     <ClInclude Include="cGameObjManager.h" />
@@ -170,6 +171,7 @@
     <ClCompile Include="cGameLoader.cpp" />
     <ClCompile Include="cGameMapHeight.cpp" />
     <ClCompile Include="cGameMapObject.cpp" />
+    <ClCompile Include="cGameMapSkyObject.cpp" />
     <ClCompile Include="cGameObject.cpp" />
     <ClCompile Include="cGameObjLoader.cpp" />
     <ClCompile Include="cGameObjManager.cpp" />
