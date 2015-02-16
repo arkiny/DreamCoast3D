@@ -47,6 +47,8 @@ void cASEInstance::BuidlMesh( std::vector<ST_PNT_VERTEX>& vecVertex )
 		D3DXVec3TransformNormal(&vecVertex[i].n, &vecVertex[i].n, &matInvWorld);
 	}
 
+	D3DXComputeBoundingBox(&vecVertex[0].p, vecVertex.size(), sizeof(ST_PNT_VERTEX), &m_stBoundingBox.vMin, &m_stBoundingBox.vMax);
+
 	HRESULT hr = D3DXCreateMeshFVF(vecVertex.size() / 3,
 		vecVertex.size(),
 		D3DXMESH_MANAGED,

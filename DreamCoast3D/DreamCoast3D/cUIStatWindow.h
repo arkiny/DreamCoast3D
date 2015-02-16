@@ -3,13 +3,9 @@
 class cObjectPlayerable;
 class cUIImageView;
 
-class cUIStatWindow : public cUIObject
+class cUIStatWindow : public cUIWindow
 {
-private:
-	RECT					m_rectClickArea;
-	LPD3DXSPRITE			m_pSprite;
-	cUIObject*				m_pUIRoot;
-
+protected:
 	cUIImageView*			m_pHealth;
 	cUIImageView*			m_pMana;
 
@@ -19,9 +15,6 @@ private:
 
 	float					m_fMaxMana;
 	float					m_fCurrentMana;
-
-	float					m_fMaxExp;
-	float					m_fCurrentExp;
 
 	float*					m_fTargetMaxHealth;
 	float*					m_fTargetCurrentHealth;

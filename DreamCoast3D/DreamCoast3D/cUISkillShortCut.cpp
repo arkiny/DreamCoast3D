@@ -5,17 +5,13 @@
 #include "cUITextView.h"
 
 cUISkillShortCut::cUISkillShortCut()
-	:m_pSprite(NULL),
-	m_pUIRoot(NULL)
 {
 }
 
 
 cUISkillShortCut::~cUISkillShortCut()
 {
-	SAFE_RELEASE(m_pSprite);
-	if (m_pUIRoot)
-		m_pUIRoot->Destroy();
+
 }
 
 void cUISkillShortCut::Setup(){

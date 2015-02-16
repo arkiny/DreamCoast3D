@@ -9,13 +9,10 @@ cUIStatWindow::cUIStatWindow()
 	, m_fCurrentHealth(1000.0f)
 	, m_fMaxMana(100.0f)
 	, m_fCurrentMana(100.0f)
-	, m_fMaxExp(100.0f)
-	, m_fCurrentExp(100.0f)
 	, m_fTargetMaxHealth(NULL)
 	, m_fTargetCurrentHealth(NULL)
 	, m_fTargetMaxMana(NULL)
 	, m_fTargetCurrentMana(NULL)
-	, m_pSprite(NULL)
 	, m_pMana(NULL)
 	, m_pHealth(NULL)
 {	 
@@ -40,7 +37,6 @@ void cUIStatWindow::Setup(){
 
 	cUIImageView* pImageView = new cUIImageView(m_pSprite);
 	pImageView->SetTextureFilename(std::string("../Resources/UI/UI_CharacterWindow/CharacterWindow_IED.tga"));
-	pImageView->SetPosition(D3DXVECTOR3(0, 0, 1.0f));
 	pImageView->SetScale(D3DXVECTOR3(scaleX, scaleY, 1.0f));
 	ST_SIZE stSize = pImageView->GetSize();
 
@@ -54,15 +50,19 @@ void cUIStatWindow::Setup(){
 	pImageView->SetPosition(D3DXVECTOR3(middle - imageMiddle, f3qfromtop - imagehMiddle, 0.0f));
 
 	m_pUIRoot = pImageView;
+	stSize = m_pUIRoot->GetSize();
 
 	m_pHealth = new cUIImageView(m_pSprite);
 	m_pHealth->SetTextureFilename(std::string("../Resources/UI/UI_CharacterWindow/CharacterWindow_I11D.tga"));
 	m_pHealth->SetPosition(D3DXVECTOR3(130.0f, 15.0f, 0));
-
+	/*ST_SIZE stHealthSize = m_pHealth->GetSize();
+	float healthMAx = stSize.fWidth / stHealthSize.fWidth;*/
 	// 21.4 가 max
 	// TODO 차후 체력 수치에 맞도록 스케일링
 	// 체력바 색을 좀더 밝게... 폰트 출력으로 수치 출력 추가
-	m_pHealth->SetScale(D3DXVECTOR3(21.4f, 1.0f, 1.0f));
+
+
+	m_pHealth->SetScale(D3DXVECTOR3(21.4, 1.0f, 1.0f));
 	m_pUIRoot->AddChild(m_pHealth);
 	SAFE_RELEASE(m_pHealth);
 

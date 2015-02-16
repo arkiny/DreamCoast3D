@@ -238,6 +238,15 @@
     <ClInclude Include="cUISkillShortCut.h">
       <Filter>Z_HeedongUIWork</Filter>
     </ClInclude>
+    <ClInclude Include="cUIExpBar.h">
+      <Filter>Z_HeedongUIWork</Filter>
+    </ClInclude>
+    <ClInclude Include="cUIMinimap.h">
+      <Filter>Z_HeedongUIWork</Filter>
+    </ClInclude>
+    <ClInclude Include="cUIWindow.h">
+      <Filter>Z_HeedongUIWork</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -415,6 +424,15 @@
       <Filter>Z_HeedongUIWork</Filter>
     </ClCompile>
     <ClCompile Include="cUISkillShortCut.cpp">
+      <Filter>Z_HeedongUIWork</Filter>
+    </ClCompile>
+    <ClCompile Include="cUIExpBar.cpp">
+      <Filter>Z_HeedongUIWork</Filter>
+    </ClCompile>
+    <ClCompile Include="cUIMinimap.cpp">
+      <Filter>Z_HeedongUIWork</Filter>
+    </ClCompile>
+    <ClCompile Include="cUIWindow.cpp">
       <Filter>Z_HeedongUIWork</Filter>
     </ClCompile>
   </ItemGroup>

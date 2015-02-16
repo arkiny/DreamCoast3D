@@ -111,6 +111,8 @@
     <ClInclude Include="cLoader.h" />
     <ClInclude Include="cMapLoader.h" />
     <ClInclude Include="cMtlTex.h" />
+    <ClInclude Include="cUIExpBar.h" />
+    <ClInclude Include="cUIMinimap.h" />
     <ClInclude Include="cUISkillShortCut.h" />
     <ClInclude Include="cSkinnedMesh.h" />
     <ClInclude Include="cSkinnedMeshManager.h" />
@@ -132,6 +134,7 @@
     <ClInclude Include="cTransform.h" />
     <ClInclude Include="cUIStatWindow.h" />
     <ClInclude Include="cUITextView.h" />
+    <ClInclude Include="cUIWindow.h" />
     <ClInclude Include="cZealot.h" />
     <ClInclude Include="DreamCoast3D.h" />
     <ClInclude Include="iActionDelegate.h" />
@@ -174,6 +177,8 @@
     <ClCompile Include="cLoader.cpp" />
     <ClCompile Include="cMapLoader.cpp" />
     <ClCompile Include="cMtlTex.cpp" />
+    <ClCompile Include="cUIExpBar.cpp" />
+    <ClCompile Include="cUIMinimap.cpp" />
     <ClCompile Include="cUISkillShortCut.cpp" />
     <ClCompile Include="cSkinnedMesh.cpp" />
     <ClCompile Include="cSkinnedMeshManager.cpp" />
@@ -195,6 +200,7 @@
     <ClCompile Include="cTransform.cpp" />
     <ClCompile Include="cUIStatWindow.cpp" />
     <ClCompile Include="cUITextView.cpp" />
+    <ClCompile Include="cUIWindow.cpp" />
     <ClCompile Include="cZealot.cpp" />
     <ClCompile Include="DreamCoast3D.cpp" />
     <ClCompile Include="iActionDelegate.cpp" />

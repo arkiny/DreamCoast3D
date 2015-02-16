@@ -115,6 +115,13 @@ struct ST_BOUNDING_SPHERE{
 	ST_BOUNDING_SPHERE(D3DXVECTOR3& vCenter, float fRadius) : m_vCenter(vCenter), m_fRadius(fRadius){};
 };
 
+struct ST_BOUNDING_BOX{
+	D3DXVECTOR3 vMin;
+	D3DXVECTOR3 vMax;
+	ST_BOUNDING_BOX() : vMin(0, 0, 0), vMax(0,0,0){};
+	ST_BOUNDING_BOX(D3DXVECTOR3& _vMin, D3DXVECTOR3& _vMax) : vMin(_vMin), vMax(_vMax){};
+};
+
 struct ST_POS_SAMPLE
 {
 	int				nKey;
@@ -146,6 +153,7 @@ struct ST_SIZE
 #include "cGameObject.h"
 #include "cGameActionObject.h"
 #include "cUIObject.h"
+#include "cUIWindow.h"
 
 // Singletone Manager Classes
 #include "cDeviceManager.h"

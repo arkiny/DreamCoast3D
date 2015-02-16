@@ -5,6 +5,8 @@ class cMtlTex;
 class cASEInstance : public cObject
 {
 	friend class cAseLoader;
+protected:
+	SYNTHESIZE(ST_BOUNDING_BOX, m_stBoundingBox, BoundingBox);
 private:
 	std::string						m_sNodeName;
 	std::string						m_sParentName;
