@@ -47,6 +47,9 @@
     <Filter Include="Z_HeedongUIWork">
       <UniqueIdentifier>{08efa0f8-cce9-4cf5-9036-54b94ce75d61}</UniqueIdentifier>
     </Filter>
+    <Filter Include="_Mansu">
+      <UniqueIdentifier>{46787708-7bbe-4547-9e0f-ae86ab1fbbdb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -250,6 +253,9 @@
     <ClInclude Include="cGameMapSkyObject.h">
       <Filter>Objects\GamMapObjects</Filter>
     </ClInclude>
+    <ClInclude Include="cGridSystem.h">
+      <Filter>_Mansu</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -440,6 +446,9 @@
     </ClCompile>
     <ClCompile Include="cGameMapSkyObject.cpp">
       <Filter>Objects\GamMapObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="cGridSystem.cpp">
+      <Filter>_Mansu</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
