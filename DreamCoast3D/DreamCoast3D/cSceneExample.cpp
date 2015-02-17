@@ -111,6 +111,7 @@ void cSceneExample::Setup(std::string sFilePath){
 	//m_pGameObjManager->AddGameObj(pAseObject);
 	//pAseObject->SetPosition(D3DXVECTOR3(100, 0, 100));
 	//pAseObject->SetScale(D3DXVECTOR3(0.1f, 0.1f, 0.1f));
+
 	//SAFE_RELEASE(pAseObject);
 
 

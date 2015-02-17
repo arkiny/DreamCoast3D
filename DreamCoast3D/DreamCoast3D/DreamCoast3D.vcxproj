@@ -110,6 +110,7 @@
     <ClInclude Include="cGameObjManager.h" />
     <ClInclude Include="cGamePlayableObject.h" />
     <ClInclude Include="cGameTimer.h" />
+    <ClInclude Include="cGridSystem.h" />
     <ClInclude Include="cLoader.h" />
     <ClInclude Include="cMapLoader.h" />
     <ClInclude Include="cMtlTex.h" />
@@ -179,6 +180,7 @@
     <ClCompile Include="cGameObjManager.cpp" />
     <ClCompile Include="cGamePlayableObject.cpp" />
     <ClCompile Include="cGameTimer.cpp" />
+    <ClCompile Include="cGridSystem.cpp" />
     <ClCompile Include="cLoader.cpp" />
     <ClCompile Include="cMapLoader.cpp" />
     <ClCompile Include="cMtlTex.cpp" />

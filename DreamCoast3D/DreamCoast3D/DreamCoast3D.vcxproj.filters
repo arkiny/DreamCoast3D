@@ -47,8 +47,13 @@
     <Filter Include="Z_HeedongUIWork">
       <UniqueIdentifier>{08efa0f8-cce9-4cf5-9036-54b94ce75d61}</UniqueIdentifier>
     </Filter>
+<<<<<<< HEAD
     <Filter Include="Z_MinwooCharWork">
       <UniqueIdentifier>{04380048-e3a6-4ad0-8bf8-c87604eee686}</UniqueIdentifier>
+=======
+    <Filter Include="_Mansu">
+      <UniqueIdentifier>{46787708-7bbe-4547-9e0f-ae86ab1fbbdb}</UniqueIdentifier>
+>>>>>>> origin/master
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -253,8 +258,14 @@
     <ClInclude Include="cGameMapSkyObject.h">
       <Filter>Objects\GamMapObjects</Filter>
     </ClInclude>
+<<<<<<< HEAD
     <ClInclude Include="cGamePlayableObject.h" />
     <ClInclude Include="cSkinnedMeshBody.h" />
+=======
+    <ClInclude Include="cGridSystem.h">
+      <Filter>_Mansu</Filter>
+    </ClInclude>
+>>>>>>> origin/master
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -446,8 +457,14 @@
     <ClCompile Include="cGameMapSkyObject.cpp">
       <Filter>Objects\GamMapObjects</Filter>
     </ClCompile>
+<<<<<<< HEAD
     <ClCompile Include="cGamePlayableObject.cpp" />
     <ClCompile Include="cSkinnedMeshBody.cpp" />
+=======
+    <ClCompile Include="cGridSystem.cpp">
+      <Filter>_Mansu</Filter>
+    </ClCompile>
+>>>>>>> origin/master
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="DreamCoast3D.rc">
