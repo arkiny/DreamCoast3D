@@ -107,6 +107,7 @@ void cScene::Setup(std::string sFilePath){
 		sFolder, std::string("Popori_F_L0_Face08.X"),
 		sFolder, std::string("Popori_F_L0_Hair02.X"));
 	pGamePlayableObject->SetPosition(D3DXVECTOR3(128.0f, 0, 128.0f));
+	pGamePlayableObject->SetScale(D3DXVECTOR3(0.5f, 0.5f, 0.5f));
 	m_pGameObjManager->AddGameObj(pGamePlayableObject);
 	SAFE_RELEASE(pGamePlayableObject);
 
