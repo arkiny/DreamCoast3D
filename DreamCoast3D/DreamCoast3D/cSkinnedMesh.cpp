@@ -70,7 +70,7 @@ void cSkinnedMesh::Render(D3DXMATRIXA16* pParentWorldTM)
 		}
 	}
 
-	m_pAnimControl->AdvanceTime(g_pTimer->DeltaTime(), NULL);
+	m_pAnimControl->AdvanceTime(g_pTimer->DeltaTime() * .5f, NULL);
 
 	UpdateWorldMatrix(m_pRootFrame, NULL);
 	UpdateSkinnedMesh(m_pRootFrame);

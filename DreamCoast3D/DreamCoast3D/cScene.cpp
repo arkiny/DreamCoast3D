@@ -98,18 +98,19 @@ void cScene::Setup(std::string sFilePath){
 	pGMSO->Setup();
 	m_pGameObjManager->AddGameObj(pGMSO);
 	SAFE_RELEASE(pGMSO);
-	///
+	
 
 	cGamePlayableObject* pGamePlayableObject = new cGamePlayableObject;
 	std::string sFolder = "../Resources/Char/Tera/";
 	pGamePlayableObject->Setup(
-		sFolder, std::string("Human_F_R31.X"),
-		sFolder, std::string("Human_F_Face09.X"),
-		sFolder, std::string("Human_F_Hair04.X"));
+		sFolder, std::string("Popori_F_Body03.X"),
+		sFolder, std::string("Popori_F_L0_Face08.X"),
+		sFolder, std::string("Popori_F_L0_Hair02.X"));
 	pGamePlayableObject->SetPosition(D3DXVECTOR3(128.0f, 0, 128.0f));
-
 	m_pGameObjManager->AddGameObj(pGamePlayableObject);
 	SAFE_RELEASE(pGamePlayableObject);
+
+	///
 }
 
 void cScene::Start(){

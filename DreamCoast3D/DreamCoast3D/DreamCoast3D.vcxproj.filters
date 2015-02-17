@@ -1,485 +1,495 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Resource Files">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
-    <Filter Include="_STDAFX">
-      <UniqueIdentifier>{6473dc44-9f72-4efe-a6ab-bad256e5c61d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Core">
-      <UniqueIdentifier>{f627e0ee-14d7-4570-ab7a-b6c25acf79d1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Singletons">
-      <UniqueIdentifier>{0ade4b30-ba8d-48b7-9d86-e57b9b99c43f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Objects">
-      <UniqueIdentifier>{94c27b00-01fd-4503-977d-177414e08ab5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Scene">
-      <UniqueIdentifier>{e35dbe3a-ca98-4a4d-8803-49ea4e922ee3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Objects\Action">
-      <UniqueIdentifier>{326e6278-0318-4e33-8767-fbda449e167f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Objects\GameObjects">
-      <UniqueIdentifier>{383401fb-0878-400c-80d2-d1e2faeb96ba}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Objects\GamMapObjects">
-      <UniqueIdentifier>{9afe40f6-2693-455f-8256-c237132e93d0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Objects\UIObject">
-      <UniqueIdentifier>{578b53a4-78cc-4efc-9f17-aa26be250020}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Objects\BaseObject">
-      <UniqueIdentifier>{7b2e22e8-24d8-45ea-9692-ac837703101f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="_Examples">
-      <UniqueIdentifier>{261727fd-7005-4ab4-9aea-57cedb664be4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Objects\SkinnedMesh">
-      <UniqueIdentifier>{ce152797-142e-467b-a4a7-bcf09542f6fb}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ParseAndLoader">
-      <UniqueIdentifier>{e411ee6f-738f-42b4-926d-e23a16bebd26}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Z_HeedongUIWork">
-      <UniqueIdentifier>{08efa0f8-cce9-4cf5-9036-54b94ce75d61}</UniqueIdentifier>
-    </Filter>
-<<<<<<< HEAD
-    <Filter Include="Z_MinwooCharWork">
-      <UniqueIdentifier>{04380048-e3a6-4ad0-8bf8-c87604eee686}</UniqueIdentifier>
-=======
-    <Filter Include="_Mansu">
-      <UniqueIdentifier>{46787708-7bbe-4547-9e0f-ae86ab1fbbdb}</UniqueIdentifier>
->>>>>>> origin/master
-    </Filter>
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="ReadMe.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="stdafx.h">
-      <Filter>_STDAFX</Filter>
-    </ClInclude>
-    <ClInclude Include="cGameTimer.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="cDeviceManager.h">
-      <Filter>Singletons</Filter>
-    </ClInclude>
-    <ClInclude Include="targetver.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="DreamCoast3D.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Resource.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="cObjectManager.h">
-      <Filter>Singletons</Filter>
-    </ClInclude>
-    <ClInclude Include="cScene.h">
-      <Filter>Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="cSceneManager.h">
-      <Filter>Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="iSceneDelegate.h">
-      <Filter>Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="cGameCore.h">
-      <Filter>Core</Filter>
-    </ClInclude>
-    <ClInclude Include="cSphere.h">
-      <Filter>_Examples</Filter>
-    </ClInclude>
-    <ClInclude Include="cLightSource.h">
-      <Filter>Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="cControlManager.h">
-      <Filter>Singletons</Filter>
-    </ClInclude>
-    <ClInclude Include="cCamera.h">
-      <Filter>Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="cSceneExample.h">
-      <Filter>_Examples</Filter>
-    </ClInclude>
-    <ClInclude Include="iActionDelegate.h">
-      <Filter>Objects\Action</Filter>
-    </ClInclude>
-    <ClInclude Include="cAction.h">
-      <Filter>Objects\Action</Filter>
-    </ClInclude>
-    <ClInclude Include="cActionMove.h">
-      <Filter>Objects\Action</Filter>
-    </ClInclude>
-    <ClInclude Include="cActionSeq.h">
-      <Filter>Objects\Action</Filter>
-    </ClInclude>
-    <ClInclude Include="cActionRepeat.h">
-      <Filter>Objects\Action</Filter>
-    </ClInclude>
-    <ClInclude Include="cSphereAction.h">
-      <Filter>_Examples</Filter>
-    </ClInclude>
-    <ClInclude Include="cFontManager.h">
-      <Filter>Singletons</Filter>
-    </ClInclude>
-    <ClInclude Include="cBillingExample.h">
-      <Filter>_Examples</Filter>
-    </ClInclude>
-    <ClInclude Include="cMapExample.h">
-      <Filter>_Examples</Filter>
-    </ClInclude>
-    <ClInclude Include="cTextureManager.h">
-      <Filter>Singletons</Filter>
-    </ClInclude>
-    <ClInclude Include="cGameBillBoardingObject.h">
-      <Filter>Objects\GameObjects</Filter>
-    </ClInclude>
-    <ClInclude Include="cGameObject.h">
-      <Filter>Objects\GameObjects</Filter>
-    </ClInclude>
-    <ClInclude Include="cTransform.h">
-      <Filter>Objects\GameObjects</Filter>
-    </ClInclude>
-    <ClInclude Include="cGameActionObject.h">
-      <Filter>Objects\GameObjects</Filter>
-    </ClInclude>
-    <ClInclude Include="cGameMapObject.h">
-      <Filter>Objects\GamMapObjects</Filter>
-    </ClInclude>
-    <ClInclude Include="iMap.h">
-      <Filter>Objects\GamMapObjects</Filter>
-    </ClInclude>
-    <ClInclude Include="cUIObject.h">
-      <Filter>Objects\UIObject</Filter>
-    </ClInclude>
-    <ClInclude Include="cUIImageView.h">
-      <Filter>Objects\UIObject</Filter>
-    </ClInclude>
-    <ClInclude Include="cUITextView.h">
-      <Filter>Objects\UIObject</Filter>
-    </ClInclude>
-    <ClInclude Include="cUIImageButton.h">
-      <Filter>Objects\UIObject</Filter>
-    </ClInclude>
-    <ClInclude Include="cUIExample.h">
-      <Filter>_Examples</Filter>
-    </ClInclude>
-    <ClInclude Include="iButtonDelegate.h">
-      <Filter>Objects\UIObject</Filter>
-    </ClInclude>
-    <ClInclude Include="cObject.h">
-      <Filter>Objects\BaseObject</Filter>
-    </ClInclude>
-    <ClInclude Include="cFrustum.h">
-      <Filter>Objects\BaseObject</Filter>
-    </ClInclude>
-    <ClInclude Include="cSkinnedMeshManager.h">
-      <Filter>Singletons</Filter>
-    </ClInclude>
-    <ClInclude Include="cZealot.h">
-      <Filter>_Examples</Filter>
-    </ClInclude>
-    <ClInclude Include="cSkinnedMesh.h">
-      <Filter>Objects\SkinnedMesh</Filter>
-    </ClInclude>
-    <ClInclude Include="cGameActionSkinnedMeshObj.h">
-      <Filter>Objects\GameObjects</Filter>
-    </ClInclude>
-    <ClInclude Include="cAnimationSet.h">
-      <Filter>Objects\SkinnedMesh</Filter>
-    </ClInclude>
-    <ClInclude Include="cAllocateHierarchy.h">
-      <Filter>Objects\SkinnedMesh</Filter>
-    </ClInclude>
-    <ClInclude Include="cMtlTex.h">
-      <Filter>Objects</Filter>
-    </ClInclude>
-    <ClInclude Include="cLoader.h">
-      <Filter>ParseAndLoader</Filter>
-    </ClInclude>
-    <ClInclude Include="cGameLoader.h">
-      <Filter>ParseAndLoader</Filter>
-    </ClInclude>
-    <ClInclude Include="cGameObjLoader.h">
-      <Filter>ParseAndLoader</Filter>
-    </ClInclude>
-    <ClInclude Include="cMapLoader.h">
-      <Filter>ParseAndLoader</Filter>
-    </ClInclude>
-    <ClInclude Include="cGameMapHeight.h">
-      <Filter>Objects\GamMapObjects</Filter>
-    </ClInclude>
-    <ClInclude Include="cCameraEditing.h">
-      <Filter>_Examples</Filter>
-    </ClInclude>
-    <ClInclude Include="cAseLoader.h">
-      <Filter>ParseAndLoader</Filter>
-    </ClInclude>
-    <ClInclude Include="Asciitok.h">
-      <Filter>ParseAndLoader</Filter>
-    </ClInclude>
-    <ClInclude Include="cAseManager.h">
-      <Filter>Singletons</Filter>
-    </ClInclude>
-    <ClInclude Include="cASEInstance.h">
-      <Filter>Objects\GameObjects</Filter>
-    </ClInclude>
-    <ClInclude Include="cGameASEObject.h">
-      <Filter>Objects\GameObjects</Filter>
-    </ClInclude>
-    <ClInclude Include="cUIObjManager.h">
-      <Filter>Objects</Filter>
-    </ClInclude>
-    <ClInclude Include="cGameObjManager.h">
-      <Filter>Objects</Filter>
-    </ClInclude>
-    <ClInclude Include="cUIStatWindow.h">
-      <Filter>Z_HeedongUIWork</Filter>
-    </ClInclude>
-    <ClInclude Include="cUISkillShortCut.h">
-      <Filter>Z_HeedongUIWork</Filter>
-    </ClInclude>
-    <ClInclude Include="cUIExpBar.h">
-      <Filter>Z_HeedongUIWork</Filter>
-    </ClInclude>
-    <ClInclude Include="cUIMinimap.h">
-      <Filter>Z_HeedongUIWork</Filter>
-    </ClInclude>
-    <ClInclude Include="cUIWindow.h">
-      <Filter>Z_HeedongUIWork</Filter>
-    </ClInclude>
-    <ClInclude Include="cGameMapSkyObject.h">
-      <Filter>Objects\GamMapObjects</Filter>
-    </ClInclude>
-<<<<<<< HEAD
-    <ClInclude Include="cGamePlayableObject.h" />
-    <ClInclude Include="cSkinnedMeshBody.h" />
-=======
-    <ClInclude Include="cGridSystem.h">
-      <Filter>_Mansu</Filter>
-    </ClInclude>
->>>>>>> origin/master
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="stdafx.cpp">
-      <Filter>_STDAFX</Filter>
-    </ClCompile>
-    <ClCompile Include="cGameTimer.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="cDeviceManager.cpp">
-      <Filter>Singletons</Filter>
-    </ClCompile>
-    <ClCompile Include="DreamCoast3D.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="cObjectManager.cpp">
-      <Filter>Singletons</Filter>
-    </ClCompile>
-    <ClCompile Include="cScene.cpp">
-      <Filter>Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="cSceneManager.cpp">
-      <Filter>Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="iSceneDelegate.cpp">
-      <Filter>Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="cGameCore.cpp">
-      <Filter>Core</Filter>
-    </ClCompile>
-    <ClCompile Include="cSphere.cpp">
-      <Filter>_Examples</Filter>
-    </ClCompile>
-    <ClCompile Include="cLightSource.cpp">
-      <Filter>Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="cControlManager.cpp">
-      <Filter>Singletons</Filter>
-    </ClCompile>
-    <ClCompile Include="cCamera.cpp">
-      <Filter>Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="cSceneExample.cpp">
-      <Filter>_Examples</Filter>
-    </ClCompile>
     <ClCompile Include="cAction.cpp">
-      <Filter>Objects\Action</Filter>
-    </ClCompile>
-    <ClCompile Include="iActionDelegate.cpp">
-      <Filter>Objects\Action</Filter>
+      <Filter>FrameWork\Object\GameObject\GameActionObject\Action</Filter>
     </ClCompile>
     <ClCompile Include="cActionMove.cpp">
-      <Filter>Objects\Action</Filter>
-    </ClCompile>
-    <ClCompile Include="cActionSeq.cpp">
-      <Filter>Objects\Action</Filter>
+      <Filter>FrameWork\Object\GameObject\GameActionObject\Action</Filter>
     </ClCompile>
     <ClCompile Include="cActionRepeat.cpp">
-      <Filter>Objects\Action</Filter>
+      <Filter>FrameWork\Object\GameObject\GameActionObject\Action</Filter>
     </ClCompile>
-    <ClCompile Include="cSphereAction.cpp">
-      <Filter>_Examples</Filter>
-    </ClCompile>
-    <ClCompile Include="cFontManager.cpp">
-      <Filter>Singletons</Filter>
-    </ClCompile>
-    <ClCompile Include="cBillingExample.cpp">
-      <Filter>_Examples</Filter>
-    </ClCompile>
-    <ClCompile Include="cMapExample.cpp">
-      <Filter>_Examples</Filter>
-    </ClCompile>
-    <ClCompile Include="cTextureManager.cpp">
-      <Filter>Singletons</Filter>
-    </ClCompile>
-    <ClCompile Include="cGameBillBoardingObject.cpp">
-      <Filter>Objects\GameObjects</Filter>
-    </ClCompile>
-    <ClCompile Include="cGameObject.cpp">
-      <Filter>Objects\GameObjects</Filter>
-    </ClCompile>
-    <ClCompile Include="cTransform.cpp">
-      <Filter>Objects\GameObjects</Filter>
-    </ClCompile>
-    <ClCompile Include="cGameActionObject.cpp">
-      <Filter>Objects\GameObjects</Filter>
-    </ClCompile>
-    <ClCompile Include="cGameMapObject.cpp">
-      <Filter>Objects\GamMapObjects</Filter>
-    </ClCompile>
-    <ClCompile Include="iMap.cpp">
-      <Filter>Objects\GamMapObjects</Filter>
-    </ClCompile>
-    <ClCompile Include="cUIObject.cpp">
-      <Filter>Objects\UIObject</Filter>
-    </ClCompile>
-    <ClCompile Include="cUIImageView.cpp">
-      <Filter>Objects\UIObject</Filter>
-    </ClCompile>
-    <ClCompile Include="cUITextView.cpp">
-      <Filter>Objects\UIObject</Filter>
-    </ClCompile>
-    <ClCompile Include="cUIImageButton.cpp">
-      <Filter>Objects\UIObject</Filter>
-    </ClCompile>
-    <ClCompile Include="cUIExample.cpp">
-      <Filter>_Examples</Filter>
-    </ClCompile>
-    <ClCompile Include="iButtonDelegate.cpp">
-      <Filter>Objects\UIObject</Filter>
-    </ClCompile>
-    <ClCompile Include="cObject.cpp">
-      <Filter>Objects\BaseObject</Filter>
-    </ClCompile>
-    <ClCompile Include="cFrustum.cpp">
-      <Filter>Objects\BaseObject</Filter>
-    </ClCompile>
-    <ClCompile Include="cSkinnedMeshManager.cpp">
-      <Filter>Singletons</Filter>
-    </ClCompile>
-    <ClCompile Include="cZealot.cpp">
-      <Filter>_Examples</Filter>
-    </ClCompile>
-    <ClCompile Include="cSkinnedMesh.cpp">
-      <Filter>Objects\SkinnedMesh</Filter>
-    </ClCompile>
-    <ClCompile Include="cGameActionSkinnedMeshObj.cpp">
-      <Filter>Objects\GameObjects</Filter>
+    <ClCompile Include="cActionSeq.cpp">
+      <Filter>FrameWork\Object\GameObject\GameActionObject\Action</Filter>
     </ClCompile>
     <ClCompile Include="cAllocateHierarchy.cpp">
-      <Filter>Objects\SkinnedMesh</Filter>
+      <Filter>FrameWork\Loader</Filter>
     </ClCompile>
     <ClCompile Include="cAnimationSet.cpp">
-      <Filter>Objects\SkinnedMesh</Filter>
-    </ClCompile>
-    <ClCompile Include="cMtlTex.cpp">
-      <Filter>Objects</Filter>
-    </ClCompile>
-    <ClCompile Include="cGameLoader.cpp">
-      <Filter>ParseAndLoader</Filter>
-    </ClCompile>
-    <ClCompile Include="cGameObjLoader.cpp">
-      <Filter>ParseAndLoader</Filter>
-    </ClCompile>
-    <ClCompile Include="cLoader.cpp">
-      <Filter>ParseAndLoader</Filter>
-    </ClCompile>
-    <ClCompile Include="cMapLoader.cpp">
-      <Filter>ParseAndLoader</Filter>
-    </ClCompile>
-    <ClCompile Include="cGameMapHeight.cpp">
-      <Filter>Objects\GamMapObjects</Filter>
-    </ClCompile>
-    <ClCompile Include="cCameraEditing.cpp">
-      <Filter>_Examples</Filter>
-    </ClCompile>
-    <ClCompile Include="cAseLoader.cpp">
-      <Filter>ParseAndLoader</Filter>
-    </ClCompile>
-    <ClCompile Include="cAseManager.cpp">
-      <Filter>Singletons</Filter>
+      <Filter>FrameWork\Object\GameObject\SkinnedMesh</Filter>
     </ClCompile>
     <ClCompile Include="cASEInstance.cpp">
-      <Filter>Objects\GameObjects</Filter>
+      <Filter>FrameWork\Object\GameObject\AseObject</Filter>
+    </ClCompile>
+    <ClCompile Include="cAseLoader.cpp">
+      <Filter>FrameWork\Loader</Filter>
+    </ClCompile>
+    <ClCompile Include="cAseManager.cpp">
+      <Filter>FrameWork\Singletons</Filter>
+    </ClCompile>
+    <ClCompile Include="cBillingExample.cpp">
+      <Filter>FrameWork\_EXAMPLE</Filter>
+    </ClCompile>
+    <ClCompile Include="cCamera.cpp">
+      <Filter>FrameWork\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="cCameraEditing.cpp">
+      <Filter>FrameWork\_EXAMPLE</Filter>
+    </ClCompile>
+    <ClCompile Include="cControlManager.cpp">
+      <Filter>FrameWork\Singletons</Filter>
+    </ClCompile>
+    <ClCompile Include="cDeviceManager.cpp">
+      <Filter>FrameWork\Singletons</Filter>
+    </ClCompile>
+    <ClCompile Include="cFontManager.cpp">
+      <Filter>FrameWork\Singletons</Filter>
+    </ClCompile>
+    <ClCompile Include="cFrustum.cpp">
+      <Filter>FrameWork\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="cGameActionObject.cpp">
+      <Filter>FrameWork\Object\GameObject\GameActionObject</Filter>
+    </ClCompile>
+    <ClCompile Include="cGameActionSkinnedMeshObj.cpp">
+      <Filter>FrameWork\Object\GameObject\GameActionObject</Filter>
     </ClCompile>
     <ClCompile Include="cGameASEObject.cpp">
-      <Filter>Objects\GameObjects</Filter>
+      <Filter>FrameWork\Object\GameObject\AseObject</Filter>
     </ClCompile>
-    <ClCompile Include="cUIObjManager.cpp">
-      <Filter>Objects</Filter>
+    <ClCompile Include="cGameBillBoardingObject.cpp">
+      <Filter>FrameWork\Object\GameObject</Filter>
     </ClCompile>
-    <ClCompile Include="cGameObjManager.cpp">
-      <Filter>Objects</Filter>
+    <ClCompile Include="cGameCore.cpp">
+      <Filter>FrameWork\Core</Filter>
     </ClCompile>
-    <ClCompile Include="cUIStatWindow.cpp">
-      <Filter>Z_HeedongUIWork</Filter>
-    </ClCompile>
-    <ClCompile Include="cUISkillShortCut.cpp">
-      <Filter>Z_HeedongUIWork</Filter>
+    <ClCompile Include="cGameLoader.cpp">
+      <Filter>FrameWork\Loader</Filter>
     </ClCompile>
     <ClCompile Include="cUIExpBar.cpp">
-      <Filter>Z_HeedongUIWork</Filter>
+      <Filter>FrameWork\Object\UIObject</Filter>
+    </ClCompile>
+    <ClCompile Include="cUIImageButton.cpp">
+      <Filter>FrameWork\Object\UIObject</Filter>
+    </ClCompile>
+    <ClCompile Include="cUIImageView.cpp">
+      <Filter>FrameWork\Object\UIObject</Filter>
     </ClCompile>
     <ClCompile Include="cUIMinimap.cpp">
-      <Filter>Z_HeedongUIWork</Filter>
+      <Filter>FrameWork\Object\UIObject</Filter>
+    </ClCompile>
+    <ClCompile Include="cUIObject.cpp">
+      <Filter>FrameWork\Object\UIObject</Filter>
+    </ClCompile>
+    <ClCompile Include="cUIObjManager.cpp">
+      <Filter>FrameWork\Object\UIObject</Filter>
+    </ClCompile>
+    <ClCompile Include="cUISkillShortCut.cpp">
+      <Filter>FrameWork\Object\UIObject</Filter>
+    </ClCompile>
+    <ClCompile Include="cUIStatWindow.cpp">
+      <Filter>FrameWork\Object\UIObject</Filter>
+    </ClCompile>
+    <ClCompile Include="cUITextView.cpp">
+      <Filter>FrameWork\Object\UIObject</Filter>
     </ClCompile>
     <ClCompile Include="cUIWindow.cpp">
-      <Filter>Z_HeedongUIWork</Filter>
+      <Filter>FrameWork\Object\UIObject</Filter>
+    </ClCompile>
+    <ClCompile Include="iActionDelegate.cpp">
+      <Filter>FrameWork\Interfaces</Filter>
+    </ClCompile>
+    <ClCompile Include="iButtonDelegate.cpp">
+      <Filter>FrameWork\Interfaces</Filter>
+    </ClCompile>
+    <ClCompile Include="iMap.cpp">
+      <Filter>FrameWork\Interfaces</Filter>
+    </ClCompile>
+    <ClCompile Include="iSceneDelegate.cpp">
+      <Filter>FrameWork\Interfaces</Filter>
+    </ClCompile>
+    <ClCompile Include="cGameMapHeight.cpp">
+      <Filter>FrameWork\Object\GameObject\GameMapObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="cGameMapObject.cpp">
+      <Filter>FrameWork\Object\GameObject\GameMapObjects</Filter>
     </ClCompile>
     <ClCompile Include="cGameMapSkyObject.cpp">
-      <Filter>Objects\GamMapObjects</Filter>
+      <Filter>FrameWork\Object\GameObject\GameMapObjects</Filter>
     </ClCompile>
-<<<<<<< HEAD
-    <ClCompile Include="cGamePlayableObject.cpp" />
-    <ClCompile Include="cSkinnedMeshBody.cpp" />
-=======
+    <ClCompile Include="cGameObject.cpp">
+      <Filter>FrameWork\Object\GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="cGameTimer.cpp">
+      <Filter>FrameWork\Singletons</Filter>
+    </ClCompile>
+    <ClCompile Include="cGameObjManager.cpp">
+      <Filter>FrameWork\Object\GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="cLoader.cpp">
+      <Filter>FrameWork\Loader</Filter>
+    </ClCompile>
+    <ClCompile Include="cSkinnedMeshBody.cpp">
+      <Filter>EachWorks\MW</Filter>
+    </ClCompile>
+    <ClCompile Include="cZealot.cpp">
+      <Filter>FrameWork\_EXAMPLE</Filter>
+    </ClCompile>
+    <ClCompile Include="cUIExample.cpp">
+      <Filter>FrameWork\_EXAMPLE</Filter>
+    </ClCompile>
+    <ClCompile Include="cSphereAction.cpp">
+      <Filter>FrameWork\_EXAMPLE</Filter>
+    </ClCompile>
+    <ClCompile Include="cSphere.cpp">
+      <Filter>FrameWork\_EXAMPLE</Filter>
+    </ClCompile>
+    <ClCompile Include="cSceneExample.cpp">
+      <Filter>FrameWork\_EXAMPLE</Filter>
+    </ClCompile>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>FrameWork\_STDAFX</Filter>
+    </ClCompile>
+    <ClCompile Include="cGameObjLoader.cpp">
+      <Filter>FrameWork\Loader</Filter>
+    </ClCompile>
+    <ClCompile Include="cTransform.cpp">
+      <Filter>FrameWork\Object\GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="cScene.cpp">
+      <Filter>FrameWork\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="cSceneManager.cpp">
+      <Filter>FrameWork\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="cTextureManager.cpp">
+      <Filter>FrameWork\Singletons</Filter>
+    </ClCompile>
+    <ClCompile Include="cSkinnedMeshManager.cpp">
+      <Filter>FrameWork\Singletons</Filter>
+    </ClCompile>
+    <ClCompile Include="cSkinnedMesh.cpp">
+      <Filter>FrameWork\Object\GameObject\SkinnedMesh</Filter>
+    </ClCompile>
+    <ClCompile Include="cObjectManager.cpp">
+      <Filter>FrameWork\Singletons</Filter>
+    </ClCompile>
+    <ClCompile Include="cLightSource.cpp">
+      <Filter>FrameWork\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="cMapLoader.cpp">
+      <Filter>FrameWork\Loader</Filter>
+    </ClCompile>
+    <ClCompile Include="cObject.cpp">
+      <Filter>FrameWork\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="cGamePlayableObject.cpp">
+      <Filter>EachWorks\MW</Filter>
+    </ClCompile>
     <ClCompile Include="cGridSystem.cpp">
-      <Filter>_Mansu</Filter>
+      <Filter>EachWorks\MS</Filter>
     </ClCompile>
->>>>>>> origin/master
+    <ClCompile Include="cMapExample.cpp">
+      <Filter>FrameWork\_EXAMPLE</Filter>
+    </ClCompile>
+    <ClCompile Include="DreamCoast3D.cpp">
+      <Filter>FrameWork\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="cMtlTex.cpp">
+      <Filter>FrameWork\Object</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="DreamCoast3D.rc">
-      <Filter>Resource Files</Filter>
-    </ResourceCompile>
+    <ClInclude Include="cAction.h">
+      <Filter>FrameWork\Object\GameObject\GameActionObject\Action</Filter>
+    </ClInclude>
+    <ClInclude Include="cActionMove.h">
+      <Filter>FrameWork\Object\GameObject\GameActionObject\Action</Filter>
+    </ClInclude>
+    <ClInclude Include="cActionRepeat.h">
+      <Filter>FrameWork\Object\GameObject\GameActionObject\Action</Filter>
+    </ClInclude>
+    <ClInclude Include="cActionSeq.h">
+      <Filter>FrameWork\Object\GameObject\GameActionObject\Action</Filter>
+    </ClInclude>
+    <ClInclude Include="Asciitok.h">
+      <Filter>FrameWork\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="cAllocateHierarchy.h">
+      <Filter>FrameWork\Loader</Filter>
+    </ClInclude>
+    <ClInclude Include="cAnimationSet.h">
+      <Filter>FrameWork\Object\GameObject\SkinnedMesh</Filter>
+    </ClInclude>
+    <ClInclude Include="cASEInstance.h">
+      <Filter>FrameWork\Object\GameObject\AseObject</Filter>
+    </ClInclude>
+    <ClInclude Include="cAseLoader.h">
+      <Filter>FrameWork\Loader</Filter>
+    </ClInclude>
+    <ClInclude Include="cAseManager.h">
+      <Filter>FrameWork\Singletons</Filter>
+    </ClInclude>
+    <ClInclude Include="cBillingExample.h">
+      <Filter>FrameWork\_EXAMPLE</Filter>
+    </ClInclude>
+    <ClInclude Include="cCamera.h">
+      <Filter>FrameWork\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="cCameraEditing.h">
+      <Filter>FrameWork\_EXAMPLE</Filter>
+    </ClInclude>
+    <ClInclude Include="cControlManager.h">
+      <Filter>FrameWork\Singletons</Filter>
+    </ClInclude>
+    <ClInclude Include="cFontManager.h">
+      <Filter>FrameWork\Singletons</Filter>
+    </ClInclude>
+    <ClInclude Include="cDeviceManager.h">
+      <Filter>FrameWork\Singletons</Filter>
+    </ClInclude>
+    <ClInclude Include="cFrustum.h">
+      <Filter>FrameWork\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="cGameActionObject.h">
+      <Filter>FrameWork\Object\GameObject\GameActionObject</Filter>
+    </ClInclude>
+    <ClInclude Include="cGameActionSkinnedMeshObj.h">
+      <Filter>FrameWork\Object\GameObject\GameActionObject</Filter>
+    </ClInclude>
+    <ClInclude Include="cGameASEObject.h">
+      <Filter>FrameWork\Object\GameObject\AseObject</Filter>
+    </ClInclude>
+    <ClInclude Include="cGameBillBoardingObject.h">
+      <Filter>FrameWork\Object\GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="cGameCore.h">
+      <Filter>FrameWork\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="cGameLoader.h">
+      <Filter>FrameWork\Loader</Filter>
+    </ClInclude>
+    <ClInclude Include="cUITextView.h">
+      <Filter>FrameWork\Object\UIObject</Filter>
+    </ClInclude>
+    <ClInclude Include="cUIExpBar.h">
+      <Filter>FrameWork\Object\UIObject</Filter>
+    </ClInclude>
+    <ClInclude Include="cUIImageButton.h">
+      <Filter>FrameWork\Object\UIObject</Filter>
+    </ClInclude>
+    <ClInclude Include="cUIImageView.h">
+      <Filter>FrameWork\Object\UIObject</Filter>
+    </ClInclude>
+    <ClInclude Include="cUIMinimap.h">
+      <Filter>FrameWork\Object\UIObject</Filter>
+    </ClInclude>
+    <ClInclude Include="cUIObject.h">
+      <Filter>FrameWork\Object\UIObject</Filter>
+    </ClInclude>
+    <ClInclude Include="cUIObjManager.h">
+      <Filter>FrameWork\Object\UIObject</Filter>
+    </ClInclude>
+    <ClInclude Include="cUISkillShortCut.h">
+      <Filter>FrameWork\Object\UIObject</Filter>
+    </ClInclude>
+    <ClInclude Include="cUIStatWindow.h">
+      <Filter>FrameWork\Object\UIObject</Filter>
+    </ClInclude>
+    <ClInclude Include="cUIWindow.h">
+      <Filter>FrameWork\Object\UIObject</Filter>
+    </ClInclude>
+    <ClInclude Include="iSceneDelegate.h">
+      <Filter>FrameWork\Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="iActionDelegate.h">
+      <Filter>FrameWork\Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="iButtonDelegate.h">
+      <Filter>FrameWork\Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="iMap.h">
+      <Filter>FrameWork\Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="cGameMapHeight.h">
+      <Filter>FrameWork\Object\GameObject\GameMapObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="cGameMapObject.h">
+      <Filter>FrameWork\Object\GameObject\GameMapObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="cGameMapSkyObject.h">
+      <Filter>FrameWork\Object\GameObject\GameMapObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="cGameObject.h">
+      <Filter>FrameWork\Object\GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="cGameTimer.h">
+      <Filter>FrameWork\Singletons</Filter>
+    </ClInclude>
+    <ClInclude Include="cGameObjManager.h">
+      <Filter>FrameWork\Object\GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="cLoader.h">
+      <Filter>FrameWork\Loader</Filter>
+    </ClInclude>
+    <ClInclude Include="cSkinnedMeshBody.h">
+      <Filter>EachWorks\MW</Filter>
+    </ClInclude>
+    <ClInclude Include="cZealot.h">
+      <Filter>FrameWork\_EXAMPLE</Filter>
+    </ClInclude>
+    <ClInclude Include="cUIExample.h">
+      <Filter>FrameWork\_EXAMPLE</Filter>
+    </ClInclude>
+    <ClInclude Include="cSphereAction.h">
+      <Filter>FrameWork\_EXAMPLE</Filter>
+    </ClInclude>
+    <ClInclude Include="cSphere.h">
+      <Filter>FrameWork\_EXAMPLE</Filter>
+    </ClInclude>
+    <ClInclude Include="cSceneExample.h">
+      <Filter>FrameWork\_EXAMPLE</Filter>
+    </ClInclude>
+    <ClInclude Include="stdafx.h">
+      <Filter>FrameWork\_STDAFX</Filter>
+    </ClInclude>
+    <ClInclude Include="cGameObjLoader.h">
+      <Filter>FrameWork\Loader</Filter>
+    </ClInclude>
+    <ClInclude Include="cTransform.h">
+      <Filter>FrameWork\Object\GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="cSceneManager.h">
+      <Filter>FrameWork\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="cScene.h">
+      <Filter>FrameWork\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="cTextureManager.h">
+      <Filter>FrameWork\Singletons</Filter>
+    </ClInclude>
+    <ClInclude Include="cSkinnedMeshManager.h">
+      <Filter>FrameWork\Singletons</Filter>
+    </ClInclude>
+    <ClInclude Include="cSkinnedMesh.h">
+      <Filter>FrameWork\Object\GameObject\SkinnedMesh</Filter>
+    </ClInclude>
+    <ClInclude Include="cObjectManager.h">
+      <Filter>FrameWork\Singletons</Filter>
+    </ClInclude>
+    <ClInclude Include="cLightSource.h">
+      <Filter>FrameWork\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="cMapLoader.h">
+      <Filter>FrameWork\Loader</Filter>
+    </ClInclude>
+    <ClInclude Include="cObject.h">
+      <Filter>FrameWork\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="cGamePlayableObject.h">
+      <Filter>EachWorks\MW</Filter>
+    </ClInclude>
+    <ClInclude Include="cGridSystem.h">
+      <Filter>EachWorks\MS</Filter>
+    </ClInclude>
+    <ClInclude Include="cMapExample.h">
+      <Filter>FrameWork\_EXAMPLE</Filter>
+    </ClInclude>
+    <ClInclude Include="DreamCoast3D.h">
+      <Filter>FrameWork\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource.h">
+      <Filter>FrameWork\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>FrameWork\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="cMtlTex.h">
+      <Filter>FrameWork\Object</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Image Include="small.ico">
-      <Filter>Resource Files</Filter>
-    </Image>
     <Image Include="DreamCoast3D.ico">
-      <Filter>Resource Files</Filter>
+      <Filter>FrameWork\Core</Filter>
+    </Image>
+    <Image Include="small.ico">
+      <Filter>FrameWork\Core</Filter>
     </Image>
   </ItemGroup>
   <ItemGroup>
     <None Include="cObjectClassDiagram.cd" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="FrameWork">
+      <UniqueIdentifier>{c457b474-e097-4e89-981e-591f6f7f0a1a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="EachWorks">
+      <UniqueIdentifier>{756a94bc-69e4-46a1-ac8e-27fd5acba7cc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="EachWorks\HD">
+      <UniqueIdentifier>{cabc2211-60ce-4a03-9afc-12df392dbdcc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="EachWorks\MW">
+      <UniqueIdentifier>{196dbc8e-7c96-4cc5-9fea-e0f9fd77d50f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="EachWorks\MS">
+      <UniqueIdentifier>{ce31fe48-7ec4-4035-88b5-47a45b8d68b7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="FrameWork\_EXAMPLE">
+      <UniqueIdentifier>{8ad80070-fa8b-46f2-9853-02b15b14d6a7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="FrameWork\Object">
+      <UniqueIdentifier>{dee45f5a-1266-45ae-834d-eddf46d5c212}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="FrameWork\Scene">
+      <UniqueIdentifier>{ca9fd1af-80e3-4847-a37f-04c7bee8bb5a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="FrameWork\Core">
+      <UniqueIdentifier>{eb51fd1a-f324-4672-9730-5c370706513a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="FrameWork\Object\GameObject">
+      <UniqueIdentifier>{4b6dd058-02db-4957-8c5d-055bb0ac10c5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="FrameWork\Object\GameObject\GameActionObject">
+      <UniqueIdentifier>{ee647f1a-1630-438c-8072-5c221e704c44}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="FrameWork\Object\GameObject\GameActionObject\Action">
+      <UniqueIdentifier>{89d6f418-b527-4815-b2a9-058e5cf34916}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="FrameWork\_STDAFX">
+      <UniqueIdentifier>{119f984c-b9cb-4391-b4ce-28eb6b2b80f1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="FrameWork\Loader">
+      <UniqueIdentifier>{08263c4b-e799-48f9-a194-4a7ac7ec6847}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="FrameWork\Object\GameObject\SkinnedMesh">
+      <UniqueIdentifier>{37107085-85d4-4600-b522-dc2ccf4a5cd5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="FrameWork\Object\GameObject\AseObject">
+      <UniqueIdentifier>{fd8c4798-bc99-4415-9f86-418f73a5fef3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="FrameWork\Object\UIObject">
+      <UniqueIdentifier>{c1d109d9-9985-46d5-944f-f7f01c62efe4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="FrameWork\Interfaces">
+      <UniqueIdentifier>{0551fd9d-39dc-4822-8abc-fa090bc54d2f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="FrameWork\Object\GameObject\GameMapObjects">
+      <UniqueIdentifier>{b5aef028-b529-4bf0-9606-1a18605a8d37}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="FrameWork\Singletons">
+      <UniqueIdentifier>{ac9d5c25-bde2-4512-947b-878b6447b5fc}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="DreamCoast3D.rc">
+      <Filter>FrameWork\Core</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="ReadMe.txt">
+      <Filter>FrameWork\Core</Filter>
+    </Text>
   </ItemGroup>
 </Project>
