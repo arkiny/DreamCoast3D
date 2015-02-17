@@ -68,24 +68,12 @@ void cSkinnedMeshBody::Render(D3DXMATRIXA16* pParentWorldTM){
 			m_pAnimControl->SetTrackWeight(1, 1.0f - fWeight);
 		}
 	}
-
-
-	//
-	//FxBottom 이 바닥 중심 하지만 고정이다.
-	//
-	//D3DXFRAME* pFxBottom = D3DXFrameFind(m_pRootFrame, "FxBottom");
-	//D3DXMATRIXA16 mat = pFxBottom->TransformationMatrix;
-
+	
 	m_pAnimControl->AdvanceTime(g_pTimer->DeltaTime() * .5f, NULL);
 
-	//D3DXFRAME* pSkel = D3DXFrameFind(m_pRootFrame, "Human_F_R31_Body_Skel");
-	//D3DXMATRIXA16 mat = m_pRootFrame->TransformationMatrix;
 	UpdateWorldMatrix(m_pRootFrame, NULL);
 	UpdateSkinnedMesh(m_pRootFrame);
-	//UpdateWorldMatrix(m_pRootFrame, NULL);
-	//UpdateSkinnedMesh(m_pRootFrame);
-	
-	//Render(pSkel, pParentWorldTM);
+
 	Render(m_pRootFrame, pParentWorldTM);
 }
 
@@ -111,21 +99,11 @@ void cSkinnedMeshBody::Render(D3DXFRAME* pFrame, D3DXMATRIXA16* pParentWorldTM){
 		for (size_t i = 0; i < pBoneMesh->dwNumSubset; ++i)
 		{
 			g_pD3DDevice->SetTransform(D3DTS_WORLD, &(pBone->matWorldTM));
-			//g_pD3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
 			g_pD3DDevice->SetTexture(0, pBoneMesh->vecMtlTex[i]->pTex);
 			g_pD3DDevice->SetMaterial(&pBoneMesh->vecMtlTex[i]->stMtl);
 			pBoneMesh->MeshData.pMesh->DrawSubset(i);
-			//g_pD3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
 		}
 	}
-
-	//g_pD3DDevice->SetTransform(D3DTS_WORLD, D3DXMatrixIdentity(&D3DXMATRIX()));
-	//g_pD3DDevice->SetTransform(D3DTS_WORLD, &(pBone->matWorldTM));
-	//g_pD3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
-	//m_pMesh->DrawSubset(0);
-	//g_pD3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
-	//g_pD3DDevice->SetTransform(D3DTS_WORLD, D3DXMatrixIdentity(&D3DXMATRIX()));
-	
 
 	if (pBone->pFrameSibling)
 	{

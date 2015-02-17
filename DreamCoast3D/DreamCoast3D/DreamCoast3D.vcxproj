@@ -116,7 +116,11 @@
     <ClInclude Include="cMtlTex.h" />
     <ClInclude Include="cSkinnedMeshBody.h" />
     <ClInclude Include="cUIExpBar.h" />
+    <ClInclude Include="cUIGameMainMenu.h" />
+    <ClInclude Include="cUIGameSystemShortCut.h" />
+    <ClInclude Include="cUIInventory.h" />
     <ClInclude Include="cUIMinimap.h" />
+    <ClInclude Include="cUIPlayerInfo.h" />
     <ClInclude Include="cUISkillShortCut.h" />
     <ClInclude Include="cSkinnedMesh.h" />
     <ClInclude Include="cSkinnedMeshManager.h" />
@@ -137,6 +141,7 @@
     <ClInclude Include="cSphereAction.h" />
     <ClInclude Include="cTransform.h" />
     <ClInclude Include="cUIStatWindow.h" />
+    <ClInclude Include="cUISystemMenu.h" />
     <ClInclude Include="cUITextView.h" />
     <ClInclude Include="cUIWindow.h" />
     <ClInclude Include="cZealot.h" />
@@ -186,7 +191,11 @@
     <ClCompile Include="cMtlTex.cpp" />
     <ClCompile Include="cSkinnedMeshBody.cpp" />
     <ClCompile Include="cUIExpBar.cpp" />
+    <ClCompile Include="cUIGameMainMenu.cpp" />
+    <ClCompile Include="cUIGameSystemShortCut.cpp" />
+    <ClCompile Include="cUIInventory.cpp" />
     <ClCompile Include="cUIMinimap.cpp" />
+    <ClCompile Include="cUIPlayerInfo.cpp" />
     <ClCompile Include="cUISkillShortCut.cpp" />
     <ClCompile Include="cSkinnedMesh.cpp" />
     <ClCompile Include="cSkinnedMeshManager.cpp" />
@@ -207,6 +216,7 @@
     <ClCompile Include="cSphereAction.cpp" />
     <ClCompile Include="cTransform.cpp" />
     <ClCompile Include="cUIStatWindow.cpp" />
+    <ClCompile Include="cUISystemMenu.cpp" />
     <ClCompile Include="cUITextView.cpp" />
     <ClCompile Include="cUIWindow.cpp" />
     <ClCompile Include="cZealot.cpp" />

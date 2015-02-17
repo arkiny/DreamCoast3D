@@ -76,22 +76,10 @@
     <ClCompile Include="cUIImageView.cpp">
       <Filter>FrameWork\Object\UIObject</Filter>
     </ClCompile>
-    <ClCompile Include="cUIMinimap.cpp">
-      <Filter>FrameWork\Object\UIObject</Filter>
-    </ClCompile>
     <ClCompile Include="cUIObject.cpp">
       <Filter>FrameWork\Object\UIObject</Filter>
     </ClCompile>
     <ClCompile Include="cUIObjManager.cpp">
-      <Filter>FrameWork\Object\UIObject</Filter>
-    </ClCompile>
-    <ClCompile Include="cUISkillShortCut.cpp">
-      <Filter>FrameWork\Object\UIObject</Filter>
-    </ClCompile>
-    <ClCompile Include="cUIStatWindow.cpp">
-      <Filter>FrameWork\Object\UIObject</Filter>
-    </ClCompile>
-    <ClCompile Include="cUITextView.cpp">
       <Filter>FrameWork\Object\UIObject</Filter>
     </ClCompile>
     <ClCompile Include="cUIWindow.cpp">
@@ -199,6 +187,33 @@
     <ClCompile Include="cMtlTex.cpp">
       <Filter>FrameWork\Object</Filter>
     </ClCompile>
+    <ClCompile Include="cUITextView.cpp">
+      <Filter>FrameWork\Object\UIObject</Filter>
+    </ClCompile>
+    <ClCompile Include="cUISkillShortCut.cpp">
+      <Filter>EachWorks\HD</Filter>
+    </ClCompile>
+    <ClCompile Include="cUIStatWindow.cpp">
+      <Filter>EachWorks\HD</Filter>
+    </ClCompile>
+    <ClCompile Include="cUIMinimap.cpp">
+      <Filter>EachWorks\HD</Filter>
+    </ClCompile>
+    <ClCompile Include="cUIInventory.cpp">
+      <Filter>EachWorks\HD\TODO-DistAfter\InGameUI</Filter>
+    </ClCompile>
+    <ClCompile Include="cUIPlayerInfo.cpp">
+      <Filter>EachWorks\HD\TODO-DistAfter\InGameUI</Filter>
+    </ClCompile>
+    <ClCompile Include="cUISystemMenu.cpp">
+      <Filter>EachWorks\HD\TODO-DistAfter\InGameUI</Filter>
+    </ClCompile>
+    <ClCompile Include="cUIGameSystemShortCut.cpp">
+      <Filter>EachWorks\HD\TODO-DistAfter\InGameUI</Filter>
+    </ClCompile>
+    <ClCompile Include="cUIGameMainMenu.cpp">
+      <Filter>EachWorks\HD\TODO-DistAfter\MainMenuUI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cAction.h">
@@ -270,9 +285,6 @@
     <ClInclude Include="cGameLoader.h">
       <Filter>FrameWork\Loader</Filter>
     </ClInclude>
-    <ClInclude Include="cUITextView.h">
-      <Filter>FrameWork\Object\UIObject</Filter>
-    </ClInclude>
     <ClInclude Include="cUIExpBar.h">
       <Filter>FrameWork\Object\UIObject</Filter>
     </ClInclude>
@@ -282,19 +294,10 @@
     <ClInclude Include="cUIImageView.h">
       <Filter>FrameWork\Object\UIObject</Filter>
     </ClInclude>
-    <ClInclude Include="cUIMinimap.h">
-      <Filter>FrameWork\Object\UIObject</Filter>
-    </ClInclude>
     <ClInclude Include="cUIObject.h">
       <Filter>FrameWork\Object\UIObject</Filter>
     </ClInclude>
     <ClInclude Include="cUIObjManager.h">
-      <Filter>FrameWork\Object\UIObject</Filter>
-    </ClInclude>
-    <ClInclude Include="cUISkillShortCut.h">
-      <Filter>FrameWork\Object\UIObject</Filter>
-    </ClInclude>
-    <ClInclude Include="cUIStatWindow.h">
       <Filter>FrameWork\Object\UIObject</Filter>
     </ClInclude>
     <ClInclude Include="cUIWindow.h">
@@ -408,6 +411,33 @@
     <ClInclude Include="cMtlTex.h">
       <Filter>FrameWork\Object</Filter>
     </ClInclude>
+    <ClInclude Include="cUITextView.h">
+      <Filter>FrameWork\Object\UIObject</Filter>
+    </ClInclude>
+    <ClInclude Include="cUIStatWindow.h">
+      <Filter>EachWorks\HD</Filter>
+    </ClInclude>
+    <ClInclude Include="cUISkillShortCut.h">
+      <Filter>EachWorks\HD</Filter>
+    </ClInclude>
+    <ClInclude Include="cUIMinimap.h">
+      <Filter>EachWorks\HD</Filter>
+    </ClInclude>
+    <ClInclude Include="cUISystemMenu.h">
+      <Filter>EachWorks\HD\TODO-DistAfter\InGameUI</Filter>
+    </ClInclude>
+    <ClInclude Include="cUIInventory.h">
+      <Filter>EachWorks\HD\TODO-DistAfter\InGameUI</Filter>
+    </ClInclude>
+    <ClInclude Include="cUIPlayerInfo.h">
+      <Filter>EachWorks\HD\TODO-DistAfter\InGameUI</Filter>
+    </ClInclude>
+    <ClInclude Include="cUIGameSystemShortCut.h">
+      <Filter>EachWorks\HD\TODO-DistAfter\InGameUI</Filter>
+    </ClInclude>
+    <ClInclude Include="cUIGameMainMenu.h">
+      <Filter>EachWorks\HD\TODO-DistAfter\MainMenuUI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="DreamCoast3D.ico">
@@ -480,6 +510,15 @@
     </Filter>
     <Filter Include="FrameWork\Singletons">
       <UniqueIdentifier>{ac9d5c25-bde2-4512-947b-878b6447b5fc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="EachWorks\HD\TODO-DistAfter">
+      <UniqueIdentifier>{1293e4f4-f5d8-42c1-8f4d-a86f1100f92e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="EachWorks\HD\TODO-DistAfter\InGameUI">
+      <UniqueIdentifier>{71622d01-a614-4833-b0b9-b97857248e2e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="EachWorks\HD\TODO-DistAfter\MainMenuUI">
+      <UniqueIdentifier>{a18f39a1-4fb3-416b-b35b-03abf33b497a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

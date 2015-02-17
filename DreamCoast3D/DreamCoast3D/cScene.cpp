@@ -99,7 +99,7 @@ void cScene::Setup(std::string sFilePath){
 	m_pGameObjManager->AddGameObj(pGMSO);
 	SAFE_RELEASE(pGMSO);
 	
-
+	// PlayableObject
 	cGamePlayableObject* pGamePlayableObject = new cGamePlayableObject;
 	std::string sFolder = "../Resources/Char/Tera/";
 	pGamePlayableObject->Setup(
