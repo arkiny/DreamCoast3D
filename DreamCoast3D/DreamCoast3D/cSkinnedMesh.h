@@ -3,7 +3,7 @@
 
 class cSkinnedMesh : public iAnimationSetDelegate, public cObject
 {
-private:
+protected:
 	D3DXFRAME*					m_pRootFrame;
 	LPD3DXANIMATIONCONTROLLER	m_pAnimControl;
 	float						m_fPassedBlendTime;
@@ -15,21 +15,19 @@ private:
 
 public:
 	cSkinnedMesh(void);
-	~cSkinnedMesh(void);
+	virtual ~cSkinnedMesh(void);
 
-	void Setup(std::string sFolder, std::string sFile);
-	void Update(float fDelta);
-	
-	void Render(D3DXMATRIXA16* pParentWorldTM);
-	
-	void SetAnimationIndex(DWORD dwIndex);
-	void SetAnimationLoop(DWORD dwIndex, bool isLoop);
+	virtual void Setup(std::string sFolder, std::string sFile);
+	virtual void Update(float fDelta);
+	virtual void Render(D3DXMATRIXA16* pParentWorldTM);
+	virtual void SetAnimationIndex(DWORD dwIndex);
+	virtual void SetAnimationLoop(DWORD dwIndex, bool isLoop);
 
-private:
-	void SetAnimationIndexBlend(DWORD dwIndex);
-	void UpdateWorldMatrix(D3DXFRAME* pFrame, D3DXMATRIXA16* pmatParent);
-	void Render(D3DXFRAME* pFrame, D3DXMATRIXA16* pParentWorldTM);
-	void UpdateSkinnedMesh(D3DXFRAME* pFrame);
+protected:
+	virtual void SetAnimationIndexBlend(DWORD dwIndex);
+	virtual void UpdateWorldMatrix(D3DXFRAME* pFrame, D3DXMATRIXA16* pmatParent);
+	virtual void Render(D3DXFRAME* pFrame, D3DXMATRIXA16* pParentWorldTM);
+	virtual void UpdateSkinnedMesh(D3DXFRAME* pFrame);
 
 public:
 	virtual void OnFinishAnimation(cAnimationSet* pSender) override;

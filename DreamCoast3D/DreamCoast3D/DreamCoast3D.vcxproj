@@ -108,10 +108,12 @@
     <ClInclude Include="cGameObject.h" />
     <ClInclude Include="cGameObjLoader.h" />
     <ClInclude Include="cGameObjManager.h" />
+    <ClInclude Include="cGamePlayableObject.h" />
     <ClInclude Include="cGameTimer.h" />
     <ClInclude Include="cLoader.h" />
     <ClInclude Include="cMapLoader.h" />
     <ClInclude Include="cMtlTex.h" />
+    <ClInclude Include="cSkinnedMeshBody.h" />
     <ClInclude Include="cUIExpBar.h" />
     <ClInclude Include="cUIMinimap.h" />
     <ClInclude Include="cUISkillShortCut.h" />
@@ -175,10 +177,12 @@
     <ClCompile Include="cGameObject.cpp" />
     <ClCompile Include="cGameObjLoader.cpp" />
     <ClCompile Include="cGameObjManager.cpp" />
+    <ClCompile Include="cGamePlayableObject.cpp" />
     <ClCompile Include="cGameTimer.cpp" />
     <ClCompile Include="cLoader.cpp" />
     <ClCompile Include="cMapLoader.cpp" />
     <ClCompile Include="cMtlTex.cpp" />
+    <ClCompile Include="cSkinnedMeshBody.cpp" />
     <ClCompile Include="cUIExpBar.cpp" />
     <ClCompile Include="cUIMinimap.cpp" />
     <ClCompile Include="cUISkillShortCut.cpp" />

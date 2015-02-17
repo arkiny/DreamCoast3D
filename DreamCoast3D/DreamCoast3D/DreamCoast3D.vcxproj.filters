@@ -47,6 +47,9 @@
     <Filter Include="Z_HeedongUIWork">
       <UniqueIdentifier>{08efa0f8-cce9-4cf5-9036-54b94ce75d61}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Z_MinwooCharWork">
+      <UniqueIdentifier>{04380048-e3a6-4ad0-8bf8-c87604eee686}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -250,6 +253,8 @@
     <ClInclude Include="cGameMapSkyObject.h">
       <Filter>Objects\GamMapObjects</Filter>
     </ClInclude>
+    <ClInclude Include="cGamePlayableObject.h" />
+    <ClInclude Include="cSkinnedMeshBody.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -441,6 +446,8 @@
     <ClCompile Include="cGameMapSkyObject.cpp">
       <Filter>Objects\GamMapObjects</Filter>
     </ClCompile>
+    <ClCompile Include="cGamePlayableObject.cpp" />
+    <ClCompile Include="cSkinnedMeshBody.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="DreamCoast3D.rc">
