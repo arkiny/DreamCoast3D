@@ -80,10 +80,15 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Asciitok.h" />
+    <ClInclude Include="cAcitionThink.h" />
     <ClInclude Include="cAction.h" />
+    <ClInclude Include="cActionAttack.h" />
+    <ClInclude Include="cActionEscape.h" />
     <ClInclude Include="cActionMove.h" />
+    <ClInclude Include="cActionPersuit.h" />
     <ClInclude Include="cActionRepeat.h" />
     <ClInclude Include="cActionSeq.h" />
+    <ClInclude Include="cActionSkill.h" />
     <ClInclude Include="cAllocateHierarchy.h" />
     <ClInclude Include="cAnimationSet.h" />
     <ClInclude Include="cAseLoader.h" />
@@ -155,10 +160,15 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="cAcitionThink.cpp" />
     <ClCompile Include="cAction.cpp" />
+    <ClCompile Include="cActionAttack.cpp" />
+    <ClCompile Include="cActionEscape.cpp" />
     <ClCompile Include="cActionMove.cpp" />
+    <ClCompile Include="cActionPersuit.cpp" />
     <ClCompile Include="cActionRepeat.cpp" />
     <ClCompile Include="cActionSeq.cpp" />
+    <ClCompile Include="cActionSkill.cpp" />
     <ClCompile Include="cAllocateHierarchy.cpp" />
     <ClCompile Include="cAnimationSet.cpp" />
     <ClCompile Include="cAseLoader.cpp" />

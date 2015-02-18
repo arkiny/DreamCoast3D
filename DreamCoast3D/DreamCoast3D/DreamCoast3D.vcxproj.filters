@@ -214,6 +214,21 @@
     <ClCompile Include="cUIGameMainMenu.cpp">
       <Filter>EachWorks\HD\TODO-DistAfter\MainMenuUI</Filter>
     </ClCompile>
+    <ClCompile Include="cAcitionThink.cpp">
+      <Filter>EachWorks\HD\AI-Action</Filter>
+    </ClCompile>
+    <ClCompile Include="cActionPersuit.cpp">
+      <Filter>EachWorks\HD\AI-Action</Filter>
+    </ClCompile>
+    <ClCompile Include="cActionAttack.cpp">
+      <Filter>EachWorks\HD\AI-Action</Filter>
+    </ClCompile>
+    <ClCompile Include="cActionSkill.cpp">
+      <Filter>EachWorks\HD\AI-Action</Filter>
+    </ClCompile>
+    <ClCompile Include="cActionEscape.cpp">
+      <Filter>EachWorks\HD\AI-Action</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cAction.h">
@@ -438,6 +453,21 @@
     <ClInclude Include="cUIGameMainMenu.h">
       <Filter>EachWorks\HD\TODO-DistAfter\MainMenuUI</Filter>
     </ClInclude>
+    <ClInclude Include="cAcitionThink.h">
+      <Filter>EachWorks\HD\AI-Action</Filter>
+    </ClInclude>
+    <ClInclude Include="cActionPersuit.h">
+      <Filter>EachWorks\HD\AI-Action</Filter>
+    </ClInclude>
+    <ClInclude Include="cActionAttack.h">
+      <Filter>EachWorks\HD\AI-Action</Filter>
+    </ClInclude>
+    <ClInclude Include="cActionSkill.h">
+      <Filter>EachWorks\HD\AI-Action</Filter>
+    </ClInclude>
+    <ClInclude Include="cActionEscape.h">
+      <Filter>EachWorks\HD\AI-Action</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="DreamCoast3D.ico">
@@ -519,6 +549,9 @@
     </Filter>
     <Filter Include="EachWorks\HD\TODO-DistAfter\MainMenuUI">
       <UniqueIdentifier>{a18f39a1-4fb3-416b-b35b-03abf33b497a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="EachWorks\HD\AI-Action">
+      <UniqueIdentifier>{1b834c32-e6d6-4f8f-b086-52e4c4847829}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
