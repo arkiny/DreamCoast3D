@@ -1,6 +1,5 @@
 #include "stdafx.h"
 #include "cGridSystem.h"
-
 #include <assert.h>
 
 

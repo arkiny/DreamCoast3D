@@ -1,7 +1,9 @@
 #pragma once
-#include "cGameObject.h"
+// 그리드는 GameObject가 아니라 일종의 시스템이므로
+// 그냥 cObject를 상속받거나 아예 상속을 받지 않는다.
+class cGameObject;
 
-class cGridSystem : public cGameObject
+class cGridSystem : public cObject
 {
 private:
 	std::vector<std::set<cGameObject*>> m_vecTileData;

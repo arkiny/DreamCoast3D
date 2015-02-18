@@ -14,6 +14,9 @@ public:
 	cAction();
 	virtual ~cAction();
 	virtual void Start() {}
+
+	//Same as Execute;
 	virtual void Update(float delta) = 0;
+	virtual void Exit() {}
 };
 
