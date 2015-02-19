@@ -60,6 +60,12 @@ public:
 		return m_pGameObjManager;
 	}
 
+	//
+	virtual cUIObjManager* GetUIObjMng(){
+		_ASSERT(m_pUIObjManager);
+		return m_pUIObjManager;
+	}
+
 	virtual void SetCamera(cCamera* pCamera);
 	virtual void AddLightSrc(cLightSource* pLightSource);
 

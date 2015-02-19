@@ -67,9 +67,6 @@
     <ClCompile Include="cGameLoader.cpp">
       <Filter>FrameWork\Loader</Filter>
     </ClCompile>
-    <ClCompile Include="cUIExpBar.cpp">
-      <Filter>FrameWork\Object\UIObject</Filter>
-    </ClCompile>
     <ClCompile Include="cUIImageButton.cpp">
       <Filter>FrameWork\Object\UIObject</Filter>
     </ClCompile>
@@ -229,6 +226,12 @@
     <ClCompile Include="cActionEscape.cpp">
       <Filter>EachWorks\HD\AI-Action</Filter>
     </ClCompile>
+    <ClCompile Include="cUILoader.cpp">
+      <Filter>FrameWork\Loader</Filter>
+    </ClCompile>
+    <ClCompile Include="cUIExpBar.cpp">
+      <Filter>EachWorks\HD</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cAction.h">
@@ -299,9 +302,6 @@
     </ClInclude>
     <ClInclude Include="cGameLoader.h">
       <Filter>FrameWork\Loader</Filter>
-    </ClInclude>
-    <ClInclude Include="cUIExpBar.h">
-      <Filter>FrameWork\Object\UIObject</Filter>
     </ClInclude>
     <ClInclude Include="cUIImageButton.h">
       <Filter>FrameWork\Object\UIObject</Filter>
@@ -467,6 +467,12 @@
     </ClInclude>
     <ClInclude Include="cActionEscape.h">
       <Filter>EachWorks\HD\AI-Action</Filter>
+    </ClInclude>
+    <ClInclude Include="cUILoader.h">
+      <Filter>FrameWork\Loader</Filter>
+    </ClInclude>
+    <ClInclude Include="cUIExpBar.h">
+      <Filter>EachWorks\HD</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

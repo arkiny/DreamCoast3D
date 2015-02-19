@@ -34,7 +34,7 @@ typedef struct ST_PLAYER_INFO{
 	float fCurrentMana;
 	float fMaxExp;
 	float fCurrentExp;
-};
+} *LPPLAYERINFO;
 
 class cSkinnedMesh;
 

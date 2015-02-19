@@ -14,6 +14,7 @@ private:
 	
 	void ParseGameMapList(OUT cScene* pScene);
 	void ParseGameObjList(OUT cScene* pScene); 
+	void ParseUIList(OUT cScene* pScene);
 	
 	void ParseLightSourceList(OUT cScene* pScene);
 	cLightSource* ParseLightSource(OUT cScene* pScene);

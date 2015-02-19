@@ -124,6 +124,7 @@
     <ClInclude Include="cUIGameMainMenu.h" />
     <ClInclude Include="cUIGameSystemShortCut.h" />
     <ClInclude Include="cUIInventory.h" />
+    <ClInclude Include="cUILoader.h" />
     <ClInclude Include="cUIMinimap.h" />
     <ClInclude Include="cUIPlayerInfo.h" />
     <ClInclude Include="cUISkillShortCut.h" />
@@ -204,6 +205,7 @@
     <ClCompile Include="cUIGameMainMenu.cpp" />
     <ClCompile Include="cUIGameSystemShortCut.cpp" />
     <ClCompile Include="cUIInventory.cpp" />
+    <ClCompile Include="cUILoader.cpp" />
     <ClCompile Include="cUIMinimap.cpp" />
     <ClCompile Include="cUIPlayerInfo.cpp" />
     <ClCompile Include="cUISkillShortCut.cpp" />

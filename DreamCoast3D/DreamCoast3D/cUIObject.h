@@ -32,6 +32,7 @@ public:
 
 	virtual void AddChild(cUIObject* pChild);
 	virtual void Update(float fDelta);
+	virtual void Setup(){}
 	virtual void Render();
 	virtual void Destroy();
 

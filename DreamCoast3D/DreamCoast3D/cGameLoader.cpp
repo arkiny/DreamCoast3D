@@ -4,6 +4,7 @@
 #include "cScene.h"
 #include "cMapLoader.h"
 #include "cGameObjLoader.h"
+#include "cUILoader.h"
 #include "cCamera.h"
 #include "cCameraEditing.h"
 #include "cLightSource.h"
@@ -85,7 +86,8 @@ void cGameLoader::ParseScene(OUT cScene* pScene){
 		}
 		else if (isEqual(szToken, "*UI_LIST")){
 			// TODO 차후 UI 리스트 추가시 수정
-			SkipBlock();
+			//SkipBlock();
+			ParseUIList(pScene);
 		}
 		else if (isEqual(szToken, "*GAMEMAP_LIST")){
 			ParseGameMapList(pScene);
@@ -309,6 +311,24 @@ void cGameLoader::ParseGameObjList(OUT cScene* pScene){
 			std::string sPath = GetToken();
 			cGameObjLoader cGOL;
 			cGOL.LoadGameObjectsFromFile(pScene->GetGameObjMng(), sPath);
+		}
+	} while (nLevel > 0);
+}
+
+void cGameLoader::ParseUIList(OUT cScene* pScene){
+	int nLevel = 0;
+	do{
+		char* szToken = GetToken();
+		if (isEqual(szToken, "{")){
+			++nLevel;
+		}
+		else if (isEqual(szToken, "}")){
+			--nLevel;
+		}
+		else if (isEqual(szToken, "*UI_LIST_PATH")){
+			std::string sPath = GetToken();
+			cUILoader cUL;
+			cUL.LoadGameUIFromFile(pScene->GetUIObjMng(), sPath);
 		}
 	} while (nLevel > 0);
 }

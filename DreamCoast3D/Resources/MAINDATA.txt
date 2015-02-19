@@ -40,7 +40,7 @@
 		}
 	
 		*UI_LIST {
-			*UI_LIST_PATH
+			*UI_LIST_PATH "../Resources/SCENE1_UIDATA.txt"
 		}
 		
 		*GAMEMAP_LIST {

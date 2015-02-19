@@ -73,25 +73,25 @@ void cScene::Setup(std::string sFilePath){
 	m_pUIObjManager->SetDesc("UIObject Manager for Example1");
 
 	/// TODO 차후 UI 및 하늘 역시 DataDriven으로 처리된후 삭제
-	cUIStatWindow* p = new cUIStatWindow;
-	p->Setup();
-	m_pUIObjManager->AddUI(p);
-	SAFE_RELEASE(p);
+	//cUIStatWindow* p = new cUIStatWindow;
+	//p->Setup();
+	//m_pUIObjManager->AddUI(p);
+	//SAFE_RELEASE(p);
 
-	cUISkillShortCut* p2 = new cUISkillShortCut;
-	p2->Setup();
-	m_pUIObjManager->AddUI(p2);
-	SAFE_RELEASE(p2);
+	//cUISkillShortCut* p2 = new cUISkillShortCut;
+	//p2->Setup();
+	//m_pUIObjManager->AddUI(p2);
+	//SAFE_RELEASE(p2);
 
-	cUIExpBar* p3 = new cUIExpBar;
-	p3->Setup();
-	m_pUIObjManager->AddUI(p3);
-	SAFE_RELEASE(p3);
+	//cUIExpBar* p3 = new cUIExpBar;
+	//p3->Setup();
+	//m_pUIObjManager->AddUI(p3);
+	//SAFE_RELEASE(p3);
 
-	cUIMinimap* p4 = new cUIMinimap;
-	p4->Setup();
-	m_pUIObjManager->AddUI(p4);
-	SAFE_RELEASE(p4);
+	//cUIMinimap* p4 = new cUIMinimap;
+	//p4->Setup();
+	//m_pUIObjManager->AddUI(p4);
+	//SAFE_RELEASE(p4);
 
 	// Sky
 	cGameMapSkyObject* pGMSO = new cGameMapSkyObject;
