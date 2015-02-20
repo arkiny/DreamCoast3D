@@ -38,9 +38,11 @@ void cSkinnedMeshBody::Setup(
 		m_vecAnimationSet.push_back(pAnimSet);
 	}
 
+	// 머리 셋업
 	m_pHead = new cSkinnedMesh;
 	m_pHead->Setup(sFolderHead, sFileHead);
 		
+	// 머리카락 셋업
 	m_pHair = new cSkinnedMesh;
 	m_pHair->Setup(sFolderHair, sFileHair);
 
@@ -81,12 +83,15 @@ void cSkinnedMeshBody::Render(D3DXFRAME* pFrame, D3DXMATRIXA16* pParentWorldTM){
 	ST_BONE* pBone = (ST_BONE*)pFrame;
 	pBone->matWorldTM = pBone->TransformationMatrix * (*pParentWorldTM);
 	
+	// 목부위 바이패드의 월드트랜스폼매트릭스를 받아서 머리 렌더 실시
 	if (pBone->Name != nullptr && std::string(pBone->Name) == std::string("Bip01-Neck"))
 	{
 		if (m_pHead){
 			m_pHead->Render(&pBone->matWorldTM);
 		}
 	}
+
+	// 머리부위 바이패드의 월드트랜스폼매트릭스를 받아서 머리카락 렌더 실시
 	else if (pBone->Name != nullptr && std::string(pBone->Name) == std::string("Bip01-Head"))
 	{
 		if (m_pHair){
