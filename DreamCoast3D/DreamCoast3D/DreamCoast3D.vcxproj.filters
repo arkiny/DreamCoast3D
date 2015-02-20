@@ -232,6 +232,9 @@
     <ClCompile Include="cUIExpBar.cpp">
       <Filter>EachWorks\HD</Filter>
     </ClCompile>
+    <ClCompile Include="cGameMapHeightGridSystem.cpp">
+      <Filter>EachWorks\MS</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cAction.h">
@@ -473,6 +476,9 @@
     </ClInclude>
     <ClInclude Include="cUIExpBar.h">
       <Filter>EachWorks\HD</Filter>
+    </ClInclude>
+    <ClInclude Include="cGameMapHeightGridSystem.h">
+      <Filter>EachWorks\MS</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
