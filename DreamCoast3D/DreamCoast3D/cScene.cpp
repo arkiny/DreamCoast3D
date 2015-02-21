@@ -104,7 +104,7 @@ void cScene::Setup(std::string sFilePath){
 	std::string sFolder = "../Resources/Char/Tera/";
 	pGamePlayableObject->Setup(
 		sFolder, std::string("Popori_F_Body03.X"),
-		sFolder, std::string("Popori_F_L0_Face08.X"),
+		sFolder, std::string("Popori_F_Face03.X"),
 		sFolder, std::string("Popori_F_L0_Hair02.X"));
 	pGamePlayableObject->SetPosition(D3DXVECTOR3(128.0f, 0, 128.0f));
 	pGamePlayableObject->SetScale(D3DXVECTOR3(0.5f, 0.5f, 0.5f));
