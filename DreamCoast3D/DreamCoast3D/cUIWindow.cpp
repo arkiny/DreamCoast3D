@@ -12,8 +12,8 @@ cUIWindow::cUIWindow()
 cUIWindow::~cUIWindow()
 {
 	SAFE_RELEASE(m_pSprite);
-	//if (m_pUIRoot)
-		//m_pUIRoot->Destroy();
+	if (m_pUIRoot)
+		m_pUIRoot->Destroy();
 }
 
 void cUIWindow::Setup(){

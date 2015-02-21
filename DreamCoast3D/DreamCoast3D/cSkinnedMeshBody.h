@@ -5,9 +5,9 @@
 class cSkinnedMeshBody : public cSkinnedMesh
 {
 protected:
-	cSkinnedMesh* m_pHead;
-	cSkinnedMesh* m_pHair;
-	LPD3DXMESH			m_pMesh;
+	cSkinnedMesh*	m_pHead;
+	cSkinnedMesh*	m_pHair;
+	LPD3DXMESH		m_pMesh;
 public:
 	cSkinnedMeshBody();
 	virtual ~cSkinnedMeshBody();
