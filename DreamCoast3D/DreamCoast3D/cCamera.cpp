@@ -120,8 +120,8 @@ void cCamera::Update(float delta)
 	bool isLand;
 	float fHeight = m_pMap->GetHeight(isLand, &m_vEye);
 	
-	if (m_vEye.y < fHeight + 10.0f){
-		m_vEye.y = fHeight + 10.0f;
+	if (m_vEye.y < fHeight + m_fMin){
+		m_vEye.y = fHeight + m_fMin;
 	}
 
 	D3DXVECTOR3 dist = m_vEye - m_vLookAt;

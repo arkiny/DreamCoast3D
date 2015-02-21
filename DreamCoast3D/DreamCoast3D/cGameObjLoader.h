@@ -12,6 +12,8 @@ protected:
 
 	void ParseAndLoadSkinnedMeshList();
 	void ParseAndLoadSkinnedMeshtoManager(int nIndex);
+	
+	cGameObject* ParseAndLoadSkinnedBodyMesh();
 	cGameObject* ParseGameActionSkinnedMeshObj();
 
 public:

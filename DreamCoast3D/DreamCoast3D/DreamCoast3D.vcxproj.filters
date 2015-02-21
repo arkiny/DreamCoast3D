@@ -565,6 +565,9 @@
     <Filter Include="EachWorks\HD\AI-Action">
       <UniqueIdentifier>{1b834c32-e6d6-4f8f-b086-52e4c4847829}</UniqueIdentifier>
     </Filter>
+    <Filter Include="FrameWork\Resource">
+      <UniqueIdentifier>{a6d80302-f288-4251-8c93-210c45ed42a2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="DreamCoast3D.rc">
@@ -574,6 +577,18 @@
   <ItemGroup>
     <Text Include="ReadMe.txt">
       <Filter>FrameWork\Core</Filter>
+    </Text>
+    <Text Include="..\Resources\MAINDATA.txt">
+      <Filter>FrameWork\Resource</Filter>
+    </Text>
+    <Text Include="..\Resources\SCENE1_GAMEOBJDATA.txt">
+      <Filter>FrameWork\Resource</Filter>
+    </Text>
+    <Text Include="..\Resources\SCENE1_MAPDATA.txt">
+      <Filter>FrameWork\Resource</Filter>
+    </Text>
+    <Text Include="..\Resources\SCENE1_UIDATA.txt">
+      <Filter>FrameWork\Resource</Filter>
     </Text>
   </ItemGroup>
 </Project>

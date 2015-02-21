@@ -4,6 +4,7 @@
 #include "cGameObject.h"
 #include "cSkinnedMesh.h"
 #include "cGameActionSkinnedMeshObj.h"
+#include "cGamePlayableObject.h"
 
 //Template
 //int nLevel = 0;
@@ -47,6 +48,12 @@ void cGameObjLoader::LoadGameObjectsFromFile(OUT cGameObjManager* pGameManager, 
 			pGameManager->AddGameObj(p);
 			SAFE_RELEASE(p);
 		}
+		else if (isEqual(szToken, "*GAMEACTIONSKINNEDBODYMESHOBJ")){
+			cGameObject* p = ParseAndLoadSkinnedBodyMesh();
+			pGameManager->AddGameObj(p);
+			SAFE_RELEASE(p);
+		}
+
 		else if (isEqual(szToken, "#")){
 			SkipBlock();
 		}
@@ -82,6 +89,13 @@ cGameObject* cGameObjLoader::ParseGameActionSkinnedMeshObj(){
 			pos.y = GetFloat();
 			pos.z = GetFloat();
 			ret->SetPosition(pos);
+		}
+		else if (isEqual(szToken, "*SCALE")){
+			D3DXVECTOR3 scale;
+			scale.x = GetFloat();
+			scale.y = GetFloat();
+			scale.z = GetFloat();
+			ret->SetScale(scale);
 		}
 		else if (isEqual(szToken, "*SETINITANIMATION")){
 			int nIndex = GetInteger();
@@ -153,4 +167,65 @@ void cGameObjLoader::ParseAndLoadSkinnedMeshtoManager(int nIndex){
 	m_vecsFiles[nIndex] = sFile;
 	
 	g_pSkinnedMeshManager->GetSkinnedMesh(sFolder, sFile);
+}
+
+cGameObject* cGameObjLoader::ParseAndLoadSkinnedBodyMesh(){
+	cGamePlayableObject* ret = NULL;
+	int nBodyIndex = -1, nHeadIndex = -1, nHairIndex = -1;
+	D3DXVECTOR3 pos(0,0,0), scale(1.0f, 1.0f, 1.0f);
+	int nLevel = 0;
+	do{
+		char* szToken = GetToken();
+		if (isEqual(szToken, "{")){
+			++nLevel;
+		}
+		else if (isEqual(szToken, "}")){
+			--nLevel;
+		}
+		else if (isEqual(szToken, "*SKINNEDMESH_REF")){
+			nBodyIndex = GetInteger();
+		}
+		else if (isEqual(szToken, "*SKINNEDMESHHEAD_REF")){
+			nHeadIndex = GetInteger();
+		}
+		else if (isEqual(szToken, "*SKINNEDMESHAIR_REF")){
+			nHairIndex = GetInteger();
+		}
+		else if (isEqual(szToken, "*POISTION")){
+			pos.x = GetFloat();
+			pos.y = GetFloat();
+			pos.z = GetFloat();
+		}
+		else if (isEqual(szToken, "*SCALE")){
+			scale.x = GetFloat();
+			scale.y = GetFloat();
+			scale.z = GetFloat();
+		}
+		else if (isEqual(szToken, "*SETINITANIMATION")){
+			int nIndex = GetInteger();
+			//for (int i = 0; i < 5; i++){
+			//	if (i != nIndex){
+			//		ret->GetSkinnedMesh()->SetAnimationLoop(i, false);
+			//	}
+			//	else{
+			//		ret->GetSkinnedMesh()->SetAnimationLoop(i, true);
+			//	}
+			//}
+			/*ret->GetSkinnedMesh()->SetAnimationLoop(0, false);
+			ret->GetSkinnedMesh()->SetAnimationLoop(1, false);
+			ret->GetSkinnedMesh()->SetAnimationLoop(2, false);
+			ret->GetSkinnedMesh()->SetAnimationLoop(3, true);
+			ret->GetSkinnedMesh()->SetAnimationLoop(4, true);
+			ret->GetSkinnedMesh()->SetAnimationIndex(nIndex);*/
+		}
+	} while (nLevel > 0);
+
+	ret = new cGamePlayableObject;
+	ret->Setup(m_vecsFolders[nBodyIndex], m_vecsFiles[nBodyIndex],
+		m_vecsFolders[nHeadIndex], m_vecsFiles[nHeadIndex],
+		m_vecsFolders[nHairIndex], m_vecsFiles[nHairIndex]);
+	ret->SetPosition(pos);
+	ret->SetScale(scale);
+
+	return ret;
 }

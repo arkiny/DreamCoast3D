@@ -76,6 +76,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <Text Include="..\Resources\MAINDATA.txt" />
+    <Text Include="..\Resources\SCENE1_GAMEOBJDATA.txt" />
+    <Text Include="..\Resources\SCENE1_MAPDATA.txt" />
+    <Text Include="..\Resources\SCENE1_UIDATA.txt" />
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
