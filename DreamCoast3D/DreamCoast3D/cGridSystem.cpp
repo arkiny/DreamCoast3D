@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "cGridSystem.h"
+#include "cASEInstance.h"
 #include <assert.h>
 
 
@@ -35,7 +36,7 @@ void cGridSystem::AddObjectOnGrid(cGameObject* pGameObejct, int nX, int nZ, int 
 	int nBeginGridX = nX - nObjectWidth / 2;
 	int nBeginGridZ = nZ - nObjectHeight / 2;
 
-	for (int z = nBeginGridZ; z < nBeginGridZ + nObjectWidth; z++)
+	for (int z = nBeginGridZ; z < nBeginGridZ + nObjectHeight; z++)
 	{
 		for (int x = nBeginGridX; x < nBeginGridX + nObjectWidth; x++)
 		{
@@ -58,11 +59,6 @@ void cGridSystem::AddObjectOnGrid(cGameObject* pGameObejct, int nX, int nZ, int 
 std::set<cGameObject*> cGridSystem::GetObjectOnGrid(int nX, int nZ)
 {
 	return m_vecTileData[nX + nZ*m_nMapSize];
-}
-
-void cGridSystem::RemoveObejctOnTile(cGameObject* pGameObejct, int nX, int nZ)
-{
-
 }
 
 D3DXVECTOR3 cGridSystem::GetObjectCenter(int nX, int nZ)
@@ -90,11 +86,15 @@ D3DXVECTOR3 cGridSystem::GetTileCenterCoord(int nX, int nZ)
 {
 	D3DXVECTOR3 vCenter(0.0f, 0.0f, 0.0f);
 
-	int x = nX / m_nConstTileSize;
-	int z = nZ / m_nConstTileSize;
+	//아래 주석은 좌표 입력시 해당 타일의 중심좌표를 찾아주게 하는것
+	//int x = nX / m_nConstTileSize;
+	//int z = nZ / m_nConstTileSize;
 
-	vCenter.x = m_nConstTileSize*(x + 0.5); // x * m_nConstTileSize + m_nConstTileSize/2;
-	vCenter.z = m_nConstTileSize*(z + 0.5); // z * m_nConstTileSize + m_nConstTileSize/2;
+	//vCenter.x = m_nConstTileSize*(x + 0.5f); // x * m_nConstTileSize + m_nConstTileSize/2;
+	//vCenter.z = m_nConstTileSize*(z + 0.5f); // z * m_nConstTileSize + m_nConstTileSize/2;
+
+	vCenter.x = m_nConstTileSize*(nX + 0.5f);
+	vCenter.z = m_nConstTileSize*(nZ + 0.5f);
 
 	return vCenter;
 }
@@ -130,4 +130,47 @@ std::vector<cGameObject*> cGridSystem::GetAdjObject(int nX, int nZ)
 	}
 
 	return vecGameObject;
+}
+
+void cGridSystem::RemoveObejctOnTile(cGameObject* pGameObejct, int nX, int nZ)
+{
+	D3DXVECTOR3 vec = GetObjectCenter(nX, nZ);
+
+	int nCenterX = (int)vec.x;
+	int nCenterZ = (int)vec.z;
+
+	if (m_vecTileData[nCenterX + nCenterZ*m_nMapSize].count(pGameObejct) > 0)
+	{
+		cASEInstance* AseObject = new cASEInstance;
+
+		AseObject = (cASEInstance*)*GetObjectOnGrid(nX, nZ).begin();
+
+		ST_BOUNDING_BOX stBoundingBox = AseObject->GetBoundingBox();
+
+		int nWidth = (int)(stBoundingBox.vMax.x - stBoundingBox.vMin.x);
+		int nHeight = (int)(stBoundingBox.vMax.z - stBoundingBox.vMin.z);
+
+		int nBeginGridX = nCenterX - nWidth / 2;
+		int nBeginGridZ = nCenterZ - nHeight / 2;
+
+		//cGameObject* GameObject = new cGameObject;
+
+		//GameObject = *GetObjectOnGrid(nX, nZ).begin();
+
+		for (int z = nBeginGridZ; z < nBeginGridZ + nHeight; z++)
+		{
+			for (int x = nBeginGridX; x < nBeginGridX + nWidth; x++)
+			{
+				if (m_vecTileData[x + z*m_nMapSize].find(pGameObejct)
+					!= m_vecTileData[x + z*m_nMapSize].end())
+				{
+					m_vecTileData[x + z*m_nMapSize].erase(pGameObejct);
+				}
+			}
+		}
+	}
+	else
+	{
+		return;
+	}
 }

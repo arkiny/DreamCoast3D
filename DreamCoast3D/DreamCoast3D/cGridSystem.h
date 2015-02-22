@@ -2,6 +2,7 @@
 // 그리드는 GameObject가 아니라 일종의 시스템이므로
 // 그냥 cObject를 상속받거나 아예 상속을 받지 않는다.
 class cGameObject;
+class cASEInstance;
 
 class cGridSystem : public cObject
 {
@@ -35,9 +36,6 @@ public:
 	// Grid 좌표 입력하면 오브젝트가 튀어나옴
 	std::set<cGameObject*> GetObjectOnGrid(int nX, int nZ);
 
-	// 아직 구현안됨
-	void RemoveObejctOnTile(cGameObject* pGameObejct, int nX, int nZ);
-
 	// TODO
 	// 타일 입력시 해당 타일의 중심좌표를 돌려주는 함수(나중에 길찾기때에 사용)
 	D3DXVECTOR3 GetTileCenterCoord(int nX, int nZ);
@@ -52,6 +50,9 @@ public:
 	// 몬스터나 플레이어가 매번 업데이트때 실행되서 현재 타일이 자신의 타일과 다를경우
 	// 자신이 있는 타일 업데이트를 실시(빼서 넣기 등등)해야 하기 때문
 	// POINT GetTileCoord(D3DXVECTOR3& vecPos)
+
+	// 아직 구현안됨
+	void RemoveObejctOnTile(cGameObject* pGameObejct, int nX, int nZ);
 
 
 };
