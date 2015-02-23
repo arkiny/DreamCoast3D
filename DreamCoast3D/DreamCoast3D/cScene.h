@@ -52,6 +52,8 @@ public:
 	virtual void AddGameObj(cGameObject* pGameObj);
 	virtual void AddUIObj(cUIObject* pUIObj);
 
+	virtual void AddStaticGameObj(cGameObject* pGameObj);
+
 	// 맵은 한번 애드되면 고정되있기로 한다.
 	virtual void AddMap(cGameMapObject* pGameMap);
 	virtual void SetCurrentMap(int nIndex);

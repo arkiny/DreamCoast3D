@@ -164,6 +164,7 @@
     <ClInclude Include="DreamCoast3D.h" />
     <ClInclude Include="iActionDelegate.h" />
     <ClInclude Include="iButtonDelegate.h" />
+    <ClInclude Include="iGameObjectDelegate.h" />
     <ClInclude Include="iMap.h" />
     <ClInclude Include="iPlayerState.h" />
     <ClInclude Include="iSceneDelegate.h" />
@@ -250,6 +251,7 @@
     <ClCompile Include="DreamCoast3D.cpp" />
     <ClCompile Include="iActionDelegate.cpp" />
     <ClCompile Include="iButtonDelegate.cpp" />
+    <ClCompile Include="iGameObjectDelegate.cpp" />
     <ClCompile Include="iMap.cpp" />
     <ClCompile Include="iPlayerState.cpp" />
     <ClCompile Include="iSceneDelegate.cpp" />

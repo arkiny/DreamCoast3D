@@ -3,6 +3,7 @@
 #include "cScene.h"
 #include "cGameMapHeight.h"
 #include "cGameASEObject.h"
+#include "cGameMapHeightGridSystem.h"
 
 
 cMapLoader::cMapLoader()
@@ -27,7 +28,7 @@ void cMapLoader::LoadGameMapFromFile(OUT cScene* pScene, IN std::string sPath){
 		else if (isEqual(szToken, "*MAP_OBJECT_ASE")){
 			cGameASEObject* add = ParseMapObjectAse();
 			if (add){
-				pScene->AddGameObj(add);
+				pScene->AddStaticGameObj(add);
 				SAFE_RELEASE(add);
 			}
 		}
@@ -131,7 +132,8 @@ void cMapLoader::ParseGameMapInfo(OUT cScene* pScene){
 			int numOfGameMap = GetInteger();
 		}
 		else if (isEqual(szToken, "*HEIGHT_MAP")){
-			cGameMapHeight* add = ParseHeightMap();
+			cGameMapObject* add = ParseHeightMap();
+			add->Setup();
 			pScene->AddMap(add);
 		}
 	} while (nLevel > 0);
@@ -139,8 +141,7 @@ void cMapLoader::ParseGameMapInfo(OUT cScene* pScene){
 
 cGameMapHeight* cMapLoader::ParseHeightMap(){
 	int nLevel = 0;
-
-	cGameMapHeight* ret = new cGameMapHeight;
+	cGameMapHeightGridSystem* ret = new cGameMapHeightGridSystem;
 	std::string sTexture;
 	std::string sRaw;
 	int num = GetInteger();

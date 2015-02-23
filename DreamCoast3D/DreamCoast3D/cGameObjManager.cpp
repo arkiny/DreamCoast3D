@@ -14,8 +14,7 @@ cGameObjManager::cGameObjManager()
 cGameObjManager::~cGameObjManager()
 {
 	SAFE_RELEASE(m_pFrustum);
-
-	SAFE_RELEASE(m_pPlayable)
+	SAFE_RELEASE(m_pPlayable);
 }
 
 void cGameObjManager::Setup(){
@@ -37,10 +36,30 @@ void cGameObjManager::Update(float fDelta){
 }
 
 void cGameObjManager::Render(){
+	for (auto p : m_setStaticGameObjects){
+		if (m_pFrustum->IsIn(p->GetBoundingSphere())){
+			SAFE_RENDER(p);
+		}
+	}
+
 	for (auto p : m_setGameObjects){
 		if (m_pFrustum->IsIn(p->GetBoundingSphere())){
 			SAFE_RENDER(p);
 		}
+	}
+}
+
+void cGameObjManager::SetCurrentTileSystem(iGridTileSystem* pGridSystem){
+	for (auto p : m_setStaticGameObjects){
+		p->SetGridTileSystem(pGridSystem);
+		int x = static_cast<int>(floorf(p->GetPosition().x));
+		int z = static_cast<int>(floorf(p->GetPosition().z));
+		pGridSystem->AddObjectOnGrid(p, x, z);
+		p->Release();
+	}
+
+	for (auto p : m_setGameObjects){
+		p->SetGridTileSystem(pGridSystem);
 	}
 }
 
@@ -62,10 +81,31 @@ void cGameObjManager::RemoveGameObj(cGameObject* pGameObj){
 	}
 }
 
+void cGameObjManager::AddStaticGameObjects(cGameObject* pGameObj){
+	if (pGameObj){
+		if (m_setStaticGameObjects.find(pGameObj) == m_setStaticGameObjects.end()){
+			SAFE_ADD_REF(pGameObj);
+			m_setStaticGameObjects.insert(pGameObj);
+		}
+	}
+}
+
+void cGameObjManager::RemoveStaticGameObjects(cGameObject* pGameObj){
+	if (pGameObj){
+		if (m_setStaticGameObjects.find(pGameObj) != m_setStaticGameObjects.end()){
+			m_setStaticGameObjects.erase(pGameObj);
+			SAFE_RELEASE(pGameObj);
+		}
+	}
+}
+
 void cGameObjManager::Destroy(){
-	for (auto p : m_setGameObjects){
+	for (auto p : m_setStaticGameObjects){
 		SAFE_RELEASE(p);
 	}
+	for (auto p : m_setGameObjects){
+		SAFE_RELEASE(p);
+	}	
 	this->Release(); 
 }
 
@@ -78,10 +118,18 @@ void cGameObjManager::AdjustYPositionByHeightMap(cGameMapObject* pMap){
 			p->SetYPosition(yPos);
 		}
 	}
+
+	for (auto p : m_setStaticGameObjects){
+		bool bIsLand = false;
+		float yPos = pMap->GetHeight(bIsLand, &p->GetTransform()->GetPosition());
+		if (bIsLand){
+			p->SetYPosition(yPos);
+		}
+	}
 }
 
 void cGameObjManager::SetPlayableGameObject(cGameObject* pPlayer){
-	if (pPlayer){
+	if (pPlayer && pPlayer != m_pPlayable){
 		pPlayer->AddRef();
 		m_pPlayable = pPlayer;
 	}	

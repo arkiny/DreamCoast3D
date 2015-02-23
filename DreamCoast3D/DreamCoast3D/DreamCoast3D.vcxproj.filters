@@ -247,6 +247,7 @@
     <ClCompile Include="iPlayerState.cpp">
       <Filter>EachWorks\HD\PlayerFSM</Filter>
     </ClCompile>
+    <ClCompile Include="iGameObjectDelegate.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cAction.h">
@@ -504,6 +505,7 @@
     <ClInclude Include="iPlayerState.h">
       <Filter>EachWorks\HD\PlayerFSM</Filter>
     </ClInclude>
+    <ClInclude Include="iGameObjectDelegate.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="DreamCoast3D.ico">

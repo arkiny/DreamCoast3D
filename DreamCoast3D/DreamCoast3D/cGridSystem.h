@@ -34,6 +34,7 @@ public:
 	// 해당 Grid 위에 Object가 있을시 Object를 삭제함
 	void RemoveObejctOnTile(cGameObject* pGameObejct, int nX, int nZ);
 
+	void Destroy();
 
 	// 좌표 입력시 해당 타일의 그리드 좌표를 돌려주는 함수(차후에 사용할수도 있음)
 	// 아마 GetObjectOnGrid안에 있겠지만 쪼개는 편이 좋음

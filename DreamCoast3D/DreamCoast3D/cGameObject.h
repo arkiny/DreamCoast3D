@@ -4,14 +4,14 @@
 // 이 함수를 상속받아서 실시한다.
 // TODO : 이동할때나 상황에 따라 바운딩 스피어가 움직이가 처리해야한다.
 //		  현재 함수는 바운딩 스피어의 Y축 이동이 불완전한 상태
-
 class cTransform;
 
 class cGameObject : public cObject
 {
 protected:
-	ST_BOUNDING_SPHERE	m_stBoundingSphere;
+	SYNTHESIZE(iGridTileSystem*, m_pGridCallback, GridTileSystem);
 
+	ST_BOUNDING_SPHERE	m_stBoundingSphere;
 	ST_BOUNDING_BOX*	m_pBoundingBox;
 	cTransform*			m_pTransform;
 

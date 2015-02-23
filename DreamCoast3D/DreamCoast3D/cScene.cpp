@@ -124,6 +124,8 @@ void cScene::Start(){
 	for (auto p : m_vecLightSources){
 		p->Start();
 	}
+
+	m_pGameObjManager->SetCurrentTileSystem(m_pCurrentMap);
 }
 
 void cScene::Update(float delta){
@@ -164,6 +166,10 @@ void cScene::AddGameObj(cGameObject* pGameObj){
 
 void cScene::AddUIObj(cUIObject* pUIObj){
 	m_pUIObjManager->AddUI(pUIObj);
+}
+
+void cScene::AddStaticGameObj(cGameObject* pGameObj){
+	m_pGameObjManager->AddStaticGameObjects(pGameObj);
 }
 
 void cScene::Destroy(){

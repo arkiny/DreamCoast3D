@@ -14,6 +14,7 @@ private:
 
 	// HACK : Playable과 몬스터와 사물을 나눠놓을까?
 	std::set<cGameObject*>			m_setGameObjects;
+	std::set<cGameObject*>			m_setStaticGameObjects;
 
 public:
 	cGameObjManager();
@@ -23,10 +24,16 @@ public:
 	void Update(float fDelta);
 	void Render();
 
+	void SetCurrentTileSystem(iGridTileSystem* pGridSystem);
+
 	void AddGameObj(cGameObject* pGameObj);
 	void RemoveGameObj(cGameObject* pGameObj);
 
+	void AddStaticGameObjects(cGameObject* pGameObj);
+	void RemoveStaticGameObjects(cGameObject* pGameObj); 
+
 	void AdjustYPositionByHeightMap(cGameMapObject* pMap);
+	
 	void SetPlayableGameObject(cGameObject* pPlayer);
 	cGameObject* GetPlayerableGameObject() { return m_pPlayable; }
 

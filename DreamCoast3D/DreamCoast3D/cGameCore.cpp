@@ -17,8 +17,7 @@ cGameCore::~cGameCore()
 	g_pSkinnedMeshManager->Destroy();
 	g_pAseManager->Destroy();
 
-	cDeviceManager* pDevice = cDeviceManager::GetInstance();
-	pDevice->Destroy();
+
 }
 
 void cGameCore::Setup(){

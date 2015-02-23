@@ -147,6 +147,7 @@ struct ST_SIZE
 #include "iSceneDelegate.h"
 #include "iActionDelegate.h"
 #include "iButtonDelegate.h"
+#include "iMap.h"
 
 // 모두가 알아야 하는 클래스들
 #include "cObject.h"

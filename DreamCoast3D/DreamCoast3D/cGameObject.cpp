@@ -5,6 +5,7 @@
 cGameObject::cGameObject()
 	:m_stBoundingSphere()
 	, m_pBoundingBox(NULL)
+	, m_pGridCallback(NULL)
 {
 	m_pTransform = new cTransform;
 }

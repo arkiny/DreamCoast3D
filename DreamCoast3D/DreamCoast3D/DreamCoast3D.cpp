@@ -96,6 +96,9 @@ int APIENTRY _tWinMain(_In_ HINSTANCE hInstance,
 	g_pTimer->Destroy();
 	g_pObjectManager->Destroy();
 	g_pControlManager->Destroy();
+	cDeviceManager* pDevice = cDeviceManager::GetInstance();
+	pDevice->Destroy();
+
 	return (int) msg.wParam;
 }
 

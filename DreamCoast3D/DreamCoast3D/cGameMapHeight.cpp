@@ -37,8 +37,8 @@ void cGameMapHeight::LoadFromFiles(std::string sFilename, std::string sTextureFi
 		for (int x = 0; x <= m_nTileN; ++x)
 		{
 			unsigned char y = fgetc(fp);
-			m_vecVertex[z * (m_nTileN + 1) + x].p = D3DXVECTOR3(x, y / 10.0f, z);
-			m_vecVertex[z * (m_nTileN + 1) + x].t = D3DXVECTOR2(x / (float)m_nTileN, z / (float)m_nTileN);
+			m_vecVertex[z * (m_nTileN + 1) + x].p = D3DXVECTOR3((float)x, y / 10.0f, (float)z);
+			m_vecVertex[z * (m_nTileN + 1) + x].t = D3DXVECTOR2((float)x / (float)m_nTileN, z / (float)m_nTileN);
 			m_vecVertex[z * (m_nTileN + 1) + x].n = D3DXVECTOR3(0, 1, 0);
 		}
 	}

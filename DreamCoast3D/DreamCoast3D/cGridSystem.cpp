@@ -13,6 +13,7 @@ cGridSystem::cGridSystem()
 
 cGridSystem::~cGridSystem()
 {
+	this->Destroy();
 }
 
 void cGridSystem::Setup(int nMapSize)
@@ -228,3 +229,11 @@ void cGridSystem::RemoveObejctOnTile(cGameObject* pGameObejct, int nX, int nZ)
 //		}
 //	}
 //}
+
+void cGridSystem::Destroy(){
+	for (size_t i = 0; i < m_vecTileData.size(); i++){
+		for (auto p : m_vecTileData[i]){
+			p->Release();
+		}
+	}
+}
