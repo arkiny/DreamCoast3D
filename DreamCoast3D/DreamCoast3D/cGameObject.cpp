@@ -4,6 +4,7 @@
 
 cGameObject::cGameObject()
 	:m_stBoundingSphere()
+	, m_pBoundingBox(NULL)
 {
 	m_pTransform = new cTransform;
 }
@@ -33,6 +34,10 @@ void cGameObject::Render(){
 
 ST_BOUNDING_SPHERE*	cGameObject::GetBoundingSphere(){
 	return &m_stBoundingSphere;
+}
+
+ST_BOUNDING_BOX* cGameObject::GetBoundingBox(){
+	return m_pBoundingBox;
 }
 
 cTransform*	cGameObject::GetTransform(){

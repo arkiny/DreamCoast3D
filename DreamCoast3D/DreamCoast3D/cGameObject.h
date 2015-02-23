@@ -11,6 +11,7 @@ class cGameObject : public cObject
 {
 protected:
 	ST_BOUNDING_SPHERE	m_stBoundingSphere;
+	ST_BOUNDING_BOX*	m_pBoundingBox;
 	cTransform*			m_pTransform;
 
 public:
@@ -23,7 +24,10 @@ public:
 
 	virtual cTransform*			GetTransform();
 	virtual D3DXMATRIXA16*		GetTransformMatrix();
+	
 	virtual ST_BOUNDING_SPHERE*	GetBoundingSphere();
+	virtual ST_BOUNDING_BOX*	GetBoundingBox();
+	virtual void				SetBoundingBox(ST_BOUNDING_BOX* pBoundingBox) { m_pBoundingBox = pBoundingBox; }
 
 	virtual void				SetPosition(D3DXVECTOR3& newPos);
 	virtual D3DXVECTOR3&		GetPosition();
