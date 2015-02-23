@@ -51,11 +51,13 @@ D3DXMATRIXA16* cGameObject::GetTransformMatrix(){
 void cGameObject::SetPosition(D3DXVECTOR3& newPos){
 	//D3DXVECTOR3 pos = m_pTransform->GetPosition();
 	//float diff = (m_stBoundingSphere.m_vCenter.y - pos.y) * m_pTransform->GetScaling().y;
-	m_pTransform->SetPosition(newPos);
-	m_stBoundingSphere.m_vCenter = newPos;
 	//m_stBoundingSphere.m_vCenter.x = newPos.x;
 	//m_stBoundingSphere.m_vCenter.y = newPos.y + diff;
 	//m_stBoundingSphere.m_vCenter.z = newPos.z;
+	/*m_stBoundingSphere.m_vCenter.y = m_stBoundingSphere.m_vCenter.y + m_stBoundingSphere.m_fRadius;*/
+
+	m_pTransform->SetPosition(newPos);
+	D3DXVec3TransformCoord(&m_stBoundingSphere.m_vCenter, &m_stBoundingSphere.m_vCenter, GetTransformMatrix());
 }
 
 D3DXVECTOR3& cGameObject::GetPosition(){
@@ -83,4 +85,8 @@ void cGameObject::SetYangle(float fAngleRad){
 
 void cGameObject::SetZangle(float fAngleRad){
 	m_pTransform->SetZAxisAngle(fAngleRad);
+}
+
+D3DXVECTOR3& cGameObject::GetScale(){
+	return m_pTransform->GetScaling();
 }

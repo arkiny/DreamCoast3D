@@ -11,6 +11,7 @@ class cGameObject : public cObject
 {
 protected:
 	ST_BOUNDING_SPHERE	m_stBoundingSphere;
+
 	ST_BOUNDING_BOX*	m_pBoundingBox;
 	cTransform*			m_pTransform;
 
@@ -40,5 +41,7 @@ public:
 	virtual void				SetXangle(float fAngleRad);
 	virtual void				SetYangle(float fAngleRad);
 	virtual void				SetZangle(float fAngleRad);
+
+	virtual D3DXVECTOR3&		GetScale();
 };
 

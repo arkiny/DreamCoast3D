@@ -13,6 +13,9 @@ m_fMaxExp(100.0f)
 
 cUIExpBar::~cUIExpBar()
 {
+	SAFE_RELEASE(m_pSprite);
+	if (m_pUIRoot)
+		m_pUIRoot->Destroy();
 }
 
 void cUIExpBar::Setup(){

@@ -16,11 +16,13 @@ cUIObject::cUIObject(LPD3DXSPRITE pSprite)
 	, m_vScale(1, 1, 1)
 	, m_pSprite(pSprite)
 {
+	m_pSprite->AddRef();
 }
 
 
 cUIObject::~cUIObject()
 {
+	SAFE_RELEASE(m_pSprite);
 }
 
 void cUIObject::AddChild(cUIObject* pChild){

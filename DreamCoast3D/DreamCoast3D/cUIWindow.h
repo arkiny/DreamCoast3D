@@ -3,7 +3,6 @@ class cUIWindow : public cUIObject
 {
 protected:
 	RECT					m_rectClickArea;
-	LPD3DXSPRITE			m_pSprite;
 	cUIObject*				m_pUIRoot;
 
 public:

@@ -24,6 +24,18 @@ void cGameASEObject::Setup(std::string sFolder, std::string sFile){
 		&m_pDebugBoxMesh, NULL);
 
 	m_pBoundingBox = &m_pASEInstance->GetBoundingBox();
+	float x = -1.0f;
+	float y = -1.0f;
+	float z = -1.0f;
+	if (m_pBoundingBox){
+		x = m_pBoundingBox->vMax.x - m_pBoundingBox->vMin.x;
+		y = m_pBoundingBox->vMax.y - m_pBoundingBox->vMin.y;
+		z = m_pBoundingBox->vMax.z - m_pBoundingBox->vMin.z;
+	}
+
+	float max = fmax(fmax(x, y),z);
+
+	m_stBoundingSphere.m_fRadius = max / 2.0f;
 }
 
 void cGameASEObject::Update(float fDelta){
@@ -35,7 +47,10 @@ void cGameASEObject::Render(){
 	if (m_pDebugBoxMesh){
 		g_pD3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
 		D3DXMATRIXA16 matT;
-		D3DXMatrixTranslation(&matT, 0, (m_pASEInstance->GetBoundingBox().vMax.y - m_pASEInstance->GetBoundingBox().vMin.y)/2.0f, 0);
+		D3DXMatrixTranslation(&matT, 
+			0, 
+			(m_pASEInstance->GetBoundingBox().vMax.y - m_pASEInstance->GetBoundingBox().vMin.y)/2.0f, 
+			0);
 		matT = matT * *GetTransformMatrix();
 		g_pD3DDevice->SetTransform(D3DTS_WORLD, &matT);
 		m_pDebugBoxMesh->DrawSubset(0);
