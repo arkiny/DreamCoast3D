@@ -41,6 +41,7 @@ public:
 	virtual void				SetXangle(float fAngleRad);
 	virtual void				SetYangle(float fAngleRad);
 	virtual void				SetZangle(float fAngleRad);
+	virtual float				GetYangle();
 
 	virtual D3DXVECTOR3&		GetScale();
 };

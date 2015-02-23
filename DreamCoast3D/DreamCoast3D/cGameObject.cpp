@@ -89,3 +89,7 @@ void cGameObject::SetZangle(float fAngleRad){
 D3DXVECTOR3& cGameObject::GetScale(){
 	return m_pTransform->GetScaling();
 }
+
+float cGameObject::GetYangle(){
+	return m_pTransform->GetYAxisAngle();
+}

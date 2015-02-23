@@ -169,9 +169,6 @@
     <ClCompile Include="cObject.cpp">
       <Filter>FrameWork\Object</Filter>
     </ClCompile>
-    <ClCompile Include="cGamePlayableObject.cpp">
-      <Filter>EachWorks\MW</Filter>
-    </ClCompile>
     <ClCompile Include="cGridSystem.cpp">
       <Filter>EachWorks\MS</Filter>
     </ClCompile>
@@ -234,6 +231,21 @@
     </ClCompile>
     <ClCompile Include="cGameMapHeightGridSystem.cpp">
       <Filter>EachWorks\MS</Filter>
+    </ClCompile>
+    <ClCompile Include="cGameSMeshBodyObject.cpp">
+      <Filter>EachWorks\MW</Filter>
+    </ClCompile>
+    <ClCompile Include="cGamePlayableObject.cpp">
+      <Filter>EachWorks\HD</Filter>
+    </ClCompile>
+    <ClCompile Include="cPlayerMove.cpp">
+      <Filter>EachWorks\HD\PlayerFSM</Filter>
+    </ClCompile>
+    <ClCompile Include="cPlayerIdle.cpp">
+      <Filter>EachWorks\HD\PlayerFSM</Filter>
+    </ClCompile>
+    <ClCompile Include="iPlayerState.cpp">
+      <Filter>EachWorks\HD\PlayerFSM</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -408,9 +420,6 @@
     <ClInclude Include="cObject.h">
       <Filter>FrameWork\Object</Filter>
     </ClInclude>
-    <ClInclude Include="cGamePlayableObject.h">
-      <Filter>EachWorks\MW</Filter>
-    </ClInclude>
     <ClInclude Include="cGridSystem.h">
       <Filter>EachWorks\MS</Filter>
     </ClInclude>
@@ -479,6 +488,21 @@
     </ClInclude>
     <ClInclude Include="cGameMapHeightGridSystem.h">
       <Filter>EachWorks\MS</Filter>
+    </ClInclude>
+    <ClInclude Include="cGameSMeshBodyObject.h">
+      <Filter>EachWorks\MW</Filter>
+    </ClInclude>
+    <ClInclude Include="cGamePlayableObject.h">
+      <Filter>EachWorks\HD</Filter>
+    </ClInclude>
+    <ClInclude Include="cPlayerMove.h">
+      <Filter>EachWorks\HD\PlayerFSM</Filter>
+    </ClInclude>
+    <ClInclude Include="cPlayerIdle.h">
+      <Filter>EachWorks\HD\PlayerFSM</Filter>
+    </ClInclude>
+    <ClInclude Include="iPlayerState.h">
+      <Filter>EachWorks\HD\PlayerFSM</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -567,6 +591,9 @@
     </Filter>
     <Filter Include="FrameWork\Resource">
       <UniqueIdentifier>{a6d80302-f288-4251-8c93-210c45ed42a2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="EachWorks\HD\PlayerFSM">
+      <UniqueIdentifier>{81c6b559-4e66-47bb-9f54-d0cbfee6aa91}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

@@ -121,11 +121,14 @@
     <ClInclude Include="cGameObjLoader.h" />
     <ClInclude Include="cGameObjManager.h" />
     <ClInclude Include="cGamePlayableObject.h" />
+    <ClInclude Include="cGameSMeshBodyObject.h" />
     <ClInclude Include="cGameTimer.h" />
     <ClInclude Include="cGridSystem.h" />
     <ClInclude Include="cLoader.h" />
     <ClInclude Include="cMapLoader.h" />
     <ClInclude Include="cMtlTex.h" />
+    <ClInclude Include="cPlayerMove.h" />
+    <ClInclude Include="cPlayerIdle.h" />
     <ClInclude Include="cSkinnedMeshBody.h" />
     <ClInclude Include="cUIExpBar.h" />
     <ClInclude Include="cUIGameMainMenu.h" />
@@ -162,6 +165,7 @@
     <ClInclude Include="iActionDelegate.h" />
     <ClInclude Include="iButtonDelegate.h" />
     <ClInclude Include="iMap.h" />
+    <ClInclude Include="iPlayerState.h" />
     <ClInclude Include="iSceneDelegate.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="stdafx.h" />
@@ -203,11 +207,14 @@
     <ClCompile Include="cGameObjLoader.cpp" />
     <ClCompile Include="cGameObjManager.cpp" />
     <ClCompile Include="cGamePlayableObject.cpp" />
+    <ClCompile Include="cGameSMeshBodyObject.cpp" />
     <ClCompile Include="cGameTimer.cpp" />
     <ClCompile Include="cGridSystem.cpp" />
     <ClCompile Include="cLoader.cpp" />
     <ClCompile Include="cMapLoader.cpp" />
     <ClCompile Include="cMtlTex.cpp" />
+    <ClCompile Include="cPlayerMove.cpp" />
+    <ClCompile Include="cPlayerIdle.cpp" />
     <ClCompile Include="cSkinnedMeshBody.cpp" />
     <ClCompile Include="cUIExpBar.cpp" />
     <ClCompile Include="cUIGameMainMenu.cpp" />
@@ -244,6 +251,7 @@
     <ClCompile Include="iActionDelegate.cpp" />
     <ClCompile Include="iButtonDelegate.cpp" />
     <ClCompile Include="iMap.cpp" />
+    <ClCompile Include="iPlayerState.cpp" />
     <ClCompile Include="iSceneDelegate.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
