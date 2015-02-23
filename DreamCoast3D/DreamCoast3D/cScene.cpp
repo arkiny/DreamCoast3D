@@ -95,7 +95,8 @@ void cScene::Setup(std::string sFilePath){
 	//cUIMinimap* p4 = new cUIMinimap;
 	//p4->Setup();
 	//m_pUIObjManager->AddUI(p4);
-	//SAFE_RELEASE(p4);
+	//SAFE_RELEASE(p4);hkjhkjh
+	jhgjhgjh
 
 	// Sky
 	cGameMapSkyObject* pGMSO = new cGameMapSkyObject;
