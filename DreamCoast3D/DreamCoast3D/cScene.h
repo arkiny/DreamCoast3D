@@ -6,8 +6,6 @@ class cGameObjManager;
 class cUIObjManager;
 class cGameMapObject;
 
-// MS test 삭제 예정
-//class cGridSystem;
 
 // 앞으로의 모든 씬은 cScene을 상속받아서 만들어진다.
 class cScene : public cObject
@@ -78,7 +76,5 @@ public:
 
 	virtual void Destroy();
 
-	// MS test용 삭제예정
-	//cGridSystem* m_pGridSystem;
 };
 
