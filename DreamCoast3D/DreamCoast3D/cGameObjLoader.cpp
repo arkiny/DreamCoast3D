@@ -5,6 +5,7 @@
 #include "cSkinnedMesh.h"
 #include "cGameActionSkinnedMeshObj.h"
 #include "cGameSMeshBodyObject.h"
+#include "cGamePlayableObject.h"
 
 //Template
 //int nLevel = 0;
@@ -51,6 +52,7 @@ void cGameObjLoader::LoadGameObjectsFromFile(OUT cGameObjManager* pGameManager, 
 		else if (isEqual(szToken, "*GAMEACTIONSKINNEDBODYMESHOBJ")){
 			cGameObject* p = ParseAndLoadSkinnedBodyMesh();
 			pGameManager->AddGameObj(p);
+			pGameManager->SetPlayableGameObject(p);
 			SAFE_RELEASE(p);
 		}
 
@@ -170,7 +172,7 @@ void cGameObjLoader::ParseAndLoadSkinnedMeshtoManager(int nIndex){
 }
 
 cGameObject* cGameObjLoader::ParseAndLoadSkinnedBodyMesh(){
-	cGameSMeshBodyObject* ret = NULL;
+	cGamePlayableObject* ret = NULL;
 	int nBodyIndex = -1, nHeadIndex = -1, nHairIndex = -1;
 	D3DXVECTOR3 pos(0,0,0), scale(1.0f, 1.0f, 1.0f);
 	int nLevel = 0;
@@ -220,7 +222,7 @@ cGameObject* cGameObjLoader::ParseAndLoadSkinnedBodyMesh(){
 		}
 	} while (nLevel > 0);
 
-	ret = new cGameSMeshBodyObject;
+	ret = new cGamePlayableObject;
 	ret->Setup(m_vecsFolders[nBodyIndex], m_vecsFiles[nBodyIndex],
 		m_vecsFolders[nHeadIndex], m_vecsFiles[nHeadIndex],
 		m_vecsFolders[nHairIndex], m_vecsFiles[nHairIndex]);

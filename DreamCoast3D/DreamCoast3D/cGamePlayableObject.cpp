@@ -4,8 +4,9 @@
 #include "cPlayerMove.h"
 
 cGamePlayableObject::cGamePlayableObject()
-	:m_vecFront(0,0,1),
-	m_fMoveSpeed(30.0f)
+	:m_vecFront(0, 0, 1),
+	m_fMoveSpeed(30.0f),
+	m_fPlayerAngleDegree(0.0f)
 {
 }
 

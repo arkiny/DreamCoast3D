@@ -17,6 +17,7 @@ protected:
 	// 게임 오브젝트들을 가지고 처리해주는 매니저
 	// 각 씬마다 변경시 갱신해줘야 한다.
 	cGameObjManager*					m_pGameObjManager;
+
 	
 	// 각씬은 여러개의 UI를 가질수 있다.
 	cUIObjManager*						m_pUIObjManager;	
@@ -75,6 +76,7 @@ public:
 	
 
 	virtual void Destroy();
+
 
 };
 

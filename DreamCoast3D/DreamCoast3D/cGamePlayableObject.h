@@ -51,8 +51,9 @@ public:
 		EPLAYABLESTATE_MAX
 	};
 protected:
-	SYNTHESIZE_PASS_BY_REF(D3DXVECTOR3, m_vecFront, Front);
+	SYNTHESIZE(D3DXVECTOR3, m_vecFront, Front);
 	SYNTHESIZE(float, m_fMoveSpeed, MoveSpeed);
+	SYNTHESIZE(float, m_fPlayerAngleDegree, PlayerAngle);
 	
 	std::vector<iPlayerState*>	m_vecStates;
 	iPlayerState*				m_pCurrentState;
@@ -66,6 +67,7 @@ public:
 		std::string sFolderHead, std::string sFileHead,
 		std::string sFolderHair, std::string sFileHair
 		);
+
 	virtual void Update(float fDelta);
 
 	virtual void ChangeState(EPLAYABLESTATE eNewState);

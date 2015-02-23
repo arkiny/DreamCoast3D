@@ -6,6 +6,7 @@
 
 cGameObjManager::cGameObjManager()
 	:m_pFrustum(NULL)
+	, m_pPlayable(NULL)
 {
 }
 
@@ -13,6 +14,8 @@ cGameObjManager::cGameObjManager()
 cGameObjManager::~cGameObjManager()
 {
 	SAFE_RELEASE(m_pFrustum);
+
+	SAFE_RELEASE(m_pPlayable)
 }
 
 void cGameObjManager::Setup(){
@@ -75,4 +78,11 @@ void cGameObjManager::AdjustYPositionByHeightMap(cGameMapObject* pMap){
 			p->SetYPosition(yPos);
 		}
 	}
+}
+
+void cGameObjManager::SetPlayableGameObject(cGameObject* pPlayer){
+	if (pPlayer){
+		pPlayer->AddRef();
+		m_pPlayable = pPlayer;
+	}	
 }
