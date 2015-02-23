@@ -17,6 +17,10 @@
 #include "cGameMapSkyObject.h"
 #include "cGamePlayableObject.h"
 
+// MS test¿ë include
+#include "cGridSystem.h"
+#include "cGameASEObject.h"
+
 cScene::cScene() 
 	:m_pCamera(NULL)
 	, m_pGameObjManager(NULL)
@@ -99,6 +103,32 @@ void cScene::Setup(std::string sFilePath){
 	m_pGameObjManager->AddGameObj(pGMSO);
 	SAFE_RELEASE(pGMSO);
 	
+	cGameASEObject* pAseObject = new cGameASEObject;
+	pAseObject->Setup(std::string("../Resources/Building/"), std::string("building.ASE"));
+	m_pGameObjManager->AddGameObj(pAseObject);
+	pAseObject->SetPosition(D3DXVECTOR3(125, 0, 100));
+	pAseObject->SetScale(D3DXVECTOR3(0.1f, 0.1f, 0.1f));
+
+
+	cGridSystem* pGridSystem = new cGridSystem;
+	pGridSystem->Setup(256);
+	
+	pGridSystem->AddObjectOnGrid(pAseObject, 125, 100);
+	std::set<cGameObject*> setGameObject;
+	setGameObject = pGridSystem->GetObjectOnGrid(125, 100);
+	std::vector<cGameObject*> vecGameObject;
+	vecGameObject = pGridSystem->GetAdjObject(124, 100);
+	
+	D3DXVECTOR3 vCenter;
+	vCenter = pGridSystem->GetObjectCenter(120, 100);
+
+	//pGridSystem->RemoveObejctOnTile(pAseObject, 120, 100);
+
+	vCenter = pGridSystem->GetObjectCenter(120, 100);
+
+	int x = 0;
+	//SAFE_RELEASE(pAseObject);
+
 	// PlayableObject
 	//cGamePlayableObject* pGamePlayableObject = new cGamePlayableObject;
 	//std::string sFolder = "../Resources/Char/Tera/";
@@ -152,6 +182,8 @@ void cScene::Render(){
 	SAFE_RENDER(m_pUIObjManager);
 
 	SAFE_RENDER(m_pCamera);
+
+
 }
 
 void cScene::AddGameObj(cGameObject* pGameObj){
