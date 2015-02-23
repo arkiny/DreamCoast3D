@@ -4,7 +4,7 @@
 #include "cGameObject.h"
 #include "cSkinnedMesh.h"
 #include "cGameActionSkinnedMeshObj.h"
-#include "cGamePlayableObject.h"
+#include "cGameSMeshBodyObject.h"
 
 //Template
 //int nLevel = 0;
@@ -170,7 +170,7 @@ void cGameObjLoader::ParseAndLoadSkinnedMeshtoManager(int nIndex){
 }
 
 cGameObject* cGameObjLoader::ParseAndLoadSkinnedBodyMesh(){
-	cGamePlayableObject* ret = NULL;
+	cGameSMeshBodyObject* ret = NULL;
 	int nBodyIndex = -1, nHeadIndex = -1, nHairIndex = -1;
 	D3DXVECTOR3 pos(0,0,0), scale(1.0f, 1.0f, 1.0f);
 	int nLevel = 0;
@@ -220,7 +220,7 @@ cGameObject* cGameObjLoader::ParseAndLoadSkinnedBodyMesh(){
 		}
 	} while (nLevel > 0);
 
-	ret = new cGamePlayableObject;
+	ret = new cGameSMeshBodyObject;
 	ret->Setup(m_vecsFolders[nBodyIndex], m_vecsFiles[nBodyIndex],
 		m_vecsFolders[nHeadIndex], m_vecsFiles[nHeadIndex],
 		m_vecsFolders[nHairIndex], m_vecsFiles[nHairIndex]);

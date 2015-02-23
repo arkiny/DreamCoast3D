@@ -38,11 +38,11 @@ typedef struct ST_PLAYER_INFO{
 
 class cSkinnedMesh;
 
-class cGamePlayableObject : public cGameActionSkinnedMeshObj
+class cGameSMeshBodyObject : public cGameActionSkinnedMeshObj
 {
 public:
-	cGamePlayableObject();
-	virtual ~cGamePlayableObject();
+	cGameSMeshBodyObject();
+	virtual ~cGameSMeshBodyObject();
 
 	virtual void Setup(
 		std::string sFolder, std::string sFile,

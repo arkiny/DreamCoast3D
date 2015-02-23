@@ -1,17 +1,17 @@
 #include "stdafx.h"
-#include "cGamePlayableObject.h"
+#include "cGameSMeshBodyObject.h"
 #include "cSkinnedMeshBody.h"
 
-cGamePlayableObject::cGamePlayableObject()
+cGameSMeshBodyObject::cGameSMeshBodyObject()
 {
 }
 
 
-cGamePlayableObject::~cGamePlayableObject()
+cGameSMeshBodyObject::~cGameSMeshBodyObject()
 {
 }
 
-void cGamePlayableObject::Setup(
+void cGameSMeshBodyObject::Setup(
 	std::string sFolder, std::string sFile,
 	std::string sFolderHead, std::string sFileHead,
 	std::string sFolderHair, std::string sFileHair

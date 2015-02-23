@@ -28,7 +28,6 @@ void cGameObject::Render(){
 	// TODO :
 	// 만약 모든 게임 오브젝트가 공통적으로 렌더 시 수행하는 것이 있을 경우
 	g_pD3DDevice->SetTransform(D3DTS_WORLD, GetTransformMatrix());
-
 }
 
 
@@ -67,7 +66,7 @@ D3DXVECTOR3& cGameObject::GetPosition(){
 void cGameObject::SetYPosition(float y){
 	D3DXVECTOR3 curPos = m_pTransform->GetPosition();
 	m_pTransform->SetPosition(D3DXVECTOR3(curPos.x, y, curPos.z));
-	m_stBoundingSphere.m_vCenter = D3DXVECTOR3(curPos.x, m_stBoundingSphere.m_vCenter.y, curPos.z);
+	m_stBoundingSphere.m_vCenter = D3DXVECTOR3(curPos.x, y, curPos.z);
 }
 
 void cGameObject::SetScale(D3DXVECTOR3& newScale){
