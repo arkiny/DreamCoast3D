@@ -26,6 +26,7 @@ void cSkinnedMeshBody::Setup(
 
 	m_pRootFrame = g_pSkinnedMeshManager->GetSkinnedMesh(sFolder, sFile, m_pAnimControl);
 
+	
 	UINT uiNumAnim = m_pAnimControl->GetNumAnimationSets();
 	for (UINT i = 0; i < uiNumAnim; ++i)
 	{
@@ -46,8 +47,18 @@ void cSkinnedMeshBody::Setup(
 	m_pHair = new cSkinnedMesh;
 	m_pHair->Setup(sFolderHair, sFileHair);
 
-	D3DXCreateSphere(g_pD3DDevice, 1.0f, 10, 10, &m_pMesh, NULL);
-	D3DXFRAME* pDummyRoot = D3DXFrameFind(m_pRootFrame, "Dummy_root");	
+	//D3DXCreateSphere(g_pD3DDevice, 1.0f, 10, 10, &m_pMesh, NULL);
+	//D3DXFRAME* pDummyRoot = D3DXFrameFind(m_pRootFrame, "Dummy_root");	
+
+	// ¸ö Áß¾Ó
+	D3DXFRAME* pDummyRoot;
+	pDummyRoot = D3DXFrameFind(m_pRootFrame, "Dummy_root");
+	D3DXMATRIXA16 mat = pDummyRoot->TransformationMatrix;
+	D3DXVECTOR3 localCenter(0, 0, 0);
+	D3DXVec3TransformCoord(&localCenter, &localCenter, &mat);
+	m_stBoundingSphere.m_vCenter = localCenter;
+	m_stBoundingSphere.m_fRadius = 10.0f;
+	D3DXCreateSphere(g_pD3DDevice, m_stBoundingSphere.m_fRadius, 10, 10, &m_pDebugSphereBody, NULL);
 }
 
 void cSkinnedMeshBody::Render(D3DXMATRIXA16* pParentWorldTM){
@@ -100,14 +111,24 @@ void cSkinnedMeshBody::Render(D3DXFRAME* pFrame, D3DXMATRIXA16* pParentWorldTM){
 	}	
 	if (pBone->pMeshContainer)
 	{
-		ST_BONE_MESH* pBoneMesh = (ST_BONE_MESH*)pBone->pMeshContainer;
+		ST_BONE_MESH_SPHERE* pBoneMesh = (ST_BONE_MESH_SPHERE*)pBone->pMeshContainer;
 		for (size_t i = 0; i < pBoneMesh->dwNumSubset; ++i)
 		{
+			
 			g_pD3DDevice->SetTransform(D3DTS_WORLD, &(pBone->matWorldTM));
 			g_pD3DDevice->SetTexture(0, pBoneMesh->vecMtlTex[i]->pTex);
 			g_pD3DDevice->SetMaterial(&pBoneMesh->vecMtlTex[i]->stMtl);
 			pBoneMesh->MeshData.pMesh->DrawSubset(i);
 		}
+	}
+
+	if (pBone->Name != nullptr && std::string(pBone->Name) == std::string("Dummy_root"))
+	{
+		g_pD3DDevice->SetTransform(D3DTS_WORLD, &(pBone->matWorldTM));
+		g_pD3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
+		g_pD3DDevice->SetTexture(0, NULL);
+		m_pDebugSphereBody->DrawSubset(0);
+		g_pD3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
 	}
 
 	if (pBone->pFrameSibling)

@@ -44,7 +44,7 @@ STDMETHODIMP cAllocateHierarchy::CreateMeshContainer(
 	LPD3DXSKININFO pSkinInfo,
 	LPD3DXMESHCONTAINER *ppNewMeshContainer)
 {
-	ST_BONE_MESH* pBoneMesh = new ST_BONE_MESH;
+	ST_BONE_MESH_SPHERE* pBoneMesh = new ST_BONE_MESH_SPHERE;
 	for (DWORD i = 0; i < NumMaterials; ++i)
 	{
 		cMtlTex* pMtlTex = new cMtlTex;
@@ -112,7 +112,7 @@ STDMETHODIMP cAllocateHierarchy::DestroyFrame(THIS_ LPD3DXFRAME pFrameToFree)
 
 STDMETHODIMP cAllocateHierarchy::DestroyMeshContainer(THIS_ LPD3DXMESHCONTAINER pMeshContainerToFree)
 {
-	ST_BONE_MESH* pBoneMesh = (ST_BONE_MESH*)pMeshContainerToFree;
+	ST_BONE_MESH_SPHERE* pBoneMesh = (ST_BONE_MESH_SPHERE*)pMeshContainerToFree;
 	SAFE_RELEASE(pBoneMesh->pSkinInfo);
 	SAFE_RELEASE(pBoneMesh->MeshData.pMesh);
 	SAFE_RELEASE(pBoneMesh->pOrigMesh);
@@ -124,7 +124,8 @@ STDMETHODIMP cAllocateHierarchy::DestroyMeshContainer(THIS_ LPD3DXMESHCONTAINER 
 	{
 		SAFE_RELEASE(p);
 	}
-
+	
+	SAFE_RELEASE(pBoneMesh->pSphereMesh);
 	delete pBoneMesh;
 	return S_OK;
 }
@@ -132,15 +133,16 @@ STDMETHODIMP cAllocateHierarchy::DestroyMeshContainer(THIS_ LPD3DXMESHCONTAINER 
 //충돌용 바운딩스피어 생성 : 민우
 void cAllocateHierarchy::CreateCollisionBoundingSphere(ST_BONE_MESH* pBoneMesh, CONST D3DXMESHDATA *pMeshData)
 {
+	ST_BONE_MESH_SPHERE* p = (ST_BONE_MESH_SPHERE*)pBoneMesh;
 	//충돌용 바운딩스피어 생성
 	D3DXVECTOR3* pVertices;
 	pMeshData->pMesh->LockVertexBuffer(D3DLOCK_READONLY, (void**)&pVertices);
 	D3DXComputeBoundingSphere(pVertices,
 		pMeshData->pMesh->GetNumVertices(),
 		pMeshData->pMesh->GetNumBytesPerVertex(),
-		&pBoneMesh->vCenter,
-		&pBoneMesh->fRadius);
+		&p->vCenter,
+		&p->fRadius);
 	pMeshData->pMesh->UnlockVertexBuffer();
-	pBoneMesh->fOriginRadius = pBoneMesh->fRadius;
-	D3DXCreateSphere(g_pD3DDevice, pBoneMesh->fRadius, 7, 5, &pBoneMesh->pSphereMesh, &pBoneMesh->pSphereAdj);
+	p->fOriginRadius = p->fRadius;
+	D3DXCreateSphere(g_pD3DDevice, p->fRadius, 7, 5, &p->pSphereMesh, &p->pSphereAdj);
 }
