@@ -21,7 +21,9 @@ void cPlayerIdle::Execute(cGamePlayableObject* pPlayer, float fDelta){
 		g_pControlManager->GetInputInfo('S') ||
 		g_pControlManager->GetInputInfo('D')){
 		pPlayer->ChangeState(pPlayer->EPLAYABLESTATE_MOVE);
+		return;
 	}
+
 	// do nothing
 }
 

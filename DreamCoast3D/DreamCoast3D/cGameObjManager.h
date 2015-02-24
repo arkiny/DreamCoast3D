@@ -32,7 +32,7 @@ public:
 	void AddStaticGameObjects(cGameObject* pGameObj);
 	void RemoveStaticGameObjects(cGameObject* pGameObj); 
 
-	void AdjustYPositionByHeightMap(cGameMapObject* pMap);
+	void AdjustYPositionByHeightMap(iMap* pMap);
 	
 	void SetPlayableGameObject(cGameObject* pPlayer);
 	cGameObject* GetPlayerableGameObject() { return m_pPlayable; }

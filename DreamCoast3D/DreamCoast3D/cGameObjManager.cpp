@@ -109,7 +109,7 @@ void cGameObjManager::Destroy(){
 	this->Release(); 
 }
 
-void cGameObjManager::AdjustYPositionByHeightMap(cGameMapObject* pMap){
+void cGameObjManager::AdjustYPositionByHeightMap(iMap* pMap){
 	// 높이맵의 높이에 따라 Y좌표를 수정해준다.
 	for (auto p : m_setGameObjects){
 		bool bIsLand = false;

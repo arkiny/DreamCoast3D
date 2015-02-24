@@ -246,6 +246,14 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	case WM_DESTROY:
 		PostQuitMessage(0);
 		break;
+
+	// TODO : Deleate when UI System Menu Added
+	case WM_KEYDOWN:
+		if (wParam == VK_ESCAPE)
+			PostQuitMessage(0);
+		break;
+	//
+
 	default:
 		return DefWindowProc(hWnd, message, wParam, lParam);
 	}

@@ -7,6 +7,7 @@
 #include "cSphere.h"
 #include "cUIObjManager.h"
 #include "cCameraEditing.h"
+#include "cTransform.h"
 
 /// TODO
 // 차후 데이타 드리븐 완료후 삭제해야할것들
@@ -126,6 +127,7 @@ void cScene::Start(){
 	}
 
 	m_pGameObjManager->SetCurrentTileSystem(m_pCurrentMap);
+	m_pCamera->SetTarget(m_pGameObjManager->GetPlayerableGameObject()->GetTransform()->getPosPointer());
 }
 
 void cScene::Update(float delta){

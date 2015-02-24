@@ -17,42 +17,42 @@
   <Class Name="cASEInstance" Collapsed="true">
     <Position X="10.5" Y="2" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAQABAAAAAEAEAAQAAAAAAAAAgCBAUAAQBAAAhAAABA=</HashCode>
+      <HashCode>AAQABAAAAAEAEAAQAAAAAAAAAgChAUAAQBAAAhAAABA=</HashCode>
       <FileName>cASEInstance.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="cGameActionObject" Collapsed="true">
-    <Position X="18.5" Y="7.5" Width="1.75" />
+    <Position X="18.5" Y="8" Width="1.75" />
     <TypeIdentifier>
       <HashCode>AAQAAAAAIAAAAAAEAAAAAAAABAAgAEAAAAAAAAAAAAA=</HashCode>
       <FileName>cGameActionObject.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="cGameActionSkinnedMeshObj" Collapsed="true">
-    <Position X="18.25" Y="9.25" Width="2.25" />
+    <Position X="18.25" Y="9.75" Width="2.25" />
     <TypeIdentifier>
       <HashCode>AAQAAAAACAAAAAAAAAAQAAAAAAAgAAAIABAAAAAAAAA=</HashCode>
       <FileName>cGameActionSkinnedMeshObj.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="cGameASEObject" Collapsed="true">
-    <Position X="13" Y="7.5" Width="1.5" />
+    <Position X="13" Y="8" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAQAAAAACAAAAAAAAAAAAAAAAABAAAAAABAEAAAAAAg=</HashCode>
+      <HashCode>AAQAAAAACAAAAAAAAAAAAAAgBABAAAAAABAEAAAAAAg=</HashCode>
       <FileName>cGameASEObject.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="cGameBillBoardingObject" Collapsed="true">
-    <Position X="16" Y="7.5" Width="1.5" />
+    <Position X="16" Y="8" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAABAAAAAAAAAAAAAAAAQAAAAIAAAAAABAAAAAAAAA=</HashCode>
       <FileName>cGameBillBoardingObject.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="cGameObject" Collapsed="true">
-    <Position X="14.25" Y="5.75" Width="1.5" />
+    <Position X="14.25" Y="5.75" Width="2" />
     <TypeIdentifier>
-      <HashCode>AAQCAAAACCAAEABAAABAAgAAAACAAgAAABUAAggCAAA=</HashCode>
+      <HashCode>AAQCAAAACCAAEABAAABAAgIgAACgAgAAIB0AAggCACA=</HashCode>
       <FileName>cGameObject.h</FileName>
     </TypeIdentifier>
   </Class>
@@ -64,21 +64,21 @@
     </TypeIdentifier>
   </Class>
   <Class Name="cGameMapHeight" Collapsed="true">
-    <Position X="21.5" Y="9.25" Width="1.5" />
+    <Position X="21.5" Y="9.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>ABAAAAAAEIEIBEACAAAAAABAAAIAAAAAABAEAAAAAAg=</HashCode>
       <FileName>cGameMapHeight.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="cGameMapObject" Collapsed="true">
-    <Position X="21.5" Y="7.5" Width="1.5" />
+    <Position X="21.5" Y="8" Width="1.5" />
     <InheritanceLine Type="cGameObject">
       <InheritanceModifierLabel ManuallyPlaced="true">
-        <Position X="-0.557" Y="0.091" />
+        <Position X="0.697" Y="0.063" />
       </InheritanceModifierLabel>
     </InheritanceLine>
     <TypeIdentifier>
-      <HashCode>AAQAAAAQiAAAAAAAAAAAAABBAAAgAAAAABAAAAAAAAA=</HashCode>
+      <HashCode>EAQAAAAQiAAAAAAQACAgAABBAAAgAABAABAAAAAAAAA=</HashCode>
       <FileName>cGameMapObject.h</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.186" />
@@ -124,14 +124,14 @@
   <Class Name="cUIImageView" Collapsed="true">
     <Position X="3.25" Y="7.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAEACAABAAAAAAAAAAAAQAABAAIAAAgAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAEACAABAAAAAAAAAgAAQAABAAIAAAgAA=</HashCode>
       <FileName>cUIImageView.h</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="cUIObject" Collapsed="true">
     <Position X="5.75" Y="5.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>QISEAQAAAAAAEAAAAAAAAQAAAIBgAgAAABEAAAAAAAA=</HashCode>
+      <HashCode>QISEAQAACAAAEAAAAAAAAQAAAIBgAgAAABEAAAAAAAA=</HashCode>
       <FileName>cUIObject.h</FileName>
     </TypeIdentifier>
   </Class>
@@ -152,7 +152,7 @@
   <Class Name="cGameObjManager" Collapsed="true">
     <Position X="8.75" Y="3.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAQAAAAACAAAAAAQAAAQAAICAABAAAAAABQIAQAAAAA=</HashCode>
+      <HashCode>AAQAAIAACAAAIAAQBABQAAICAEBAAAAAABQIAQAAAAE=</HashCode>
       <FileName>cGameObjManager.h</FileName>
     </TypeIdentifier>
   </Class>
@@ -161,6 +161,62 @@
     <TypeIdentifier>
       <HashCode>AAQAAAAACAAAAAAMAAAAAgAAAABAAAAAABEAAAAAAAA=</HashCode>
       <FileName>cUIObjManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="cCamera" Collapsed="true">
+    <Position X="5.25" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQCAgEAiggQAAAAQBAABAAgAAAgAAACABAAAAAAABI=</HashCode>
+      <FileName>cCamera.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="cLightSource" Collapsed="true">
+    <Position X="7" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAACKAACAAAAQACAAAAAAAAAEAAAAAAAAAAAAA=</HashCode>
+      <FileName>cLightSource.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="cLoader" Collapsed="true">
+    <Position X="2.5" Y="10.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAQAAACABAIAQAAAQAAAAAABAAEAAAAABAEAAAAA=</HashCode>
+      <FileName>cLoader.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="cAseLoader" Collapsed="true">
+    <Position X="9.25" Y="12.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QBAAoQAAACgAQICDAQAQEAAAgARAAAAAIBgBCAECAAA=</HashCode>
+      <FileName>cAseLoader.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="cGameLoader" Collapsed="true">
+    <Position X="1" Y="12.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgAABAAABAAAJAAAAAAIACAAAAKAAAAAABAAAAACBAA=</HashCode>
+      <FileName>cGameLoader.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="cGameObjLoader" Collapsed="true">
+    <Position X="7.25" Y="12.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACQIAACAAgAAAAAABAEAIAAAAAAAAAAgAgAAAAAAAA=</HashCode>
+      <FileName>cGameObjLoader.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="cMapLoader" Collapsed="true">
+    <Position X="5.25" Y="12.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACAAAAAAAAQAAIAEAAAAAAAAAAAAAQAAgAAACFAAAAg=</HashCode>
+      <FileName>cMapLoader.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="cUILoader" Collapsed="true">
+    <Position X="3" Y="12.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAAAAAAAAAAAAAAAAAAAAAAAACAAAEAAAAAAEAAAAA=</HashCode>
+      <FileName>cUILoader.h</FileName>
     </TypeIdentifier>
   </Class>
   <Interface Name="iMap" Collapsed="true">
