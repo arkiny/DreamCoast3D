@@ -11,6 +11,7 @@ cSkinnedMesh::cSkinnedMesh(void)
 	, m_isAnimationBlending(false)
 	, m_nCurrentAnimation(0)
 	, m_pAnimControl(NULL)
+	, m_pDebugSphereBody(NULL)
 {
 }
 
@@ -21,13 +22,17 @@ cSkinnedMesh::~cSkinnedMesh(void)
 	for (auto p : m_vecAnimationSet){
 		SAFE_RELEASE(p);
 	}
+	SAFE_RELEASE(m_pDebugSphereBody);
 }
 
 void cSkinnedMesh::Setup(std::string sFolder, std::string sFile)
 {
 	// 인스탄싱을 마친 D3DXFRAME을 루트로 넘겨줌
 	m_pRootFrame = g_pSkinnedMeshManager->GetSkinnedMesh(sFolder, sFile, m_pAnimControl);
-	
+
+	// 이펙트가 일어나는 손
+	D3DXFrameFind(m_pRootFrame, "FxHand01");
+
 	UINT uiNumAnim = m_pAnimControl->GetNumAnimationSets();
 	for (UINT i = 0; i < uiNumAnim; ++i)
 	{
@@ -40,6 +45,17 @@ void cSkinnedMesh::Setup(std::string sFolder, std::string sFile)
 		m_vecAnimationSet.push_back(pAnimSet);
 	}
 
+	// 몸 중앙
+	D3DXFRAME* pDummyRoot;
+	pDummyRoot = D3DXFrameFind(m_pRootFrame, "Dummy_root");
+	if (pDummyRoot){
+		D3DXMATRIXA16 mat = pDummyRoot->TransformationMatrix;
+		D3DXVECTOR3 localCenter(0, 0, 0);
+		D3DXVec3TransformCoord(&localCenter, &localCenter, &mat);
+		m_stBoundingSphere.m_vCenter = localCenter;
+		m_stBoundingSphere.m_fRadius = 10.0f;
+		D3DXCreateSphere(g_pD3DDevice, m_stBoundingSphere.m_fRadius, 10, 10, &m_pDebugSphereBody, NULL);
+	}
 }
 
 void cSkinnedMesh::Update(float fDelta)
@@ -83,7 +99,6 @@ void cSkinnedMesh::UpdateWorldMatrix(D3DXFRAME* pFrame, D3DXMATRIXA16* pmatParen
 {
 	ST_BONE* pBone = (ST_BONE*)pFrame;
 	pBone->matWorldTM = pBone->TransformationMatrix;
-
 	if (pmatParent)
 	{
 		pBone->matWorldTM = pBone->matWorldTM * (*pmatParent);
@@ -113,6 +128,14 @@ void cSkinnedMesh::Render(D3DXFRAME* pFrame, D3DXMATRIXA16* pParentWorldTM)
 			g_pD3DDevice->SetTexture(0, pBoneMesh->vecMtlTex[i]->pTex);
 			g_pD3DDevice->SetMaterial(&pBoneMesh->vecMtlTex[i]->stMtl);
 			pBoneMesh->MeshData.pMesh->DrawSubset(i);
+		}
+
+		if (pBone->Name != nullptr && std::string(pBone->Name) == std::string("Dummy_root"))
+		{
+			g_pD3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
+			g_pD3DDevice->SetTexture(0, NULL);
+			m_pDebugSphereBody->DrawSubset(0);
+			g_pD3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
 		}
 	}
 	if (pBone->pFrameSibling)
@@ -233,4 +256,35 @@ void cSkinnedMesh::UpdateSkinnedMesh(D3DXFRAME* pFrame)
 void cSkinnedMesh::OnFinishAnimation(cAnimationSet* pSender)
 {
 	SetAnimationIndex(pSender->GetPrevAnimation()->GetIndex());
+}
+
+//충돌용 바운딩 스피어의 크기와 위치를 계산한다. : 민우
+void cSkinnedMesh::CalcCollisionSphere(ST_BONE_MESH* pBoneMesh)
+{
+	ST_BONE_MESH_SPHERE* p = (ST_BONE_MESH_SPHERE*)pBoneMesh;
+	D3DXMATRIXA16 matS, matT;
+	D3DXMatrixIdentity(&matS);
+	D3DXMatrixIdentity(&matT);
+
+	//첫 프레임의 반지름을 OriginRadius라고 하고 이것을 기준으로 삼아 차이만큼 스케일링 한다.
+	float fOffset = p->fRadius / p->fOriginRadius;
+	D3DXMatrixScaling(&matS, fOffset, fOffset, fOffset);
+
+	//스피어의 중심점으로 변환
+	D3DXMatrixTranslation(&matT,
+		p->vCenter.x, p->vCenter.y, p->vCenter.z);
+
+	p->matSphereW = matS*matT;
+}
+
+//충돌용 바운딩 스피어를 그린다. : 민우
+void cSkinnedMesh::RenderCollisionSphere(ST_BONE_MESH* pBoneMesh)
+{
+	ST_BONE_MESH_SPHERE* p = (ST_BONE_MESH_SPHERE*)pBoneMesh;
+	g_pD3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
+	g_pD3DDevice->SetRenderState(D3DRS_LIGHTING, false);
+	g_pD3DDevice->SetTransform(D3DTS_WORLD, &p->matSphereW);
+	p->pSphereMesh->DrawSubset(0);
+	g_pD3DDevice->SetRenderState(D3DRS_LIGHTING, true);
+	g_pD3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
 }

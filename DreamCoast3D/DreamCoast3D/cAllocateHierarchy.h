@@ -31,6 +31,5 @@ public:
 
 	//충돌용 바운딩스피어 생성 : 민우
 	void cAllocateHierarchy::CreateCollisionBoundingSphere(ST_BONE_MESH* pBoneMesh, CONST D3DXMESHDATA *pMeshData);
-	
 };
 

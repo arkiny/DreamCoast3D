@@ -106,31 +106,6 @@ void cScene::Setup(std::string sFilePath){
 	SAFE_RELEASE(pGMSO);
 
 	//SAFE_RELEASE(pAseObject);
-
-	// PlayableObject
-	cGamePlayableObject* pGamePlayableObject = new cGamePlayableObject;
-	std::string sFolder = "../Resources/Char/Tera/";
-	pGamePlayableObject->Setup(
-		sFolder, std::string("Ellin_Body_Attack.X"),
-		sFolder, std::string("Ellin_Face_Attack.X"),
-		sFolder, std::string("Ellin_Hair_Attack.X"));
-	pGamePlayableObject->SetPosition(D3DXVECTOR3(128.0f, 0, 128.0f));
-	pGamePlayableObject->SetScale(D3DXVECTOR3(1.f, 1.f, 1.f));
-	m_pGameObjManager->AddGameObj(pGamePlayableObject);
-	SAFE_RELEASE(pGamePlayableObject);
-
-	// PlayableObject2
-	cGamePlayableObject* pGamePlayableObject2 = new cGamePlayableObject;
-	//std::string sFolder = "../Resources/Char/Tera/";
-	pGamePlayableObject2->Setup(
-		sFolder, std::string("Ellin_Body_Attack.X"),
-		sFolder, std::string("Ellin_Face_Attack.X"),
-		sFolder, std::string("Ellin_Hair_Attack.X"));
-	pGamePlayableObject2->SetPosition(D3DXVECTOR3(128.0f, 0, 108.0f));
-	pGamePlayableObject2->SetScale(D3DXVECTOR3(1.f, 1.f, 1.f));
-	m_pGameObjManager->AddGameObj(pGamePlayableObject2);
-	SAFE_RELEASE(pGamePlayableObject2);
-
 	cGameAIObject* pGameAIObject = new cGameAIObject;
 	pGameAIObject->Setup(std::string("../Resources/Char/Zealot/"), std::string("zealot.X"));
 	pGameAIObject->SetPosition(D3DXVECTOR3(124.0f, 0.0f, 124.0f));

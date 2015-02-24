@@ -45,30 +45,3 @@ void cGamePlayableObject::ChangeState(EPLAYABLESTATE eNewState){
 	m_pCurrentState = m_vecStates[eNewState];
 	m_pCurrentState->Start(this);
 }
-
-//충돌용 바운딩 스피어의 크기와 위치를 계산한다. : 민우
-void cGamePlayableObject::CalcCollisionSphere(ST_BONE_MESH* pBoneMesh)
-{
-	D3DXMATRIXA16 matS, matT;
-	D3DXMatrixIdentity(&matS);
-	D3DXMatrixIdentity(&matT);
-
-	//첫 프레임의 반지름을 OriginRadius라고 하고 이것을 기준으로 삼아 차이만큼 스케일링 한다.
-	float fOffset = pBoneMesh->fRadius / pBoneMesh->fOriginRadius;
-	D3DXMatrixScaling(&matS, fOffset, fOffset, fOffset);
-
-	//스피어의 중심점으로 변환
-	D3DXMatrixTranslation(&matT,
-		pBoneMesh->vCenter.x, pBoneMesh->vCenter.y, pBoneMesh->vCenter.z);
-
-	pBoneMesh->matSphereW = matS*matT;
-}
-//충돌용 바운딩 스피어를 그린다. : 민우
-void cGamePlayableObject::RenderCollisionSphere(ST_BONE_MESH* pBoneMesh)
-{
-	g_pD3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
-	g_pD3DDevice->SetRenderState(D3DRS_LIGHTING, false);
-	g_pD3DDevice->SetTransform(D3DTS_WORLD, &pBoneMesh->matSphereW);
-	pBoneMesh->pSphereMesh->DrawSubset(0);
-	g_pD3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
-}
