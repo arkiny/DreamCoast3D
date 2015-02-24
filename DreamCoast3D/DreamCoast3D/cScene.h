@@ -83,7 +83,7 @@ public:
 
 
 	// MS
-	//cGamePlayableObject* m_pPlayableObject;
+	cGamePlayableObject* m_pPlayableObject;
 
 
 };

@@ -51,6 +51,9 @@ public:
 	D3DXVECTOR3 m_vFixedEye;
 	D3DXVECTOR3 m_vFixedLookAt;
 	float m_fAngle;
+    float m_fFixedDist;
+
+    LPD3DXMESH m_pMesh;
 
 };
 
