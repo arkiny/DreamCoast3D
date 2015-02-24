@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "cPlayerMove.h"
 #include "cGamePlayableObject.h"
+#include "cSkinnedMesh.h"
 
 cPlayerMove::cPlayerMove()
 {
@@ -12,7 +13,7 @@ cPlayerMove::~cPlayerMove()
 }
 
 void cPlayerMove::Start(cGamePlayableObject* pPlayer){
-
+	pPlayer->GetSkinnedMesh()->SetAnimationIndex(pPlayer->EPLAYABLESTATE_MOVE);
 }
 
 void cPlayerMove::Execute(cGamePlayableObject* pPlayer, float fDelta){
@@ -25,7 +26,7 @@ void cPlayerMove::Execute(cGamePlayableObject* pPlayer, float fDelta){
 			D3DXVECTOR3 curPos = pPlayer->GetPosition();
 			D3DXVECTOR3 addVec = (pPlayer->GetFront()*fDelta*pPlayer->GetMoveSpeed());
 			newPos = curPos + addVec;
-			if (pPlayer->GetGridTileSystem()->GetAdjObject(newPos.x, newPos.z).size() == 0){
+			if (pPlayer->GetGridTileSystem()->GetAdjObject((int)newPos.x, (int)newPos.z).size() == 0){
 				pPlayer->SetPosition(newPos);
 			}
 		}
@@ -34,7 +35,7 @@ void cPlayerMove::Execute(cGamePlayableObject* pPlayer, float fDelta){
 			D3DXVECTOR3 curPos = pPlayer->GetPosition();
 			D3DXVECTOR3 addVec = (pPlayer->GetFront()*fDelta*pPlayer->GetMoveSpeed());
 			newPos = curPos - addVec;
-			if (pPlayer->GetGridTileSystem()->GetAdjObject(newPos.x, newPos.z).size() == 0){
+			if (pPlayer->GetGridTileSystem()->GetAdjObject((int)newPos.x, (int)newPos.z).size() == 0){
 				pPlayer->SetPosition(newPos);
 			}
 		}
@@ -45,7 +46,7 @@ void cPlayerMove::Execute(cGamePlayableObject* pPlayer, float fDelta){
 			angle -= fDelta* 4.0f;
 			pPlayer->SetPlayerAngle(angle);
 			D3DXMatrixRotationY(&matR, angle);
-			D3DXVECTOR3 vDir = D3DXVECTOR3(0, 0, 1.f);
+			D3DXVECTOR3 vDir = D3DXVECTOR3(0, 0, -1.f);
 			D3DXVec3TransformNormal(&vDir, &vDir, &matR);
 			pPlayer->SetFront(vDir);
 			pPlayer->SetYangle(angle);
@@ -57,7 +58,7 @@ void cPlayerMove::Execute(cGamePlayableObject* pPlayer, float fDelta){
 			angle += fDelta* 4.0f;
 			pPlayer->SetPlayerAngle(angle);
 			D3DXMatrixRotationY(&matR, angle);
-			D3DXVECTOR3 vDir = D3DXVECTOR3(0, 0, 1.f);
+			D3DXVECTOR3 vDir = D3DXVECTOR3(0, 0, -1.f);
 			D3DXVec3TransformNormal(&vDir, &vDir, &matR);
 			pPlayer->SetFront(vDir);
 			pPlayer->SetYangle(angle);

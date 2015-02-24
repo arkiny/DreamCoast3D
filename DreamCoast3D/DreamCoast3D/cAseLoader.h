@@ -1,9 +1,11 @@
 #pragma once
 
+#include "cLoader.h"
+
 class cASEInstance;
 class cMtlTex;
 
-class cAseLoader
+class cAseLoader : public cLoader
 {
 private:
 	FILE*		m_fp;

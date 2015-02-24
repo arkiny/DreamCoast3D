@@ -219,8 +219,50 @@
       <FileName>cUILoader.h</FileName>
     </TypeIdentifier>
   </Class>
+  <Class Name="cGamePlayableObject" Collapsed="true">
+    <Position X="18.5" Y="12.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAQCAAAACAAABAAAAAAAAAAgAAAgIAAAAAAAAAAAACA=</HashCode>
+      <FileName>cGamePlayableObject.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="cGameSMeshBodyObject" Collapsed="true">
+    <Position X="18.5" Y="11.25" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAABAAABAAAA=</HashCode>
+      <FileName>cGameSMeshBodyObject.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="cGridSystem" Collapsed="true">
+    <Position X="3.5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAQAACAACAAAAAIQACAoCAAAIABAAABAAAAKAAAAAAA=</HashCode>
+      <FileName>cGridSystem.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="cGameMapHeightGridSystem" Collapsed="true">
+    <Position X="21.5" Y="11.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAIACAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>cGameMapHeightGridSystem.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Struct Name="ST_PLAYER_INFO" Collapsed="true">
+    <Position X="26.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABABAAAAAAAEAAQAHAAACAAIAAQAAAIAAAgCgAADkAA=</HashCode>
+      <FileName>cGamePlayableObject.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Typedef Name="LPPLAYERINFO" Collapsed="true">
+    <Position X="26.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>cGamePlayableObject.h</FileName>
+    </TypeIdentifier>
+  </Typedef>
   <Interface Name="iMap" Collapsed="true">
-    <Position X="23.25" Y="7.5" Width="1.5" />
+    <Position X="23.5" Y="8" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>iMap.h</FileName>
@@ -231,6 +273,13 @@
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>iButtonDelegate.h</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="iPlayableCharacter" Collapsed="true">
+    <Position X="28.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>cGamePlayableObject.h</FileName>
     </TypeIdentifier>
   </Interface>
   <Font Name="Segoe UI" Size="9" />

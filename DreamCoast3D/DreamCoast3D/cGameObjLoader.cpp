@@ -268,21 +268,8 @@ cGameObject* cGameObjLoader::ParsePlayerbleObj(){
 			scale.z = GetFloat();
 		}
 		else if (isEqual(szToken, "*SETINITANIMATION")){
-			int nIndex = GetInteger();
-			//for (int i = 0; i < 5; i++){
-			//	if (i != nIndex){
-			//		ret->GetSkinnedMesh()->SetAnimationLoop(i, false);
-			//	}
-			//	else{
-			//		ret->GetSkinnedMesh()->SetAnimationLoop(i, true);
-			//	}
-			//}
-			/*ret->GetSkinnedMesh()->SetAnimationLoop(0, false);
-			ret->GetSkinnedMesh()->SetAnimationLoop(1, false);
-			ret->GetSkinnedMesh()->SetAnimationLoop(2, false);
-			ret->GetSkinnedMesh()->SetAnimationLoop(3, true);
-			ret->GetSkinnedMesh()->SetAnimationLoop(4, true);
-			ret->GetSkinnedMesh()->SetAnimationIndex(nIndex);*/
+			int nIndex = GetInteger();	
+			/*ret->GetSkinnedMesh()->SetAnimationIndex(nIndex);*/
 		}
 	} while (nLevel > 0);
 
@@ -293,6 +280,13 @@ cGameObject* cGameObjLoader::ParsePlayerbleObj(){
 	ret->SetPosition(pos);
 	ret->SetScale(scale);
 
+	ret->GetSkinnedMesh()->SetAnimationLoop(ret->EPLAYABLESTATE_IDLE, true);
+	ret->GetSkinnedMesh()->SetAnimationLoop(ret->EPLAYABLESTATE_MOVE, true);
+	ret->GetSkinnedMesh()->SetAnimationLoop(ret->EPLAYABLESTATE_ATTACK, true);
+	ret->GetSkinnedMesh()->SetAnimationLoop(4, true);
+
+	ret->GetSkinnedMesh()->SetAnimationIndex(0);
+	
 	return ret;
 }
 //*PLAYABLEOBJ

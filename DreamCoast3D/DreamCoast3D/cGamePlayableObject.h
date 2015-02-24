@@ -3,7 +3,8 @@
 #include "cGameSMeshBodyObject.h"
 #include "iPlayerState.h"
 
-// TODO 차후 playable 캐릭터 인터페이스를 이용해서 UI상호작용 실시
+// TODO
+// 차후 playable 캐릭터 인터페이스를 이용해서 UI상호작용 실시
 __interface iPlayableCharacter{
 	void GetInventoryPointer();
 };
@@ -48,8 +49,11 @@ public:
 	{
 		EPLAYABLESTATE_IDLE,
 		EPLAYABLESTATE_MOVE,
+		EPLAYABLESTATE_ATTACK,
+		EPLAYABLESTATE_ONHIT,
 		EPLAYABLESTATE_MAX
 	};
+
 protected:
 	SYNTHESIZE(D3DXVECTOR3, m_vecFront, Front);
 	SYNTHESIZE(float, m_fMoveSpeed, MoveSpeed);

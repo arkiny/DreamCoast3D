@@ -105,6 +105,7 @@
     <ClInclude Include="cControlManager.h" />
     <ClInclude Include="cDeviceManager.h" />
     <ClInclude Include="cFontManager.h" />
+    <ClInclude Include="cGameAIObject.h" />
     <ClInclude Include="cGameASEObject.h" />
     <ClInclude Include="cASEInstance.h" />
     <ClInclude Include="cFrustum.h" />
@@ -127,8 +128,10 @@
     <ClInclude Include="cLoader.h" />
     <ClInclude Include="cMapLoader.h" />
     <ClInclude Include="cMtlTex.h" />
+    <ClInclude Include="cPlayerAttack.h" />
     <ClInclude Include="cPlayerMove.h" />
     <ClInclude Include="cPlayerIdle.h" />
+    <ClInclude Include="cPlayerOnHit.h" />
     <ClInclude Include="cSkinnedMeshBody.h" />
     <ClInclude Include="cUIExpBar.h" />
     <ClInclude Include="cUIGameMainMenu.h" />
@@ -192,6 +195,7 @@
     <ClCompile Include="cControlManager.cpp" />
     <ClCompile Include="cDeviceManager.cpp" />
     <ClCompile Include="cFontManager.cpp" />
+    <ClCompile Include="cGameAIObject.cpp" />
     <ClCompile Include="cGameASEObject.cpp" />
     <ClCompile Include="cASEInstance.cpp" />
     <ClCompile Include="cFrustum.cpp" />
@@ -214,8 +218,10 @@
     <ClCompile Include="cLoader.cpp" />
     <ClCompile Include="cMapLoader.cpp" />
     <ClCompile Include="cMtlTex.cpp" />
+    <ClCompile Include="cPlayerAttack.cpp" />
     <ClCompile Include="cPlayerMove.cpp" />
     <ClCompile Include="cPlayerIdle.cpp" />
+    <ClCompile Include="cPlayerOnHit.cpp" />
     <ClCompile Include="cSkinnedMeshBody.cpp" />
     <ClCompile Include="cUIExpBar.cpp" />
     <ClCompile Include="cUIGameMainMenu.cpp" />

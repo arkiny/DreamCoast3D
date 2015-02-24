@@ -248,6 +248,13 @@
       <Filter>EachWorks\HD\PlayerFSM</Filter>
     </ClCompile>
     <ClCompile Include="iGameObjectDelegate.cpp" />
+    <ClCompile Include="cPlayerAttack.cpp">
+      <Filter>EachWorks\HD\PlayerFSM</Filter>
+    </ClCompile>
+    <ClCompile Include="cPlayerOnHit.cpp">
+      <Filter>EachWorks\HD\PlayerFSM</Filter>
+    </ClCompile>
+    <ClCompile Include="cGameAIObject.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cAction.h">
@@ -506,6 +513,13 @@
       <Filter>EachWorks\HD\PlayerFSM</Filter>
     </ClInclude>
     <ClInclude Include="iGameObjectDelegate.h" />
+    <ClInclude Include="cPlayerOnHit.h">
+      <Filter>EachWorks\HD\PlayerFSM</Filter>
+    </ClInclude>
+    <ClInclude Include="cPlayerAttack.h">
+      <Filter>EachWorks\HD\PlayerFSM</Filter>
+    </ClInclude>
+    <ClInclude Include="cGameAIObject.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="DreamCoast3D.ico">

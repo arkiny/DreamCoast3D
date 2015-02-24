@@ -141,3 +141,24 @@ void cSkinnedMeshBody::UpdateWorldMatrix(D3DXFRAME* pFrame, D3DXMATRIXA16* pmatP
 		UpdateWorldMatrix(pBone->pFrameFirstChild, &pBone->matWorldTM);
 	}
 }
+
+void cSkinnedMeshBody::SetAnimationIndex(DWORD dwIndex){
+	cSkinnedMesh::SetAnimationIndex(dwIndex);
+	if (m_pHair){
+		m_pHair->SetAnimationIndex(dwIndex);
+	}
+	if (m_pHead){
+		m_pHead->SetAnimationIndex(dwIndex);
+	}
+}
+
+void cSkinnedMeshBody::SetAnimationLoop(DWORD dwIndex, bool isLoop)
+{
+	cSkinnedMesh::SetAnimationLoop(dwIndex, isLoop);
+	if (m_pHair){
+		m_pHair->SetAnimationLoop(dwIndex, isLoop);
+	}
+	if (m_pHead){
+		m_pHead->SetAnimationLoop(dwIndex, isLoop);
+	}
+}

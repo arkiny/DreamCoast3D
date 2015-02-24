@@ -21,5 +21,7 @@ public:
 	virtual void UpdateWorldMatrix(D3DXFRAME* pFrame, D3DXMATRIXA16* pmatParent);
 	virtual void Render(D3DXMATRIXA16* pParentWorldTM);
 	virtual void Render(D3DXFRAME* pFrame, D3DXMATRIXA16* pParentWorldTM);
+	virtual void SetAnimationIndex(DWORD dwIndex);
+	virtual void SetAnimationLoop(DWORD dwIndex, bool isLoop);	
 };
 
