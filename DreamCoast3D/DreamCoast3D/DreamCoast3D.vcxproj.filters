@@ -232,7 +232,6 @@
     <ClCompile Include="iPlayerState.cpp">
       <Filter>EachWorks\HD\PlayerFSM</Filter>
     </ClCompile>
-    <ClCompile Include="iGameObjectDelegate.cpp" />
     <ClCompile Include="cPlayerAttack.cpp">
       <Filter>EachWorks\HD\PlayerFSM</Filter>
     </ClCompile>
@@ -247,6 +246,9 @@
     </ClCompile>
     <ClCompile Include="cAIFSM.cpp">
       <Filter>EachWorks\HD\AI-FSM</Filter>
+    </ClCompile>
+    <ClCompile Include="iGameObjectDelegate.cpp">
+      <Filter>FrameWork\Interfaces</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -490,7 +492,6 @@
     <ClInclude Include="iPlayerState.h">
       <Filter>EachWorks\HD\PlayerFSM</Filter>
     </ClInclude>
-    <ClInclude Include="iGameObjectDelegate.h" />
     <ClInclude Include="cPlayerOnHit.h">
       <Filter>EachWorks\HD\PlayerFSM</Filter>
     </ClInclude>
@@ -505,6 +506,9 @@
     </ClInclude>
     <ClInclude Include="cAIFSM.h">
       <Filter>EachWorks\HD\AI-FSM</Filter>
+    </ClInclude>
+    <ClInclude Include="iGameObjectDelegate.h">
+      <Filter>FrameWork\Interfaces</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

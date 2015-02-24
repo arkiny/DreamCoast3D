@@ -41,7 +41,6 @@ void cGameActionObject::Update(float fDelta){
 			}
 		}
 	}
-
 }
 
 void cGameActionObject::SetAction(cAction* pAction){

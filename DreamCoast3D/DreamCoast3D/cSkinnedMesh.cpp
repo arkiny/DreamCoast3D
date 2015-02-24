@@ -54,6 +54,8 @@ void cSkinnedMesh::Setup(std::string sFolder, std::string sFile)
 		D3DXVec3TransformCoord(&localCenter, &localCenter, &mat);
 		m_stBoundingSphere.m_vCenter = localCenter;
 		m_stBoundingSphere.m_fRadius = 15.0f;
+		m_stUpdateBoundingSphere.m_vCenter = m_stBoundingSphere.m_vCenter;
+		m_stUpdateBoundingSphere.m_fRadius = m_stBoundingSphere.m_fRadius;
 		D3DXCreateSphere(g_pD3DDevice, m_stBoundingSphere.m_fRadius, 10, 10, &m_pDebugSphereBody, NULL);
 	}
 }
@@ -137,6 +139,11 @@ void cSkinnedMesh::Render(D3DXFRAME* pFrame, D3DXMATRIXA16* pParentWorldTM)
 		g_pD3DDevice->SetTexture(0, NULL);
 		m_pDebugSphereBody->DrawSubset(0);
 		g_pD3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
+
+		D3DXVec3TransformCoord(
+			&m_stUpdateBoundingSphere.m_vCenter,
+			&m_stBoundingSphere.m_vCenter,
+			&pBone->matWorldTM);
 	}
 
 	if (pBone->pFrameSibling)

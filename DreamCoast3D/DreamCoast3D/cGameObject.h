@@ -9,9 +9,13 @@ class cTransform;
 class cGameObject : public cObject
 {
 protected:
-	SYNTHESIZE(iGridTileSystem*, m_pGridCallback, GridTileSystem);
+	SYNTHESIZE(iGameObjectDelegate*, m_pGameObjDeligate, GameObjDeligate);
+
+	iGridTileSystem*	m_pGridCallback;
+	ST_TILE_GRIDPOS		m_stGridPos;
 
 	ST_BOUNDING_SPHERE	m_stBoundingSphere;
+	
 	ST_BOUNDING_BOX*	m_pBoundingBox;
 	cTransform*			m_pTransform;
 
@@ -27,8 +31,16 @@ public:
 	virtual D3DXMATRIXA16*		GetTransformMatrix();
 	
 	virtual ST_BOUNDING_SPHERE*	GetBoundingSphere();
+	virtual ST_BOUNDING_SPHERE*	GetCollisionSphere(){
+		return NULL;
+	}
+
 	virtual ST_BOUNDING_BOX*	GetBoundingBox();
-	virtual void				SetBoundingBox(ST_BOUNDING_BOX* pBoundingBox) { m_pBoundingBox = pBoundingBox; }
+	virtual void				SetBoundingBox(ST_BOUNDING_BOX* pBoundingBox) { 
+		//m_pBoundingBox->vMin = pBoundingBox->vMin; 
+		//m_pBoundingBox->vMax = pBoundingBox->vMax;
+		m_pBoundingBox = pBoundingBox;
+	}
 
 	virtual void				SetPosition(D3DXVECTOR3& newPos);
 	virtual D3DXVECTOR3&		GetPosition();
@@ -44,5 +56,8 @@ public:
 	virtual float				GetYangle();
 
 	virtual D3DXVECTOR3&		GetScale();
+
+	virtual void SetGridTileSystem(iGridTileSystem* pGrid);
+	virtual iGridTileSystem* GetGridTileSystem() { return m_pGridCallback; }
 };
 

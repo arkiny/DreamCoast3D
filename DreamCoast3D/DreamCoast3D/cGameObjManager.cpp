@@ -52,10 +52,6 @@ void cGameObjManager::Render(){
 void cGameObjManager::SetCurrentTileSystem(iGridTileSystem* pGridSystem){
 	for (auto p : m_setStaticGameObjects){
 		p->SetGridTileSystem(pGridSystem);
-		int x = static_cast<int>(floorf(p->GetPosition().x));
-		int z = static_cast<int>(floorf(p->GetPosition().z));
-		pGridSystem->AddObjectOnGrid(p, x, z);
-		p->Release();
 	}
 
 	for (auto p : m_setGameObjects){
@@ -67,6 +63,7 @@ void cGameObjManager::AddGameObj(cGameObject* pGameObj){
 	if (pGameObj){
 		if (m_setGameObjects.find(pGameObj) == m_setGameObjects.end()){
 			SAFE_ADD_REF(pGameObj);
+			pGameObj->SetGameObjDeligate(this);
 			m_setGameObjects.insert(pGameObj);
 		}
 	}
@@ -85,6 +82,7 @@ void cGameObjManager::AddStaticGameObjects(cGameObject* pGameObj){
 	if (pGameObj){
 		if (m_setStaticGameObjects.find(pGameObj) == m_setStaticGameObjects.end()){
 			SAFE_ADD_REF(pGameObj);
+			pGameObj->SetGameObjDeligate(this);
 			m_setStaticGameObjects.insert(pGameObj);
 		}
 	}
@@ -133,4 +131,38 @@ void cGameObjManager::SetPlayableGameObject(cGameObject* pPlayer){
 		pPlayer->AddRef();
 		m_pPlayable = pPlayer;
 	}	
+}
+
+bool cGameObjManager::isGameObjectCollided(cGameObject* pFrom){
+	if (pFrom->GetCollisionSphere()){
+		for (auto p : m_setGameObjects){
+			if (p == pFrom){
+				continue;
+			}
+			else{
+				if (p->GetCollisionSphere()){
+					D3DXVECTOR3 from = pFrom->GetCollisionSphere()->m_vCenter;
+					D3DXVECTOR3 to = p->GetCollisionSphere()->m_vCenter;
+					D3DXVECTOR3 dist = from - to;
+					float fFrom = pFrom->GetCollisionSphere()->m_fRadius;
+					float fTo = p->GetCollisionSphere()->m_fRadius;
+					float scale = pFrom->GetScale().x;
+					float scale2 = p->GetScale().x;
+					float fIntersect = fFrom*scale + fTo*scale2;
+					//pFrom->GetCollisionSphere()->m_vCenter;
+					//pFrom->GetCollisionSphere()->m_fRadius;
+					//p->GetCollisionSphere()->m_vCenter;
+					//p->GetCollisionSphere()->m_fRadius;
+					float fDist = D3DXVec3Length(&dist);
+					if (fIntersect > fDist){
+						return true;
+					}
+				}
+				else{
+					continue;
+				}
+			}
+		}
+	}
+	return false;
 }

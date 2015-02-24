@@ -1,10 +1,10 @@
 #pragma once
-
+#include "iGameObjectDelegate.h"
 class cFrustum;
 class cGameObject;
 class cGameMapObject;
 
-class cGameObjManager : public cObject
+class cGameObjManager : public cObject, public iGameObjectDelegate
 {
 private:
 	// 프러스텀 컬링용
@@ -38,5 +38,8 @@ public:
 	cGameObject* GetPlayerableGameObject() { return m_pPlayable; }
 
 	void Destroy();
+
+	// iGameObjectDelegate override
+	bool isGameObjectCollided(cGameObject* pFrom) override;
 };
 

@@ -25,6 +25,11 @@ void cPlayerIdle::Execute(cGamePlayableObject* pPlayer, float fDelta){
 		return;
 	}
 
+	if (g_pControlManager->GetInputInfo(VK_LBUTTON)){
+		pPlayer->ChangeState(pPlayer->EPLAYABLESTATE_ATTACK);
+		return;
+	}
+
 	// do nothing
 }
 

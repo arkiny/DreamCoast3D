@@ -112,9 +112,9 @@ cGameObject* cGameObjLoader::ParseGameActionSkinnedMeshObj(){
 			//		ret->GetSkinnedMesh()->SetAnimationLoop(i, true);
 			//	}
 			//}
-			ret->GetSkinnedMesh()->SetAnimationLoop(0, false);
-			ret->GetSkinnedMesh()->SetAnimationLoop(1, false);
-			ret->GetSkinnedMesh()->SetAnimationLoop(2, false);
+			ret->GetSkinnedMesh()->SetAnimationLoop(0, true);
+			ret->GetSkinnedMesh()->SetAnimationLoop(1, true);
+			ret->GetSkinnedMesh()->SetAnimationLoop(2, true);
 			ret->GetSkinnedMesh()->SetAnimationLoop(3, true);
 			ret->GetSkinnedMesh()->SetAnimationLoop(4, true);
 			ret->GetSkinnedMesh()->SetAnimationIndex(nIndex);

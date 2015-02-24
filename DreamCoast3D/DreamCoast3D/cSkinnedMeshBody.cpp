@@ -58,7 +58,19 @@ void cSkinnedMeshBody::Setup(
 	D3DXVec3TransformCoord(&localCenter, &localCenter, &mat);
 	m_stBoundingSphere.m_vCenter = localCenter;
 	m_stBoundingSphere.m_fRadius = 10.0f;
+	m_stUpdateBoundingSphere.m_vCenter = m_stBoundingSphere.m_vCenter;
+	m_stUpdateBoundingSphere.m_fRadius = m_stBoundingSphere.m_fRadius;
 	D3DXCreateSphere(g_pD3DDevice, m_stBoundingSphere.m_fRadius, 10, 10, &m_pDebugSphereBody, NULL);
+
+	D3DXFRAME* pFxHand;
+	pFxHand = D3DXFrameFind(m_pRootFrame, "FxHand01");
+	mat = pFxHand->TransformationMatrix;
+	D3DXVec3TransformCoord(&localCenter, &localCenter, &mat);
+	m_stAttacSphere.m_vCenter = localCenter;
+	m_stAttacSphere.m_fRadius = 5.0f;
+	m_stUpdateAttacSphere.m_vCenter = m_stAttacSphere.m_vCenter;
+	m_stUpdateAttacSphere.m_fRadius = m_stAttacSphere.m_fRadius;
+	D3DXCreateSphere(g_pD3DDevice, m_stAttacSphere.m_fRadius, 10, 10, &m_pMesh, NULL);
 }
 
 void cSkinnedMeshBody::Render(D3DXMATRIXA16* pParentWorldTM){
@@ -129,6 +141,25 @@ void cSkinnedMeshBody::Render(D3DXFRAME* pFrame, D3DXMATRIXA16* pParentWorldTM){
 		g_pD3DDevice->SetTexture(0, NULL);
 		m_pDebugSphereBody->DrawSubset(0);
 		g_pD3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
+
+		D3DXVec3TransformCoord(
+			&m_stUpdateBoundingSphere.m_vCenter,
+			&m_stBoundingSphere.m_vCenter,
+			&pBone->matWorldTM);
+	}
+
+	if (pBone->Name != nullptr && std::string(pBone->Name) == std::string("FxHand01"))
+	{
+		g_pD3DDevice->SetTransform(D3DTS_WORLD, &(pBone->matWorldTM));
+		g_pD3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
+		g_pD3DDevice->SetTexture(0, NULL);
+		m_pMesh->DrawSubset(0);
+		g_pD3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
+
+		D3DXVec3TransformCoord(
+			&m_stUpdateAttacSphere.m_vCenter,
+			&m_stAttacSphere.m_vCenter,
+			&pBone->matWorldTM);
 	}
 
 	if (pBone->pFrameSibling)

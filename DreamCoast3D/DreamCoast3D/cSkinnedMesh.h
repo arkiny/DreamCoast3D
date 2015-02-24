@@ -17,6 +17,11 @@ protected:
 	D3DXVECTOR3				m_vCenter;				//충돌용 바운딩 스피어의 중심점
 	
 	SYNTHESIZE(ST_BOUNDING_SPHERE, m_stBoundingSphere, BoundingSphere);
+	SYNTHESIZE(ST_BOUNDING_SPHERE, m_stAttacSphere, AttackSphere);
+
+	SYNTHESIZE(ST_BOUNDING_SPHERE, m_stUpdateBoundingSphere, UpdateBoundingSphere);
+	SYNTHESIZE(ST_BOUNDING_SPHERE, m_stUpdateAttacSphere, UpdateAttackSphere);
+
 	SYNTHESIZE(float, m_fAnimationBlendTime, AnimationBlendTime);
 
 	LPD3DXMESH					m_pDebugSphereBody;
@@ -31,6 +36,10 @@ public:
 	virtual void SetAnimationIndex(DWORD dwIndex);
 	virtual void SetAnimationLoop(DWORD dwIndex, bool isLoop);
 	
+	virtual ST_BOUNDING_SPHERE&	GetCollisionSphere(){
+		return m_stBoundingSphere;
+	}
+
 	virtual void CalcCollisionSphere(ST_BONE_MESH* pBoneMesh);
 	virtual void RenderCollisionSphere(ST_BONE_MESH* pBoneMesh);
 

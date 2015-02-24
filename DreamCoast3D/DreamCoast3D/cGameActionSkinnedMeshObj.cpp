@@ -33,6 +33,16 @@ void cGameActionSkinnedMeshObj::Render(){
 	}
 }
 
+ST_BOUNDING_SPHERE* cGameActionSkinnedMeshObj::GetCollisionSphere(){
+	ST_BOUNDING_SPHERE* ret = NULL;
+	if (m_pSkinnedMesh){
+		ret = &m_pSkinnedMesh->GetUpdateBoundingSphere();
+		//ret->m_fRadius *= GetScale().x;
+		return ret;
+	}
+	return ret;
+}
+
 //UINT uiNumAnim = m_pAnimControl->GetNumAnimationSets();
 //for (UINT i = 0; i < uiNumAnim; ++i)
 //{

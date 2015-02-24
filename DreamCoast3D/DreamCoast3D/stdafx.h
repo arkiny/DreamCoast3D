@@ -170,11 +170,19 @@ struct ST_BONE_MESH_SPHERE : public ST_BONE_MESH{
 	D3DXMATRIX				matSphereW;				//충돌용 바운딩 스피어의 월드변환행렬
 };
 
+struct ST_TILE_GRIDPOS{
+	int x;
+	int z;
+	ST_TILE_GRIDPOS() : x(0), z(0){}
+	ST_TILE_GRIDPOS(int nX, int nZ) : x(nX), z(nZ){}
+};
+
 // 인터페이스들
 #include "iSceneDelegate.h"
 #include "iActionDelegate.h"
 #include "iButtonDelegate.h"
 #include "iMap.h"
+#include "iGameObjectDelegate.h"
 
 // 모두가 알아야 하는 클래스들
 #include "cObject.h"

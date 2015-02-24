@@ -6,23 +6,44 @@ cGameObject::cGameObject()
 	:m_stBoundingSphere()
 	, m_pBoundingBox(NULL)
 	, m_pGridCallback(NULL)
+	, m_stGridPos(0,0)
+	, m_pGameObjDeligate(NULL)
 {
 	m_pTransform = new cTransform;
+	//m_pBoundingBox = new ST_BOUNDING_BOX;
+	//m_pBoundingBox->vMin = D3DXVECTOR3(-.5f, -.5f, -.5f);
+	//m_pBoundingBox->vMax = D3DXVECTOR3(.5f, .5f, .5f);
 }
 
 
 cGameObject::~cGameObject()
 {
 	SAFE_RELEASE(m_pTransform);
+	//SAFE_DELETE(m_pBoundingBox);
 }
 
 void cGameObject::Setup(){
-
+	
 }
 
 void cGameObject::Update(float fdelta){
 	// TODO :
 	// 만약 모든 게임 오브젝트가 공통적으로 업데이트가 필요할 경우
+	
+	// TODO : 유동 그리드시스템에 대한 수정보완이 필요
+	//if (m_pGridCallback){
+	//	ST_TILE_GRIDPOS pos(
+	//		static_cast<int>(floorf(m_pTransform->GetPosition().x)),
+	//		static_cast<int>(floorf(m_pTransform->GetPosition().z))
+	//		);
+
+	//	if (pos.x != m_stGridPos.x || pos.z != m_stGridPos.z){
+	//		m_pGridCallback->RemoveObejctOnTile(this, m_stGridPos.x, m_stGridPos.z);
+	//		m_pGridCallback->AddObjectOnGrid(this, pos.x, pos.z);
+	//		this->Release();
+	//		m_stGridPos = pos;
+	//	}
+	//}
 }
 
 void cGameObject::Render(){
@@ -93,4 +114,12 @@ D3DXVECTOR3& cGameObject::GetScale(){
 
 float cGameObject::GetYangle(){
 	return m_pTransform->GetYAxisAngle();
+}
+
+void cGameObject::SetGridTileSystem(iGridTileSystem* pGrid){
+	m_pGridCallback = pGrid;
+	m_stGridPos.x = static_cast<int>(floorf(m_pTransform->GetPosition().x));
+	m_stGridPos.z = static_cast<int>(floorf(m_pTransform->GetPosition().z));
+	pGrid->AddObjectOnGrid(this, m_stGridPos.x, m_stGridPos.z);
+	this->Release();
 }

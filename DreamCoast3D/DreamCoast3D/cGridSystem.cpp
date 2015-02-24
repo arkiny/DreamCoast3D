@@ -41,11 +41,15 @@ void cGridSystem::AddObjectOnGrid(cGameObject* pGameObejct, int nX, int nZ)
 	//int GridZ = nZ * m_nConstTileSize;
 	// Object ½ÃÀÛ X,Z ÁÂÇ¥
 
-	ST_BOUNDING_BOX stBox;
-	stBox = *pGameObejct->GetBoundingBox();
-	float fWidth = stBox.vMax.x - stBox.vMin.x;
-	float fHeight = stBox.vMax.z - stBox.vMin.z;
+	float fWidth = 0.0f;
+	float fHeight = 0.0f;
 
+	if (pGameObejct->GetBoundingBox()){
+		ST_BOUNDING_BOX stBox;
+		stBox = *pGameObejct->GetBoundingBox();
+		fWidth = stBox.vMax.x - stBox.vMin.x;
+		fHeight = stBox.vMax.z - stBox.vMin.z;
+	}
 
 	int nBeginGridX = nX - fWidth / 2;
 	int nBeginGridZ = nZ - fHeight / 2;
@@ -94,7 +98,9 @@ D3DXVECTOR3 cGridSystem::GetObjectCenter(int nX, int nZ)
 			//GameObject = vecGameObject[0];
 		}
 	}
-	return GameObject->GetPosition();
+	D3DXVECTOR3 ret = GameObject->GetPosition();
+	SAFE_RELEASE(GameObject);
+	return ret;
 }
 
 D3DXVECTOR3 cGridSystem::GetTileCenterCoord(int nX, int nZ)
@@ -183,11 +189,13 @@ void cGridSystem::RemoveObejctOnTile(cGameObject* pGameObejct, int nX, int nZ)
 		cGameObject* GameObject = new cGameObject;
 
 		GameObject = *GetObjectOnGrid(nX, nZ).begin();
-
-		ST_BOUNDING_BOX *stBoundingBox = GameObject->GetBoundingBox();
-
-		int nWidth = (int)(stBoundingBox->vMax.x - stBoundingBox->vMin.x);
-		int nHeight = (int)(stBoundingBox->vMax.z - stBoundingBox->vMin.z);
+		int nWidth = 1;
+		int nHeight = 1;
+		if (GameObject->GetBoundingBox()){
+			ST_BOUNDING_BOX *stBoundingBox = GameObject->GetBoundingBox();
+			nWidth = (int)(stBoundingBox->vMax.x - stBoundingBox->vMin.x);
+			nHeight = (int)(stBoundingBox->vMax.z - stBoundingBox->vMin.z);
+		}
 
 		int nBeginGridX = nCenterX - nWidth / 2;
 		int nBeginGridZ = nCenterZ - nHeight / 2;
@@ -200,7 +208,7 @@ void cGridSystem::RemoveObejctOnTile(cGameObject* pGameObejct, int nX, int nZ)
 					!= m_vecTileData[x + z*m_nMapSize].end())
 				{
 					m_vecTileData[x + z*m_nMapSize].erase(pGameObejct);
-					SAFE_RELEASE(pGameObejct);
+					pGameObejct->Release();
 				}
 			}
 		}
@@ -236,4 +244,16 @@ void cGridSystem::Destroy(){
 			p->Release();
 		}
 	}
+}
+
+void cGridSystem::AddMovingObject(cGameObject* pGameObejct, int nX, int nZ){
+	SAFE_ADD_REF(pGameObejct);
+	m_vecTileData[nX + nZ*m_nMapSize].insert(pGameObejct);
+	m_vecGameObject[nX + nZ*m_nMapSize].push_back(pGameObejct);
+	SAFE_ADD_REF(pGameObejct);
+}
+
+void cGridSystem::RemoveMovingObject(cGameObject* pGameObejct, int nX, int nZ){
+	m_vecTileData[nX + nZ*m_nMapSize].erase(pGameObejct);
+	pGameObejct->Release();
 }

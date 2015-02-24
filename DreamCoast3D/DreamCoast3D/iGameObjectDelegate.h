@@ -2,6 +2,6 @@
 
 class cGameObject;
 
-__interface iGameObjectDelgate{
-	bool isCollideWith(cGameObject* pSender);
+__interface iGameObjectDelegate{
+	bool isGameObjectCollided(cGameObject* pFrom);
 };

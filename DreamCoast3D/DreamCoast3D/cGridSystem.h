@@ -21,6 +21,10 @@ public:
 
 	// HeightMap Setup
 	void Setup(int nMapSize);
+
+	void AddMovingObject(cGameObject* pGameObejct, int nX, int nZ);
+	void RemoveMovingObject(cGameObject* pGameObejct, int nX, int nZ);
+
 	// Object Add
 	void AddObjectOnGrid(cGameObject* pGameObejct, int nX, int nZ);
 	// Grid 좌표 입력시 해당 Grid 위에 있는 Object의 중심좌표가 나옴
