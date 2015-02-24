@@ -86,15 +86,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Asciitok.h" />
-    <ClInclude Include="cAcitionThink.h" />
     <ClInclude Include="cAction.h" />
-    <ClInclude Include="cActionAttack.h" />
-    <ClInclude Include="cActionEscape.h" />
     <ClInclude Include="cActionMove.h" />
-    <ClInclude Include="cActionPersuit.h" />
     <ClInclude Include="cActionRepeat.h" />
     <ClInclude Include="cActionSeq.h" />
-    <ClInclude Include="cActionSkill.h" />
+    <ClInclude Include="cAIFSM.h" />
     <ClInclude Include="cAllocateHierarchy.h" />
     <ClInclude Include="cAnimationSet.h" />
     <ClInclude Include="cAseLoader.h" />
@@ -166,6 +162,7 @@
     <ClInclude Include="cZealot.h" />
     <ClInclude Include="DreamCoast3D.h" />
     <ClInclude Include="iActionDelegate.h" />
+    <ClInclude Include="iAIState.h" />
     <ClInclude Include="iButtonDelegate.h" />
     <ClInclude Include="iGameObjectDelegate.h" />
     <ClInclude Include="iMap.h" />
@@ -176,15 +173,11 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="cAcitionThink.cpp" />
     <ClCompile Include="cAction.cpp" />
-    <ClCompile Include="cActionAttack.cpp" />
-    <ClCompile Include="cActionEscape.cpp" />
     <ClCompile Include="cActionMove.cpp" />
-    <ClCompile Include="cActionPersuit.cpp" />
     <ClCompile Include="cActionRepeat.cpp" />
     <ClCompile Include="cActionSeq.cpp" />
-    <ClCompile Include="cActionSkill.cpp" />
+    <ClCompile Include="cAIFSM.cpp" />
     <ClCompile Include="cAllocateHierarchy.cpp" />
     <ClCompile Include="cAnimationSet.cpp" />
     <ClCompile Include="cAseLoader.cpp" />
@@ -256,6 +249,7 @@
     <ClCompile Include="cZealot.cpp" />
     <ClCompile Include="DreamCoast3D.cpp" />
     <ClCompile Include="iActionDelegate.cpp" />
+    <ClCompile Include="iAIState.cpp" />
     <ClCompile Include="iButtonDelegate.cpp" />
     <ClCompile Include="iGameObjectDelegate.cpp" />
     <ClCompile Include="iMap.cpp" />

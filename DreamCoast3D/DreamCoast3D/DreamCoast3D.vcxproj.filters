@@ -208,21 +208,6 @@
     <ClCompile Include="cUIGameMainMenu.cpp">
       <Filter>EachWorks\HD\TODO-DistAfter\MainMenuUI</Filter>
     </ClCompile>
-    <ClCompile Include="cAcitionThink.cpp">
-      <Filter>EachWorks\HD\AI-Action</Filter>
-    </ClCompile>
-    <ClCompile Include="cActionPersuit.cpp">
-      <Filter>EachWorks\HD\AI-Action</Filter>
-    </ClCompile>
-    <ClCompile Include="cActionAttack.cpp">
-      <Filter>EachWorks\HD\AI-Action</Filter>
-    </ClCompile>
-    <ClCompile Include="cActionSkill.cpp">
-      <Filter>EachWorks\HD\AI-Action</Filter>
-    </ClCompile>
-    <ClCompile Include="cActionEscape.cpp">
-      <Filter>EachWorks\HD\AI-Action</Filter>
-    </ClCompile>
     <ClCompile Include="cUILoader.cpp">
       <Filter>FrameWork\Loader</Filter>
     </ClCompile>
@@ -254,7 +239,15 @@
     <ClCompile Include="cPlayerOnHit.cpp">
       <Filter>EachWorks\HD\PlayerFSM</Filter>
     </ClCompile>
-    <ClCompile Include="cGameAIObject.cpp" />
+    <ClCompile Include="cGameAIObject.cpp">
+      <Filter>EachWorks\HD</Filter>
+    </ClCompile>
+    <ClCompile Include="iAIState.cpp">
+      <Filter>EachWorks\HD\AI-FSM</Filter>
+    </ClCompile>
+    <ClCompile Include="cAIFSM.cpp">
+      <Filter>EachWorks\HD\AI-FSM</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cAction.h">
@@ -473,21 +466,6 @@
     <ClInclude Include="cUIGameMainMenu.h">
       <Filter>EachWorks\HD\TODO-DistAfter\MainMenuUI</Filter>
     </ClInclude>
-    <ClInclude Include="cAcitionThink.h">
-      <Filter>EachWorks\HD\AI-Action</Filter>
-    </ClInclude>
-    <ClInclude Include="cActionPersuit.h">
-      <Filter>EachWorks\HD\AI-Action</Filter>
-    </ClInclude>
-    <ClInclude Include="cActionAttack.h">
-      <Filter>EachWorks\HD\AI-Action</Filter>
-    </ClInclude>
-    <ClInclude Include="cActionSkill.h">
-      <Filter>EachWorks\HD\AI-Action</Filter>
-    </ClInclude>
-    <ClInclude Include="cActionEscape.h">
-      <Filter>EachWorks\HD\AI-Action</Filter>
-    </ClInclude>
     <ClInclude Include="cUILoader.h">
       <Filter>FrameWork\Loader</Filter>
     </ClInclude>
@@ -519,7 +497,15 @@
     <ClInclude Include="cPlayerAttack.h">
       <Filter>EachWorks\HD\PlayerFSM</Filter>
     </ClInclude>
-    <ClInclude Include="cGameAIObject.h" />
+    <ClInclude Include="cGameAIObject.h">
+      <Filter>EachWorks\HD</Filter>
+    </ClInclude>
+    <ClInclude Include="iAIState.h">
+      <Filter>EachWorks\HD\AI-FSM</Filter>
+    </ClInclude>
+    <ClInclude Include="cAIFSM.h">
+      <Filter>EachWorks\HD\AI-FSM</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="DreamCoast3D.ico">
@@ -610,6 +596,9 @@
     </Filter>
     <Filter Include="EachWorks\HD\PlayerFSM">
       <UniqueIdentifier>{81c6b559-4e66-47bb-9f54-d0cbfee6aa91}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="EachWorks\HD\AI-FSM">
+      <UniqueIdentifier>{8a82e0f0-af01-4641-89a2-9ad2b8f4209f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
