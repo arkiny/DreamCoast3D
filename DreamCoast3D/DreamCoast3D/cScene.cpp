@@ -76,8 +76,6 @@ void cScene::Setup(std::string sFilePath){
 	m_pUIObjManager->Setup();
 	m_pUIObjManager->SetDesc("UIObject Manager for Example1");
 
-	m_pPlayableObject = new cGamePlayableObject;
-
 	/// TODO 차후 UI 및 하늘 역시 DataDriven으로 처리된후 삭제
 	//cUIStatWindow* p = new cUIStatWindow;
 	//p->Setup();
@@ -107,14 +105,16 @@ void cScene::Setup(std::string sFilePath){
 
 	//SAFE_RELEASE(pAseObject);
 	cGameAIObject* pGameAIObject = new cGameAIObject;
-	pGameAIObject->Setup(std::string("../Resources/Char/Zealot/"), std::string("zealot.X"));
+	pGameAIObject->Setup(std::string("../Resources/Char/Tera/"), std::string("Monster_SnowmanRed.X"));
 	pGameAIObject->SetPosition(D3DXVECTOR3(124.0f, 0.0f, 124.0f));
+	pGameAIObject->SetScale(D3DXVECTOR3(0.06f, 0.06f, 0.06f));
 	m_pGameObjManager->AddGameObj(pGameAIObject);
 	SAFE_RELEASE(pGameAIObject);
 
 	pGameAIObject = new cGameAIObject;
-	pGameAIObject->Setup(std::string("../Resources/Char/Zealot/"), std::string("zealot.X"));
+	pGameAIObject->Setup(std::string("../Resources/Char/Tera/"), std::string("Monster_SnowmanRed.X"));
 	pGameAIObject->SetPosition(D3DXVECTOR3(122.0f, 0.0f, 122.0f));
+	pGameAIObject->SetScale(D3DXVECTOR3(0.06f, 0.06f, 0.06f));
 	m_pGameObjManager->AddGameObj(pGameAIObject);
 	SAFE_RELEASE(pGameAIObject);
 

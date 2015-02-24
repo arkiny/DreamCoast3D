@@ -47,13 +47,13 @@ void cSkinnedMesh::Setup(std::string sFolder, std::string sFile)
 
 	// ¸ö Áß¾Ó
 	D3DXFRAME* pDummyRoot;
-	pDummyRoot = D3DXFrameFind(m_pRootFrame, "Dummy_root");
+	pDummyRoot = D3DXFrameFind(m_pRootFrame, "FxCenter");
 	if (pDummyRoot){
 		D3DXMATRIXA16 mat = pDummyRoot->TransformationMatrix;
 		D3DXVECTOR3 localCenter(0, 0, 0);
 		D3DXVec3TransformCoord(&localCenter, &localCenter, &mat);
 		m_stBoundingSphere.m_vCenter = localCenter;
-		m_stBoundingSphere.m_fRadius = 10.0f;
+		m_stBoundingSphere.m_fRadius = 15.0f;
 		D3DXCreateSphere(g_pD3DDevice, m_stBoundingSphere.m_fRadius, 10, 10, &m_pDebugSphereBody, NULL);
 	}
 }
@@ -129,15 +129,16 @@ void cSkinnedMesh::Render(D3DXFRAME* pFrame, D3DXMATRIXA16* pParentWorldTM)
 			g_pD3DDevice->SetMaterial(&pBoneMesh->vecMtlTex[i]->stMtl);
 			pBoneMesh->MeshData.pMesh->DrawSubset(i);
 		}
-
-		if (pBone->Name != nullptr && std::string(pBone->Name) == std::string("Dummy_root"))
-		{
-			g_pD3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
-			g_pD3DDevice->SetTexture(0, NULL);
-			m_pDebugSphereBody->DrawSubset(0);
-			g_pD3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
-		}
 	}
+
+	if (pBone->Name != nullptr && std::string(pBone->Name) == std::string("FxCenter"))
+	{
+		g_pD3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
+		g_pD3DDevice->SetTexture(0, NULL);
+		m_pDebugSphereBody->DrawSubset(0);
+		g_pD3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
+	}
+
 	if (pBone->pFrameSibling)
 	{
 		Render(pBone->pFrameSibling, pParentWorldTM);

@@ -52,7 +52,7 @@ void cSkinnedMeshBody::Setup(
 
 	// ¸ö Áß¾Ó
 	D3DXFRAME* pDummyRoot;
-	pDummyRoot = D3DXFrameFind(m_pRootFrame, "Dummy_root");
+	pDummyRoot = D3DXFrameFind(m_pRootFrame, "FxCenter");
 	D3DXMATRIXA16 mat = pDummyRoot->TransformationMatrix;
 	D3DXVECTOR3 localCenter(0, 0, 0);
 	D3DXVec3TransformCoord(&localCenter, &localCenter, &mat);
@@ -122,7 +122,7 @@ void cSkinnedMeshBody::Render(D3DXFRAME* pFrame, D3DXMATRIXA16* pParentWorldTM){
 		}
 	}
 
-	if (pBone->Name != nullptr && std::string(pBone->Name) == std::string("Dummy_root"))
+	if (pBone->Name != nullptr && std::string(pBone->Name) == std::string("FxCenter"))
 	{
 		g_pD3DDevice->SetTransform(D3DTS_WORLD, &(pBone->matWorldTM));
 		g_pD3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);

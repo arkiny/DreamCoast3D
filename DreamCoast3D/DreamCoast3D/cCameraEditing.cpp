@@ -67,11 +67,11 @@ void cCameraEditing::Update(float fDelta){
 }
 
 void cCameraEditing::Render(){
-	D3DXMATRIXA16 trans;
-	D3DXMatrixTranslation(&trans, m_vPosition.x, m_vPosition.y, m_vPosition.z);
+	//D3DXMATRIXA16 trans;
+	//D3DXMatrixTranslation(&trans, m_vPosition.x, m_vPosition.y, m_vPosition.z);
 
-	g_pD3DDevice->SetTransform(D3DTS_WORLD, &trans);
-	g_pD3DDevice->SetTexture(0, NULL);
-	g_pD3DDevice->SetMaterial(&m_stMaterial);
-	m_pMesh->DrawSubset(0);
+	//g_pD3DDevice->SetTransform(D3DTS_WORLD, &trans);
+	//g_pD3DDevice->SetTexture(0, NULL);
+	//g_pD3DDevice->SetMaterial(&m_stMaterial);
+	//m_pMesh->DrawSubset(0);
 }
