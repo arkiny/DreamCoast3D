@@ -140,7 +140,6 @@ void cCamera::Update(float delta)
 	//	m_vLookAt = prevLookAt;
 	//}
 
-
 	if (g_pControlManager->GetInputInfo(VK_SPACE))
 	{
 		SetSightTarget();
@@ -181,7 +180,6 @@ void cCamera::SetSightTarget()
 	D3DXMATRIXA16 matWorld;
 	D3DXMatrixIdentity(&matWorld);
 
-	//m_vFixedEye = m_vEye;
 	D3DXVECTOR3 vEye = m_vEye;
 	D3DXVECTOR3 vLookAt = m_vLookAt;
 
@@ -189,39 +187,28 @@ void cCamera::SetSightTarget()
 	vec.x = m_pvTarget->x - vEye.x;
 	vec.z = m_pvTarget->z - vEye.z;
 
-	//D3DXVECTOR3 pvTarget = *m_pvTarget;
-	//D3DXMatrixRotationY(&matRot, m_fAngle);
-	//D3DXVec3TransformCoord(&pvTarget, &pvTarget, &matRot);
-
 	D3DXVECTOR3 pvTarget(0.f, 0.f, 0.f);
     pvTarget.x = cos(m_fAngle);
     pvTarget.z = sin(m_fAngle);
 	D3DXVec3Normalize(&pvTarget, &pvTarget);
-    pvTarget *= m_fFixedDist;
 
     D3DXMATRIXA16 matY;
     D3DXMatrixIdentity(&matY);
-    D3DXMatrixRotationY(&matY, D3DX_PI/2);
-	D3DXVec3TransformCoord(&vLookAt, &pvTarget, &matY);
+    D3DXMatrixRotationY(&matY, D3DX_PI / 2);
+    D3DXVec3TransformCoord(&vLookAt, &pvTarget, &matY);
     vLookAt += *m_pvTarget;
-	m_vLookAt = vLookAt;
+    vLookAt.y = m_pvTarget->y;
+    m_vLookAt = vLookAt;
+
+    pvTarget *= m_fFixedDist;
 
     D3DXMatrixIdentity(&matY);
     D3DXMatrixRotationY(&matY, -D3DX_PI/2);
     D3DXVec3TransformCoord(&vEye, &pvTarget, &matY);
     vEye += *m_pvTarget;
-    vEye.y = m_pvTarget->y + 10.f;
+    vEye.y = m_vEye.y;
     m_vEye = vEye;
 
-	//D3DXMatrixTranslation(&matTrs, m_pvTarget->x, m_pvTarget->y, m_pvTarget->z);
-
-	//matWorld = matRot * matTrs;
-	//D3DXVec3TransformCoord(&vEye, &vec, &matWorld);
-
-	//m_vEye = pvTarget;
-
-
-	//vLookAt.y = -m_vEye.y/* - 2*m_pvTarget->y*/;
 }
 
 void cCamera::UpdateAngle(float fAngle)
