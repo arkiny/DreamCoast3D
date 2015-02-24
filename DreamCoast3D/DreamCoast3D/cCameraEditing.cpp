@@ -62,7 +62,7 @@ void cCameraEditing::Update(float fDelta){
 	//else {
 	//	m_vPosition = prevPos;
 	//}
-
+	float a=0.f;
 	cCamera::Update(fDelta);
 }
 

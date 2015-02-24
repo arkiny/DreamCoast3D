@@ -19,11 +19,13 @@
 #include "cGamePlayableObject.h"
 #include "cGameAIObject.h"
 
+
 cScene::cScene() 
 	:m_pCamera(NULL)
 	, m_pGameObjManager(NULL)
 	, m_pCurrentMap(NULL)
 	, m_pUIObjManager(NULL)
+//	, m_pPlayableObject(NULL)
 {
 }
 
@@ -73,6 +75,8 @@ void cScene::Setup(std::string sFilePath){
 	m_pUIObjManager = new cUIObjManager;
 	m_pUIObjManager->Setup();
 	m_pUIObjManager->SetDesc("UIObject Manager for Example1");
+
+	//m_pPlayableObject = new cGamePlayableObject;
 
 	/// TODO 차후 UI 및 하늘 역시 DataDriven으로 처리된후 삭제
 	//cUIStatWindow* p = new cUIStatWindow;
@@ -141,11 +145,14 @@ void cScene::Start(){
 
 	m_pGameObjManager->SetCurrentTileSystem(m_pCurrentMap);
 	m_pCamera->SetTarget(m_pGameObjManager->GetPlayerableGameObject()->GetTransform()->getPosPointer());
+	
 }
 
 void cScene::Update(float delta){
 	m_pCamera->Update(delta);
-	
+	//m_pPlayableObject = (cGamePlayableObject*)m_pGameObjManager->GetPlayerableGameObject();
+	//m_pCamera->UpdateAngle(m_pPlayableObject->GetPlayerAngle());
+	//m_pCamera->UpdateAngle(m_pPlayableObject->GetPlayerAngle());
 	if (m_pUIObjManager){
 		m_pUIObjManager->Update(delta);
 	}

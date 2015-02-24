@@ -44,5 +44,13 @@ public:
 
 	//void AdjustYPositionByHeightMap(iMap* pMap);
 
+	// MS
+	void FixedCamera(D3DXVECTOR3* pvEye, D3DXVECTOR3* pvLookAt);
+	void SetSightTarget();
+	void UpdateAngle(float fAngle);
+	D3DXVECTOR3 m_vFixedEye;
+	D3DXVECTOR3 m_vFixedLookAt;
+	float m_fAngle;
+
 };
 

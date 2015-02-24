@@ -6,6 +6,8 @@ class cGameObjManager;
 class cUIObjManager;
 class cGameMapObject;
 
+// MS
+class cGamePlayableObject;
 
 // 앞으로의 모든 씬은 cScene을 상속받아서 만들어진다.
 class cScene : public cObject
@@ -78,6 +80,10 @@ public:
 	
 
 	virtual void Destroy();
+
+
+	// MS
+	//cGamePlayableObject* m_pPlayableObject;
 
 
 };
