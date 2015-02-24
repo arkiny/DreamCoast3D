@@ -17,6 +17,7 @@
 #include "cUIMinimap.h"
 #include "cGameMapSkyObject.h"
 #include "cGamePlayableObject.h"
+#include "cGameAIObject.h"
 
 cScene::cScene() 
 	:m_pCamera(NULL)
@@ -113,6 +114,18 @@ void cScene::Setup(std::string sFilePath){
 	//pGamePlayableObject->SetScale(D3DXVECTOR3(0.5f, 0.5f, 0.5f));
 	//m_pGameObjManager->AddGameObj(pGamePlayableObject);
 	//SAFE_RELEASE(pGamePlayableObject);
+
+	cGameAIObject* pGameAIObject = new cGameAIObject;
+	pGameAIObject->Setup(std::string("../Resources/Char/Zealot/"), std::string("zealot.X"));
+	pGameAIObject->SetPosition(D3DXVECTOR3(124.0f, 0.0f, 124.0f));
+	m_pGameObjManager->AddGameObj(pGameAIObject);
+	SAFE_RELEASE(pGameAIObject);
+
+	pGameAIObject = new cGameAIObject;
+	pGameAIObject->Setup(std::string("../Resources/Char/Zealot/"), std::string("zealot.X"));
+	pGameAIObject->SetPosition(D3DXVECTOR3(122.0f, 0.0f, 122.0f));
+	m_pGameObjManager->AddGameObj(pGameAIObject);
+	SAFE_RELEASE(pGameAIObject);
 
 	///
 }

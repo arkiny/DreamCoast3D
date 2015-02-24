@@ -2,12 +2,13 @@
 #include "cGameActionSkinnedMeshObj.h"
 #include "iAIState.h"
 
-class cGameAIObject : public cGameActionSkinnedMeshObj
+class cGameAIObject : public cGameActionSkinnedMeshObj, public iActionDelegate
 {
 public:
 	enum EAIOBJECTSTATE{
 		eAISTATE_IDLE,
 		eAISTATE_MOVE,
+		eAISTATE_RANDOMMOVE,
 		eAISTATE_ATTACK,
 		eAISTATE_ONHIT,
 		eAISTATE_THINK,
@@ -17,6 +18,7 @@ public:
 protected:
 	std::vector<iAIState*>	m_vecPatterns;
 	iAIState*				m_pCurrentState;
+	SYNTHESIZE(float, m_fPassedTime, PassedTime);
 
 public:
 	cGameAIObject();
@@ -26,5 +28,6 @@ public:
 	virtual void Update(float fDelta);
 
 	virtual void ChangeState(EAIOBJECTSTATE eState);
+	virtual void OnActionFinish(cAction* pSender);
 };
 

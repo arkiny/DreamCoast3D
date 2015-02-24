@@ -588,9 +588,6 @@
     <Filter Include="EachWorks\HD\TODO-DistAfter\MainMenuUI">
       <UniqueIdentifier>{a18f39a1-4fb3-416b-b35b-03abf33b497a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="EachWorks\HD\AI-Action">
-      <UniqueIdentifier>{1b834c32-e6d6-4f8f-b086-52e4c4847829}</UniqueIdentifier>
-    </Filter>
     <Filter Include="FrameWork\Resource">
       <UniqueIdentifier>{a6d80302-f288-4251-8c93-210c45ed42a2}</UniqueIdentifier>
     </Filter>
