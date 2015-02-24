@@ -83,6 +83,9 @@ STDMETHODIMP cAllocateHierarchy::CreateMeshContainer(
 			pBoneMesh->pBoneOffsetMatrices = new D3DXMATRIX[dwNumBones];
 			pBoneMesh->pCurrentBoneMatrices = new D3DXMATRIX[dwNumBones];
 
+			//충돌용 바운딩 스피어도 같이 생성한다. : 민우
+			CreateCollisionBoundingSphere(pBoneMesh, pMeshData);
+
 			// step 4. 동적 할당된 pBoneOffsetMatrices 매트릭스에 값 저장.
 			for (DWORD i = 0; i < dwNumBones; ++i)
 			{
@@ -124,4 +127,20 @@ STDMETHODIMP cAllocateHierarchy::DestroyMeshContainer(THIS_ LPD3DXMESHCONTAINER 
 
 	delete pBoneMesh;
 	return S_OK;
+}
+
+//충돌용 바운딩스피어 생성 : 민우
+void cAllocateHierarchy::CreateCollisionBoundingSphere(ST_BONE_MESH* pBoneMesh, CONST D3DXMESHDATA *pMeshData)
+{
+	//충돌용 바운딩스피어 생성
+	D3DXVECTOR3* pVertices;
+	pMeshData->pMesh->LockVertexBuffer(D3DLOCK_READONLY, (void**)&pVertices);
+	D3DXComputeBoundingSphere(pVertices,
+		pMeshData->pMesh->GetNumVertices(),
+		pMeshData->pMesh->GetNumBytesPerVertex(),
+		&pBoneMesh->vCenter,
+		&pBoneMesh->fRadius);
+	pMeshData->pMesh->UnlockVertexBuffer();
+	pBoneMesh->fOriginRadius = pBoneMesh->fRadius;
+	D3DXCreateSphere(g_pD3DDevice, pBoneMesh->fRadius, 7, 5, &pBoneMesh->pSphereMesh, &pBoneMesh->pSphereAdj);
 }

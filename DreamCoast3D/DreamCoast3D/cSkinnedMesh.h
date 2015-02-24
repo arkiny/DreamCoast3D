@@ -11,6 +11,12 @@ protected:
 	std::vector<cAnimationSet*>	m_vecAnimationSet;
 	int							m_nCurrentAnimation;
 
+	//스킨드메쉬 Body까지 넘어갈 충돌용 바운딩 스피어 값 : 민우
+	float					m_fRadius;				//애니메이션 현재 프레임의 충돌용 바운딩 스피어 메쉬의 반지름.
+	D3DXVECTOR3				m_vCenter;				//충돌용 바운딩 스피어의 중심점
+	
+
+
 	SYNTHESIZE(float, m_fAnimationBlendTime, AnimationBlendTime);
 
 public:

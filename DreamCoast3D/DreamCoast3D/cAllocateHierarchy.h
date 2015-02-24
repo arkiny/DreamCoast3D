@@ -1,22 +1,6 @@
 #pragma once
 
-class cMtlTex;
 
-_declspec(align(16)) struct ST_BONE : public D3DXFRAME
-{
-	D3DXMATRIXA16 matWorldTM;
-};
-
-struct ST_BONE_MESH : public D3DXMESHCONTAINER
-{
-	DWORD					dwNumSubset;
-	std::vector<cMtlTex*>	vecMtlTex;
-
-	LPD3DXMESH				pOrigMesh;				// 원본 메쉬
-	D3DXMATRIX**			ppBoneMatrixPtrs;		// 이 메쉬에 영향을 주는 프레임'들'의 월드매트릭스 포인터 배열
-	D3DXMATRIX*				pBoneOffsetMatrices;	// 원본 메쉬를 로컬스페이스로 보내는 매트릭스들.
-	D3DXMATRIX*				pCurrentBoneMatrices;	// 각 본의 계산된 월드매트릭스
-};
 
 class cAllocateHierarchy :
 	public ID3DXAllocateHierarchy
@@ -44,5 +28,9 @@ public:
 	STDMETHOD(DestroyFrame)(THIS_ LPD3DXFRAME pFrameToFree) override;
 
 	STDMETHOD(DestroyMeshContainer)(THIS_ LPD3DXMESHCONTAINER pMeshContainerToFree) override;
+
+	//충돌용 바운딩스피어 생성 : 민우
+	void cAllocateHierarchy::CreateCollisionBoundingSphere(ST_BONE_MESH* pBoneMesh, CONST D3DXMESHDATA *pMeshData);
+	
 };
 

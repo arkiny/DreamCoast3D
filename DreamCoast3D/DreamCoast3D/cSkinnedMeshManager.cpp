@@ -61,7 +61,7 @@ D3DXFRAME* cSkinnedMeshManager::GetSkinnedMesh(std::string sFolder, std::string 
 			&pFrame,
 			&pAnimCon);
 		_ASSERT(hr == S_OK);
-
+		
 		SetupBoneMatrixPtrs(pFrame, pFrame);
 
 		//return pFrame;

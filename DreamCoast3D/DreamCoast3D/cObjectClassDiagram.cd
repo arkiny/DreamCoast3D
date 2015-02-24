@@ -74,7 +74,7 @@
     <Position X="21.5" Y="8" Width="1.5" />
     <InheritanceLine Type="cGameObject">
       <InheritanceModifierLabel ManuallyPlaced="true">
-        <Position X="0.697" Y="0.063" />
+        <Position X="0.063" Y="0.697" />
       </InheritanceModifierLabel>
     </InheritanceLine>
     <TypeIdentifier>
@@ -97,8 +97,8 @@
       <FileName>cAnimationSet.h</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="cSkinnedMesh" Collapsed="true">
-    <Position X="17.5" Y="2" Width="1.5" />
+  <Class Name="cSkinnedMesh">
+    <Position X="18.75" Y="1.75" Width="1.5" />
     <InheritanceLine Type="iAnimationSetDelegate">
       <InheritanceModifierLabel ManuallyPlaced="true">
         <Position X="0.06" Y="0.069" />
@@ -110,7 +110,7 @@
       </InheritanceModifierLabel>
     </InheritanceLine>
     <TypeIdentifier>
-      <HashCode>AAQgBEEACARAAAAAAAIAAAQAAAAhAAAAIBAgAAAACQA=</HashCode>
+      <HashCode>gAQgBEEACARAAAAAAAIAAAQAAAAhAAAAIBAggAAACQA=</HashCode>
       <FileName>cSkinnedMesh.h</FileName>
     </TypeIdentifier>
   </Class>
@@ -222,7 +222,7 @@
   <Class Name="cGamePlayableObject" Collapsed="true">
     <Position X="18.5" Y="12.75" Width="1.75" />
     <TypeIdentifier>
-      <HashCode>AAQCAAAACAAABAAAAAAAAAAgAAAgIAAAAAAAAAAAACA=</HashCode>
+      <HashCode>AAYCAAAACAAABAAAAAAAAAAgACAgIAAAAAAAAAAAACA=</HashCode>
       <FileName>cGamePlayableObject.h</FileName>
     </TypeIdentifier>
   </Class>
@@ -245,6 +245,20 @@
     <TypeIdentifier>
       <HashCode>AAAAAAIACAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>cGameMapHeightGridSystem.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="cSkinnedMeshManager">
+    <Position X="20.5" Y="2" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAgAAEAAAAAAAAAgABAAAAABAAAAAAAAAAAAAAAE=</HashCode>
+      <FileName>cSkinnedMeshManager.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="cSkinnedMeshBody" Collapsed="true">
+    <Position X="17.5" Y="4.25" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAACCUAAAAAAAAAAAAAgAADAEAAABAAAgAAGAA=</HashCode>
+      <FileName>cSkinnedMeshBody.h</FileName>
     </TypeIdentifier>
   </Class>
   <Struct Name="ST_PLAYER_INFO" Collapsed="true">
