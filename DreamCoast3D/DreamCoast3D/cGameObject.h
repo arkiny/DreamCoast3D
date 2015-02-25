@@ -32,7 +32,12 @@ public:
 	virtual D3DXMATRIXA16*		GetTransformMatrix();
 	
 	virtual ST_BOUNDING_SPHERE*	GetBoundingSphere();
+
 	virtual ST_BOUNDING_SPHERE*	GetCollisionSphere(){
+		return NULL;
+	}
+
+	virtual ST_BOUNDING_SPHERE* GetAttackSphere(){
 		return NULL;
 	}
 
@@ -59,6 +64,8 @@ public:
 	virtual D3DXVECTOR3&		GetScale();
 
 	virtual void SetGridTileSystem(iGridTileSystem* pGrid);
+
+	//
 	virtual iGridTileSystem* GetGridTileSystem() { return m_pGridCallback; }
 };
 

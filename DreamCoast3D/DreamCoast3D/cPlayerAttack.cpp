@@ -18,6 +18,7 @@ void cPlayerAttack::Start(cGamePlayableObject* pPlayer){
 
 void cPlayerAttack::Execute(cGamePlayableObject* pPlayer, float fDelta){
 	if (g_pControlManager->GetInputInfo(VK_LBUTTON)){
+		pPlayer->GetGameObjDeligate()->isGameAttackSphereCollided(pPlayer, *pPlayer->GetAttackSphere());
 		return;
 		// do nothing
 	}

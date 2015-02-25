@@ -16,5 +16,6 @@ public:
 	virtual void Render();
 
 	virtual ST_BOUNDING_SPHERE* GetCollisionSphere() override;
+	virtual ST_BOUNDING_SPHERE* GetAttackSphere() override;
 };
 

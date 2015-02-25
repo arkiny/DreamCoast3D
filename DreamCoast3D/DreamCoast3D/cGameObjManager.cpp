@@ -166,3 +166,39 @@ bool cGameObjManager::isGameObjectCollided(cGameObject* pFrom){
 	}
 	return false;
 }
+
+bool cGameObjManager::isGameAttackSphereCollided(
+	cGameObject* pFrom, 
+	ST_BOUNDING_SPHERE stAttackSphere)
+{
+	for (auto p : m_setGameObjects){
+		if (p == pFrom){
+			continue;
+		}
+		else{
+			if (p->GetCollisionSphere()){
+				D3DXVECTOR3 from = stAttackSphere.m_vCenter;
+				D3DXVECTOR3 to = p->GetCollisionSphere()->m_vCenter;
+				D3DXVECTOR3 dist = from - to;
+
+				float fFrom = stAttackSphere.m_fRadius;
+				float fTo = p->GetCollisionSphere()->m_fRadius;
+				float scale = pFrom->GetScale().x;
+				float scale2 = p->GetScale().x;
+				float fIntersect = fFrom*scale + fTo*scale2;
+
+				float fDist = D3DXVec3Length(&dist);
+				if (fIntersect > fDist){
+					// 공격 스피어와 충돌
+					// p->ChangeState(OnHit);
+					assert(false && "AttackSphere Collided");
+				}
+			}
+			else{
+				continue;
+			}
+		}
+	}
+
+	return false;
+}

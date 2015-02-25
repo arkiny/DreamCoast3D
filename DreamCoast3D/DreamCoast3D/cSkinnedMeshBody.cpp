@@ -30,8 +30,22 @@ cSkinnedMeshBody::cSkinnedMeshBody(std::string sFolder, std::string sFile,
 	m_pHead = new cSkinnedMesh(sFolderHead, sFileHead);
 	m_pHair = new cSkinnedMesh(sFolderHair, sFileHair);
 
-	//몸중심의 전체적 바운딩스피어를 구해낸 다음 그 값을 cSkinnedMesh의 바운딩스피어 멤버들에게 전달해준다 : 민우
 	
+	// Attack용 임시처리, HD
+	D3DXVECTOR3 localCenter(0, 0, 0);
+	D3DXMATRIXA16 mat;
+	D3DXFRAME* pFxHand;
+	pFxHand = D3DXFrameFind(m_pRootFrame, "FxHand01");
+	mat = pFxHand->TransformationMatrix;
+	D3DXVec3TransformCoord(&localCenter, &localCenter, &mat);
+	m_stAttacSphere.m_vCenter = localCenter;
+	m_stAttacSphere.m_fRadius = 5.0f;
+	m_stUpdateAttacSphere.m_vCenter = m_stAttacSphere.m_vCenter;
+	m_stUpdateAttacSphere.m_fRadius = m_stAttacSphere.m_fRadius;
+	D3DXCreateSphere(g_pD3DDevice, m_stAttacSphere.m_fRadius, 10, 10, &m_pMesh, NULL);
+
+
+	//몸중심의 전체적 바운딩스피어를 구해낸 다음 그 값을 cSkinnedMesh의 바운딩스피어 멤버들에게 전달해준다 : 민우
 	GetCollisionBoundingSphere(m_stBoundingSphere.m_vCenter, m_stBoundingSphere.m_fRadius);
 	m_stUpdateBoundingSphere.m_vCenter = m_stBoundingSphere.m_vCenter;
 	m_stUpdateBoundingSphere.m_fRadius = m_stBoundingSphere.m_fRadius;
@@ -53,11 +67,13 @@ void cSkinnedMeshBody::GetCollisionBoundingSphere(OUT D3DXVECTOR3& vCenter, OUT 
 	vCenter = vLocalCenter;
 	fRadius = 20.f; //HACK: 이 값(반지름)을 정하는 규칙이 있어야 한다. : 민우
 }
+
 //캐릭터 신체 각 부위의 충돌(피격)을 세부적 판정할 바운딩 스피어를 vector컨테이너로 구한다 : 민우
 void cSkinnedMeshBody::GetDetailCollisionBoundingSpheres(OUT std::vector<ST_BOUNDING_SPHERE>& vecSphere)
 {
 	RecursivePushBoundingSphereAllBones(m_pRootFrame, vecSphere);
 }
+
 //인자로 받은 벡터컨테이너에 재귀적으로 모든 본을 찾아서 바운딩스피어값을 Push한다.(vCenter는 로컬좌표다) : 민우
 void cSkinnedMeshBody::RecursivePushBoundingSphereAllBones(D3DXFRAME* pFrame, std::vector<ST_BOUNDING_SPHERE>& vecSphere)
 {
@@ -79,6 +95,7 @@ void cSkinnedMeshBody::RenderBoundingSphere(D3DXFRAME* pFrame, D3DXMATRIXA16* pP
 {
 	//세부 본을 그리다 보면 이미 구현되는 셈이기 때문에 일단 비워둔다.
 }
+
 //FIX: 세부적인 본의 바운딩스피어를 그린다. 단순히 표현만 해보는 것으로, 연산된 값은 이용하지 않는다. Parent가 아니라 Combine이라는 개념으로 수정해야한다. : 민우
 void cSkinnedMeshBody::RenderDetailBoundingSphere(D3DXFRAME* pFrame, D3DXMATRIXA16* pParentWorldTM)
 {
@@ -95,6 +112,7 @@ void cSkinnedMeshBody::RenderDetailBoundingSphere(D3DXFRAME* pFrame, D3DXMATRIXA
 	g_pD3DDevice->SetRenderState(D3DRS_LIGHTING, true);
 	g_pD3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
 }
+
 void cSkinnedMeshBody::Update(ST_BONE* pCurrent, D3DXMATRIXA16* pmatParent){
 	pCurrent->CombinedTransformationMatrix = pCurrent->TransformationMatrix;
 	if (pmatParent)
@@ -128,6 +146,15 @@ void cSkinnedMeshBody::Update(ST_BONE* pCurrent, D3DXMATRIXA16* pmatParent){
 			&pCurrent->CombinedTransformationMatrix);
 	}
 
+	// Hand
+	if (pCurrent->Name != nullptr && std::string(pCurrent->Name) == std::string("FxHand01"))
+	{
+		D3DXVec3TransformCoord(
+			&m_stUpdateAttacSphere.m_vCenter,
+			&m_stAttacSphere.m_vCenter,
+			&pCurrent->CombinedTransformationMatrix);
+	}
+
 	if (pCurrent->pFrameSibling)
 	{
 		Update((ST_BONE*)pCurrent->pFrameSibling, pmatParent);
@@ -143,7 +170,8 @@ void cSkinnedMeshBody::Render(ST_BONE* pBone /*= NULL*/)
 {
 	assert(pBone);
 	//TODO: CombinedTransformationMatrix가 뭔지 알아야 한다. 원래는 Parent가 들어가는 자리였다 : 민우
-	RenderDetailBoundingSphere(pBone, &pBone->CombinedTransformationMatrix); 
+	// 예전 matWorldTM
+	//RenderDetailBoundingSphere(pBone, &pBone->CombinedTransformationMatrix); 
 	if (pBone->Name != nullptr && std::string(pBone->Name) == std::string("FxCenter"))
 	{
 		g_pD3DDevice->SetTexture(0, nullptr);
@@ -154,6 +182,14 @@ void cSkinnedMeshBody::Render(ST_BONE* pBone /*= NULL*/)
 		m_pDebugSphereBody->DrawSubset(0);
 		g_pD3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
 		g_pD3DDevice->SetRenderState(D3DRS_LIGHTING, true);
+	}
+
+	if (pBone->Name != nullptr && std::string(pBone->Name) == std::string("FxHand01"))
+	{
+		g_pD3DDevice->SetTransform(D3DTS_WORLD, &pBone->CombinedTransformationMatrix);
+		g_pD3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
+		m_pMesh->DrawSubset(0);
+		g_pD3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
 	}
 
 	// 각 프레임의 메시 컨테이너에 있는 pSkinInfo를 이용하여 영향받는 모든 

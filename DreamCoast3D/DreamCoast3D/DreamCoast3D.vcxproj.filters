@@ -421,9 +421,6 @@
     <ClInclude Include="cObject.h">
       <Filter>FrameWork\Object</Filter>
     </ClInclude>
-    <ClInclude Include="cGridSystem.h">
-      <Filter>EachWorks\MS</Filter>
-    </ClInclude>
     <ClInclude Include="cMapExample.h">
       <Filter>FrameWork\_EXAMPLE</Filter>
     </ClInclude>
@@ -508,6 +505,9 @@
     </ClInclude>
     <ClInclude Include="MultiAnimation.hpp">
       <Filter>FrameWork\FX</Filter>
+    </ClInclude>
+    <ClInclude Include="cGridSystem.h">
+      <Filter>EachWorks\MS</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
