@@ -165,7 +165,7 @@ Material Multimaterial_Snowman_red_MISub0 {
  0.000000;0.000000;0.000000;;
 
  TextureFilename {
-  "Snowman_red_diff.bmp";
+  "Snowman_red_diff.png";
  }
 }
 
