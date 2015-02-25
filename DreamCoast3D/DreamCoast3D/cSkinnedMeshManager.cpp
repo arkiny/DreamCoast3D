@@ -16,7 +16,7 @@ void cSkinnedMeshManager::Destroy()
 	for each(auto it in m_mapSkinnedMesh)
 	{
 		it.second->Destroy();
-		SAFE_DELETE(it.second);
+		//SAFE_RELEASE(it.second);
 	}
 }
 

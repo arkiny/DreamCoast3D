@@ -31,7 +31,7 @@ cSkinnedMeshBody::cSkinnedMeshBody(std::string sFolder, std::string sFile,
 	m_pHair = new cSkinnedMesh(sFolderHair, sFileHair);
 
 	// 몸 중앙
-	D3DXFRAME* pDummyRoot;
+	/*D3DXFRAME* pDummyRoot;
 	pDummyRoot = D3DXFrameFind(m_pRootFrame, "FxCenter");
 	D3DXMATRIXA16 mat = pDummyRoot->TransformationMatrix;
 	D3DXVECTOR3 localCenter(0, 0, 0);
@@ -40,8 +40,9 @@ cSkinnedMeshBody::cSkinnedMeshBody(std::string sFolder, std::string sFile,
 	m_stBoundingSphere.m_fRadius = 10.0f;
 	m_stUpdateBoundingSphere.m_vCenter = m_stBoundingSphere.m_vCenter;
 	m_stUpdateBoundingSphere.m_fRadius = m_stBoundingSphere.m_fRadius;
-	D3DXCreateSphere(g_pD3DDevice, m_stBoundingSphere.m_fRadius, 10, 10, &m_pDebugSphereBody, NULL);
-
+	D3DXCreateSphere(g_pD3DDevice, m_stBoundingSphere.m_fRadius, 10, 10, &m_pDebugSphereBody, NULL);*/
+	D3DXMATRIXA16 mat;
+	D3DXVECTOR3 localCenter(0, 0, 0);
 	D3DXFRAME* pFxHand;
 	pFxHand = D3DXFrameFind(m_pRootFrame, "FxHand01");
 	mat = pFxHand->TransformationMatrix;
@@ -77,6 +78,14 @@ void cSkinnedMeshBody::Update(ST_BONE* pCurrent, D3DXMATRIXA16* pmatParent){
 		}
 	}
 
+	if (pCurrent->Name != nullptr && std::string(pCurrent->Name) == std::string("FxCenter"))
+	{
+		D3DXVec3TransformCoord(
+			&m_stUpdateBoundingSphere.m_vCenter,
+			&m_stBoundingSphere.m_vCenter,
+			&pCurrent->CombinedTransformationMatrix);
+	}
+
 	if (pCurrent->pFrameSibling)
 	{
 		Update((ST_BONE*)pCurrent->pFrameSibling, pmatParent);
@@ -91,6 +100,16 @@ void cSkinnedMeshBody::Update(ST_BONE* pCurrent, D3DXMATRIXA16* pmatParent){
 void cSkinnedMeshBody::Render(ST_BONE* pBone /*= NULL*/)
 {
 	assert(pBone);
+
+	if (pBone->Name != nullptr && std::string(pBone->Name) == std::string("FxCenter"))
+	{
+		g_pD3DDevice->SetTransform(D3DTS_WORLD, &pBone->CombinedTransformationMatrix);
+		g_pD3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
+		g_pD3DDevice->SetTexture(0, NULL);
+		m_pDebugSphereBody->DrawSubset(0);
+		g_pD3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
+	}
+
 	// 각 프레임의 메시 컨테이너에 있는 pSkinInfo를 이용하여 영향받는 모든 
 	// 프레임의 매트릭스를 ppBoneMatrixPtrs에 연결한다.
 	if (pBone->pMeshContainer)

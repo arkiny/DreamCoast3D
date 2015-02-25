@@ -81,12 +81,21 @@ cSkinnedMesh::cSkinnedMesh()
 	, m_dwWorkingPaletteSize(0)
 	, m_pmWorkingPalette(NULL)
 	, m_pEffect(NULL)
+	, m_fAnimationBlendTime(0.3f)
+	, m_fPassedBlendTime(0.0f)
+	, m_isAnimationBlending(false)
+	, m_nCurrentAnimation(0)
+	, m_pDebugSphereBody(NULL)
 {
 }
 
 cSkinnedMesh::~cSkinnedMesh(void)
 {
 	SAFE_RELEASE(m_pAnimController);
+	SAFE_RELEASE(m_pDebugSphereBody);
+	for (auto p : m_vecAnimationSet){
+		SAFE_RELEASE(p);
+	}	
 }
 
 void cSkinnedMesh::Load(std::string sFolder, std::string sFile){
@@ -131,10 +140,31 @@ void cSkinnedMesh::Load(char* szDirectory, char* szFilename)
 
 void cSkinnedMesh::UpdateAndRender(D3DXMATRIXA16* pParentWorldTM)
 {
-	if (m_pAnimController)
+	//if (m_pAnimController)
+	//{
+	//	m_pAnimController->AdvanceTime(g_pTimer->DeltaTime(), NULL);
+	//}
+	m_vecAnimationSet[m_nCurrentAnimation]->Update(g_pTimer->DeltaTime());
+	
+	if (m_isAnimationBlending)
 	{
-		m_pAnimController->AdvanceTime(g_pTimer->DeltaTime(), NULL);
+		m_fPassedBlendTime += g_pTimer->DeltaTime();
+		if (m_fPassedBlendTime >= m_fAnimationBlendTime)
+		{
+			m_isAnimationBlending = false;
+			m_pAnimController->SetTrackWeight(0, 1.0f);
+			m_pAnimController->SetTrackWeight(1, 0.0f);
+			m_pAnimController->SetTrackEnable(1, false);
+		}
+		else
+		{
+			float fWeight = m_fPassedBlendTime / m_fAnimationBlendTime;
+			m_pAnimController->SetTrackWeight(0, fWeight);
+			m_pAnimController->SetTrackWeight(1, 1.0f - fWeight);
+		}
 	}
+	
+	m_pAnimController->AdvanceTime(g_pTimer->DeltaTime() * .5f, NULL);
 
 	if (m_pRootFrame)
 	{
@@ -154,6 +184,15 @@ void cSkinnedMesh::UpdateAndRender(D3DXMATRIXA16* pParentWorldTM)
 void cSkinnedMesh::Render(ST_BONE* pBone /*= NULL*/)
 {
 	assert(pBone);
+
+	if (pBone->Name != nullptr && std::string(pBone->Name) == std::string("FxCenter"))
+	{
+		g_pD3DDevice->SetTransform(D3DTS_WORLD, &pBone->TransformationMatrix);
+		g_pD3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
+		g_pD3DDevice->SetTexture(0, NULL);
+		m_pDebugSphereBody->DrawSubset(0);
+		g_pD3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
+	}
 
 	// 각 프레임의 메시 컨테이너에 있는 pSkinInfo를 이용하여 영향받는 모든 
 	// 프레임의 매트릭스를 ppBoneMatrixPtrs에 연결한다.
@@ -302,6 +341,14 @@ void cSkinnedMesh::Update(ST_BONE* pCurrent, D3DXMATRIXA16* pmatParent)
 	{
 		pCurrent->CombinedTransformationMatrix =
 			pCurrent->CombinedTransformationMatrix * (*pmatParent);
+	}
+
+	if (pCurrent->Name != nullptr && std::string(pCurrent->Name) == std::string("FxCenter"))
+	{
+		D3DXVec3TransformCoord(
+			&m_stUpdateBoundingSphere.m_vCenter,
+			&m_stBoundingSphere.m_vCenter,
+			&pCurrent->CombinedTransformationMatrix);
 	}
 
 	if (pCurrent->pFrameSibling)
