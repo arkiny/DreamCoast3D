@@ -36,8 +36,6 @@ void cGridSystem::Setup(int nMapSize)
 
 void cGridSystem::AddObjectOnGrid(cGameObject* pGameObejct, int nX, int nZ)
 {
-	SAFE_ADD_REF(pGameObejct);
-
 	int nWidth = 0.0f;
 	int nHeight = 0.0f;
 
@@ -60,7 +58,6 @@ void cGridSystem::AddObjectOnGrid(cGameObject* pGameObejct, int nX, int nZ)
 			{
 				m_vecTileData[x + z*m_nMapSize].insert(pGameObejct);
 				m_vecGameObject[x + z*m_nMapSize].push_back(pGameObejct);
-				SAFE_ADD_REF(pGameObejct);
 			}
 			else
 			{
@@ -78,7 +75,7 @@ std::set<cGameObject*> cGridSystem::GetObjectOnGrid(int nX, int nZ)
 
 D3DXVECTOR3 cGridSystem::GetObjectCenter(int nX, int nZ)
 {
-	cGameObject* GameObject = new cGameObject;
+	cGameObject* GameObject = NULL;
 
 	if (m_vecTileData[nX + nZ*m_nMapSize].size() > 0)
 	{
@@ -95,7 +92,6 @@ D3DXVECTOR3 cGridSystem::GetObjectCenter(int nX, int nZ)
 		}
 	}
 	D3DXVECTOR3 ret = GameObject->GetPosition();
-	SAFE_RELEASE(GameObject);
 	return ret;
 }
 
@@ -168,7 +164,7 @@ void cGridSystem::RemoveObejctOnTile(cGameObject* pGameObejct, int nX, int nZ)
 
 	if (m_vecTileData[nCenterX + nCenterZ*m_nMapSize].count(pGameObejct) > 0)
 	{
-		cGameObject* GameObject = new cGameObject;
+		cGameObject* GameObject = NULL;
 
 		GameObject = *GetObjectOnGrid(nX, nZ).begin();
 		int nWidth = 1;
@@ -190,7 +186,6 @@ void cGridSystem::RemoveObejctOnTile(cGameObject* pGameObejct, int nX, int nZ)
 					!= m_vecTileData[x + z*m_nMapSize].end())
 				{
 					m_vecTileData[x + z*m_nMapSize].erase(pGameObejct);
-					pGameObejct->Release();
 				}
 			}
 		}
@@ -204,7 +199,6 @@ void cGridSystem::RemoveObejctOnTile(cGameObject* pGameObejct, int nX, int nZ)
 void cGridSystem::Destroy(){
 	for (size_t i = 0; i < m_vecTileData.size(); i++){
 		for (auto p : m_vecTileData[i]){
-			p->Release();
 		}
 	}
 }
@@ -218,5 +212,4 @@ void cGridSystem::AddMovingObject(cGameObject* pGameObejct, int nX, int nZ){
 
 void cGridSystem::RemoveMovingObject(cGameObject* pGameObejct, int nX, int nZ){
 	m_vecTileData[nX + nZ*m_nMapSize].erase(pGameObejct);
-	pGameObejct->Release();
 }

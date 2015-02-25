@@ -37,6 +37,7 @@ void cGamePlayableObject::Setup(
 }
 
 void cGamePlayableObject::Update(float fDelta){
+	cGameActionSkinnedMeshObj::Update(fDelta);
 	m_pCurrentState->Execute(this, fDelta);
 }
 

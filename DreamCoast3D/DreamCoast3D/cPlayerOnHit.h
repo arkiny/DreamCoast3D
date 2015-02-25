@@ -1,4 +1,4 @@
-#pragma once
+ #pragma once
 #include "iPlayerState.h"
 
 class cPlayerOnHit : public iPlayerState

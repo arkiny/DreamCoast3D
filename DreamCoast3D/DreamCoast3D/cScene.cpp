@@ -104,19 +104,19 @@ void cScene::Setup(std::string sFilePath){
 	SAFE_RELEASE(pGMSO);
 
 	//SAFE_RELEASE(pAseObject);
-	cGameAIObject* pGameAIObject = new cGameAIObject;
-	pGameAIObject->Setup(std::string("../Resources/Char/Tera/"), std::string("Monster_SnowmanRed.X"));
-	pGameAIObject->SetPosition(D3DXVECTOR3(124.0f, 0.0f, 124.0f));
-	pGameAIObject->SetScale(D3DXVECTOR3(0.06f, 0.06f, 0.06f));
-	m_pGameObjManager->AddGameObj(pGameAIObject);
-	SAFE_RELEASE(pGameAIObject);
+	//cGameAIObject* pGameAIObject = new cGameAIObject;
+	//pGameAIObject->Setup(std::string("../Resources/Char/Tera/"), std::string("Monster_SnowmanRed.X"));
+	//pGameAIObject->SetPosition(D3DXVECTOR3(124.0f, 0.0f, 124.0f));
+	//pGameAIObject->SetScale(D3DXVECTOR3(0.06f, 0.06f, 0.06f));
+	//m_pGameObjManager->AddGameObj(pGameAIObject);
+	//SAFE_RELEASE(pGameAIObject);
 
-	pGameAIObject = new cGameAIObject;
-	pGameAIObject->Setup(std::string("../Resources/Char/Tera/"), std::string("Monster_SnowmanRed.X"));
-	pGameAIObject->SetPosition(D3DXVECTOR3(122.0f, 0.0f, 122.0f));
-	pGameAIObject->SetScale(D3DXVECTOR3(0.06f, 0.06f, 0.06f));
-	m_pGameObjManager->AddGameObj(pGameAIObject);
-	SAFE_RELEASE(pGameAIObject);
+	//pGameAIObject = new cGameAIObject;
+	//pGameAIObject->Setup(std::string("../Resources/Char/Tera/"), std::string("Monster_SnowmanRed.X"));
+	//pGameAIObject->SetPosition(D3DXVECTOR3(122.0f, 0.0f, 122.0f));
+	//pGameAIObject->SetScale(D3DXVECTOR3(0.06f, 0.06f, 0.06f));
+	//m_pGameObjManager->AddGameObj(pGameAIObject);
+	//SAFE_RELEASE(pGameAIObject);
 
 	///
 }

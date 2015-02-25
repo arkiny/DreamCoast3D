@@ -168,6 +168,7 @@
     <ClInclude Include="iMap.h" />
     <ClInclude Include="iPlayerState.h" />
     <ClInclude Include="iSceneDelegate.h" />
+    <ClInclude Include="MultiAnimation.hpp" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
@@ -269,6 +270,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="cObjectClassDiagram.cd" />
+    <None Include="MultiAnimation.vsh" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
