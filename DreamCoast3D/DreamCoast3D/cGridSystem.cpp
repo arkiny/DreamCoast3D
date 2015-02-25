@@ -45,8 +45,11 @@ void cGridSystem::AddObjectOnGrid(cGameObject* pGameObejct, int nX, int nZ)
 		nHeight = (int)(stBox->vMax.z - stBox->vMin.z);
 	}
 
-	int nBeginGridX = nX - nWidth / 2;
-	int nBeginGridZ = nZ - nHeight / 2;
+	int nBeginGridX = nX - ceil(nWidth / 2);
+	int nBeginGridZ = nZ - ceil(nHeight / 2);
+
+	int SizeX = ceil(nWidth / 2);
+	int SizeZ = ceil(nHeight / 2);
 
 	for (int z = nBeginGridZ; z < nBeginGridZ + nWidth; z++)
 	{
@@ -61,8 +64,32 @@ void cGridSystem::AddObjectOnGrid(cGameObject* pGameObejct, int nX, int nZ)
 			}
 			else
 			{
-				assert(m_vecTileData[x + z*m_nMapSize].find(pGameObejct)
-					== m_vecTileData[x + z*m_nMapSize].end() && "이미 추가된 오브젝트 입니다");
+				m_vecTileData[x + z*m_nMapSize].insert(pGameObejct);
+				//assert(m_vecTileData[x + z*m_nMapSize].find(pGameObejct)
+				//	== m_vecTileData[x + z*m_nMapSize].end() && "이미 추가된 오브젝트 입니다");
+			}
+		}
+	}
+}
+
+void cGridSystem::AddObjectCustomer(cGameObject* pGameObejct, int nX, int nZ, int nHeight, int nWidth)
+{
+	int nBeginGridX = nX - ceil(nWidth / 2);
+	int nBeginGridZ = nZ - ceil(nHeight / 2);
+
+	for (int z = nBeginGridZ; z < nBeginGridZ + nWidth; z++)
+	{
+		for (int x = nBeginGridX; x < nBeginGridX + nHeight; x++)
+		{
+			if (m_vecTileData[x + z*m_nMapSize].find(pGameObejct)
+				== m_vecTileData[x + z*m_nMapSize].end())
+			{
+				m_vecTileData[x + z*m_nMapSize].insert(pGameObejct);
+				m_vecGameObject[x + z*m_nMapSize].push_back(pGameObejct);
+			}
+			else
+			{
+				m_vecTileData[x + z*m_nMapSize].insert(pGameObejct);
 			}
 		}
 	}
@@ -71,6 +98,11 @@ void cGridSystem::AddObjectOnGrid(cGameObject* pGameObejct, int nX, int nZ)
 std::set<cGameObject*> cGridSystem::GetObjectOnGrid(int nX, int nZ)
 {
 	return m_vecTileData[nX + nZ*m_nMapSize];
+}
+
+std::vector<cGameObject*> cGridSystem::GetObjectOnGridVec(int nX, int nZ)
+{
+	return m_vecGameObject[nX + nZ*m_nMapSize];
 }
 
 D3DXVECTOR3 cGridSystem::GetObjectCenter(int nX, int nZ)
@@ -159,36 +191,39 @@ void cGridSystem::RemoveObejctOnTile(cGameObject* pGameObejct, int nX, int nZ)
 {
 	D3DXVECTOR3 vec = GetObjectCenter(nX, nZ);
 
-	int nCenterX = (int)vec.x;
-	int nCenterZ = (int)vec.z;
+	int nCenterX = (int)ceil(vec.x);
+	int nCenterZ = (int)ceil(vec.z);
 
 	if (m_vecTileData[nCenterX + nCenterZ*m_nMapSize].count(pGameObejct) > 0)
 	{
-		cGameObject* GameObject = NULL;
-
-		GameObject = *GetObjectOnGrid(nX, nZ).begin();
-		int nWidth = 1;
-		int nHeight = 1;
-		if (GameObject->GetBoundingBox()){
-			ST_BOUNDING_BOX *stBoundingBox = GameObject->GetBoundingBox();
-			nWidth = (int)(stBoundingBox->vMax.x - stBoundingBox->vMin.x);
-			nHeight = (int)(stBoundingBox->vMax.z - stBoundingBox->vMin.z);
-		}
-
-		int nBeginGridX = nCenterX - nWidth / 2;
-		int nBeginGridZ = nCenterZ - nHeight / 2;
-
-		for (int z = nBeginGridZ; z < nBeginGridZ + nHeight; z++)
+		while (m_vecTileData[nCenterX + nCenterZ*m_nMapSize].count(pGameObejct) != 0)
 		{
-			for (int x = nBeginGridX; x < nBeginGridX + nWidth; x++)
+			cGameObject* GameObject = NULL;
+			GameObject = *GetObjectOnGrid(nX, nZ).find(pGameObejct);
+			int nWidth = 0;
+			int nHeight = 0;
+			if (GameObject->GetBoundingBox()){
+				ST_BOUNDING_BOX *stBoundingBox = GameObject->GetBoundingBox();
+				nWidth = (int)(stBoundingBox->vMax.x - stBoundingBox->vMin.x);
+				nHeight = (int)(stBoundingBox->vMax.z - stBoundingBox->vMin.z);
+			}
+
+			int nBeginGridX = nCenterX - ceil((float)nWidth / 2);
+			int nBeginGridZ = nCenterZ - ceil((float)nHeight / 2);
+
+			for (int z = nBeginGridZ; z <= nBeginGridZ + nHeight; z++)
 			{
-				if (m_vecTileData[x + z*m_nMapSize].find(pGameObejct)
-					!= m_vecTileData[x + z*m_nMapSize].end())
+				for (int x = nBeginGridX; x <= nBeginGridX + nWidth; x++)
 				{
-					m_vecTileData[x + z*m_nMapSize].erase(pGameObejct);
+					if (m_vecTileData[x + z*m_nMapSize].find(pGameObejct)
+						!= m_vecTileData[x + z*m_nMapSize].end())
+					{
+						m_vecTileData[x + z*m_nMapSize].erase(pGameObejct);
+					}
 				}
 			}
 		}
+
 	}
 	else
 	{
