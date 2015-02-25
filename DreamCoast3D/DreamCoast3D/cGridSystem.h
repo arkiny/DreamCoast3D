@@ -38,6 +38,9 @@ public:
 	// 해당 Grid 위에 Object가 있을시 Object를 삭제함
 	void RemoveObejctOnTile(cGameObject* pGameObejct, int nX, int nZ);
 
+	// Grid 좌표 입력하면 해당 Grid위의 Object값이 vector형태로 리턴
+	std::vector<cGameObject*> GetObjectOnGridVec(int nX, int nZ);
+
 	void Destroy();
 
 	// 좌표 입력시 해당 타일의 그리드 좌표를 돌려주는 함수(차후에 사용할수도 있음)
