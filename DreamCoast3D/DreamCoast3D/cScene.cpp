@@ -139,7 +139,6 @@ void cScene::Update(float delta){
 	m_pCamera->Update(delta);
 	m_pPlayableObject = (cGamePlayableObject*)m_pGameObjManager->GetPlayerableGameObject();
 	m_pCamera->UpdateAngle(m_pPlayableObject->GetPlayerAngle());
-	m_pCamera->UpdateAngle(m_pPlayableObject->GetPlayerAngle());
 	if (m_pUIObjManager){
 		m_pUIObjManager->Update(delta);
 	}

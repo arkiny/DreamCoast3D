@@ -47,26 +47,3 @@ public:
 	// 자신이 있는 타일 업데이트를 실시(빼서 넣기 등등)해야 하기 때문
 	// POINT GetTileCoord(D3DXVECTOR3& vecPos)
 };
-
-
-
-//std::vector<POINT> vecTest;
-//D3DXVECTOR3 vCenter;
-//for (int z = 0; z < 256; z++)
-//{
-//	for (int x = 0; x < 256; x++)
-//	{
-//		vCenter = pGridSystem->GetObjectCenter(x, z);
-//		if (vCenter.x == 0.f && vCenter.z == 0.f)
-//		{
-//
-//		}
-//		else
-//		{
-//			POINT pos;
-//			pos.x = vCenter.x;
-//			pos.y = vCenter.z;
-//			vecTest.push_back(pos);
-//		}
-//	}
-//}

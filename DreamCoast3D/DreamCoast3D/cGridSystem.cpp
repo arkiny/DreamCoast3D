@@ -37,26 +37,22 @@ void cGridSystem::Setup(int nMapSize)
 void cGridSystem::AddObjectOnGrid(cGameObject* pGameObejct, int nX, int nZ)
 {
 	SAFE_ADD_REF(pGameObejct);
-	//int GridX = nX * m_nConstTileSize;
-	//int GridZ = nZ * m_nConstTileSize;
-	// Object 시작 X,Z 좌표
 
-	float fWidth = 0.0f;
-	float fHeight = 0.0f;
+	int nWidth = 0.0f;
+	int nHeight = 0.0f;
 
 	if (pGameObejct->GetBoundingBox()){
-		ST_BOUNDING_BOX stBox;
-		stBox = *pGameObejct->GetBoundingBox();
-		fWidth = stBox.vMax.x - stBox.vMin.x;
-		fHeight = stBox.vMax.z - stBox.vMin.z;
+		ST_BOUNDING_BOX* stBox = pGameObejct->GetBoundingBox();
+		nWidth = (int)(stBox->vMax.x - stBox->vMin.x);
+		nHeight = (int)(stBox->vMax.z - stBox->vMin.z);
 	}
 
-	int nBeginGridX = nX - fWidth / 2;
-	int nBeginGridZ = nZ - fHeight / 2;
+	int nBeginGridX = nX - nWidth / 2;
+	int nBeginGridZ = nZ - nHeight / 2;
 
-	for (int z = nBeginGridZ; z < nBeginGridZ + fWidth; z++)
+	for (int z = nBeginGridZ; z < nBeginGridZ + nWidth; z++)
 	{
-		for (int x = nBeginGridX; x < nBeginGridX + fHeight; x++)
+		for (int x = nBeginGridX; x < nBeginGridX + nHeight; x++)
 		{
 			// 그리드 위에 같은 Object가 있는지 확인
 			if (m_vecTileData[x + z*m_nMapSize].find(pGameObejct)
@@ -106,16 +102,6 @@ D3DXVECTOR3 cGridSystem::GetObjectCenter(int nX, int nZ)
 D3DXVECTOR3 cGridSystem::GetTileCenterCoord(int nX, int nZ)
 {
 	D3DXVECTOR3 vCenter(0.0f, 0.0f, 0.0f);
-
-	//아래 주석은 좌표 입력시 해당 타일의 중심좌표를 찾아주게 하는것
-	//int x = nX / m_nConstTileSize;
-	//int z = nZ / m_nConstTileSize;
-
-	//vCenter.x = m_nConstTileSize*(x + 0.5f); // x * m_nConstTileSize + m_nConstTileSize/2;
-	//vCenter.z = m_nConstTileSize*(z + 0.5f); // z * m_nConstTileSize + m_nConstTileSize/2;
-
-	//vCenter.x = m_nConstTileSize*(nX + 0.5f);
-	//vCenter.z = m_nConstTileSize*(nZ + 0.5f);
 
 	vCenter.x = nX / 2;
 	vCenter.z = nZ / 2;
@@ -182,10 +168,6 @@ void cGridSystem::RemoveObejctOnTile(cGameObject* pGameObejct, int nX, int nZ)
 
 	if (m_vecTileData[nCenterX + nCenterZ*m_nMapSize].count(pGameObejct) > 0)
 	{
-		//cASEInstance* AseObject = new cASEInstance;
-
-		//AseObject = (cASEInstance*)*GetObjectOnGrid(nX, nZ).begin();
-
 		cGameObject* GameObject = new cGameObject;
 
 		GameObject = *GetObjectOnGrid(nX, nZ).begin();
@@ -218,25 +200,6 @@ void cGridSystem::RemoveObejctOnTile(cGameObject* pGameObejct, int nX, int nZ)
 		return;
 	}
 }
-
-//void cGridSystem::RenderSetup()
-//{
-//	D3DXCreateBox(g_pD3DDevice, 10.f, 10.f, 10.f, &m_pMesh, NULL);
-//}
-//
-//void cGridSystem::Render()
-//{
-//	//D3DXMatrixIdentity(&mat);
-//	for (int i = 0; i < m_vecTileData[i].size(); i++)
-//	{
-//		if (m_vecTileData[i].size() > 0)
-//		{
-//			D3DXMatrixTranslation(&m_mat, i / 256, 0, i % 256);
-//			g_pD3DDevice->SetTransform(D3DTS_WORLD, &m_mat);
-//			m_pMesh->DrawSubset(0);
-//		}
-//	}
-//}
 
 void cGridSystem::Destroy(){
 	for (size_t i = 0; i < m_vecTileData.size(); i++){
