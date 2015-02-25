@@ -14,6 +14,7 @@ cSkinnedMesh::cSkinnedMesh(char* szFolder, char* szFilename)
 	, m_isAnimationBlending(false)
 	, m_nCurrentAnimation(0)
 	, m_pDebugSphereBody(NULL)
+	, m_pDebugDetailSphereBody(nullptr)
 	//, m_vPosition(0, 0, 0)
 {
 	cSkinnedMesh(std::string(szFolder), std::string(szFilename));
@@ -30,6 +31,7 @@ cSkinnedMesh::cSkinnedMesh(std::string sFolder, std::string sFile)
 	, m_isAnimationBlending(false)
 	, m_nCurrentAnimation(0)
 	, m_pDebugSphereBody(NULL)
+	, m_pDebugDetailSphereBody(nullptr)
 {
 	cSkinnedMesh* pSkinnedMesh = g_pSkinnedMeshManager->GetSkinnedMesh(sFolder, sFile);
 	
@@ -45,8 +47,9 @@ cSkinnedMesh::cSkinnedMesh(std::string sFolder, std::string sFile)
 		pSkinnedMesh->m_pAnimController->GetMaxNumEvents(),
 		&m_pAnimController);
 
-	// ÀÌÆåÆ®°¡ ÀÏ¾î³ª´Â ¼Õ
-	D3DXFrameFind(m_pRootFrame, "FxHand01");
+	
+	//// ÀÌÆåÆ®°¡ ÀÏ¾î³ª´Â ¼Õ
+	//D3DXFrameFind(m_pRootFrame, "FxHand01");
 
 	UINT uiNumAnim = m_pAnimController->GetNumAnimationSets();
 	for (UINT i = 0; i < uiNumAnim; ++i)
@@ -59,20 +62,20 @@ cSkinnedMesh::cSkinnedMesh(std::string sFolder, std::string sFile)
 		pAnimSet->SetIndex(m_vecAnimationSet.size());
 		m_vecAnimationSet.push_back(pAnimSet);
 	}
-
-	// ¸ö Áß¾Ó
-	D3DXFRAME* pDummyRoot;
-	pDummyRoot = D3DXFrameFind(m_pRootFrame, "FxCenter");
-	if (pDummyRoot){
-		D3DXMATRIXA16 mat = pDummyRoot->TransformationMatrix;
-		D3DXVECTOR3 localCenter(0, 0, 0);
-		D3DXVec3TransformCoord(&localCenter, &localCenter, &mat);
-		m_stBoundingSphere.m_vCenter = localCenter;
-		m_stBoundingSphere.m_fRadius = 15.0f;
-		m_stUpdateBoundingSphere.m_vCenter = m_stBoundingSphere.m_vCenter;
-		m_stUpdateBoundingSphere.m_fRadius = m_stBoundingSphere.m_fRadius;
-		D3DXCreateSphere(g_pD3DDevice, m_stBoundingSphere.m_fRadius, 10, 10, &m_pDebugSphereBody, NULL);
-	}
+	//Áßº¹ÀÌ¶ó Àá±ñ ´Ý¾ÆµÐ´Ù : ¹Î¿ì
+	//// ¸ö Áß¾Ó
+	//D3DXFRAME* pDummyRoot;
+	//pDummyRoot = D3DXFrameFind(m_pRootFrame, "FxCenter");
+	//if (pDummyRoot){
+	//	D3DXMATRIXA16 mat = pDummyRoot->TransformationMatrix;
+	//	D3DXVECTOR3 localCenter(0, 0, 0);
+	//	D3DXVec3TransformCoord(&localCenter, &localCenter, &mat);
+	//	m_stBoundingSphere.m_vCenter = localCenter;
+	//	m_stBoundingSphere.m_fRadius = 15.0f;
+	//	m_stUpdateBoundingSphere.m_vCenter = m_stBoundingSphere.m_vCenter;
+	//	m_stUpdateBoundingSphere.m_fRadius = m_stBoundingSphere.m_fRadius;
+	//	D3DXCreateSphere(g_pD3DDevice, m_stBoundingSphere.m_fRadius, 10, 10, &m_pDebugSphereBody, NULL);
+	//}
 }
 
 cSkinnedMesh::cSkinnedMesh()
@@ -86,6 +89,7 @@ cSkinnedMesh::cSkinnedMesh()
 	, m_isAnimationBlending(false)
 	, m_nCurrentAnimation(0)
 	, m_pDebugSphereBody(NULL)
+	, m_pDebugDetailSphereBody(nullptr)
 {
 }
 
@@ -93,6 +97,7 @@ cSkinnedMesh::~cSkinnedMesh(void)
 {
 	SAFE_RELEASE(m_pAnimController);
 	SAFE_RELEASE(m_pDebugSphereBody);
+	SAFE_RELEASE(m_pDebugDetailSphereBody);
 	for (auto p : m_vecAnimationSet){
 		SAFE_RELEASE(p);
 	}	

@@ -13,7 +13,7 @@ protected:
 	SYNTHESIZE(DWORD, m_dwWorkingPaletteSize, WorkingPaletteSize);
 	SYNTHESIZE(D3DXMATRIX*, m_pmWorkingPalette, WorkingPalette);
 	SYNTHESIZE(LPD3DXEFFECT, m_pEffect, Effect);
-
+	
 	// 객체마다 생성
 	SYNTHESIZE(LPD3DXANIMATIONCONTROLLER, m_pAnimController, AnimController);
 
@@ -21,7 +21,7 @@ protected:
 	bool						m_isAnimationBlending;
 	std::vector<cAnimationSet*>	m_vecAnimationSet;
 	int							m_nCurrentAnimation;
-
+	
 	SYNTHESIZE(ST_BOUNDING_SPHERE, m_stBoundingSphere, BoundingSphere);
 	SYNTHESIZE(ST_BOUNDING_SPHERE, m_stAttacSphere, AttackSphere);
 
@@ -30,6 +30,8 @@ protected:
 
 	SYNTHESIZE(float, m_fAnimationBlendTime, AnimationBlendTime);
 	LPD3DXMESH					m_pDebugSphereBody;
+	LPD3DXMESH					m_pDebugDetailSphereBody;
+	std::vector<ST_BOUNDING_SPHERE> m_vecDetailBoundingSphere; //FIX: 포인터나 레퍼런스여야함
 
 public:
 	cSkinnedMesh(char* szFolder, char* szFilename);

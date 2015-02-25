@@ -16,6 +16,7 @@ protected:
 
 	ST_BOUNDING_SPHERE	m_stBoundingSphere;
 	
+	
 	ST_BOUNDING_BOX*	m_pBoundingBox;
 	cTransform*			m_pTransform;
 
