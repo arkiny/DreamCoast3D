@@ -31,6 +31,10 @@ public:
 	virtual void SetAnimationLoop(DWORD dwIndex, bool isLoop) override;	
 
 	virtual void Update(ST_BONE* pCurrent, D3DXMATRIXA16* pmatParent) override;
-	virtual void Render(ST_BONE* pBone = NULL) override;
+	virtual void Render(ST_BONE* pBone = NULL) override;	void cSkinnedMeshBody::RenderBoundingSphere(D3DXFRAME* pFrame, D3DXMATRIXA16* pParentWorldTM);
+	void cSkinnedMeshBody::RenderDetailBoundingSphere(D3DXFRAME* pFrame, D3DXMATRIXA16* pParentWorldTM);
+	void cSkinnedMeshBody::GetCollisionBoundingSphere(OUT D3DXVECTOR3& vCenter, OUT float& fRadius);
+	void cSkinnedMeshBody::GetDetailCollisionBoundingSpheres(OUT std::vector<ST_BOUNDING_SPHERE>& vecSphere);
+	void cSkinnedMeshBody::RecursivePushBoundingSphereAllBones(D3DXFRAME* pFrame, std::vector<ST_BOUNDING_SPHERE>& vecSphere);
 };
 
