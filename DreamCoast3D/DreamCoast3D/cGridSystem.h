@@ -27,10 +27,14 @@ public:
 
 	// Object Add
 	void AddObjectOnGrid(cGameObject* pGameObejct, int nX, int nZ);
+	// Object Add Customer
+	void AddObjectCustomer(cGameObject* pGameObject, int nX, int nZ, int nHeight, int nWidth);
 	// Grid 좌표 입력시 해당 Grid 위에 있는 Object의 중심좌표가 나옴
 	D3DXVECTOR3 GetObjectCenter(int nX, int nZ);
 	// Grid 좌표 입력하면 해당 Grid위의 Object값이 set형태로 리턴
 	std::set<cGameObject*> GetObjectOnGrid(int nX, int nZ);
+	// Grid 좌표 입력하면 해당 Grid위의 Object값이 vector형태로 리턴
+	std::vector<cGameObject*> GetObjectOnGridVec(int nX, int nZ);
 	// Grid 좌표 입력시 중앙의 좌표가 vector 형태로 리턴
 	D3DXVECTOR3 GetTileCenterCoord(int nX, int nZ);
 	// Grid 좌표 입력시 8방향의 Object들이 vector 형태로 리턴
@@ -38,8 +42,6 @@ public:
 	// 해당 Grid 위에 Object가 있을시 Object를 삭제함
 	void RemoveObejctOnTile(cGameObject* pGameObejct, int nX, int nZ);
 
-	// Grid 좌표 입력하면 해당 Grid위의 Object값이 vector형태로 리턴
-	std::vector<cGameObject*> GetObjectOnGridVec(int nX, int nZ);
 
 	void Destroy();
 

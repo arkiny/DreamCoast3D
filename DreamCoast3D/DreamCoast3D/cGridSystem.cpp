@@ -72,6 +72,29 @@ void cGridSystem::AddObjectOnGrid(cGameObject* pGameObejct, int nX, int nZ)
 	}
 }
 
+void cGridSystem::AddObjectCustomer(cGameObject* pGameObejct, int nX, int nZ, int nHeight, int nWidth)
+{
+	int nBeginGridX = nX - ceil(nWidth / 2);
+	int nBeginGridZ = nZ - ceil(nHeight / 2);
+
+	for (int z = nBeginGridZ; z < nBeginGridZ + nWidth; z++)
+	{
+		for (int x = nBeginGridX; x < nBeginGridX + nHeight; x++)
+		{
+			if (m_vecTileData[x + z*m_nMapSize].find(pGameObejct)
+				== m_vecTileData[x + z*m_nMapSize].end())
+			{
+				m_vecTileData[x + z*m_nMapSize].insert(pGameObejct);
+				m_vecGameObject[x + z*m_nMapSize].push_back(pGameObejct);
+			}
+			else
+			{
+				m_vecTileData[x + z*m_nMapSize].insert(pGameObejct);
+			}
+		}
+	}
+}
+
 std::set<cGameObject*> cGridSystem::GetObjectOnGrid(int nX, int nZ)
 {
 	return m_vecTileData[nX + nZ*m_nMapSize];
