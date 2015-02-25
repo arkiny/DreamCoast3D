@@ -1,44 +1,59 @@
-#include "stdafx.h"
+#include "StdAfx.h"
 #include "cSkinnedMesh.h"
 #include "cAllocateHierarchy.h"
-#include "cMtlTex.h"
-#include "cAnimationSet.h"
 
-cSkinnedMesh::cSkinnedMesh(void)
+
+cSkinnedMesh::cSkinnedMesh(char* szFolder, char* szFilename)
 	: m_pRootFrame(NULL)
+	, m_pAnimController(NULL)
+	, m_dwWorkingPaletteSize(0)
+	, m_pmWorkingPalette(NULL)
+	, m_pEffect(NULL)
 	, m_fAnimationBlendTime(0.3f)
 	, m_fPassedBlendTime(0.0f)
 	, m_isAnimationBlending(false)
 	, m_nCurrentAnimation(0)
-	, m_pAnimControl(NULL)
+	, m_pDebugSphereBody(NULL)
+	//, m_vPosition(0, 0, 0)
+{
+	cSkinnedMesh(std::string(szFolder), std::string(szFilename));
+}
+
+cSkinnedMesh::cSkinnedMesh(std::string sFolder, std::string sFile)
+	: m_pRootFrame(NULL)
+	, m_pAnimController(NULL)
+	, m_dwWorkingPaletteSize(0)
+	, m_pmWorkingPalette(NULL)
+	, m_pEffect(NULL)
+	, m_fAnimationBlendTime(0.3f)
+	, m_fPassedBlendTime(0.0f)
+	, m_isAnimationBlending(false)
+	, m_nCurrentAnimation(0)
 	, m_pDebugSphereBody(NULL)
 {
-}
+	cSkinnedMesh* pSkinnedMesh = g_pSkinnedMeshManager->GetSkinnedMesh(sFolder, sFile);
+	
+	m_pRootFrame = pSkinnedMesh->m_pRootFrame;
+	m_dwWorkingPaletteSize = pSkinnedMesh->m_dwWorkingPaletteSize;
+	m_pmWorkingPalette = pSkinnedMesh->m_pmWorkingPalette;
+	m_pEffect = pSkinnedMesh->m_pEffect;
 
-
-cSkinnedMesh::~cSkinnedMesh(void)
-{
-	SAFE_RELEASE(m_pAnimControl);
-	for (auto p : m_vecAnimationSet){
-		SAFE_RELEASE(p);
-	}
-	SAFE_RELEASE(m_pDebugSphereBody);
-}
-
-void cSkinnedMesh::Setup(std::string sFolder, std::string sFile)
-{
-	// 인스탄싱을 마친 D3DXFRAME을 루트로 넘겨줌
-	m_pRootFrame = g_pSkinnedMeshManager->GetSkinnedMesh(sFolder, sFile, m_pAnimControl);
+	pSkinnedMesh->m_pAnimController->CloneAnimationController(
+		pSkinnedMesh->m_pAnimController->GetMaxNumAnimationOutputs(),
+		pSkinnedMesh->m_pAnimController->GetMaxNumAnimationSets(),
+		pSkinnedMesh->m_pAnimController->GetMaxNumTracks(),
+		pSkinnedMesh->m_pAnimController->GetMaxNumEvents(),
+		&m_pAnimController);
 
 	// 이펙트가 일어나는 손
 	D3DXFrameFind(m_pRootFrame, "FxHand01");
 
-	UINT uiNumAnim = m_pAnimControl->GetNumAnimationSets();
+	UINT uiNumAnim = m_pAnimController->GetNumAnimationSets();
 	for (UINT i = 0; i < uiNumAnim; ++i)
 	{
 		cAnimationSet* pAnimSet = new cAnimationSet;
 		LPD3DXANIMATIONSET pAS = NULL;
-		m_pAnimControl->GetAnimationSet(i, &pAS);
+		m_pAnimController->GetAnimationSet(i, &pAS);
 		pAnimSet->SetAnimationSet(pAS);
 		SAFE_RELEASE(pAS);
 		pAnimSet->SetIndex(m_vecAnimationSet.size());
@@ -60,102 +75,295 @@ void cSkinnedMesh::Setup(std::string sFolder, std::string sFile)
 	}
 }
 
-void cSkinnedMesh::Update(float fDelta)
+cSkinnedMesh::cSkinnedMesh()
+	: m_pRootFrame(NULL)
+	, m_pAnimController(NULL)
+	, m_dwWorkingPaletteSize(0)
+	, m_pmWorkingPalette(NULL)
+	, m_pEffect(NULL)
 {
-	// TODO : 스킨드 매쉬를 인스탄싱해서 쓰려면,
-	//        특이 경우로 렌더직전에 업데이트 해줘야한다.
 }
 
-void cSkinnedMesh::Render(D3DXMATRIXA16* pParentWorldTM)
+cSkinnedMesh::~cSkinnedMesh(void)
 {
-	m_vecAnimationSet[m_nCurrentAnimation]->Update(g_pTimer->DeltaTime());
+	SAFE_RELEASE(m_pAnimController);
+}
 
-	if (m_isAnimationBlending)
+void cSkinnedMesh::Load(std::string sFolder, std::string sFile){
+	m_pEffect = LoadEffect("MultiAnimation.hpp");
+
+	int nPaletteSize = 0;
+	m_pEffect->GetInt("MATRIX_PALETTE_SIZE", &nPaletteSize);
+
+	cAllocateHierarchy ah;
+	ah.SetDirectory(sFolder);
+	ah.SetDefaultPaletteSize(nPaletteSize);
+
+	std::string sFullPath(sFolder);
+	sFullPath += std::string(sFile);
+
+	D3DXLoadMeshHierarchyFromX(sFullPath.c_str(),
+		D3DXMESH_MANAGED,
+		g_pD3DDevice,
+		&ah,
+		NULL,
+		(LPD3DXFRAME*)&m_pRootFrame,
+		&m_pAnimController);
+
+	if (m_pmWorkingPalette)
+		delete[] m_pmWorkingPalette;
+
+	m_dwWorkingPaletteSize = ah.GetMaxPaletteSize();
+	m_pmWorkingPalette = new D3DXMATRIX[m_dwWorkingPaletteSize];
+	if (m_pmWorkingPalette == NULL)
 	{
-		m_fPassedBlendTime += g_pTimer->DeltaTime();
-		if (m_fPassedBlendTime >= m_fAnimationBlendTime)
-		{
-			m_isAnimationBlending = false;
-			m_pAnimControl->SetTrackWeight(0, 1.0f);
-			m_pAnimControl->SetTrackWeight(1, 0.0f);
-			m_pAnimControl->SetTrackEnable(1, false);
+		m_dwWorkingPaletteSize = 0;
+	}
+
+	if (m_pRootFrame)
+		SetupBoneMatrixPtrs(m_pRootFrame);
+}
+
+void cSkinnedMesh::Load(char* szDirectory, char* szFilename)
+{
+	Load(std::string(szDirectory), std::string(szFilename));
+}
+
+void cSkinnedMesh::UpdateAndRender(D3DXMATRIXA16* pParentWorldTM)
+{
+	if (m_pAnimController)
+	{
+		m_pAnimController->AdvanceTime(g_pTimer->DeltaTime(), NULL);
+	}
+
+	if (m_pRootFrame)
+	{
+		D3DXMATRIXA16 mat;
+		D3DXMatrixIdentity(&mat);
+		//D3DXMatrixTranslation(&mat, m_vPosition.x, m_vPosition.y, m_vPosition.z);
+		if (pParentWorldTM){
+			Update(m_pRootFrame, pParentWorldTM);
 		}
-		else
-		{
-			float fWeight = m_fPassedBlendTime / m_fAnimationBlendTime;
-			m_pAnimControl->SetTrackWeight(0, fWeight);
-			m_pAnimControl->SetTrackWeight(1, 1.0f - fWeight);
+		else{
+			Update(m_pRootFrame, &mat);
 		}
-	}
-
-	m_pAnimControl->AdvanceTime(g_pTimer->DeltaTime() * .5f, NULL);
-
-	UpdateWorldMatrix(m_pRootFrame, NULL);
-	UpdateSkinnedMesh(m_pRootFrame);
-
-	Render(m_pRootFrame, pParentWorldTM);
-}
-
-
-void cSkinnedMesh::UpdateWorldMatrix(D3DXFRAME* pFrame, D3DXMATRIXA16* pmatParent)
-{
-	ST_BONE* pBone = (ST_BONE*)pFrame;
-	pBone->matWorldTM = pBone->TransformationMatrix;
-	if (pmatParent)
-	{
-		pBone->matWorldTM = pBone->matWorldTM * (*pmatParent);
-	}
-
-	if (pBone->pFrameSibling)
-	{
-		UpdateWorldMatrix(pBone->pFrameSibling, pmatParent);
-	}
-	if (pBone->pFrameFirstChild)
-	{
-		UpdateWorldMatrix(pBone->pFrameFirstChild, &pBone->matWorldTM);
+		Render(m_pRootFrame);
 	}
 }
 
-void cSkinnedMesh::Render(D3DXFRAME* pFrame, D3DXMATRIXA16* pParentWorldTM)
+void cSkinnedMesh::Render(ST_BONE* pBone /*= NULL*/)
 {
-	ST_BONE* pBone = (ST_BONE*)pFrame;
-	pBone->matWorldTM = (pFrame->TransformationMatrix) * (*pParentWorldTM);
-	g_pD3DDevice->SetTransform(D3DTS_WORLD, &pBone->matWorldTM);
+	assert(pBone);
 
+	// 각 프레임의 메시 컨테이너에 있는 pSkinInfo를 이용하여 영향받는 모든 
+	// 프레임의 매트릭스를 ppBoneMatrixPtrs에 연결한다.
 	if (pBone->pMeshContainer)
 	{
 		ST_BONE_MESH* pBoneMesh = (ST_BONE_MESH*)pBone->pMeshContainer;
-		for (size_t i = 0; i < pBoneMesh->dwNumSubset; ++i)
+
+		// get bone combinations
+		LPD3DXBONECOMBINATION pBoneCombos =
+			(LPD3DXBONECOMBINATION)(pBoneMesh->pBufBoneCombos->GetBufferPointer());
+
+		D3DXMATRIXA16 matViewProj, matView, matProj;
+		g_pD3DDevice->GetTransform(D3DTS_VIEW, &matView);
+		g_pD3DDevice->GetTransform(D3DTS_PROJECTION, &matProj);
+		matViewProj = matView * matProj;
+
+		D3DXMATRIXA16 mView, mInvView;
+		g_pD3DDevice->GetTransform(D3DTS_VIEW, &mView);
+		D3DXMatrixInverse(&mInvView, 0, &mView);
+		D3DXVECTOR3 vEye = D3DXVECTOR3(0, 0, 0);
+		D3DXVec3TransformCoord(&vEye, &vEye, &mInvView);
+
+		// for each palette
+		for (DWORD dwAttrib = 0; dwAttrib < pBoneMesh->dwNumAttrGroups; ++dwAttrib)
 		{
-			g_pD3DDevice->SetTexture(0, pBoneMesh->vecMtlTex[i]->pTex);
-			g_pD3DDevice->SetMaterial(&pBoneMesh->vecMtlTex[i]->stMtl);
-			pBoneMesh->MeshData.pMesh->DrawSubset(i);
+			// set each transform into the palette
+			for (DWORD dwPalEntry = 0; dwPalEntry < pBoneMesh->dwNumPaletteEntries; ++dwPalEntry)
+			{
+				DWORD dwMatrixIndex = pBoneCombos[dwAttrib].BoneId[dwPalEntry];
+				if (dwMatrixIndex != UINT_MAX)
+				{
+					m_pmWorkingPalette[dwPalEntry] =
+						pBoneMesh->pBoneOffsetMatrices[dwMatrixIndex] *
+						(*pBoneMesh->ppBoneMatrixPtrs[dwMatrixIndex]);
+				}
+			}
+
+			// set the matrix palette into the effect
+			m_pEffect->SetMatrixArray("amPalette",
+				m_pmWorkingPalette,
+				pBoneMesh->dwNumPaletteEntries);
+
+			m_pEffect->SetMatrix("g_mViewProj", &matViewProj);
+			m_pEffect->SetVector("vLightDiffuse", &D3DXVECTOR4(1.0f, 1.0f, 1.0f, 1.0f));
+			m_pEffect->SetVector("vWorldLightPos", &D3DXVECTOR4(500.0f, 500.0f, 500.0f, 1.0f));
+			m_pEffect->SetVector("vWorldCameraPos", &D3DXVECTOR4(vEye, 1.0f));
+			m_pEffect->SetVector("vMaterialAmbient", &D3DXVECTOR4(0.53f, 0.53f, 0.53f, 0.53f));
+			m_pEffect->SetVector("vMaterialDiffuse", &D3DXVECTOR4(1.0f, 1.0f, 1.0f, 1.0f));
+
+			// we're pretty much ignoring the materials we got from the x-file; just set
+			// the texture here
+			m_pEffect->SetTexture("g_txScene", pBoneMesh->vecTexture[pBoneCombos[dwAttrib].AttribId]);
+
+			// set the current number of bones; this tells the effect which shader to use
+			m_pEffect->SetInt("CurNumBones", pBoneMesh->dwMaxNumFaceInfls - 1);
+
+			// set the technique we use to draw
+			m_pEffect->SetTechnique("Skinning20");
+
+			UINT uiPasses, uiPass;
+
+			// run through each pass and draw
+			m_pEffect->Begin(&uiPasses, 0);
+			for (uiPass = 0; uiPass < uiPasses; ++uiPass)
+			{
+				m_pEffect->BeginPass(uiPass);
+				pBoneMesh->pWorkingMesh->DrawSubset(dwAttrib);
+				m_pEffect->EndPass();
+			}
+			m_pEffect->End();
 		}
 	}
 
-	if (pBone->Name != nullptr && std::string(pBone->Name) == std::string("FxCenter"))
-	{
-		g_pD3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
-		g_pD3DDevice->SetTexture(0, NULL);
-		m_pDebugSphereBody->DrawSubset(0);
-		g_pD3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
-
-		D3DXVec3TransformCoord(
-			&m_stUpdateBoundingSphere.m_vCenter,
-			&m_stBoundingSphere.m_vCenter,
-			&pBone->matWorldTM);
-	}
-
+	//재귀적으로 모든 프레임에 대해서 실행.
 	if (pBone->pFrameSibling)
 	{
-		Render(pBone->pFrameSibling, pParentWorldTM);
+		Render((ST_BONE*)pBone->pFrameSibling);
 	}
 
 	if (pBone->pFrameFirstChild)
 	{
-		Render(pBone->pFrameFirstChild, &pBone->matWorldTM);
+		Render((ST_BONE*)pBone->pFrameFirstChild);
 	}
 }
+
+LPD3DXEFFECT cSkinnedMesh::LoadEffect(char* szFilename)
+{
+	LPD3DXEFFECT pEffect = NULL;
+
+	D3DXMACRO mac[2] =
+	{
+		{ "MATRIX_PALETTE_SIZE_DEFAULT", "35" },
+		{ NULL, NULL }
+	};
+
+	D3DCAPS9 caps;
+	D3DXMACRO *pmac = NULL;
+	g_pD3DDevice->GetDeviceCaps(&caps);
+	if (caps.VertexShaderVersion > D3DVS_VERSION(1, 1))
+		pmac = mac;
+
+	DWORD dwShaderFlags = 0;
+
+#if defined( DEBUG ) || defined( _DEBUG )
+	// Set the D3DXSHADER_DEBUG flag to embed debug information in the shaders.
+	// Setting this flag improves the shader debugging experience, but still allows 
+	// the shaders to be optimized and to run exactly the way they will run in 
+	// the release configuration of this program.
+	dwShaderFlags |= D3DXSHADER_DEBUG;
+#endif
+
+#ifdef DEBUG_VS
+	dwShaderFlags |= D3DXSHADER_FORCE_VS_SOFTWARE_NOOPT;
+#endif
+#ifdef DEBUG_PS
+	dwShaderFlags |= D3DXSHADER_FORCE_PS_SOFTWARE_NOOPT;
+#endif
+
+	ID3DXBuffer* pBuffer = NULL;
+	if (FAILED(D3DXCreateEffectFromFile(g_pD3DDevice,
+		szFilename,
+		pmac,
+		NULL,
+		dwShaderFlags,
+		NULL,
+		&pEffect,
+		&pBuffer)))
+	{
+		// if creation fails, and debug information has been returned, output debug info
+		if (pBuffer)
+		{
+			OutputDebugStringA((char*)pBuffer->GetBufferPointer());
+			SAFE_RELEASE(pBuffer);
+		}
+
+		return NULL;
+	}
+
+	return pEffect;
+}
+
+void cSkinnedMesh::Update(ST_BONE* pCurrent, D3DXMATRIXA16* pmatParent)
+{
+	pCurrent->CombinedTransformationMatrix = pCurrent->TransformationMatrix;
+	if (pmatParent)
+	{
+		pCurrent->CombinedTransformationMatrix =
+			pCurrent->CombinedTransformationMatrix * (*pmatParent);
+	}
+
+	if (pCurrent->pFrameSibling)
+	{
+		Update((ST_BONE*)pCurrent->pFrameSibling, pmatParent);
+	}
+
+	if (pCurrent->pFrameFirstChild)
+	{
+		Update((ST_BONE*)pCurrent->pFrameFirstChild, &(pCurrent->CombinedTransformationMatrix));
+	}
+}
+
+void cSkinnedMesh::SetupBoneMatrixPtrs(ST_BONE* pBone)
+{
+	assert(pBone);
+
+	// 각 프레임의 메시 컨테이너에 있는 pSkinInfo를 이용하여 영향받는 모든 
+	// 프레임의 매트릭스를 ppBoneMatrixPtrs에 연결한다.
+	if (pBone->pMeshContainer)
+	{
+		ST_BONE_MESH* pBoneMesh = (ST_BONE_MESH*)pBone->pMeshContainer;
+		if (pBoneMesh->pSkinInfo)
+		{
+			LPD3DXSKININFO pSkinInfo = pBoneMesh->pSkinInfo;
+			// pSkinInfo->GetNumBones() 으로 영향받는 본의 개수를 찾음.
+			// pSkinInfo->GetBoneName(i) 로 i번 프레임의 이름을 찾음
+			// D3DXFrameFind(루트 프레임, 프레임 이름) 로 프레임을 찾음.
+			// 찾아서 월드매트릭스를 걸어줘라.
+			DWORD dwNumBones = pSkinInfo->GetNumBones();
+			for (DWORD i = 0; i < dwNumBones; ++i)
+			{
+				LPCSTR szBoneName = pSkinInfo->GetBoneName(i);
+				if (szBoneName == NULL || strlen(szBoneName) == 0)
+					continue;
+				ST_BONE* pInfluence = (ST_BONE*)D3DXFrameFind(m_pRootFrame, szBoneName);
+				pBoneMesh->ppBoneMatrixPtrs[i] = &(pInfluence->CombinedTransformationMatrix);
+			}
+		}
+	}
+
+	//재귀적으로 모든 프레임에 대해서 실행.
+	if (pBone->pFrameSibling)
+	{
+		SetupBoneMatrixPtrs((ST_BONE*)pBone->pFrameSibling);
+	}
+
+	if (pBone->pFrameFirstChild)
+	{
+		SetupBoneMatrixPtrs((ST_BONE*)pBone->pFrameFirstChild);
+	}
+}
+
+//void cSkinnedMesh::SetAnimationIndex(int nIndex)
+//{
+//	if (!m_pAnimController)
+//		return;
+//	LPD3DXANIMATIONSET pAnimSet = NULL;
+//	m_pAnimController->GetAnimationSet(nIndex, &pAnimSet);
+//	m_pAnimController->SetTrackAnimationSet(0, pAnimSet);
+//	SAFE_RELEASE(pAnimSet);
+//}
 
 void cSkinnedMesh::SetAnimationIndex(DWORD dwIndex)
 {
@@ -183,22 +391,22 @@ void cSkinnedMesh::SetAnimationIndexBlend(DWORD dwIndex)
 	LPD3DXANIMATIONSET pPrev = NULL;
 	LPD3DXANIMATIONSET pNext = NULL;
 
-	m_pAnimControl->GetAnimationSet(dwIndex, &pNext);
+	m_pAnimController->GetAnimationSet(dwIndex, &pNext);
 	if (!pNext)
 	{
 		return;
 	}
-	m_pAnimControl->GetTrackAnimationSet(0, &pPrev);
+	m_pAnimController->GetTrackAnimationSet(0, &pPrev);
 
 	D3DXTRACK_DESC desc;
-	m_pAnimControl->GetTrackDesc(0, &desc);
-	m_pAnimControl->SetTrackDesc(1, &desc);
+	m_pAnimController->GetTrackDesc(0, &desc);
+	m_pAnimController->SetTrackDesc(1, &desc);
 
-	m_pAnimControl->SetTrackWeight(0, 0.0f);
-	m_pAnimControl->SetTrackWeight(1, 1.0f);
+	m_pAnimController->SetTrackWeight(0, 0.0f);
+	m_pAnimController->SetTrackWeight(1, 1.0f);
 
-	m_pAnimControl->SetTrackAnimationSet(0, pNext);
-	m_pAnimControl->SetTrackAnimationSet(1, pPrev);
+	m_pAnimController->SetTrackAnimationSet(0, pNext);
+	m_pAnimController->SetTrackAnimationSet(1, pPrev);
 
 	SAFE_RELEASE(pPrev);
 	SAFE_RELEASE(pNext);
@@ -215,84 +423,21 @@ void cSkinnedMesh::SetAnimationLoop(DWORD dwIndex, bool isLoop)
 	}
 }
 
-void cSkinnedMesh::UpdateSkinnedMesh(D3DXFRAME* pFrame)
-{
-	if (pFrame->pMeshContainer)
-	{
-		ST_BONE_MESH* pBoneMesh = (ST_BONE_MESH*)pFrame->pMeshContainer;
-		if (pBoneMesh->pSkinInfo)
-		{
-			LPD3DXSKININFO pSkinInfo = pBoneMesh->pSkinInfo;
-			DWORD dwNumBones = pSkinInfo->GetNumBones();
-			for (DWORD i = 0; i < dwNumBones; ++i)
-			{
-				// pCurrentBoneMatrices 를 계산하시오
-				// pCurrentBoneMatrices = pBoneOffsetMatrices * ppBoneMatrixPtrs 
-
-				pBoneMesh->pCurrentBoneMatrices[i] =
-					pBoneMesh->pBoneOffsetMatrices[i] * *(pBoneMesh->ppBoneMatrixPtrs[i]);
-			}
-
-			BYTE* src = NULL;
-			BYTE* dest = NULL;
-
-			pBoneMesh->pOrigMesh->LockVertexBuffer(D3DLOCK_READONLY, (void**)&src);
-			pBoneMesh->MeshData.pMesh->LockVertexBuffer(0, (void**)&dest);
-
-			//MeshData.pMesh을 업데이트 시켜준다.
-			pBoneMesh->pSkinInfo->UpdateSkinnedMesh(
-				pBoneMesh->pCurrentBoneMatrices, NULL, src, dest);
-
-			pBoneMesh->MeshData.pMesh->UnlockVertexBuffer();
-			pBoneMesh->pOrigMesh->UnlockVertexBuffer();
-		}
-	}
-
-	ST_BONE* pBone = (ST_BONE*)pFrame;
-	//재귀적으로 모든 프레임에 대해서 실행.
-	if (pBone->pFrameSibling)
-	{
-		UpdateSkinnedMesh(pBone->pFrameSibling);
-	}
-
-	if (pBone->pFrameFirstChild)
-	{
-		UpdateSkinnedMesh(pBone->pFrameFirstChild);
-	}
-}
-
-void cSkinnedMesh::OnFinishAnimation(cAnimationSet* pSender)
-{
+void cSkinnedMesh::OnFinishAnimation(cAnimationSet* pSender){
 	SetAnimationIndex(pSender->GetPrevAnimation()->GetIndex());
 }
 
-//충돌용 바운딩 스피어의 크기와 위치를 계산한다. : 민우
-void cSkinnedMesh::CalcCollisionSphere(ST_BONE_MESH* pBoneMesh)
+
+void cSkinnedMesh::Destroy()
 {
-	ST_BONE_MESH_SPHERE* p = (ST_BONE_MESH_SPHERE*)pBoneMesh;
-	D3DXMATRIXA16 matS, matT;
-	D3DXMatrixIdentity(&matS);
-	D3DXMatrixIdentity(&matT);
-
-	//첫 프레임의 반지름을 OriginRadius라고 하고 이것을 기준으로 삼아 차이만큼 스케일링 한다.
-	float fOffset = p->fRadius / p->fOriginRadius;
-	D3DXMatrixScaling(&matS, fOffset, fOffset, fOffset);
-
-	//스피어의 중심점으로 변환
-	D3DXMatrixTranslation(&matT,
-		p->vCenter.x, p->vCenter.y, p->vCenter.z);
-
-	p->matSphereW = matS*matT;
+	cAllocateHierarchy ah;
+	D3DXFrameDestroy((LPD3DXFRAME)m_pRootFrame, &ah);
+	SAFE_DELETE_ARRAY(m_pmWorkingPalette);
+	SAFE_RELEASE(m_pEffect);
+	this->Release();
 }
 
-//충돌용 바운딩 스피어를 그린다. : 민우
-void cSkinnedMesh::RenderCollisionSphere(ST_BONE_MESH* pBoneMesh)
+void cSkinnedMesh::SetRandomTrackPosition()
 {
-	ST_BONE_MESH_SPHERE* p = (ST_BONE_MESH_SPHERE*)pBoneMesh;
-	g_pD3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
-	g_pD3DDevice->SetRenderState(D3DRS_LIGHTING, false);
-	g_pD3DDevice->SetTransform(D3DTS_WORLD, &p->matSphereW);
-	p->pSphereMesh->DrawSubset(0);
-	g_pD3DDevice->SetRenderState(D3DRS_LIGHTING, true);
-	g_pD3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
+	m_pAnimController->SetTrackPosition(0, (rand() % 100) / 10.0f);
 }

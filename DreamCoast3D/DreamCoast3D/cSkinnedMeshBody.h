@@ -15,18 +15,22 @@ protected:
 
 public:
 	cSkinnedMeshBody();
+	cSkinnedMeshBody(std::string sFolder, std::string sFile,
+		std::string sFolderHead, std::string sFileHead,
+		std::string sFolderHair, std::string sFileHair);
+	
 	virtual ~cSkinnedMeshBody();
 
-	virtual void Setup(
-		std::string sFolder, std::string sFile,
-		std::string sFolderHead, std::string sFileHead,
-		std::string sFolderHair, std::string sFileHair
-		);
+	//virtual void Setup(
+	//	std::string sFolder, std::string sFile,
+	//	std::string sFolderHead, std::string sFileHead,
+	//	std::string sFolderHair, std::string sFileHair
+	//	);
 
-	virtual void UpdateWorldMatrix(D3DXFRAME* pFrame, D3DXMATRIXA16* pmatParent);
-	virtual void Render(D3DXMATRIXA16* pParentWorldTM);
-	virtual void Render(D3DXFRAME* pFrame, D3DXMATRIXA16* pParentWorldTM);
-	virtual void SetAnimationIndex(DWORD dwIndex);
-	virtual void SetAnimationLoop(DWORD dwIndex, bool isLoop);	
+	virtual void SetAnimationIndex(DWORD dwIndex) override;
+	virtual void SetAnimationLoop(DWORD dwIndex, bool isLoop) override;	
+
+	virtual void Update(ST_BONE* pCurrent, D3DXMATRIXA16* pmatParent) override;
+	virtual void Render(ST_BONE* pBone = NULL) override;
 };
 

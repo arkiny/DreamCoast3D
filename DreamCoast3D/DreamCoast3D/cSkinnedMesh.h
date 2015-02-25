@@ -1,21 +1,27 @@
 #pragma once
-#include "cAnimationSet.h"
+#include  "cAnimationSet.h"
 
-class cSkinnedMesh : public iAnimationSetDelegate, public cObject
+struct ST_BONE;
+
+class cSkinnedMesh : public cObject, public iAnimationSetDelegate
 {
+	friend class cSkinnedMeshManager;
+
 protected:
-	D3DXFRAME*					m_pRootFrame;
-	LPD3DXANIMATIONCONTROLLER	m_pAnimControl;
+	//하나만 생성
+	SYNTHESIZE(ST_BONE*, m_pRootFrame, RootFrame);
+	SYNTHESIZE(DWORD, m_dwWorkingPaletteSize, WorkingPaletteSize);
+	SYNTHESIZE(D3DXMATRIX*, m_pmWorkingPalette, WorkingPalette);
+	SYNTHESIZE(LPD3DXEFFECT, m_pEffect, Effect);
+
+	// 객체마다 생성
+	SYNTHESIZE(LPD3DXANIMATIONCONTROLLER, m_pAnimController, AnimController);
+
 	float						m_fPassedBlendTime;
 	bool						m_isAnimationBlending;
 	std::vector<cAnimationSet*>	m_vecAnimationSet;
 	int							m_nCurrentAnimation;
-	
 
-	//스킨드메쉬 Body까지 넘어갈 충돌용 바운딩 스피어 값 : 민우
-	float					m_fRadius;				//애니메이션 현재 프레임의 충돌용 바운딩 스피어 메쉬의 반지름.
-	D3DXVECTOR3				m_vCenter;				//충돌용 바운딩 스피어의 중심점
-	
 	SYNTHESIZE(ST_BOUNDING_SPHERE, m_stBoundingSphere, BoundingSphere);
 	SYNTHESIZE(ST_BOUNDING_SPHERE, m_stAttacSphere, AttackSphere);
 
@@ -23,31 +29,39 @@ protected:
 	SYNTHESIZE(ST_BOUNDING_SPHERE, m_stUpdateAttacSphere, UpdateAttackSphere);
 
 	SYNTHESIZE(float, m_fAnimationBlendTime, AnimationBlendTime);
-
 	LPD3DXMESH					m_pDebugSphereBody;
 
 public:
-	cSkinnedMesh(void);
+	cSkinnedMesh(char* szFolder, char* szFilename);
+	cSkinnedMesh(std::string sFolder, std::string sFile);
 	virtual ~cSkinnedMesh(void);
 
-	virtual void Setup(std::string sFolder, std::string sFile);
-	virtual void Update(float fDelta);
-	virtual void Render(D3DXMATRIXA16* pParentWorldTM);
+	virtual void UpdateAndRender(D3DXMATRIXA16* pParentWorldTM = NULL);
+	
+	// todo
+	//virtual void SetAnimationIndex(int nIndex);
 	virtual void SetAnimationIndex(DWORD dwIndex);
 	virtual void SetAnimationLoop(DWORD dwIndex, bool isLoop);
-	
+
 	virtual ST_BOUNDING_SPHERE&	GetCollisionSphere(){
 		return m_stBoundingSphere;
 	}
 
-	virtual void CalcCollisionSphere(ST_BONE_MESH* pBoneMesh);
-	virtual void RenderCollisionSphere(ST_BONE_MESH* pBoneMesh);
+	virtual void SetRandomTrackPosition(); // 테스트용
+	virtual void Update(ST_BONE* pCurrent, D3DXMATRIXA16* pmatParent);
 
 protected:
+	cSkinnedMesh();
+
+	virtual void Load(char* szFolder, char* szFilename);
+	virtual void Load(std::string sFolder, std::string sFile);
+
+	virtual LPD3DXEFFECT LoadEffect(char* szFilename);
+	virtual void Render(ST_BONE* pBone = NULL);
+	virtual void SetupBoneMatrixPtrs(ST_BONE* pBone);
+	virtual void Destroy();
+
 	virtual void SetAnimationIndexBlend(DWORD dwIndex);
-	virtual void UpdateWorldMatrix(D3DXFRAME* pFrame, D3DXMATRIXA16* pmatParent);
-	virtual void Render(D3DXFRAME* pFrame, D3DXMATRIXA16* pParentWorldTM);
-	virtual void UpdateSkinnedMesh(D3DXFRAME* pFrame);
 
 public:
 	virtual void OnFinishAnimation(cAnimationSet* pSender) override;

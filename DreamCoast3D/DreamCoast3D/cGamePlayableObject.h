@@ -77,7 +77,7 @@ public:
 	virtual void ChangeState(EPLAYABLESTATE eNewState);
 
 	//:¹Î¿ì
-	void cGamePlayableObject::CalcCollisionSphere(ST_BONE_MESH* pBoneMesh);
-	void cGamePlayableObject::RenderCollisionSphere(ST_BONE_MESH* pBoneMesh);
+	//void cGamePlayableObject::CalcCollisionSphere(ST_BONE_MESH* pBoneMesh);
+	//void cGamePlayableObject::RenderCollisionSphere(ST_BONE_MESH* pBoneMesh);
 };
 

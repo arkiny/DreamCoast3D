@@ -24,6 +24,7 @@
 #include <map>
 #include <set>
 #include <string>
+#include <assert.h>
 
 // D3DX Include
 #include <d3dx9.h>
@@ -144,31 +145,7 @@ struct ST_SIZE
 };
 class cMtlTex;
 
-_declspec(align(16)) struct ST_BONE : public D3DXFRAME
-{
-	D3DXMATRIXA16 matWorldTM;
-};
 
-struct ST_BONE_MESH : public D3DXMESHCONTAINER
-{
-	DWORD					dwNumSubset;
-	std::vector<cMtlTex*>	vecMtlTex;
-
-	LPD3DXMESH				pOrigMesh;				// 원본 메쉬
-	D3DXMATRIX**			ppBoneMatrixPtrs;		// 이 메쉬에 영향을 주는 프레임'들'의 월드매트릭스 포인터 배열
-	D3DXMATRIX*				pBoneOffsetMatrices;	// 원본 메쉬를 로컬스페이스로 보내는 매트릭스들.
-	D3DXMATRIX*				pCurrentBoneMatrices;	// 각 본의 계산된 월드매트릭스
-};
-
-struct ST_BONE_MESH_SPHERE : public ST_BONE_MESH{
-	//충돌용 바운딩 스피어 값 채우기용 : 민우
-	float					fOriginRadius;			//애니메이션 첫 프레임의 충돌용 바운딩 스피어 메쉬의 반지름. 변환의 기준이 된다.
-	float					fRadius;				//애니메이션 현재 프레임의 충돌용 바운딩 스피어 메쉬의 반지름.
-	D3DXVECTOR3				vCenter;				//충돌용 바운딩 스피어의 중심점
-	LPD3DXMESH				pSphereMesh;			//충돌용 바운딩 스피어의 메쉬
-	LPD3DXBUFFER			pSphereAdj;				//충돌용 바운딩 스피어의 Adj버퍼
-	D3DXMATRIX				matSphereW;				//충돌용 바운딩 스피어의 월드변환행렬
-};
 
 struct ST_TILE_GRIDPOS{
 	int x;

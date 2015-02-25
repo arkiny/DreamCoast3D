@@ -16,20 +16,17 @@ cGameActionSkinnedMeshObj::~cGameActionSkinnedMeshObj()
 }
 
 void cGameActionSkinnedMeshObj::Setup(std::string sFolder, std::string sFile){
-	m_pSkinnedMesh = new cSkinnedMesh;
-	m_pSkinnedMesh->Setup(sFolder, sFile);
+	m_pSkinnedMesh = new cSkinnedMesh(sFolder, sFile);
 }
 
 void cGameActionSkinnedMeshObj::Update(float fDelta){
 	cGameActionObject::Update(fDelta);
-	if (m_pSkinnedMesh){
-		m_pSkinnedMesh->Update(fDelta);
-	}
+	
 }
 
 void cGameActionSkinnedMeshObj::Render(){
 	if (m_pSkinnedMesh){
-		m_pSkinnedMesh->Render(GetTransformMatrix());
+		m_pSkinnedMesh->UpdateAndRender(GetTransformMatrix());
 	}
 }
 

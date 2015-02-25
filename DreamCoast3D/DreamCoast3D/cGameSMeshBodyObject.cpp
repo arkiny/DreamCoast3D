@@ -17,11 +17,7 @@ void cGameSMeshBodyObject::Setup(
 	std::string sFolderHair, std::string sFileHair
 	)
 {
-	cSkinnedMeshBody* pSkinnedMeshBody = new cSkinnedMeshBody;
-	pSkinnedMeshBody->Setup(
-		sFolder, sFile,
+	m_pSkinnedMesh = new cSkinnedMeshBody(sFolder, sFile,
 		sFolderHead, sFileHead,
 		sFolderHair, sFileHair);
-	
-	m_pSkinnedMesh = pSkinnedMeshBody;
 }

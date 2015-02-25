@@ -6,7 +6,8 @@
 cSkinnedMeshBody::cSkinnedMeshBody()
 	:m_pHead(NULL),
 	m_pHair(NULL),
-	m_pMesh(NULL)
+	m_pMesh(NULL),
+	cSkinnedMesh()
 {
 }
 
@@ -18,37 +19,16 @@ cSkinnedMeshBody::~cSkinnedMeshBody()
 	SAFE_RELEASE(m_pMesh);
 }
 
-void cSkinnedMeshBody::Setup(
-	std::string sFolder, std::string sFile,
+cSkinnedMeshBody::cSkinnedMeshBody(std::string sFolder, std::string sFile,
 	std::string sFolderHead, std::string sFileHead,
-	std::string sFolderHair, std::string sFileHair
-	){
-
-	m_pRootFrame = g_pSkinnedMeshManager->GetSkinnedMesh(sFolder, sFile, m_pAnimControl);
-
-	
-	UINT uiNumAnim = m_pAnimControl->GetNumAnimationSets();
-	for (UINT i = 0; i < uiNumAnim; ++i)
-	{
-		cAnimationSet* pAnimSet = new cAnimationSet;
-		LPD3DXANIMATIONSET pAS = NULL;
-		m_pAnimControl->GetAnimationSet(i, &pAS);
-		pAnimSet->SetAnimationSet(pAS);
-		SAFE_RELEASE(pAS);
-		pAnimSet->SetIndex(m_vecAnimationSet.size());
-		m_vecAnimationSet.push_back(pAnimSet);
-	}
-
-	// 머리 셋업
-	m_pHead = new cSkinnedMesh;
-	m_pHead->Setup(sFolderHead, sFileHead);
-		
-	// 머리카락 셋업
-	m_pHair = new cSkinnedMesh;
-	m_pHair->Setup(sFolderHair, sFileHair);
-
-	//D3DXCreateSphere(g_pD3DDevice, 1.0f, 10, 10, &m_pMesh, NULL);
-	//D3DXFRAME* pDummyRoot = D3DXFrameFind(m_pRootFrame, "Dummy_root");	
+	std::string sFolderHair, std::string sFileHair) 
+	:m_pHead(NULL),
+	m_pHair(NULL),
+	m_pMesh(NULL),
+	cSkinnedMesh(sFolder, sFile)
+{
+	m_pHead = new cSkinnedMesh(sFolderHead, sFileHead);
+	m_pHair = new cSkinnedMesh(sFolderHair, sFileHair);
 
 	// 몸 중앙
 	D3DXFRAME* pDummyRoot;
@@ -73,127 +53,128 @@ void cSkinnedMeshBody::Setup(
 	D3DXCreateSphere(g_pD3DDevice, m_stAttacSphere.m_fRadius, 10, 10, &m_pMesh, NULL);
 }
 
-void cSkinnedMeshBody::Render(D3DXMATRIXA16* pParentWorldTM){
-	m_vecAnimationSet[m_nCurrentAnimation]->Update(g_pTimer->DeltaTime());
-
-	if (m_isAnimationBlending)
-	{
-		m_fPassedBlendTime += g_pTimer->DeltaTime();
-		if (m_fPassedBlendTime >= m_fAnimationBlendTime)
-		{
-			m_isAnimationBlending = false;
-			m_pAnimControl->SetTrackWeight(0, 1.0f);
-			m_pAnimControl->SetTrackWeight(1, 0.0f);
-			m_pAnimControl->SetTrackEnable(1, false);
-		}
-		else
-		{
-			float fWeight = m_fPassedBlendTime / m_fAnimationBlendTime;
-			m_pAnimControl->SetTrackWeight(0, fWeight);
-			m_pAnimControl->SetTrackWeight(1, 1.0f - fWeight);
-		}
-	}
-	
-	m_pAnimControl->AdvanceTime(g_pTimer->DeltaTime() * .5f, NULL);
-
-	UpdateWorldMatrix(m_pRootFrame, NULL);
-	UpdateSkinnedMesh(m_pRootFrame);
-
-	Render(m_pRootFrame, pParentWorldTM);
-}
-
-void cSkinnedMeshBody::Render(D3DXFRAME* pFrame, D3DXMATRIXA16* pParentWorldTM){
-	ST_BONE* pBone = (ST_BONE*)pFrame;
-	pBone->matWorldTM = pBone->TransformationMatrix * (*pParentWorldTM);
-	
-	// 목부위 바이패드의 월드트랜스폼매트릭스를 받아서 머리 렌더 실시
-	if (pBone->Name != nullptr && std::string(pBone->Name) == std::string("Bip01-Neck"))
-	{
-		if (m_pHead){
-			m_pHead->Render(&pBone->matWorldTM);
-		}
-	}
-
-	// 머리부위 바이패드의 월드트랜스폼매트릭스를 받아서 머리카락 렌더 실시
-	else if (pBone->Name != nullptr && std::string(pBone->Name) == std::string("Bip01-Head"))
-	{
-		if (m_pHair){
-			m_pHair->Render(&pBone->matWorldTM);
-		}
-	}	
-	if (pBone->pMeshContainer)
-	{
-		ST_BONE_MESH_SPHERE* pBoneMesh = (ST_BONE_MESH_SPHERE*)pBone->pMeshContainer;
-		for (size_t i = 0; i < pBoneMesh->dwNumSubset; ++i)
-		{
-			
-			g_pD3DDevice->SetTransform(D3DTS_WORLD, &(pBone->matWorldTM));
-			g_pD3DDevice->SetTexture(0, pBoneMesh->vecMtlTex[i]->pTex);
-			g_pD3DDevice->SetMaterial(&pBoneMesh->vecMtlTex[i]->stMtl);
-			pBoneMesh->MeshData.pMesh->DrawSubset(i);
-		}
-	}
-
-	if (pBone->Name != nullptr && std::string(pBone->Name) == std::string("FxCenter"))
-	{
-		g_pD3DDevice->SetTransform(D3DTS_WORLD, &(pBone->matWorldTM));
-		g_pD3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
-		g_pD3DDevice->SetTexture(0, NULL);
-		m_pDebugSphereBody->DrawSubset(0);
-		g_pD3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
-
-		D3DXVec3TransformCoord(
-			&m_stUpdateBoundingSphere.m_vCenter,
-			&m_stBoundingSphere.m_vCenter,
-			&pBone->matWorldTM);
-	}
-
-	if (pBone->Name != nullptr && std::string(pBone->Name) == std::string("FxHand01"))
-	{
-		g_pD3DDevice->SetTransform(D3DTS_WORLD, &(pBone->matWorldTM));
-		g_pD3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
-		g_pD3DDevice->SetTexture(0, NULL);
-		m_pMesh->DrawSubset(0);
-		g_pD3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
-
-		D3DXVec3TransformCoord(
-			&m_stUpdateAttacSphere.m_vCenter,
-			&m_stAttacSphere.m_vCenter,
-			&pBone->matWorldTM);
-	}
-
-	if (pBone->pFrameSibling)
-	{
-		Render(pBone->pFrameSibling, pParentWorldTM);
-	}
-	
-	if (pBone->pFrameFirstChild)
-	{
-		Render(pBone->pFrameFirstChild, &pBone->matWorldTM);
-	}
-}
-
-
-void cSkinnedMeshBody::UpdateWorldMatrix(D3DXFRAME* pFrame, D3DXMATRIXA16* pmatParent)
-{
-	ST_BONE* pBone = (ST_BONE*)pFrame;
-	pBone->matWorldTM = pBone->TransformationMatrix;
-
+void cSkinnedMeshBody::Update(ST_BONE* pCurrent, D3DXMATRIXA16* pmatParent){
+	pCurrent->CombinedTransformationMatrix = pCurrent->TransformationMatrix;
 	if (pmatParent)
 	{
-		pBone->matWorldTM = pBone->TransformationMatrix * (*pmatParent);
+		pCurrent->CombinedTransformationMatrix =
+			pCurrent->CombinedTransformationMatrix * (*pmatParent);
+
+		// 목부위 바이패드의 월드트랜스폼매트릭스를 받아서 머리 렌더 실시
+		if (pCurrent->Name != nullptr && std::string(pCurrent->Name) == std::string("Bip01-Neck"))
+		{
+			if (m_pHead){
+				m_pHead->UpdateAndRender(&pCurrent->CombinedTransformationMatrix);
+			}
+		}
+
+		// 머리부위 바이패드의 월드트랜스폼매트릭스를 받아서 머리카락 렌더 실시
+		else if (pCurrent->Name != nullptr && std::string(pCurrent->Name) == std::string("Bip01-Head"))
+		{
+			if (m_pHair){
+				m_pHair->UpdateAndRender(&pCurrent->CombinedTransformationMatrix);
+			}
+		}
 	}
 
-	if (pBone->pFrameSibling)
+	if (pCurrent->pFrameSibling)
 	{
-		UpdateWorldMatrix(pBone->pFrameSibling, pmatParent);
+		Update((ST_BONE*)pCurrent->pFrameSibling, pmatParent);
 	}
-	if (pBone->pFrameFirstChild)
+
+	if (pCurrent->pFrameFirstChild)
 	{
-		UpdateWorldMatrix(pBone->pFrameFirstChild, &pBone->matWorldTM);
+		Update((ST_BONE*)pCurrent->pFrameFirstChild, &(pCurrent->CombinedTransformationMatrix));
 	}
 }
 
+void cSkinnedMeshBody::Render(ST_BONE* pBone /*= NULL*/)
+{
+	assert(pBone);
+	// 각 프레임의 메시 컨테이너에 있는 pSkinInfo를 이용하여 영향받는 모든 
+	// 프레임의 매트릭스를 ppBoneMatrixPtrs에 연결한다.
+	if (pBone->pMeshContainer)
+	{
+		ST_BONE_MESH* pBoneMesh = (ST_BONE_MESH*)pBone->pMeshContainer;
+
+		// get bone combinations
+		LPD3DXBONECOMBINATION pBoneCombos =
+			(LPD3DXBONECOMBINATION)(pBoneMesh->pBufBoneCombos->GetBufferPointer());
+
+		D3DXMATRIXA16 matViewProj, matView, matProj;
+		g_pD3DDevice->GetTransform(D3DTS_VIEW, &matView);
+		g_pD3DDevice->GetTransform(D3DTS_PROJECTION, &matProj);
+		matViewProj = matView * matProj;
+
+		D3DXMATRIXA16 mView, mInvView;
+		g_pD3DDevice->GetTransform(D3DTS_VIEW, &mView);
+		D3DXMatrixInverse(&mInvView, 0, &mView);
+		D3DXVECTOR3 vEye = D3DXVECTOR3(0, 0, 0);
+		D3DXVec3TransformCoord(&vEye, &vEye, &mInvView);
+
+		// for each palette
+		for (DWORD dwAttrib = 0; dwAttrib < pBoneMesh->dwNumAttrGroups; ++dwAttrib)
+		{
+			// set each transform into the palette
+			for (DWORD dwPalEntry = 0; dwPalEntry < pBoneMesh->dwNumPaletteEntries; ++dwPalEntry)
+			{
+				DWORD dwMatrixIndex = pBoneCombos[dwAttrib].BoneId[dwPalEntry];
+				if (dwMatrixIndex != UINT_MAX)
+				{
+					m_pmWorkingPalette[dwPalEntry] =
+						pBoneMesh->pBoneOffsetMatrices[dwMatrixIndex] *
+						(*pBoneMesh->ppBoneMatrixPtrs[dwMatrixIndex]);
+				}
+			}
+
+			// set the matrix palette into the effect
+			m_pEffect->SetMatrixArray("amPalette",
+				m_pmWorkingPalette,
+				pBoneMesh->dwNumPaletteEntries);
+
+			m_pEffect->SetMatrix("g_mViewProj", &matViewProj);
+			m_pEffect->SetVector("vLightDiffuse", &D3DXVECTOR4(1.0f, 1.0f, 1.0f, 1.0f));
+			m_pEffect->SetVector("vWorldLightPos", &D3DXVECTOR4(500.0f, 500.0f, 500.0f, 1.0f));
+			m_pEffect->SetVector("vWorldCameraPos", &D3DXVECTOR4(vEye, 1.0f));
+			m_pEffect->SetVector("vMaterialAmbient", &D3DXVECTOR4(0.53f, 0.53f, 0.53f, 0.53f));
+			m_pEffect->SetVector("vMaterialDiffuse", &D3DXVECTOR4(1.0f, 1.0f, 1.0f, 1.0f));
+
+			// we're pretty much ignoring the materials we got from the x-file; just set
+			// the texture here
+			m_pEffect->SetTexture("g_txScene", pBoneMesh->vecTexture[pBoneCombos[dwAttrib].AttribId]);
+
+			// set the current number of bones; this tells the effect which shader to use
+			m_pEffect->SetInt("CurNumBones", pBoneMesh->dwMaxNumFaceInfls - 1);
+
+			// set the technique we use to draw
+			m_pEffect->SetTechnique("Skinning20");
+
+			UINT uiPasses, uiPass;
+
+			// run through each pass and draw
+			m_pEffect->Begin(&uiPasses, 0);
+			for (uiPass = 0; uiPass < uiPasses; ++uiPass)
+			{
+				m_pEffect->BeginPass(uiPass);
+				pBoneMesh->pWorkingMesh->DrawSubset(dwAttrib);
+				m_pEffect->EndPass();
+			}
+			m_pEffect->End();
+		}
+	}
+	//재귀적으로 모든 프레임에 대해서 실행.
+	if (pBone->pFrameSibling)
+	{
+		Render((ST_BONE*)pBone->pFrameSibling);
+	}
+
+	if (pBone->pFrameFirstChild)
+	{
+		Render((ST_BONE*)pBone->pFrameFirstChild);
+	}
+}
+
+//
 void cSkinnedMeshBody::SetAnimationIndex(DWORD dwIndex){
 	cSkinnedMesh::SetAnimationIndex(dwIndex);
 	if (m_pHair){
@@ -214,3 +195,4 @@ void cSkinnedMeshBody::SetAnimationLoop(DWORD dwIndex, bool isLoop)
 		m_pHead->SetAnimationLoop(dwIndex, isLoop);
 	}
 }
+
