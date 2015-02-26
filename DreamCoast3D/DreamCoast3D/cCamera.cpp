@@ -75,7 +75,7 @@ void cCamera::Update(float delta)
 	}
 
 	m_vLookAt = *m_pvTarget;
-	
+
 	D3DXVECTOR3 vec(0.f, 0.f, 0.f);
 	vec.x = m_pvTarget->x - m_vEye.x;
 	vec.z = m_pvTarget->z - m_vEye.z;
@@ -92,13 +92,13 @@ void cCamera::Update(float delta)
 	D3DXMatrixRotationY(&matY, D3DX_PI / 2);
 	D3DXVec3TransformCoord(&m_vLookAt, &pvTarget, &matY);
 	m_vLookAt += *m_pvTarget;
-	m_vLookAt.y = m_pvTarget->y - 20.f;
+	m_vLookAt.y = m_pvTarget->y - m_fDist;
 
 	D3DXMatrixIdentity(&matY);
 	D3DXMatrixRotationY(&matY, -D3DX_PI / 2);
 	D3DXVec3TransformCoord(&m_vEye, &pvTarget, &matY);
 	m_vEye += *m_pvTarget;
-	m_vEye.y = m_pvTarget->y + 20.f;
+	m_vEye.y = m_pvTarget->y + m_fDist;
 
 
 	if (g_pControlManager->GetInputInfo(VK_MBUTTON) && m_isRButtonDown == false){
@@ -153,6 +153,7 @@ void cCamera::Update(float delta)
 		if (m_fDist < m_fMin)
 			m_fDist = m_fMin;
 		if (m_fDist > m_fMax)
+
 			m_fDist = m_fMax;
 	}
 	
@@ -171,6 +172,7 @@ void cCamera::Update(float delta)
 	{
 		m_vEye += (*m_pvTarget);
 		m_vLookAt = (*m_pvTarget);
+		m_vLookAt.y += 2.0f;
 	}
 
 	bool isLand;
