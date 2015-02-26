@@ -229,10 +229,6 @@ void cSkinnedMeshBody::Update(ST_BONE* pCurrent, D3DXMATRIXA16* pmatParent)
 	//몸의 중심 바운딩스피어를 찾아서 1차 검사용으로 사용할 것이다.
 	//if (pCurrent->Name != nullptr && std::string(pCurrent->Name) == std::string("FxCenter"))
 	//{
-	//	/*D3DXVec3TransformCoord(
-	//		&m_mapDebugUpdateSphereBody["FxCenter"].m_vCenter,
-	//		&m_mapDebugOriginSphereBody["FxCenter"].m_vCenter,
-	//		&pCurrent->CombinedTransformationMatrix);*/
 	//	D3DXVec3TransformCoord(
 	//		&m_stUpdateBoundingSphere.m_vCenter,
 	//		&m_stBoundingSphere.m_vCenter,

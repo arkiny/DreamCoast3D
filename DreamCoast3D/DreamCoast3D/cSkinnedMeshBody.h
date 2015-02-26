@@ -33,13 +33,13 @@ public:
 	virtual void Update(ST_BONE* pCurrent, D3DXMATRIXA16* pmatParent) override;
 	virtual void Render(ST_BONE* pBone = NULL) override;
 
-	void RenderBoundingSphere(D3DXFRAME* pFrame, D3DXMATRIXA16* pParentWorldTM);
-	void RenderDetailBoundingSphere(D3DXFRAME* pFrame, D3DXMATRIXA16* pParentWorldTM);
+	//void RenderBoundingSphere(D3DXFRAME* pFrame, D3DXMATRIXA16* pParentWorldTM);
+	//void RenderDetailBoundingSphere(D3DXFRAME* pFrame, D3DXMATRIXA16* pParentWorldTM);
 
-	void GetCollisionBoundingSphere(OUT D3DXVECTOR3& vCenter, OUT float& fRadius);
+	//void GetCollisionBoundingSphere(OUT D3DXVECTOR3& vCenter, OUT float& fRadius);
 	
-	void GetDetailCollisionBoundingSpheres(OUT std::vector<ST_BOUNDING_SPHERE>& vecSphere);
-	void RecursivePushBoundingSphereAllBones(D3DXFRAME* pFrame, std::vector<ST_BOUNDING_SPHERE>& vecSphere);
+	//void GetDetailCollisionBoundingSpheres(OUT std::vector<ST_BOUNDING_SPHERE>& vecSphere);
+	//void RecursivePushBoundingSphereAllBones(D3DXFRAME* pFrame, std::vector<ST_BOUNDING_SPHERE>& vecSphere);
 	
 	//Setup에서 한 번만 동작한다
 	void GetDebugOriginSphereBody(
