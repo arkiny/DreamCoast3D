@@ -31,7 +31,9 @@ public:
 	virtual void SetAnimationLoop(DWORD dwIndex, bool isLoop) override;	
 
 	virtual void Update(ST_BONE* pCurrent, D3DXMATRIXA16* pmatParent) override;
-	virtual void Render(ST_BONE* pBone = NULL) override;	void RenderBoundingSphere(D3DXFRAME* pFrame, D3DXMATRIXA16* pParentWorldTM);
+	virtual void Render(ST_BONE* pBone = NULL) override;
+
+	void RenderBoundingSphere(D3DXFRAME* pFrame, D3DXMATRIXA16* pParentWorldTM);
 	void RenderDetailBoundingSphere(D3DXFRAME* pFrame, D3DXMATRIXA16* pParentWorldTM);
 
 	void GetCollisionBoundingSphere(OUT D3DXVECTOR3& vCenter, OUT float& fRadius);
