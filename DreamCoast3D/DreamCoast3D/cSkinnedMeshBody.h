@@ -38,5 +38,7 @@ public:
 	
 	void GetDetailCollisionBoundingSpheres(OUT std::vector<ST_BOUNDING_SPHERE>& vecSphere);
 	void RecursivePushBoundingSphereAllBones(D3DXFRAME* pFrame, std::vector<ST_BOUNDING_SPHERE>& vecSphere);
+	void GetDebugOriginSphereBody(OUT std::map<std::string, ST_BOUNDING_SPHERE>& mapDebugOriginSphereBody);
+	void GetDebugUpdateSphereBody(OUT std::map<std::string, ST_BOUNDING_SPHERE>& mapDebugUpdateSphereBody);
 };
 
