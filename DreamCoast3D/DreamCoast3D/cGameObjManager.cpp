@@ -155,7 +155,7 @@ bool cGameObjManager::isGameObjectCollided(cGameObject* pFrom){
 					if (isCollided(from, fFrom, scale, to, fTo, scale2)){
 						std::map<std::string, ST_BOUNDING_SPHERE>* pMap = p->GetUpdatedDetailedSphere();
 						for (auto pSphere : *pMap){
-							
+
 							D3DXVECTOR3 from = pFrom->GetCollisionSphere()->m_vCenter;
 							D3DXVECTOR3 to = pSphere.second.m_vCenter;
 							D3DXVECTOR3 dist = from - to;
@@ -165,8 +165,9 @@ bool cGameObjManager::isGameObjectCollided(cGameObject* pFrom){
 							float scale2 = p->GetScale().x;
 					
 							if (isCollided(from, fFrom, scale, to, fTo, scale2)){
-								pFrom->ForcedMoving(dist, 1.0f);
-								p->ForcedMoving(-dist, 1.0f);
+
+								pFrom->ForcedMoving(-dist, 1.0f);
+								p->ForcedMoving(-dist, 10.0f);
 								return true;
 							}
 						}
@@ -280,5 +281,8 @@ D3DXVECTOR3 cGameObjManager::PushingForce(D3DXVECTOR3* vFrom, float fFromLength,
 
 	vForceTo *= fDist - fRadius;
 
-	return vForceFrom - vForceTo;
+	D3DXVECTOR3 vForce = vForceFrom - vForceTo;
+	D3DXVec3Normalize(&vForce, &vForce);
+
+	return vForce;
 }
