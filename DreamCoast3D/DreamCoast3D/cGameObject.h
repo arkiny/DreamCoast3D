@@ -68,7 +68,8 @@ public:
 	//
 	virtual iGridTileSystem* GetGridTileSystem() { return m_pGridCallback; }
 
-	// override
 	virtual void ChangeState(int nState){}
+
+	virtual std::map<std::string, ST_BOUNDING_SPHERE>* GetUpdatedDetailedSphere() { return NULL; }
 };
 

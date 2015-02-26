@@ -50,6 +50,16 @@ ST_BOUNDING_SPHERE* cGameActionSkinnedMeshObj::GetAttackSphere(){
 	return ret;
 }
 
+std::map<std::string, ST_BOUNDING_SPHERE>* cGameActionSkinnedMeshObj::GetUpdatedDetailedSphere(){
+	std::map<std::string, ST_BOUNDING_SPHERE>* ret = NULL;
+	if (m_pSkinnedMesh){
+		ret = &m_pSkinnedMesh->GetUpdatedDetailedSphere();
+		return ret;
+	}
+	return ret;
+}
+
+
 //UINT uiNumAnim = m_pAnimControl->GetNumAnimationSets();
 //for (UINT i = 0; i < uiNumAnim; ++i)
 //{

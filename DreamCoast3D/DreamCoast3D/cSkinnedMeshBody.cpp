@@ -45,110 +45,85 @@ cSkinnedMeshBody::cSkinnedMeshBody(std::string sFolder, std::string sFile,
 	D3DXCreateSphere(g_pD3DDevice, m_stAttacSphere.m_fRadius, 10, 10, &m_pMesh, NULL);
 
 
-	//GetDebugOriginSphereBody(m_mapDebugOriginSphereBody);
+	GetDebugOriginSphereBody(m_mapDebugOriginSphereBody, m_mapDebugUpdateSphereBody);
+	
 	//몸중심의 전체적 바운딩스피어를 구해낸 다음 그 값을 cSkinnedMesh의 바운딩스피어 멤버들에게 전달해준다 : 민우
-	GetCollisionBoundingSphere(m_stBoundingSphere.m_vCenter, m_stBoundingSphere.m_fRadius);
-	m_stUpdateBoundingSphere.m_vCenter = m_stBoundingSphere.m_vCenter;
-	m_stUpdateBoundingSphere.m_fRadius = m_stBoundingSphere.m_fRadius;
+
+	// HD : 프레임워크 위에서의 작업은 기존에 있는 것에서 지우고 수정하는 형태가 아니라
+	// 기존의 것을 놔둔채 추가해 나가는 작업을 우선으로 하고, 리뷰 후에 예전 코드를 삭제하는 작업을 행해야 한다.
+	// 차라리 새로 만들려면 기존에 것을 놔둔채 새로 상속받아서 작업하고 치환해 주는 작업을 거치던가 해야함.
+
+	m_stUpdateBoundingSphere.m_vCenter = m_mapDebugOriginSphereBody[std::string("FxCenter")].m_vCenter;
+	m_stUpdateBoundingSphere.m_fRadius = m_mapDebugOriginSphereBody[std::string("FxCenter")].m_fRadius;
+
 	SAFE_RELEASE(m_pDebugSphereBody);
-	D3DXCreateSphere(g_pD3DDevice, m_stBoundingSphere.m_fRadius, 10, 10, &m_pDebugSphereBody, NULL);
-	GetDetailCollisionBoundingSpheres(m_vecDetailBoundingSphere);	//TODO: 여기서 구해진 것을 토대로 Update에서 위치를 지속적으로 갱신해야 한다. :민우
-	D3DXCreateSphere(g_pD3DDevice, 2.5f, 5, 5, &m_pDebugDetailSphereBody, NULL);//세부적인 부분을 보여줄 작은 바운딩스피어
+	D3DXCreateSphere(g_pD3DDevice, 1, 10, 10, &m_pDebugSphereBody, NULL);
+
+
+	//반지름을 1로 해두고 확장해서 렌더 : 민우
+	//GetDetailCollisionBoundingSpheres(m_vecDetailBoundingSphere);	//TODO: 여기서 구해진 것을 토대로 Update에서 위치를 지속적으로 갱신해야 한다. :민우
+	//D3DXCreateSphere(g_pD3DDevice, 2.5f, 5, 5, &m_pDebugDetailSphereBody, NULL);//세부적인 부분을 보여줄 작은 바운딩스피어
 }
 
 //캐릭터 몸의 1차 충돌(피격)체크용 전체적 바운딩스피어를 구한다 : 민우
-void cSkinnedMeshBody::GetCollisionBoundingSphere(OUT D3DXVECTOR3& vCenter, OUT float& fRadius)
-{
-	D3DXFRAME* pFrameCenter;
-	pFrameCenter = D3DXFrameFind(m_pRootFrame, "FxCenter");
-	D3DXMATRIXA16 matCenterTM = pFrameCenter->TransformationMatrix;
-	D3DXVECTOR3	vLocalCenter(0, 0, 0); //바운딩 스피어의 중심점을 구해낼 벡터3
-	D3DXVec3TransformCoord(&vLocalCenter, &vLocalCenter, &matCenterTM);
-	
-	//바운딩스피어의 중심점과 반지름을 대입
-	vCenter = vLocalCenter;
-	fRadius = 20.f; //HACK: 이 값(반지름)을 정하는 규칙이 있어야 한다. : 민우
-}
+//void cSkinnedMeshBody::GetCollisionBoundingSphere(OUT D3DXVECTOR3& vCenter, OUT float& fRadius)
+//{
+//	D3DXFRAME* pFrameCenter;
+//	pFrameCenter = D3DXFrameFind(m_pRootFrame, "FxCenter");
+//	D3DXMATRIXA16 matCenterTM = pFrameCenter->TransformationMatrix;
+//	D3DXVECTOR3	vLocalCenter(0, 0, 0); //바운딩 스피어의 중심점을 구해낼 벡터3
+//	D3DXVec3TransformCoord(&vLocalCenter, &vLocalCenter, &matCenterTM);
+//	
+//	//바운딩스피어의 중심점과 반지름을 대입
+//	vCenter = vLocalCenter;
+//	fRadius = 20.f; //HACK: 이 값(반지름)을 정하는 규칙이 있어야 한다. : 민우
+//}
 
 //캐릭터 신체 각 부위의 충돌(피격)을 세부적 판정할 바운딩 스피어를 vector컨테이너로 구한다 : 민우
-void cSkinnedMeshBody::GetDetailCollisionBoundingSpheres(OUT std::vector<ST_BOUNDING_SPHERE>& vecSphere)
-{
-	RecursivePushBoundingSphereAllBones(m_pRootFrame, vecSphere);
-}
+//void cSkinnedMeshBody::GetDetailCollisionBoundingSpheres(OUT std::vector<ST_BOUNDING_SPHERE>& vecSphere)
+//{
+//	RecursivePushBoundingSphereAllBones(m_pRootFrame, vecSphere);
+//}
 
 //인자로 받은 벡터컨테이너에 재귀적으로 모든 본을 찾아서 바운딩스피어값을 Push한다.(vCenter는 로컬좌표다) : 민우
-void cSkinnedMeshBody::RecursivePushBoundingSphereAllBones(D3DXFRAME* pFrame, std::vector<ST_BOUNDING_SPHERE>& vecSphere)
-{
-	if (pFrame)
-	{
-		D3DXMATRIX matTM = pFrame->TransformationMatrix;
-		D3DXVECTOR3	vLocalCenter(0, 0, 0); //바운딩 스피어의 중심점을 구해낼 벡터3
-		D3DXVec3TransformCoord(&vLocalCenter, &vLocalCenter, &matTM);
-		ST_BOUNDING_SPHERE stBs(vLocalCenter, 5.f);	//HACK: 반지름을 정하는 규칙이 있어야 한다. : 민우
-		vecSphere.push_back(stBs); //인자로 받은 벡터에 Push. 로컬좌표만 들어가 있는 상태.
-
-		if (pFrame->pFrameSibling){ RecursivePushBoundingSphereAllBones(pFrame->pFrameFirstChild, vecSphere); }
-		if (pFrame->pFrameFirstChild){ RecursivePushBoundingSphereAllBones(pFrame->pFrameFirstChild, vecSphere); }
-	}
-}
+//void cSkinnedMeshBody::RecursivePushBoundingSphereAllBones(D3DXFRAME* pFrame, std::vector<ST_BOUNDING_SPHERE>& vecSphere)
+//{
+//	if (pFrame)
+//	{
+//		D3DXMATRIX matTM = pFrame->TransformationMatrix;
+//		D3DXVECTOR3	vLocalCenter(0, 0, 0); //바운딩 스피어의 중심점을 구해낼 벡터3
+//		D3DXVec3TransformCoord(&vLocalCenter, &vLocalCenter, &matTM);
+//		ST_BOUNDING_SPHERE stBs(vLocalCenter, 5.f);	//HACK: 반지름을 정하는 규칙이 있어야 한다. : 민우
+//		vecSphere.push_back(stBs); //인자로 받은 벡터에 Push. 로컬좌표만 들어가 있는 상태.
+//
+//		if (pFrame->pFrameSibling){ RecursivePushBoundingSphereAllBones(pFrame->pFrameFirstChild, vecSphere); }
+//		if (pFrame->pFrameFirstChild){ RecursivePushBoundingSphereAllBones(pFrame->pFrameFirstChild, vecSphere); }
+//	}
+//}
 
 //TODO: 전체적인 본의 바운딩스피어를 그린다. : 민우
-void cSkinnedMeshBody::RenderBoundingSphere(D3DXFRAME* pFrame, D3DXMATRIXA16* pParentWorldTM)
-{
-	//세부 본을 그리다 보면 이미 구현되는 셈이기 때문에 일단 비워둔다.
-}
+//void cSkinnedMeshBody::RenderBoundingSphere(D3DXFRAME* pFrame, D3DXMATRIXA16* pParentWorldTM)
+//{
+//	//세부 본을 그리다 보면 이미 구현되는 셈이기 때문에 일단 비워둔다.
+//}
 
 //FIX: 세부적인 본의 바운딩스피어를 그린다. 단순히 표현만 해보는 것으로, 연산된 값은 이용하지 않는다. Parent가 아니라 Combine이라는 개념으로 수정해야한다. : 민우
-void cSkinnedMeshBody::RenderDetailBoundingSphere(D3DXFRAME* pFrame, D3DXMATRIXA16* pParentWorldTM)
-{
-	ST_BONE* pBone = (ST_BONE*)pFrame;
-	D3DXMATRIXA16 matW;
-	D3DXMatrixIdentity(&matW);
-	matW = pBone->TransformationMatrix * (*pParentWorldTM);
-	
-	g_pD3DDevice->SetTexture(0, NULL);
-	g_pD3DDevice->SetRenderState(D3DRS_LIGHTING, false);
-	g_pD3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
-	g_pD3DDevice->SetTransform(D3DTS_WORLD, &matW);
-	m_pDebugDetailSphereBody->DrawSubset(0);
-	g_pD3DDevice->SetRenderState(D3DRS_LIGHTING, true);
-	g_pD3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
-}
-void cSkinnedMeshBody::GetDebugOriginSphereBody(OUT std::map<std::string, ST_BOUNDING_SPHERE>& mapDebugOriginSphereBody)
-{
-	D3DXFRAME* pFrame;
-	ST_BOUNDING_SPHERE stBs;
-	pFrame = D3DXFrameFind(m_pRootFrame, "FxCenter");
-	D3DXMATRIXA16 matTM = pFrame->TransformationMatrix;
-	D3DXVECTOR3	vLocalCenter(0, 0, 0); //바운딩 스피어의 중심점을 구해낼 벡터3
-	D3DXVec3TransformCoord(&vLocalCenter, &vLocalCenter, &matTM);
+//void cSkinnedMeshBody::RenderDetailBoundingSphere(D3DXFRAME* pFrame, D3DXMATRIXA16* pParentWorldTM)
+//{
+//	ST_BONE* pBone = (ST_BONE*)pFrame;
+//	D3DXMATRIXA16 matW;
+//	D3DXMatrixIdentity(&matW);
+//	matW = pBone->TransformationMatrix * (*pParentWorldTM);
+//	
+//	g_pD3DDevice->SetTexture(0, NULL);
+//	g_pD3DDevice->SetRenderState(D3DRS_LIGHTING, false);
+//	g_pD3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
+//	g_pD3DDevice->SetTransform(D3DTS_WORLD, &matW);
+//	m_pDebugDetailSphereBody->DrawSubset(0);
+//	g_pD3DDevice->SetRenderState(D3DRS_LIGHTING, true);
+//	g_pD3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
+//}
 
-	stBs.m_vCenter = vLocalCenter;
-	stBs.m_fRadius = 20.f; //HACK: 이 값(반지름)을 정하는 규칙이 있어야 한다. : 민우
-	mapDebugOriginSphereBody["FxCenter"] = stBs;
-	
-	pFrame = D3DXFrameFind(m_pRootFrame, "FxTop");
-	matTM = pFrame->TransformationMatrix;
-	vLocalCenter = D3DXVECTOR3(0, 0, 0);
-	D3DXVec3TransformCoord(&vLocalCenter, &vLocalCenter, &matTM);
-
-	stBs.m_vCenter = vLocalCenter;
-	stBs.m_fRadius = 10.f; //HACK: 이 값(반지름)을 정하는 규칙이 있어야 한다. : 민우
-	mapDebugOriginSphereBody["FxTop"] = stBs;
-
-	pFrame = D3DXFrameFind(m_pRootFrame, "FxBottom");
-	matTM = pFrame->TransformationMatrix;
-	vLocalCenter = D3DXVECTOR3(0, 0, 0);
-	D3DXVec3TransformCoord(&vLocalCenter, &vLocalCenter, &matTM);
-
-	stBs.m_vCenter = vLocalCenter;
-	stBs.m_fRadius = 10.f; //HACK: 이 값(반지름)을 정하는 규칙이 있어야 한다. : 민우
-	mapDebugOriginSphereBody["FxBottom"] = stBs;
-}
-void cSkinnedMeshBody::GetDebugUpdateSphereBody(OUT std::map<std::string, ST_BOUNDING_SPHERE>& mapDebugUpdateSphereBody)
-{
-
-}
 void cSkinnedMeshBody::Update(ST_BONE* pCurrent, D3DXMATRIXA16* pmatParent)
 {
 	pCurrent->CombinedTransformationMatrix = pCurrent->TransformationMatrix;
@@ -179,16 +154,19 @@ void cSkinnedMeshBody::Update(ST_BONE* pCurrent, D3DXMATRIXA16* pmatParent)
 	{
 		D3DXVec3TransformCoord(
 			&m_stUpdateBoundingSphere.m_vCenter,
-			&m_stBoundingSphere.m_vCenter,
+			&D3DXVECTOR3(0, 0, 0),
 			&pCurrent->CombinedTransformationMatrix);
 	}
+
+	//FxTop, FxCenter, FxBottom 세 군데의 위치를 갱신한다.
+	GetDebugUpdateSphereBody(pCurrent, m_mapDebugOriginSphereBody, m_mapDebugUpdateSphereBody);
 
 	// Hand
 	if (pCurrent->Name != nullptr && std::string(pCurrent->Name) == std::string("FxHand01"))
 	{
 		D3DXVec3TransformCoord(
 			&m_stUpdateAttacSphere.m_vCenter,
-			&m_stAttacSphere.m_vCenter,
+			&D3DXVECTOR3(0, 0, 0),
 			&pCurrent->CombinedTransformationMatrix);
 	}
 
@@ -206,20 +184,8 @@ void cSkinnedMeshBody::Update(ST_BONE* pCurrent, D3DXMATRIXA16* pmatParent)
 void cSkinnedMeshBody::Render(ST_BONE* pBone /*= NULL*/)
 {
 	assert(pBone);
-	//TODO: CombinedTransformationMatrix가 뭔지 알아야 한다. 원래는 Parent가 들어가는 자리였다 : 민우
-	// 예전 matWorldTM
-	//RenderDetailBoundingSphere(pBone, &pBone->CombinedTransformationMatrix); 
-	if (pBone->Name != nullptr && std::string(pBone->Name) == std::string("FxCenter"))
-	{
-		g_pD3DDevice->SetTexture(0, nullptr);
-		g_pD3DDevice->SetRenderState(D3DRS_LIGHTING, false);
-		g_pD3DDevice->SetTransform(D3DTS_WORLD, &pBone->CombinedTransformationMatrix);
-		g_pD3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
-		g_pD3DDevice->SetTexture(0, NULL);
-		m_pDebugSphereBody->DrawSubset(0);
-		g_pD3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
-		g_pD3DDevice->SetRenderState(D3DRS_LIGHTING, true);
-	}
+	//FxTop, FxCenter, FxBottom의 바운딩스피어를 그린다 : 민우
+	RenderDebugUpdateSphereBody(pBone, m_mapDebugUpdateSphereBody);
 
 	if (pBone->Name != nullptr && std::string(pBone->Name) == std::string("FxHand01"))
 	{
@@ -334,3 +300,92 @@ void cSkinnedMeshBody::SetAnimationLoop(DWORD dwIndex, bool isLoop)
 	}
 }
 
+//
+//void cSkinnedMeshBody::GetDebugOriginSphereBody(
+//	OUT std::map<std::string, ST_BOUNDING_SPHERE>& mapDebugOriginSphereBody,
+//	OUT std::map<std::string, ST_BOUNDING_SPHERE>& mapDebugUpdateSphereBody)
+//{
+//	D3DXFRAME* pFrame;
+//	ST_BOUNDING_SPHERE stBs;
+//	pFrame = D3DXFrameFind(m_pRootFrame, "FxCenter");
+//	D3DXMATRIXA16 matTM = pFrame->TransformationMatrix;
+//	D3DXVECTOR3	vLocalCenter(0, 0, 0); //바운딩 스피어의 중심점을 구해낼 벡터3
+//	D3DXVec3TransformCoord(&vLocalCenter, &vLocalCenter, &matTM);
+//
+//	stBs.m_vCenter = vLocalCenter;
+//	stBs.m_fRadius = 15.f; //HACK: 이 값(반지름)을 정하는 규칙이 있어야 한다. : 민우
+//	mapDebugOriginSphereBody["FxCenter"] = stBs;
+//
+//	pFrame = D3DXFrameFind(m_pRootFrame, "FxTop");
+//	matTM = pFrame->TransformationMatrix;
+//	vLocalCenter = D3DXVECTOR3(0, 0, 0);
+//	D3DXVec3TransformCoord(&vLocalCenter, &vLocalCenter, &matTM);
+//
+//	stBs.m_vCenter = vLocalCenter;
+//	stBs.m_fRadius = 10.f; //HACK: 이 값(반지름)을 정하는 규칙이 있어야 한다. : 민우
+//	mapDebugOriginSphereBody["FxTop"] = stBs;
+//
+//	pFrame = D3DXFrameFind(m_pRootFrame, "FxBottom");
+//	matTM = pFrame->TransformationMatrix;
+//	vLocalCenter = D3DXVECTOR3(0, 0, 0);
+//	D3DXVec3TransformCoord(&vLocalCenter, &vLocalCenter, &matTM);
+//
+//	stBs.m_vCenter = vLocalCenter;
+//	stBs.m_fRadius = 10.f; //HACK: 이 값(반지름)을 정하는 규칙이 있어야 한다. : 민우
+//	mapDebugOriginSphereBody["FxBottom"] = stBs;
+//
+//	mapDebugUpdateSphereBody["FxCenter"] = mapDebugOriginSphereBody["FxCenter"];
+//	mapDebugUpdateSphereBody["FxBottom"] = mapDebugOriginSphereBody["FxBottom"];
+//	mapDebugUpdateSphereBody["FxTop"] = mapDebugOriginSphereBody["FxTop"];
+//}
+//
+//void cSkinnedMeshBody::GetDebugUpdateSphereBody(
+//	IN ST_BONE* pBone,
+//	OUT std::map<std::string, ST_BOUNDING_SPHERE>& mapDebugOriginSphereBody,
+//	OUT std::map<std::string, ST_BOUNDING_SPHERE>& mapDebugUpdateSphereBody)
+//{
+//	for each(auto it in mapDebugUpdateSphereBody)
+//	{
+//		if (pBone->Name == nullptr || pBone->Name != it.first) { continue; }
+//
+//		D3DXVec3TransformCoord(
+//			&it.second.m_vCenter,
+//			&mapDebugOriginSphereBody[it.first].m_vCenter,
+//			&pBone->CombinedTransformationMatrix);
+//	}	
+//}
+//
+//void cSkinnedMeshBody::RenderDebugUpdateSphereBody(
+//	IN ST_BONE* pBone,
+//	OUT std::map<std::string, ST_BOUNDING_SPHERE>& mapDebugUpdateSphereBody)
+//{
+//	//원래 이 코드가 하는 일을 함수로 다르게 만들었다.
+//	/*if (pBone->Name != nullptr && std::string(pBone->Name) == std::string("FxCenter"))
+//	{
+//	g_pD3DDevice->SetTexture(0, nullptr);
+//	g_pD3DDevice->SetRenderState(D3DRS_LIGHTING, false);
+//	g_pD3DDevice->SetTransform(D3DTS_WORLD, &pBone->CombinedTransformationMatrix);
+//	g_pD3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
+//	g_pD3DDevice->SetTexture(0, NULL);
+//	m_pDebugSphereBody->DrawSubset(0);
+//	g_pD3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
+//	g_pD3DDevice->SetRenderState(D3DRS_LIGHTING, true);
+//	}*/
+//	for each(auto it in mapDebugUpdateSphereBody)
+//	{
+//		if (pBone->Name == nullptr || pBone->Name != it.first) { continue; }
+//
+//		g_pD3DDevice->SetTexture(0, NULL);
+//		g_pD3DDevice->SetRenderState(D3DRS_LIGHTING, false);
+//		g_pD3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
+//
+//		D3DXMATRIXA16 matW; D3DXMatrixIdentity(&matW);
+//		//메쉬의 반지름이 1이므로 크기에 맞게 스케일링해서 그린다.
+//		D3DXMatrixScaling(&matW, it.second.m_fRadius, it.second.m_fRadius, it.second.m_fRadius);
+//		matW *= pBone->CombinedTransformationMatrix;
+//		g_pD3DDevice->SetTransform(D3DTS_WORLD, &matW);
+//		m_pDebugSphereBody->DrawSubset(0);
+//		g_pD3DDevice->SetRenderState(D3DRS_LIGHTING, true);
+//		g_pD3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
+//	}
+//}

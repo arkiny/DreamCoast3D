@@ -16,25 +16,26 @@ protected:
 	
 	// 객체마다 생성
 	SYNTHESIZE(LPD3DXANIMATIONCONTROLLER, m_pAnimController, AnimController);
+	SYNTHESIZE(float, m_fAnimationBlendTime, AnimationBlendTime);
+
+	SYNTHESIZE(ST_BOUNDING_SPHERE, m_stBoundingSphere, BoundingSphere);
+	SYNTHESIZE(ST_BOUNDING_SPHERE, m_stAttacSphere, AttackSphere);
+	SYNTHESIZE(ST_BOUNDING_SPHERE, m_stUpdateAttacSphere, UpdateAttackSphere);
+	ST_BOUNDING_SPHERE			m_stUpdateBoundingSphere;
 
 	float						m_fPassedBlendTime;
 	bool						m_isAnimationBlending;
 	std::vector<cAnimationSet*>	m_vecAnimationSet;
 	int							m_nCurrentAnimation;
 	
-	SYNTHESIZE(ST_BOUNDING_SPHERE, m_stBoundingSphere, BoundingSphere);
-	SYNTHESIZE(ST_BOUNDING_SPHERE, m_stAttacSphere, AttackSphere);
-
-	SYNTHESIZE(ST_BOUNDING_SPHERE, m_stUpdateBoundingSphere, UpdateBoundingSphere);
-	SYNTHESIZE(ST_BOUNDING_SPHERE, m_stUpdateAttacSphere, UpdateAttackSphere);
-
-	SYNTHESIZE(float, m_fAnimationBlendTime, AnimationBlendTime);
 	LPD3DXMESH					m_pDebugSphereBody;
 	LPD3DXMESH					m_pDebugDetailSphereBody;
-	std::vector<ST_BOUNDING_SPHERE> m_vecDetailBoundingSphere; //FIX: 포인터나 레퍼런스여야함
+	
 	std::map<std::string, ST_BOUNDING_SPHERE> m_mapDebugOriginSphereBody;
 	std::map<std::string, ST_BOUNDING_SPHERE> m_mapDebugUpdateSphereBody;
 
+	//SYNTHESIZE(ST_BOUNDING_SPHERE, m_stUpdateBoundingSphere, UpdateBoundingSphere);
+	//std::vector<ST_BOUNDING_SPHERE> m_vecDetailBoundingSphere; //FIX: 포인터나 레퍼런스여야함
 public:
 	cSkinnedMesh(char* szFolder, char* szFilename);
 	cSkinnedMesh(std::string sFolder, std::string sFile);
@@ -46,14 +47,17 @@ public:
 	//virtual void SetAnimationIndex(int nIndex);
 	virtual void SetAnimationIndex(DWORD dwIndex);
 	virtual void SetAnimationLoop(DWORD dwIndex, bool isLoop);
+	virtual void SetRandomTrackPosition(); // 테스트용
+	
+	virtual float GetCurrentAnimationPeriodTime();
 
 	virtual ST_BOUNDING_SPHERE&	GetCollisionSphere(){
 		return m_stBoundingSphere;
 	}
-
-	virtual void SetRandomTrackPosition(); // 테스트용
-	virtual void Update(ST_BONE* pCurrent, D3DXMATRIXA16* pmatParent);
-
+	virtual ST_BOUNDING_SPHERE GetUpdateBoundingSphere(){
+		return m_stUpdateBoundingSphere;
+	}
+	std::map<std::string, ST_BOUNDING_SPHERE>& GetUpdatedDetailedSphere(){ return m_mapDebugUpdateSphereBody; };
 protected:
 	cSkinnedMesh();
 
@@ -61,11 +65,27 @@ protected:
 	virtual void Load(std::string sFolder, std::string sFile);
 
 	virtual LPD3DXEFFECT LoadEffect(char* szFilename);
+	virtual void Update(ST_BONE* pCurrent, D3DXMATRIXA16* pmatParent);
 	virtual void Render(ST_BONE* pBone = NULL);
 	virtual void SetupBoneMatrixPtrs(ST_BONE* pBone);
 	virtual void Destroy();
 
 	virtual void SetAnimationIndexBlend(DWORD dwIndex);
+
+
+	//Setup에서 한 번만 동작한다
+	void GetDebugOriginSphereBody(
+		OUT std::map<std::string, ST_BOUNDING_SPHERE>& mapDebugOriginSphereBody,
+		OUT std::map<std::string, ST_BOUNDING_SPHERE>& mapDebugUpdateSphereBody);
+	//Update내부에서 갱신한다
+	void GetDebugUpdateSphereBody(
+		IN ST_BONE* pBone,
+		OUT std::map<std::string, ST_BOUNDING_SPHERE>& mapDebugOriginSphereBody,
+		OUT std::map<std::string, ST_BOUNDING_SPHERE>& mapDebugUpdateSphereBody);
+	//Render내부에서 동작한다
+	void RenderDebugUpdateSphereBody(IN ST_BONE* pBone, OUT std::map<std::string, ST_BOUNDING_SPHERE>& mapDebugUpdateSphereBody);
+
+	
 
 public:
 	virtual void OnFinishAnimation(cAnimationSet* pSender) override;
