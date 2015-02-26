@@ -17,7 +17,7 @@
       <Filter>FrameWork\Loader</Filter>
     </ClCompile>
     <ClCompile Include="cAnimationSet.cpp">
-      <Filter>FrameWork\Object\GameObject\SkinnedMesh</Filter>
+      <Filter>EachWorks\MW\SkinnedMesh</Filter>
     </ClCompile>
     <ClCompile Include="cASEInstance.cpp">
       <Filter>FrameWork\Object\GameObject\AseObject</Filter>
@@ -155,7 +155,7 @@
       <Filter>FrameWork\Singletons</Filter>
     </ClCompile>
     <ClCompile Include="cSkinnedMesh.cpp">
-      <Filter>FrameWork\Object\GameObject\SkinnedMesh</Filter>
+      <Filter>EachWorks\MW\SkinnedMesh</Filter>
     </ClCompile>
     <ClCompile Include="cObjectManager.cpp">
       <Filter>FrameWork\Singletons</Filter>
@@ -274,7 +274,7 @@
       <Filter>FrameWork\Loader</Filter>
     </ClInclude>
     <ClInclude Include="cAnimationSet.h">
-      <Filter>FrameWork\Object\GameObject\SkinnedMesh</Filter>
+      <Filter>EachWorks\MW\SkinnedMesh</Filter>
     </ClInclude>
     <ClInclude Include="cASEInstance.h">
       <Filter>FrameWork\Object\GameObject\AseObject</Filter>
@@ -412,7 +412,7 @@
       <Filter>FrameWork\Singletons</Filter>
     </ClInclude>
     <ClInclude Include="cSkinnedMesh.h">
-      <Filter>FrameWork\Object\GameObject\SkinnedMesh</Filter>
+      <Filter>EachWorks\MW\SkinnedMesh</Filter>
     </ClInclude>
     <ClInclude Include="cObjectManager.h">
       <Filter>FrameWork\Singletons</Filter>
@@ -577,9 +577,6 @@
     <Filter Include="FrameWork\Loader">
       <UniqueIdentifier>{08263c4b-e799-48f9-a194-4a7ac7ec6847}</UniqueIdentifier>
     </Filter>
-    <Filter Include="FrameWork\Object\GameObject\SkinnedMesh">
-      <UniqueIdentifier>{37107085-85d4-4600-b522-dc2ccf4a5cd5}</UniqueIdentifier>
-    </Filter>
     <Filter Include="FrameWork\Object\GameObject\AseObject">
       <UniqueIdentifier>{fd8c4798-bc99-4415-9f86-418f73a5fef3}</UniqueIdentifier>
     </Filter>
@@ -615,6 +612,9 @@
     </Filter>
     <Filter Include="FrameWork\FX">
       <UniqueIdentifier>{4e55bb74-4fe7-46d3-94b7-d8793094f829}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="EachWorks\MW\SkinnedMesh">
+      <UniqueIdentifier>{37107085-85d4-4600-b522-dc2ccf4a5cd5}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

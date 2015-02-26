@@ -40,18 +40,20 @@ public:
 	
 	//void GetDetailCollisionBoundingSpheres(OUT std::vector<ST_BOUNDING_SPHERE>& vecSphere);
 	//void RecursivePushBoundingSphereAllBones(D3DXFRAME* pFrame, std::vector<ST_BOUNDING_SPHERE>& vecSphere);
-	
-	//Setup에서 한 번만 동작한다
-	void GetDebugOriginSphereBody(
-		OUT std::map<std::string, ST_BOUNDING_SPHERE>& mapDebugOriginSphereBody,
-		OUT std::map<std::string, ST_BOUNDING_SPHERE>& mapDebugUpdateSphereBody);
-	//Update내부에서 갱신한다
-	void GetDebugUpdateSphereBody(
-		IN ST_BONE* pBone,
-		OUT std::map<std::string, ST_BOUNDING_SPHERE>& mapDebugOriginSphereBody,
-		OUT std::map<std::string, ST_BOUNDING_SPHERE>& mapDebugUpdateSphereBody);
-	//Render내부에서 동작한다
-	void RenderDebugUpdateSphereBody(IN ST_BONE* pBone, OUT std::map<std::string, ST_BOUNDING_SPHERE>& mapDebugUpdateSphereBody);
+
+
+private:
+	////Setup에서 한 번만 동작한다
+	//void GetDebugOriginSphereBody(
+	//	OUT std::map<std::string, ST_BOUNDING_SPHERE>& mapDebugOriginSphereBody,
+	//	OUT std::map<std::string, ST_BOUNDING_SPHERE>& mapDebugUpdateSphereBody);
+	////Update내부에서 갱신한다
+	//void GetDebugUpdateSphereBody(
+	//	IN ST_BONE* pBone,
+	//	OUT std::map<std::string, ST_BOUNDING_SPHERE>& mapDebugOriginSphereBody,
+	//	OUT std::map<std::string, ST_BOUNDING_SPHERE>& mapDebugUpdateSphereBody);
+	////Render내부에서 동작한다
+	//void RenderDebugUpdateSphereBody(IN ST_BONE* pBone, OUT std::map<std::string, ST_BOUNDING_SPHERE>& mapDebugUpdateSphereBody);
 	
 };
 

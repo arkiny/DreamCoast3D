@@ -158,7 +158,25 @@ bool cGameObjManager::isGameObjectCollided(cGameObject* pFrom){
 					//p->GetCollisionSphere()->m_fRadius;
 					float fDist = D3DXVec3Length(&dist);
 					if (fIntersect > fDist){
-						return true;
+						std::map<std::string, ST_BOUNDING_SPHERE>* pMap = p->GetUpdatedDetailedSphere();
+						for (auto pSphere : *pMap){
+							D3DXVECTOR3 from = pFrom->GetCollisionSphere()->m_vCenter;
+							D3DXVECTOR3 to = pSphere.second.m_vCenter;
+							D3DXVECTOR3 dist = from - to;
+							float fFrom = pFrom->GetCollisionSphere()->m_fRadius;
+							float fTo = pSphere.second.m_fRadius;
+							float scale = pFrom->GetScale().x;
+							float scale2 = p->GetScale().x;
+							float fIntersect = fFrom*scale + fTo*scale2;
+							//pFrom->GetCollisionSphere()->m_vCenter;
+							//pFrom->GetCollisionSphere()->m_fRadius;
+							//p->GetCollisionSphere()->m_vCenter;
+							//p->GetCollisionSphere()->m_fRadius;
+							float fDist = D3DXVec3Length(&dist);
+							if (fIntersect > fDist){
+								return true;
+							}
+						}
 					}
 				}
 				else{
