@@ -162,8 +162,6 @@ std::vector<cGameObject*> cGridSystem::GetAdjObject(int nX, int nZ)
 
 				for (int i = 0; i < setGO.size(); i++)
 				{
-					setGameObject.insert(vecGO[i]);
-					
 					// vector가 비었는지 확인 비었으면 바로 넣어줌
 					if (vecGameObject.size() == 0)
 					{
@@ -176,12 +174,62 @@ std::vector<cGameObject*> cGridSystem::GetAdjObject(int nX, int nZ)
 					{
 						vecGameObject.push_back(vecGO[i]);
 					}
+					setGameObject.insert(vecGO[i]);
 
 				}
 			}
 		}
 		x = nX - 1;
 		if (nX < 1) x = nX;
+	}
+
+	return vecGameObject;
+}
+
+std::vector<cGameObject*> cGridSystem::GetAdjObjectCustomer(int nX, int nZ, int nSize)
+{
+	std::vector<cGameObject*> vecGameObject;
+	std::set<cGameObject*> setGameObject;
+
+	int x = nX - nSize;
+	int z = nZ - nSize;
+
+	if (nX < nSize) x = nX;
+	if (nZ < nSize)	z = nZ;
+
+	for (z; z < nZ + nSize; z++)
+	{
+		for (x; x < nX + nSize; x++)
+		{
+			std::set<cGameObject*> setGO;
+			setGO = m_vecTileData[x + z*m_nMapSize];
+
+			if (setGO.size() > 0)
+			{
+				std::vector<cGameObject*> vecGO;
+				vecGO = m_vecGameObject[x + z*m_nMapSize];
+
+				for (int i = 0; i < setGO.size(); i++)
+				{
+					// vector가 비었는지 확인 비었으면 바로 넣어줌
+					if (vecGameObject.size() == 0)
+					{
+						vecGameObject.push_back(vecGO[i]);
+					}
+
+					// 같은 object일 경우 pass 
+					// 같은 object가 아니면 add
+					else if (setGameObject.find(vecGO[i]) == setGameObject.end())
+					{
+						vecGameObject.push_back(vecGO[i]);
+					}
+					setGameObject.insert(vecGO[i]);
+
+				}
+			}
+		}
+		x = nX - nSize;
+		if (nX < nSize) x = nX;
 	}
 
 	return vecGameObject;

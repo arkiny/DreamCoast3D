@@ -174,7 +174,13 @@ bool cGameObjManager::isGameAttackSphereCollided(
 	cGameObject* pFrom,
 	ST_BOUNDING_SPHERE stAttackSphere)
 {
-	for (auto p : m_setGameObjects){
+	int nAttackRange = 10;
+	D3DXVECTOR3 vFrom;
+	vFrom = pFrom->GetPosition();
+	std::vector<cGameObject*> vecGameObject;
+	vecGameObject = m_pGridTileSystem->GetAdjObjectCustomer(vFrom.x, vFrom.z, nAttackRange);
+
+	for (auto p : vecGameObject){
 		if (p == pFrom){
 			continue;
 		}
@@ -197,8 +203,6 @@ bool cGameObjManager::isGameAttackSphereCollided(
 					// p->ChangeState(OnHit);
 					// int a = 0;
 					//pFrom->ChangeState(4);
-					//assert(false && "AttackSphere Collided");
-
 				}
 			}
 			else{

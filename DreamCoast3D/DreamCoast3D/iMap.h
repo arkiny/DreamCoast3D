@@ -11,5 +11,6 @@ __interface iGridTileSystem{
 	std::set<cGameObject*> GetObjectOnGrid(int nX, int nZ);
 	D3DXVECTOR3 GetTileCenterCoord(int nX, int nZ);
 	std::vector<cGameObject*> GetAdjObject(int nX, int nZ);
+	std::vector<cGameObject*> GetAdjObjectCustomer(int nX, int nZ, int nSize);
 	void RemoveObejctOnTile(cGameObject* pGameObejct, int nX, int nZ);
 };

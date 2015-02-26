@@ -32,6 +32,8 @@ protected:
 	LPD3DXMESH					m_pDebugSphereBody;
 	LPD3DXMESH					m_pDebugDetailSphereBody;
 	std::vector<ST_BOUNDING_SPHERE> m_vecDetailBoundingSphere; //FIX: 포인터나 레퍼런스여야함
+	std::map<std::string, ST_BOUNDING_SPHERE> m_mapDebugOriginSphereBody;
+	std::map<std::string, ST_BOUNDING_SPHERE> m_mapDebugUpdateSphereBody;
 
 public:
 	cSkinnedMesh(char* szFolder, char* szFilename);

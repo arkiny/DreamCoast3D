@@ -45,6 +45,7 @@ cSkinnedMeshBody::cSkinnedMeshBody(std::string sFolder, std::string sFile,
 	D3DXCreateSphere(g_pD3DDevice, m_stAttacSphere.m_fRadius, 10, 10, &m_pMesh, NULL);
 
 
+	//GetDebugOriginSphereBody(m_mapDebugOriginSphereBody);
 	//몸중심의 전체적 바운딩스피어를 구해낸 다음 그 값을 cSkinnedMesh의 바운딩스피어 멤버들에게 전달해준다 : 민우
 	GetCollisionBoundingSphere(m_stBoundingSphere.m_vCenter, m_stBoundingSphere.m_fRadius);
 	m_stUpdateBoundingSphere.m_vCenter = m_stBoundingSphere.m_vCenter;
@@ -113,8 +114,43 @@ void cSkinnedMeshBody::RenderDetailBoundingSphere(D3DXFRAME* pFrame, D3DXMATRIXA
 	g_pD3DDevice->SetRenderState(D3DRS_LIGHTING, true);
 	g_pD3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
 }
+void cSkinnedMeshBody::GetDebugOriginSphereBody(OUT std::map<std::string, ST_BOUNDING_SPHERE>& mapDebugOriginSphereBody)
+{
+	D3DXFRAME* pFrame;
+	ST_BOUNDING_SPHERE stBs;
+	pFrame = D3DXFrameFind(m_pRootFrame, "FxCenter");
+	D3DXMATRIXA16 matTM = pFrame->TransformationMatrix;
+	D3DXVECTOR3	vLocalCenter(0, 0, 0); //바운딩 스피어의 중심점을 구해낼 벡터3
+	D3DXVec3TransformCoord(&vLocalCenter, &vLocalCenter, &matTM);
 
-void cSkinnedMeshBody::Update(ST_BONE* pCurrent, D3DXMATRIXA16* pmatParent){
+	stBs.m_vCenter = vLocalCenter;
+	stBs.m_fRadius = 20.f; //HACK: 이 값(반지름)을 정하는 규칙이 있어야 한다. : 민우
+	mapDebugOriginSphereBody["FxCenter"] = stBs;
+	
+	pFrame = D3DXFrameFind(m_pRootFrame, "FxTop");
+	matTM = pFrame->TransformationMatrix;
+	vLocalCenter = D3DXVECTOR3(0, 0, 0);
+	D3DXVec3TransformCoord(&vLocalCenter, &vLocalCenter, &matTM);
+
+	stBs.m_vCenter = vLocalCenter;
+	stBs.m_fRadius = 10.f; //HACK: 이 값(반지름)을 정하는 규칙이 있어야 한다. : 민우
+	mapDebugOriginSphereBody["FxTop"] = stBs;
+
+	pFrame = D3DXFrameFind(m_pRootFrame, "FxBottom");
+	matTM = pFrame->TransformationMatrix;
+	vLocalCenter = D3DXVECTOR3(0, 0, 0);
+	D3DXVec3TransformCoord(&vLocalCenter, &vLocalCenter, &matTM);
+
+	stBs.m_vCenter = vLocalCenter;
+	stBs.m_fRadius = 10.f; //HACK: 이 값(반지름)을 정하는 규칙이 있어야 한다. : 민우
+	mapDebugOriginSphereBody["FxBottom"] = stBs;
+}
+void cSkinnedMeshBody::GetDebugUpdateSphereBody(OUT std::map<std::string, ST_BOUNDING_SPHERE>& mapDebugUpdateSphereBody)
+{
+
+}
+void cSkinnedMeshBody::Update(ST_BONE* pCurrent, D3DXMATRIXA16* pmatParent)
+{
 	pCurrent->CombinedTransformationMatrix = pCurrent->TransformationMatrix;
 	if (pmatParent)
 	{
