@@ -44,5 +44,11 @@ public:
 	// iGameObjectDelegate override
 	bool isGameObjectCollided(cGameObject* pFrom) override;
 	bool isGameAttackSphereCollided(cGameObject* pFrom, ST_BOUNDING_SPHERE stAttackSphere) override;
+
+
+
+	// Calculate by Conan
+private:
+	D3DXVECTOR3 PushingForce(D3DXVECTOR3* vFrom, D3DXVECTOR3* vTo);
 };
 

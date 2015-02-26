@@ -152,6 +152,7 @@ bool cGameObjManager::isGameObjectCollided(cGameObject* pFrom){
 					float scale = pFrom->GetScale().x;
 					float scale2 = p->GetScale().x;
 					float fIntersect = fFrom*scale + fTo*scale2;
+
 					//pFrom->GetCollisionSphere()->m_vCenter;
 					//pFrom->GetCollisionSphere()->m_fRadius;
 					//p->GetCollisionSphere()->m_vCenter;
@@ -230,4 +231,47 @@ bool cGameObjManager::isGameAttackSphereCollided(
 	}
 
 	return false;
+}
+
+D3DXVECTOR3 cGameObjManager::PushingForce(D3DXVECTOR3* vFrom, D3DXVECTOR3* vTo)
+{
+	D3DXVECTOR3 vForceFrom(0.f, 0.f, 0.f);
+	D3DXVECTOR3 vForceTo(0.f, 0.f, 0.f);
+	D3DXVECTOR3 vDist(0.f, 0.f, 0.f);
+
+	float fX = 0.f;
+	float fY = 0.f;
+	float fDist = 0.f;
+	float fAngle = 0.f;
+	float fRadius = 0.f;
+
+	vDist = vForceFrom - vForceTo;
+	fDist = D3DXVec3Length(&vDist);
+
+	// from -> to
+	fX = vFrom->x - vTo->x;
+	fY = vFrom->z - vTo->z;
+
+	fAngle = atan2(fY, fX);
+
+	vForceFrom.x = cos(fAngle);
+	vForceFrom.z = sin(fAngle);
+	D3DXVec3Normalize(&vForceFrom, &vForceFrom);
+
+	fRadius = D3DXVec3Length(&vForceFrom);
+	vForceFrom *= fRadius;
+
+	// to -> from
+	fX = vTo->x - vFrom->x;
+	fY = vTo->z - vFrom->z;
+
+	fAngle = atan2(fY, fX);
+	
+	vForceTo.x = cos(fAngle);
+	vForceTo.z = sin(fAngle);
+	D3DXVec3Normalize(&vForceTo, &vForceTo);
+
+	vForceTo *= fDist - fRadius;
+
+	return vForceFrom - vForceTo;
 }
