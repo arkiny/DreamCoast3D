@@ -239,7 +239,7 @@ bool cGameObjManager::isGameAttackSphereCollided(
 	return false;
 }
 
-D3DXVECTOR3 cGameObjManager::PushingForce(D3DXVECTOR3* vFrom, D3DXVECTOR3* vTo)
+D3DXVECTOR3 cGameObjManager::PushingForce(D3DXVECTOR3* vFrom, float fFromLength, D3DXVECTOR3* vTo, float fFromTo)
 {
 	D3DXVECTOR3 vForceFrom(0.f, 0.f, 0.f);
 	D3DXVECTOR3 vForceTo(0.f, 0.f, 0.f);
@@ -250,6 +250,8 @@ D3DXVECTOR3 cGameObjManager::PushingForce(D3DXVECTOR3* vFrom, D3DXVECTOR3* vTo)
 	float fDist = 0.f;
 	float fAngle = 0.f;
 	float fRadius = 0.f;
+
+	fRadius = fFromLength;
 
 	vDist = vForceFrom - vForceTo;
 	fDist = D3DXVec3Length(&vDist);
@@ -264,7 +266,6 @@ D3DXVECTOR3 cGameObjManager::PushingForce(D3DXVECTOR3* vFrom, D3DXVECTOR3* vTo)
 	vForceFrom.z = sin(fAngle);
 	D3DXVec3Normalize(&vForceFrom, &vForceFrom);
 
-	fRadius = D3DXVec3Length(&vForceFrom);
 	vForceFrom *= fRadius;
 
 	// to -> from
