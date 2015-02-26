@@ -249,6 +249,12 @@
       <Filter>EachWorks\HD\AI-FSM</Filter>
     </ClCompile>
     <ClCompile Include="iGameStateObject.cpp" />
+    <ClCompile Include="cAstar.cpp">
+      <Filter>EachWorks\MS</Filter>
+    </ClCompile>
+    <ClCompile Include="cAstarNode.cpp">
+      <Filter>EachWorks\MS</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cAction.h">
@@ -511,6 +517,12 @@
       <Filter>EachWorks\MS</Filter>
     </ClInclude>
     <ClInclude Include="iGameStateObject.h" />
+    <ClInclude Include="cAstar.h">
+      <Filter>EachWorks\MS</Filter>
+    </ClInclude>
+    <ClInclude Include="cAstarNode.h">
+      <Filter>EachWorks\MS</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="DreamCoast3D.ico">

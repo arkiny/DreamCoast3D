@@ -95,6 +95,8 @@
     <ClInclude Include="cAnimationSet.h" />
     <ClInclude Include="cAseLoader.h" />
     <ClInclude Include="cAseManager.h" />
+    <ClInclude Include="cAstar.h" />
+    <ClInclude Include="cAstarNode.h" />
     <ClInclude Include="cBillingExample.h" />
     <ClInclude Include="cCamera.h" />
     <ClInclude Include="cCameraEditing.h" />
@@ -184,6 +186,8 @@
     <ClCompile Include="cAnimationSet.cpp" />
     <ClCompile Include="cAseLoader.cpp" />
     <ClCompile Include="cAseManager.cpp" />
+    <ClCompile Include="cAstar.cpp" />
+    <ClCompile Include="cAstarNode.cpp" />
     <ClCompile Include="cBillingExample.cpp" />
     <ClCompile Include="cCamera.cpp" />
     <ClCompile Include="cCameraEditing.cpp" />
