@@ -7,7 +7,7 @@
 
 cGamePlayableObject::cGamePlayableObject()
 	:m_vecFront(0, 0, -1),
-	m_fMoveSpeed(30.0f),
+	m_fMoveSpeed(10.0f),
 	m_fPlayerAngleDegree(0.0f)
 {
 }
