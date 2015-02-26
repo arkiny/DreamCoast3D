@@ -151,15 +151,11 @@ bool cGameObjManager::isGameObjectCollided(cGameObject* pFrom){
 					float fTo = p->GetCollisionSphere()->m_fRadius;
 					float scale = pFrom->GetScale().x;
 					float scale2 = p->GetScale().x;
-					float fIntersect = fFrom*scale + fTo*scale2;
-					//pFrom->GetCollisionSphere()->m_vCenter;
-					//pFrom->GetCollisionSphere()->m_fRadius;
-					//p->GetCollisionSphere()->m_vCenter;
-					//p->GetCollisionSphere()->m_fRadius;
-					float fDist = D3DXVec3Length(&dist);
-					if (fIntersect > fDist){
+
+					if (isCollided(from, fFrom, scale, to, fTo, scale2)){
 						std::map<std::string, ST_BOUNDING_SPHERE>* pMap = p->GetUpdatedDetailedSphere();
 						for (auto pSphere : *pMap){
+							
 							D3DXVECTOR3 from = pFrom->GetCollisionSphere()->m_vCenter;
 							D3DXVECTOR3 to = pSphere.second.m_vCenter;
 							D3DXVECTOR3 dist = from - to;
@@ -167,13 +163,10 @@ bool cGameObjManager::isGameObjectCollided(cGameObject* pFrom){
 							float fTo = pSphere.second.m_fRadius;
 							float scale = pFrom->GetScale().x;
 							float scale2 = p->GetScale().x;
-							float fIntersect = fFrom*scale + fTo*scale2;
-							//pFrom->GetCollisionSphere()->m_vCenter;
-							//pFrom->GetCollisionSphere()->m_fRadius;
-							//p->GetCollisionSphere()->m_vCenter;
-							//p->GetCollisionSphere()->m_fRadius;
-							float fDist = D3DXVec3Length(&dist);
-							if (fIntersect > fDist){
+					
+							if (isCollided(from, fFrom, scale, to, fTo, scale2)){
+								pFrom->ForcedMoving(dist, 1.0f);
+								p->ForcedMoving(-dist, 1.0f);
 								return true;
 							}
 						}
@@ -186,6 +179,13 @@ bool cGameObjManager::isGameObjectCollided(cGameObject* pFrom){
 		}
 	}
 	return false;
+}
+
+bool cGameObjManager::isCollided(D3DXVECTOR3 vFromCenter, float fFromRad, float fFromScale, D3DXVECTOR3 vToCenter, float fCenterRad, float fToScale){
+	D3DXVECTOR3 dist = vFromCenter - vToCenter;
+	float fIntersect = fFromRad*fFromScale + fCenterRad*fToScale;
+	float fDist = D3DXVec3Length(&dist);
+	return fIntersect > fDist;
 }
 
 bool cGameObjManager::isGameAttackSphereCollided(
@@ -212,15 +212,23 @@ bool cGameObjManager::isGameAttackSphereCollided(
 				float fTo = p->GetCollisionSphere()->m_fRadius;
 				float scale = pFrom->GetScale().x;
 				float scale2 = p->GetScale().x;
-				float fIntersect = fFrom*scale + fTo*scale2;
 
-				float fDist = D3DXVec3Length(&dist);
-				if (fIntersect > fDist){
-					p->ChangeState(4);
-					// 공격 스피어와 충돌
-					// p->ChangeState(OnHit);
-					// int a = 0;
-					//pFrom->ChangeState(4);
+				if (isCollided(from, fFrom, scale, to, fTo, scale2)){
+					std::map<std::string, ST_BOUNDING_SPHERE>* pMap = p->GetUpdatedDetailedSphere();
+					for (auto pSphere : *pMap){
+
+						D3DXVECTOR3 from = pFrom->GetCollisionSphere()->m_vCenter;
+						D3DXVECTOR3 to = pSphere.second.m_vCenter;
+						D3DXVECTOR3 dist = from - to;
+						float fFrom = pFrom->GetCollisionSphere()->m_fRadius;
+						float fTo = pSphere.second.m_fRadius;
+						float scale = pFrom->GetScale().x;
+						float scale2 = p->GetScale().x;
+
+						if (isCollided(from, fFrom, scale, to, fTo, scale2)){
+							p->ChangeState(4);
+						}
+					}
 				}
 			}
 			else{
@@ -228,6 +236,5 @@ bool cGameObjManager::isGameAttackSphereCollided(
 			}
 		}
 	}
-
 	return false;
 }

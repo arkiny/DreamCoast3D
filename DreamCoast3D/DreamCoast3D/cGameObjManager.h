@@ -44,5 +44,11 @@ public:
 	// iGameObjectDelegate override
 	bool isGameObjectCollided(cGameObject* pFrom) override;
 	bool isGameAttackSphereCollided(cGameObject* pFrom, ST_BOUNDING_SPHERE stAttackSphere) override;
+
+protected:
+	bool isCollided(D3DXVECTOR3 vFromCenter,
+		float fFromRad, float fFromScale,
+		D3DXVECTOR3 vToCenter,
+		float fCenterRad, float fToScale);
 };
 

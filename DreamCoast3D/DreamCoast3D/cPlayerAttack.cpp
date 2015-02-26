@@ -18,11 +18,11 @@ void cPlayerAttack::Start(cGamePlayableObject* pPlayer){
 
 void cPlayerAttack::Execute(cGamePlayableObject* pPlayer, float fDelta){
 	pPlayer->SetStatePassedTime(pPlayer->GetStatePassedTime() + fDelta);
-	if (g_pControlManager->GetInputInfo(VK_LBUTTON)){
+	//if (g_pControlManager->GetInputInfo(VK_LBUTTON)){
 		pPlayer->GetGameObjDeligate()->isGameAttackSphereCollided(pPlayer, *pPlayer->GetAttackSphere());
-		return;
+		//return;
 		// do nothing
-	}
+	//}
 	if (pPlayer->GetSkinnedMesh()->GetCurrentAnimationPeriodTime() < pPlayer->GetStatePassedTime()){
 		pPlayer->ChangeState(pPlayer->EPLAYABLESTATE_IDLE);
 	}
