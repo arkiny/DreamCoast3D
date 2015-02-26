@@ -33,13 +33,7 @@ public:
 	
 	virtual ST_BOUNDING_SPHERE*	GetBoundingSphere();
 
-	virtual ST_BOUNDING_SPHERE*	GetCollisionSphere(){
-		return NULL;
-	}
 
-	virtual ST_BOUNDING_SPHERE* GetAttackSphere(){
-		return NULL;
-	}
 
 	virtual ST_BOUNDING_BOX*	GetBoundingBox();
 	virtual void				SetBoundingBox(ST_BOUNDING_BOX* pBoundingBox) { 
@@ -64,12 +58,13 @@ public:
 	virtual D3DXVECTOR3&		GetScale();
 
 	virtual void SetGridTileSystem(iGridTileSystem* pGrid);
-
-	//
 	virtual iGridTileSystem* GetGridTileSystem() { return m_pGridCallback; }
 
+	// Primitive Interfaces
 	virtual void ChangeState(int nState){}
-
 	virtual std::map<std::string, ST_BOUNDING_SPHERE>* GetUpdatedDetailedSphere() { return NULL; }
+	virtual ST_BOUNDING_SPHERE*	GetCollisionSphere(){ return NULL; }
+	virtual ST_BOUNDING_SPHERE* GetAttackSphere(){ return NULL;	}
+	virtual void ForcedMoving(D3DXVECTOR3 vDir, float fSpeed) {}
 };
 

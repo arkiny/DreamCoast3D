@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "cGameActionSkinnedMeshObj.h"
 #include "cSkinnedMesh.h"
+#include "cTransform.h"
 
 
 cGameActionSkinnedMeshObj::cGameActionSkinnedMeshObj()
@@ -59,6 +60,9 @@ std::map<std::string, ST_BOUNDING_SPHERE>* cGameActionSkinnedMeshObj::GetUpdated
 	return ret;
 }
 
+void cGameActionSkinnedMeshObj::ForcedMoving(D3DXVECTOR3 vDir, float fSpeed) {
+	m_pTransform->SetPosition(m_pTransform->GetPosition() + vDir*g_pTimer->DeltaTime());
+}
 
 //UINT uiNumAnim = m_pAnimControl->GetNumAnimationSets();
 //for (UINT i = 0; i < uiNumAnim; ++i)
