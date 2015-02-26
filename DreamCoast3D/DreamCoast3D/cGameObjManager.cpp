@@ -137,6 +137,7 @@ void cGameObjManager::SetPlayableGameObject(cGameObject* pPlayer){
 }
 
 bool cGameObjManager::isGameObjectCollided(cGameObject* pFrom){
+	bool ret = false;
 	if (pFrom->GetCollisionSphere()){
 		for (auto p : m_setGameObjects){
 			if (p == pFrom){
@@ -165,9 +166,9 @@ bool cGameObjManager::isGameObjectCollided(cGameObject* pFrom){
 							float scale2 = p->GetScale().x;
 					
 							if (isCollided(from, fFrom, scale, to, fTo, scale2)){
-								pFrom->ForcedMoving(dist, 1.0f);
-								p->ForcedMoving(-dist, 1.0f);
-								return true;
+								pFrom->ForcedMoving(-dist, 1.0f);
+								p->ForcedMoving(-dist, 1.5f);
+								ret = true;
 							}
 						}
 					}
@@ -178,7 +179,7 @@ bool cGameObjManager::isGameObjectCollided(cGameObject* pFrom){
 			}
 		}
 	}
-	return false;
+	return ret;
 }
 
 bool cGameObjManager::isCollided(D3DXVECTOR3 vFromCenter, float fFromRad, float fFromScale, D3DXVECTOR3 vToCenter, float fCenterRad, float fToScale){

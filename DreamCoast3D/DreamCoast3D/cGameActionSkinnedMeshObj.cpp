@@ -61,7 +61,7 @@ std::map<std::string, ST_BOUNDING_SPHERE>* cGameActionSkinnedMeshObj::GetUpdated
 }
 
 void cGameActionSkinnedMeshObj::ForcedMoving(D3DXVECTOR3 vDir, float fSpeed) {
-	m_pTransform->SetPosition(m_pTransform->GetPosition() + vDir*g_pTimer->DeltaTime());
+	m_pTransform->SetPosition(m_pTransform->GetPosition() + vDir*g_pTimer->DeltaTime()*fSpeed);
 }
 
 //UINT uiNumAnim = m_pAnimControl->GetNumAnimationSets();
