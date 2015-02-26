@@ -21,6 +21,8 @@ cCamera::cCamera(void)
     m_fFixedAngleY = 0.f;
 	m_fDirection = 0.f;
 	m_isMove = false;
+    m_isAttack = false;
+    m_fPassTime = 0.2f;
 }
 
 
@@ -73,6 +75,10 @@ void cCamera::Update(float delta)
 	{
 		m_isMove = false;
 	}
+    if (g_pControlManager->GetInputInfo(VK_CONTROL))
+    {
+        m_isAttack = true;
+    }
 
 	m_vLookAt = *m_pvTarget;
 
@@ -184,6 +190,10 @@ void cCamera::Update(float delta)
 
 	D3DXVECTOR3 dist = m_vEye - m_vLookAt;
 	float fAfterDist = D3DXVec3Length(&dist);
+    if (m_isAttack)
+    {
+        AttackCameraMoving();
+    }
 
     D3DXMATRIXA16 matView;
 	D3DXMatrixLookAtLH(&matView, &m_vEye, &m_vLookAt, &m_vUp);
@@ -196,15 +206,57 @@ void cCamera::SetTarget(D3DXVECTOR3* pvTarget)
 	m_pvTarget = pvTarget;
 }
 
-//void cCamera::AdjustYPositionByHeightMap(iMap* pMap){
-//	bool bIsLand = false;
-//	float yPos = pMap->GetHeight(bIsLand, &m_vEye);
-//	if (m_vEye.y < yPos){
-//		m_vEye.y = yPos;
-//	}
-//}
-
 void cCamera::UpdateAngle(float fAngle)
 {
 	m_fDirection = fAngle;
+}
+
+void cCamera::AttackCameraMoving()
+{
+    {
+        float fAttackTime = 0.2f;
+        float nCameraMove = 0.1f;
+        float fDist = 0.2f;
+        float fShake = 0;
+        float fPower = 0;
+        float fTimeInterval = 0.1f;
+
+        m_fPassTime -= g_pTimer->DeltaTime();
+        
+        if (m_fPassTime < 0.0f)
+        {
+            m_isAttack = false;
+            m_fPassTime = fAttackTime;
+        }
+        fShake = m_fPassTime / fTimeInterval;
+
+        if (fShake > 2)
+        {
+            m_vEye.x -= nCameraMove;
+            m_vLookAt.x -= nCameraMove;
+            m_vEye.z += nCameraMove;
+            m_vLookAt.z += nCameraMove;
+
+            m_fDist -= fDist;
+        }
+        else if (fShake > 1)
+        {
+            m_vEye.x += nCameraMove;
+            m_vLookAt.x += nCameraMove;
+            m_vEye.z -= nCameraMove;
+            m_vLookAt.z -= nCameraMove;
+
+            m_fDist += fDist;
+
+        }
+        else
+        {
+            m_vEye.x -= nCameraMove;
+            m_vLookAt.x -= nCameraMove;
+            m_vEye.z += nCameraMove;
+            m_vLookAt.z += nCameraMove;
+
+            m_fDist -= fDist;
+        }
+    }
 }
