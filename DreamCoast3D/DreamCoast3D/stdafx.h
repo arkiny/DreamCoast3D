@@ -160,6 +160,7 @@ struct ST_TILE_GRIDPOS{
 #include "iButtonDelegate.h"
 #include "iMap.h"
 #include "iGameObjectDelegate.h"
+#include "iGameStateObject.h"
 
 // 모두가 알아야 하는 클래스들
 #include "cObject.h"

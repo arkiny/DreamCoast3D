@@ -165,6 +165,7 @@
     <ClInclude Include="iAIState.h" />
     <ClInclude Include="iButtonDelegate.h" />
     <ClInclude Include="iGameObjectDelegate.h" />
+    <ClInclude Include="iGameStateObject.h" />
     <ClInclude Include="iMap.h" />
     <ClInclude Include="iPlayerState.h" />
     <ClInclude Include="iSceneDelegate.h" />
@@ -253,6 +254,7 @@
     <ClCompile Include="iAIState.cpp" />
     <ClCompile Include="iButtonDelegate.cpp" />
     <ClCompile Include="iGameObjectDelegate.cpp" />
+    <ClCompile Include="iGameStateObject.cpp" />
     <ClCompile Include="iMap.cpp" />
     <ClCompile Include="iPlayerState.cpp" />
     <ClCompile Include="iSceneDelegate.cpp" />

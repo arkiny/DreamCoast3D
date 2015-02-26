@@ -67,5 +67,8 @@ public:
 
 	//
 	virtual iGridTileSystem* GetGridTileSystem() { return m_pGridCallback; }
+
+	// override
+	virtual void ChangeState(int nState){}
 };
 

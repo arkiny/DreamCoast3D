@@ -248,6 +248,7 @@
     <ClCompile Include="cAIFSM.cpp">
       <Filter>EachWorks\HD\AI-FSM</Filter>
     </ClCompile>
+    <ClCompile Include="iGameStateObject.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cAction.h">
@@ -509,6 +510,7 @@
     <ClInclude Include="cGridSystem.h">
       <Filter>EachWorks\MS</Filter>
     </ClInclude>
+    <ClInclude Include="iGameStateObject.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="DreamCoast3D.ico">

@@ -28,6 +28,8 @@ public:
 	virtual void Update(float fDelta);
 
 	virtual void ChangeState(EAIOBJECTSTATE eState);
+	virtual void ChangeState(int nState) override;
+
 	virtual void OnActionFinish(cAction* pSender);
 };
 
