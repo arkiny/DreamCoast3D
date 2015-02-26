@@ -497,3 +497,10 @@ void cSkinnedMesh::SetRandomTrackPosition()
 {
 	m_pAnimController->SetTrackPosition(0, (rand() % 100) / 10.0f);
 }
+
+float cSkinnedMesh::GetCurrentAnimationPeriodTime(){
+	LPD3DXANIMATIONSET pSet;
+	m_pAnimController->GetTrackAnimationSet(0, &pSet);
+	float fPeriodTime = pSet->GetPeriod();
+	return fPeriodTime;
+}

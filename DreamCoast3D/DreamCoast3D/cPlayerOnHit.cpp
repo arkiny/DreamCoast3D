@@ -18,10 +18,12 @@ void cPlayerOnHit::Start(cGamePlayableObject* pPlayer){
 
 void cPlayerOnHit::Execute(cGamePlayableObject* pPlayer, float fDelta){
 	pPlayer->SetStatePassedTime(fDelta + pPlayer->GetStatePassedTime());
-	if (pPlayer->GetStatePassedTime()){
+
+	if (pPlayer->GetStatePassedTime() > pPlayer->GetSkinnedMesh()->GetCurrentAnimationPeriodTime()){
 		pPlayer->ChangeState(pPlayer->EPLAYABLESTATE_IDLE);
 		return;
 	}
+
 }
 
 void cPlayerOnHit::Exit(cGamePlayableObject* pPlayer){

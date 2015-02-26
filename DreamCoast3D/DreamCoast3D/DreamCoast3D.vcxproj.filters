@@ -232,7 +232,6 @@
     <ClCompile Include="iPlayerState.cpp">
       <Filter>EachWorks\HD\PlayerFSM</Filter>
     </ClCompile>
-    <ClCompile Include="iGameObjectDelegate.cpp" />
     <ClCompile Include="cPlayerAttack.cpp">
       <Filter>EachWorks\HD\PlayerFSM</Filter>
     </ClCompile>
@@ -248,7 +247,12 @@
     <ClCompile Include="cAIFSM.cpp">
       <Filter>EachWorks\HD\AI-FSM</Filter>
     </ClCompile>
-    <ClCompile Include="iGameStateObject.cpp" />
+    <ClCompile Include="iGameObjectDelegate.cpp">
+      <Filter>FrameWork\Interfaces</Filter>
+    </ClCompile>
+    <ClCompile Include="iGameStateObject.cpp">
+      <Filter>FrameWork\Interfaces</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cAction.h">
@@ -488,7 +492,6 @@
     <ClInclude Include="iPlayerState.h">
       <Filter>EachWorks\HD\PlayerFSM</Filter>
     </ClInclude>
-    <ClInclude Include="iGameObjectDelegate.h" />
     <ClInclude Include="cPlayerOnHit.h">
       <Filter>EachWorks\HD\PlayerFSM</Filter>
     </ClInclude>
@@ -510,7 +513,12 @@
     <ClInclude Include="cGridSystem.h">
       <Filter>EachWorks\MS</Filter>
     </ClInclude>
-    <ClInclude Include="iGameStateObject.h" />
+    <ClInclude Include="iGameStateObject.h">
+      <Filter>FrameWork\Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="iGameObjectDelegate.h">
+      <Filter>FrameWork\Interfaces</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="DreamCoast3D.ico">

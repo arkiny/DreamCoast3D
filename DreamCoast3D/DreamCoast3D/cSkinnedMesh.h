@@ -53,6 +53,7 @@ public:
 
 	virtual void SetRandomTrackPosition(); // 테스트용
 	virtual void Update(ST_BONE* pCurrent, D3DXMATRIXA16* pmatParent);
+	virtual float GetCurrentAnimationPeriodTime();
 
 protected:
 	cSkinnedMesh();

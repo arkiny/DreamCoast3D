@@ -13,7 +13,7 @@ void cAIIdle::Execute(cGameAIObject* pAIObject, float fDelta){
 	pAIObject->SetPassedTime(pAIObject->GetPassedTime() + fDelta);
 	// Idle 1초마다 나는 생각한다.
 	if (pAIObject->GetPassedTime() >= 1.0f){
-		//pAIObject->ChangeState(pAIObject->eAISTATE_THINK);
+		pAIObject->ChangeState(pAIObject->eAISTATE_THINK);
 	}
 }
 
