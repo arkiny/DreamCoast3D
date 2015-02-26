@@ -25,8 +25,11 @@ protected:
 	SYNTHESIZE(ST_BOUNDING_SPHERE, m_stBoundingSphere, BoundingSphere);
 	SYNTHESIZE(ST_BOUNDING_SPHERE, m_stAttacSphere, AttackSphere);
 
-	SYNTHESIZE(ST_BOUNDING_SPHERE, m_stUpdateBoundingSphere, UpdateBoundingSphere);
+	//SYNTHESIZE(ST_BOUNDING_SPHERE, m_stUpdateBoundingSphere, UpdateBoundingSphere);
+	ST_BOUNDING_SPHERE m_stUpdateBoundingSphere;
+	
 	SYNTHESIZE(ST_BOUNDING_SPHERE, m_stUpdateAttacSphere, UpdateAttackSphere);
+
 
 	SYNTHESIZE(float, m_fAnimationBlendTime, AnimationBlendTime);
 	LPD3DXMESH					m_pDebugSphereBody;
@@ -54,7 +57,7 @@ public:
 	virtual void SetRandomTrackPosition(); // 테스트용
 	virtual void Update(ST_BONE* pCurrent, D3DXMATRIXA16* pmatParent);
 	virtual float GetCurrentAnimationPeriodTime();
-
+	
 protected:
 	cSkinnedMesh();
 
