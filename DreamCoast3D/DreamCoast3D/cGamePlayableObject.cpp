@@ -44,6 +44,7 @@ void cGamePlayableObject::Update(float fDelta){
 void cGamePlayableObject::ChangeState(EPLAYABLESTATE eNewState){
 	m_pCurrentState->Exit(this);
 	m_pCurrentState = m_vecStates[eNewState];
+	m_fStatePassedTime = 0.0f;
 	m_pCurrentState->Start(this);
 }
 

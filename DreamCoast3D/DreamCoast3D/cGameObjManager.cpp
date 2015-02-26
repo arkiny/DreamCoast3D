@@ -171,10 +171,16 @@ bool cGameObjManager::isGameObjectCollided(cGameObject* pFrom){
 }
 
 bool cGameObjManager::isGameAttackSphereCollided(
-	cGameActionSkinnedMeshObj* pFrom,
+	cGameObject* pFrom,
 	ST_BOUNDING_SPHERE stAttackSphere)
 {
-	for (auto p : m_setGameObjects){
+	int nAttackRange = 10;
+	D3DXVECTOR3 vFrom;
+	vFrom = pFrom->GetPosition();
+	std::vector<cGameObject*> vecGameObject;
+	vecGameObject = m_pGridTileSystem->GetAdjObjectCustomer(vFrom.x, vFrom.z, nAttackRange);
+
+	for (auto p : vecGameObject){
 		if (p == pFrom){
 			continue;
 		}
@@ -192,12 +198,11 @@ bool cGameObjManager::isGameAttackSphereCollided(
 
 				float fDist = D3DXVec3Length(&dist);
 				if (fIntersect > fDist){
+					p->ChangeState(4);
 					// 공격 스피어와 충돌
 					// p->ChangeState(OnHit);
-					int a = 0;
+					// int a = 0;
 					//pFrom->ChangeState(4);
-
-					//assert(false && "AttackSphere Collided");
 				}
 			}
 			else{

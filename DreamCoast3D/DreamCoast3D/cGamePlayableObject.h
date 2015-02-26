@@ -58,6 +58,7 @@ protected:
 	SYNTHESIZE(D3DXVECTOR3, m_vecFront, Front);
 	SYNTHESIZE(float, m_fMoveSpeed, MoveSpeed);
 	SYNTHESIZE(float, m_fPlayerAngleDegree, PlayerAngle);
+	SYNTHESIZE(float, m_fStatePassedTime, StatePassedTime);
 	
 	std::vector<iPlayerState*>	m_vecStates;
 	iPlayerState*				m_pCurrentState;
@@ -74,8 +75,10 @@ public:
 
 	virtual void Update(float fDelta);
 
-	virtual void ChangeState(EPLAYABLESTATE eNewState);
 	virtual void ChangeState(int nState) override;
+	virtual void ChangeState(EPLAYABLESTATE eNewState);
+
+
 
 
 	//:¹Î¿ì

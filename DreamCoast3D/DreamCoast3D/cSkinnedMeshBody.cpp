@@ -47,10 +47,12 @@ cSkinnedMeshBody::cSkinnedMeshBody(std::string sFolder, std::string sFile,
 
 	GetDebugOriginSphereBody(m_mapDebugOriginSphereBody, m_mapDebugUpdateSphereBody);
 	//몸중심의 전체적 바운딩스피어를 구해낸 다음 그 값을 cSkinnedMesh의 바운딩스피어 멤버들에게 전달해준다 : 민우
+
 	//GetCollisionBoundingSphere(m_stBoundingSphere.m_vCenter, m_stBoundingSphere.m_fRadius);
 	//m_stUpdateBoundingSphere.m_vCenter = m_stBoundingSphere.m_vCenter;
 	//m_stUpdateBoundingSphere.m_fRadius = m_stBoundingSphere.m_fRadius;
 	D3DXCreateSphere(g_pD3DDevice, 1, 10, 10, &m_pDebugSphereBody, NULL);//반지름을 1로 해두고 확장해서 렌더 : 민우
+	SAFE_RELEASE(m_pDebugSphereBody);
 	//GetDetailCollisionBoundingSpheres(m_vecDetailBoundingSphere);	//TODO: 여기서 구해진 것을 토대로 Update에서 위치를 지속적으로 갱신해야 한다. :민우
 	//D3DXCreateSphere(g_pD3DDevice, 2.5f, 5, 5, &m_pDebugDetailSphereBody, NULL);//세부적인 부분을 보여줄 작은 바운딩스피어
 }

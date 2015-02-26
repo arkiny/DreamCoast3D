@@ -6,13 +6,14 @@
 #include "cActionMove.h"
 
 void cAIIdle::Start(cGameAIObject* pAIObject){
+	pAIObject->GetSkinnedMesh()->SetAnimationIndex(pAIObject->eAISTATE_IDLE);
 }
 
 void cAIIdle::Execute(cGameAIObject* pAIObject, float fDelta){
 	pAIObject->SetPassedTime(pAIObject->GetPassedTime() + fDelta);
 	// Idle 1초마다 나는 생각한다.
 	if (pAIObject->GetPassedTime() >= 1.0f){
-		pAIObject->ChangeState(pAIObject->eAISTATE_THINK);
+		//pAIObject->ChangeState(pAIObject->eAISTATE_THINK);
 	}
 }
 
@@ -100,10 +101,13 @@ int  cAIAttack::GetCurrentStateType(){
 }
 
 void cAIOnHit::Start(cGameAIObject* pAIObject){
-	pAIObject->GetSkinnedMesh()->SetAnimationIndex(pAIObject->eAISTATE_ONHIT);
+	pAIObject->GetSkinnedMesh()->SetAnimationIndex(1);
 }
 void cAIOnHit::Execute(cGameAIObject* pAIObject, float fDelta){
-
+	if (pAIObject->GetPassedTime() > 1.0f){
+		pAIObject->ChangeState(pAIObject->eAISTATE_IDLE);
+		return;
+	}
 }
 void cAIOnHit::Exit(cGameAIObject* pAIObject){
 	pAIObject->SetPassedTime(0);

@@ -39,6 +39,9 @@ public:
 	D3DXVECTOR3 GetTileCenterCoord(int nX, int nZ);
 	// Grid 좌표 입력시 8방향의 Object들이 vector 형태로 리턴
 	std::vector<cGameObject*> GetAdjObject(int nX, int nZ);
+	// Grid 좌표 입력시 입력 좌표 중심으로 Size x Size Object들이 vector 형태로 리턴
+	std::vector<cGameObject*> GetAdjObjectCustomer(int nX, int nZ, int nSize);
+
 	// 해당 Grid 위에 Object가 있을시 Object를 삭제함
 	void RemoveObejctOnTile(cGameObject* pGameObejct, int nX, int nZ);
 

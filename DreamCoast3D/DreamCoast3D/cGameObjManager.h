@@ -43,6 +43,6 @@ public:
 
 	// iGameObjectDelegate override
 	bool isGameObjectCollided(cGameObject* pFrom) override;
-	bool isGameAttackSphereCollided(cGameActionSkinnedMeshObj* pFrom, ST_BOUNDING_SPHERE stAttackSphere) override;
+	bool isGameAttackSphereCollided(cGameObject* pFrom, ST_BOUNDING_SPHERE stAttackSphere) override;
 };
 

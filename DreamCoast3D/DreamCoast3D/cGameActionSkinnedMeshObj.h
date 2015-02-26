@@ -17,6 +17,5 @@ public:
 
 	virtual ST_BOUNDING_SPHERE* GetCollisionSphere() override;
 	virtual ST_BOUNDING_SPHERE* GetAttackSphere() override;
-	virtual void ChangeState(int eState) {}
 };
 

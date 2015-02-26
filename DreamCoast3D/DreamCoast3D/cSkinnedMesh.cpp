@@ -62,20 +62,22 @@ cSkinnedMesh::cSkinnedMesh(std::string sFolder, std::string sFile)
 		pAnimSet->SetIndex(m_vecAnimationSet.size());
 		m_vecAnimationSet.push_back(pAnimSet);
 	}
+
 	//중복이라 잠깐 닫아둔다 : 민우
 	//// 몸 중앙
-	//D3DXFRAME* pDummyRoot;
-	//pDummyRoot = D3DXFrameFind(m_pRootFrame, "FxCenter");
-	//if (pDummyRoot){
-	//	D3DXMATRIXA16 mat = pDummyRoot->TransformationMatrix;
-	//	D3DXVECTOR3 localCenter(0, 0, 0);
-	//	D3DXVec3TransformCoord(&localCenter, &localCenter, &mat);
-	//	m_stBoundingSphere.m_vCenter = localCenter;
-	//	m_stBoundingSphere.m_fRadius = 15.0f;
-	//	m_stUpdateBoundingSphere.m_vCenter = m_stBoundingSphere.m_vCenter;
-	//	m_stUpdateBoundingSphere.m_fRadius = m_stBoundingSphere.m_fRadius;
-	//	D3DXCreateSphere(g_pD3DDevice, m_stBoundingSphere.m_fRadius, 10, 10, &m_pDebugSphereBody, NULL);
-	//}
+	D3DXFRAME* pDummyRoot;
+	pDummyRoot = D3DXFrameFind(m_pRootFrame, "FxCenter");
+	if (pDummyRoot){
+		D3DXMATRIXA16 mat = pDummyRoot->TransformationMatrix;
+		D3DXVECTOR3 localCenter(0, 0, 0);
+		D3DXVec3TransformCoord(&localCenter, &localCenter, &mat);
+		m_stBoundingSphere.m_vCenter = localCenter;
+		m_stBoundingSphere.m_fRadius = 30.0f;
+		m_stUpdateBoundingSphere.m_vCenter = m_stBoundingSphere.m_vCenter;
+		m_stUpdateBoundingSphere.m_fRadius = m_stBoundingSphere.m_fRadius;
+		SAFE_RELEASE(m_pDebugSphereBody);
+		D3DXCreateSphere(g_pD3DDevice, m_stBoundingSphere.m_fRadius, 10, 10, &m_pDebugSphereBody, NULL);
+	}
 }
 
 cSkinnedMesh::cSkinnedMesh()
@@ -192,11 +194,13 @@ void cSkinnedMesh::Render(ST_BONE* pBone /*= NULL*/)
 
 	if (pBone->Name != nullptr && std::string(pBone->Name) == std::string("FxCenter"))
 	{
-		g_pD3DDevice->SetTransform(D3DTS_WORLD, &pBone->TransformationMatrix);
-		g_pD3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
-		g_pD3DDevice->SetTexture(0, NULL);
-		m_pDebugSphereBody->DrawSubset(0);
-		g_pD3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
+		//if (m_pDebugSphereBody){
+		g_pD3DDevice->SetTransform(D3DTS_WORLD, &pBone->CombinedTransformationMatrix);
+			g_pD3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
+			g_pD3DDevice->SetTexture(0, NULL);
+			m_pDebugSphereBody->DrawSubset(0);
+			g_pD3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
+		//}
 	}
 
 	// 각 프레임의 메시 컨테이너에 있는 pSkinInfo를 이용하여 영향받는 모든 

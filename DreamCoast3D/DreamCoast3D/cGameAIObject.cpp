@@ -33,6 +33,7 @@ void cGameAIObject::Setup(std::string sFolder, std::string sFile){
 
 void cGameAIObject::Update(float fDelta){
 	cGameActionSkinnedMeshObj::Update(fDelta);
+	m_fPassedTime += fDelta;
 	m_pCurrentState->Execute(this, fDelta);
 }
 
@@ -42,6 +43,10 @@ void cGameAIObject::ChangeState(EAIOBJECTSTATE eState){
 		m_pCurrentState = m_vecPatterns[eState];
 	}
 	m_pCurrentState->Start(this);
+}
+
+void cGameAIObject::ChangeState(int nState){
+	this->ChangeState((EAIOBJECTSTATE)nState);
 }
 
 void cGameAIObject::OnActionFinish(cAction* pSender){
