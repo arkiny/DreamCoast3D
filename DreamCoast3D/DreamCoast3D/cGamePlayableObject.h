@@ -75,6 +75,8 @@ public:
 	virtual void Update(float fDelta);
 
 	virtual void ChangeState(EPLAYABLESTATE eNewState);
+	virtual void ChangeState(int nState) override;
+
 
 	//:¹Î¿ì
 	//void cGamePlayableObject::CalcCollisionSphere(ST_BONE_MESH* pBoneMesh);

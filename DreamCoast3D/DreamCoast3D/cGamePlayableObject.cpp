@@ -46,3 +46,7 @@ void cGamePlayableObject::ChangeState(EPLAYABLESTATE eNewState){
 	m_pCurrentState = m_vecStates[eNewState];
 	m_pCurrentState->Start(this);
 }
+
+void cGamePlayableObject::ChangeState(int nState){
+	this->ChangeState((EPLAYABLESTATE)nState);
+}

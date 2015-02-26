@@ -3,6 +3,7 @@
 #include "cFrustum.h"
 #include "cTransform.h"
 #include "cGameMapObject.h"
+#include "cGameActionSkinnedMeshObj.h"
 
 cGameObjManager::cGameObjManager()
 	:m_pFrustum(NULL)
@@ -50,6 +51,8 @@ void cGameObjManager::Render(){
 }
 
 void cGameObjManager::SetCurrentTileSystem(iGridTileSystem* pGridSystem){
+	m_pGridTileSystem = pGridSystem;
+
 	for (auto p : m_setStaticGameObjects){
 		p->SetGridTileSystem(pGridSystem);
 	}
@@ -168,7 +171,7 @@ bool cGameObjManager::isGameObjectCollided(cGameObject* pFrom){
 }
 
 bool cGameObjManager::isGameAttackSphereCollided(
-	cGameObject* pFrom, 
+	cGameActionSkinnedMeshObj* pFrom,
 	ST_BOUNDING_SPHERE stAttackSphere)
 {
 	for (auto p : m_setGameObjects){
@@ -191,7 +194,10 @@ bool cGameObjManager::isGameAttackSphereCollided(
 				if (fIntersect > fDist){
 					// 공격 스피어와 충돌
 					// p->ChangeState(OnHit);
-					assert(false && "AttackSphere Collided");
+					int a = 0;
+					//pFrom->ChangeState(4);
+
+					//assert(false && "AttackSphere Collided");
 				}
 			}
 			else{

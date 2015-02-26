@@ -11,6 +11,8 @@ private:
 	cFrustum*						m_pFrustum;
 
 	cGameObject*					m_pPlayable;
+	iGridTileSystem*				m_pGridTileSystem;
+	
 
 	// HACK : Playable과 몬스터와 사물을 나눠놓을까?
 	std::set<cGameObject*>			m_setGameObjects;
@@ -41,6 +43,6 @@ public:
 
 	// iGameObjectDelegate override
 	bool isGameObjectCollided(cGameObject* pFrom) override;
-	bool isGameAttackSphereCollided(cGameObject* pFrom, ST_BOUNDING_SPHERE stAttackSphere) override;
+	bool isGameAttackSphereCollided(cGameActionSkinnedMeshObj* pFrom, ST_BOUNDING_SPHERE stAttackSphere) override;
 };
 
