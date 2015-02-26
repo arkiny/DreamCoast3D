@@ -53,6 +53,6 @@ protected:
 
 	// Calculate by Conan
 private:
-	D3DXVECTOR3 PushingForce(D3DXVECTOR3* vFrom, D3DXVECTOR3* vTo);
+	D3DXVECTOR3 PushingForce(D3DXVECTOR3* vFrom, float fFromLength, D3DXVECTOR3* vTo, float fFromTo);
 };
 
