@@ -178,7 +178,7 @@ void cCamera::Update(float delta)
 	{
 		m_vEye += (*m_pvTarget);
 		m_vLookAt = (*m_pvTarget);
-		m_vLookAt.y += 2.0f;
+		m_vLookAt.y += 1.0f;
 	}
 
 	bool isLand;
@@ -230,16 +230,7 @@ void cCamera::AttackCameraMoving()
         }
         fShake = m_fPassTime / fTimeInterval;
 
-        if (fShake > 2)
-        {
-            m_vEye.x -= nCameraMove;
-            m_vLookAt.x -= nCameraMove;
-            m_vEye.z += nCameraMove;
-            m_vLookAt.z += nCameraMove;
-
-            m_fDist -= fDist;
-        }
-        else if (fShake > 1)
+        if (fShake > 1)
         {
             m_vEye.x += nCameraMove;
             m_vLookAt.x += nCameraMove;
