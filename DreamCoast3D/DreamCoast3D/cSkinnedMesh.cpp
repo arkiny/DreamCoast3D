@@ -233,17 +233,18 @@ void cSkinnedMesh::Render(ST_BONE* pBone /*= NULL*/)
 {
 	assert(pBone);
 
-	if (pBone->Name != nullptr && std::string(pBone->Name) == std::string("FxCenter"))
-	{
-		//if (m_pDebugSphereBody){
-		g_pD3DDevice->SetTransform(D3DTS_WORLD, &pBone->CombinedTransformationMatrix);
+	if (GetAsyncKeyState(VK_TAB)){
+		if (pBone->Name != nullptr && std::string(pBone->Name) == std::string("FxCenter"))
+		{
+			//if (m_pDebugSphereBody){
+			g_pD3DDevice->SetTransform(D3DTS_WORLD, &pBone->CombinedTransformationMatrix);
 			g_pD3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
 			g_pD3DDevice->SetTexture(0, NULL);
 			m_pDebugSphereBody->DrawSubset(0);
 			g_pD3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
-		//}
+			//}
+		}
 	}
-
 	// 각 프레임의 메시 컨테이너에 있는 pSkinInfo를 이용하여 영향받는 모든 
 	// 프레임의 매트릭스를 ppBoneMatrixPtrs에 연결한다.
 	if (pBone->pMeshContainer)

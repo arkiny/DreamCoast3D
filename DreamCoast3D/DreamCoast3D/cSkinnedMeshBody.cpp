@@ -186,14 +186,16 @@ void cSkinnedMeshBody::Render(ST_BONE* pBone /*= NULL*/)
 {
 	assert(pBone);
 	//FxTop, FxCenter, FxBottom의 바운딩스피어를 그린다 : 민우
-	RenderDebugUpdateSphereBody(pBone, m_mapDebugUpdateSphereBody);
 
-	if (pBone->Name != nullptr && std::string(pBone->Name) == std::string("FxHand01"))
-	{
-		g_pD3DDevice->SetTransform(D3DTS_WORLD, &pBone->CombinedTransformationMatrix);
-		g_pD3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
-		m_pMesh->DrawSubset(0);
-		g_pD3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
+	if (GetAsyncKeyState(VK_TAB)){
+		RenderDebugUpdateSphereBody(pBone, m_mapDebugUpdateSphereBody);
+		if (pBone->Name != nullptr && std::string(pBone->Name) == std::string("FxHand01"))
+		{
+			g_pD3DDevice->SetTransform(D3DTS_WORLD, &pBone->CombinedTransformationMatrix);
+			g_pD3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
+			m_pMesh->DrawSubset(0);
+			g_pD3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
+		}
 	}
 
 	// 각 프레임의 메시 컨테이너에 있는 pSkinInfo를 이용하여 영향받는 모든 
