@@ -244,6 +244,8 @@ void cSkinnedMesh::Render(ST_BONE* pBone /*= NULL*/)
 			g_pD3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
 			//}
 		}
+
+		RenderDebugUpdateSphereBody(pBone, m_mapDebugUpdateSphereBody);
 	}
 	// 각 프레임의 메시 컨테이너에 있는 pSkinInfo를 이용하여 영향받는 모든 
 	// 프레임의 매트릭스를 ppBoneMatrixPtrs에 연결한다.
@@ -538,7 +540,7 @@ void cSkinnedMesh::GetDebugOriginSphereBody(
 		D3DXVec3TransformCoord(&vLocalCenter, &vLocalCenter, &matTM);
 
 		stBs.m_vCenter = vLocalCenter;
-		stBs.m_fRadius = 15.f; //HACK: 이 값(반지름)을 정하는 규칙이 있어야 한다. : 민우
+		stBs.m_fRadius = 8.f; //HACK: 이 값(반지름)을 정하는 규칙이 있어야 한다. : 민우
 		mapDebugOriginSphereBody["FxCenter"] = stBs;
 		pFrame = NULL;
 	}
@@ -551,7 +553,7 @@ void cSkinnedMesh::GetDebugOriginSphereBody(
 		D3DXVec3TransformCoord(&vLocalCenter, &vLocalCenter, &matTM);
 
 		stBs.m_vCenter = vLocalCenter;
-		stBs.m_fRadius = 10.f; //HACK: 이 값(반지름)을 정하는 규칙이 있어야 한다. : 민우
+		stBs.m_fRadius = 8.f; //HACK: 이 값(반지름)을 정하는 규칙이 있어야 한다. : 민우
 		mapDebugOriginSphereBody["FxTop"] = stBs;
 		pFrame = NULL;
 	}
@@ -563,7 +565,7 @@ void cSkinnedMesh::GetDebugOriginSphereBody(
 		D3DXVec3TransformCoord(&vLocalCenter, &vLocalCenter, &matTM);
 
 		stBs.m_vCenter = vLocalCenter;
-		stBs.m_fRadius = 10.f; //HACK: 이 값(반지름)을 정하는 규칙이 있어야 한다. : 민우
+		stBs.m_fRadius = 8.f; //HACK: 이 값(반지름)을 정하는 규칙이 있어야 한다. : 민우
 		mapDebugOriginSphereBody["FxBottom"] = stBs;
 	}
 

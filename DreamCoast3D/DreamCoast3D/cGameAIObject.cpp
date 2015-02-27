@@ -9,6 +9,7 @@ cGameAIObject::cGameAIObject()
 	m_fPassedTime(0),
 	m_pTargetGameObject(NULL)
 {
+	m_fMoveSpeed = 30.0f;
 }
 
 

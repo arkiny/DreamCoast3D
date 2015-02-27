@@ -22,7 +22,9 @@ void cGameActionSkinnedMeshObj::Setup(std::string sFolder, std::string sFile){
 
 void cGameActionSkinnedMeshObj::Update(float fDelta){
 	cGameActionObject::Update(fDelta);
-	
+	if (m_pGameObjDeligate){
+		m_pGameObjDeligate->isGameObjectCollided(this);
+	}	
 }
 
 void cGameActionSkinnedMeshObj::Render(){

@@ -121,12 +121,25 @@ void cGameMapHeight::LoadFromFiles(char* szFilename, char* szTextureFilename){
 }
 	
 void cGameMapHeight::Render(){
-	D3DXMATRIXA16 matWorld;
-	D3DXMatrixIdentity(&matWorld);
-	g_pD3DDevice->SetTransform(D3DTS_WORLD, &matWorld);
-	g_pD3DDevice->SetMaterial(&m_stMtl);
-	g_pD3DDevice->SetTexture(0, m_pTexture);
-	m_pMesh->DrawSubset(0);
+	if (GetAsyncKeyState(VK_TAB)){
+		g_pD3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
+		D3DXMATRIXA16 matWorld;
+		D3DXMatrixIdentity(&matWorld);
+		g_pD3DDevice->SetTransform(D3DTS_WORLD, &matWorld);
+		g_pD3DDevice->SetMaterial(&m_stMtl);
+		g_pD3DDevice->SetTexture(0, m_pTexture);
+		m_pMesh->DrawSubset(0);
+		g_pD3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
+
+	}
+	else{
+		D3DXMATRIXA16 matWorld;
+		D3DXMatrixIdentity(&matWorld);
+		g_pD3DDevice->SetTransform(D3DTS_WORLD, &matWorld);
+		g_pD3DDevice->SetMaterial(&m_stMtl);
+		g_pD3DDevice->SetTexture(0, m_pTexture);
+		m_pMesh->DrawSubset(0);
+	}
 }
 
 float cGameMapHeight::GetHeight(OUT bool& isLand, IN D3DXVECTOR3* pvPosition){

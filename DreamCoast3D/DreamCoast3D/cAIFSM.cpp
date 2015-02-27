@@ -36,6 +36,7 @@ void cAIMove::Start(cGameAIObject* pAIObject){
 	pAIObject->SetPassedTime(0);
 }
 void cAIMove::Execute(cGameAIObject* pAIObject, float fDelta){
+	pAIObject->GetGameObjDeligate()->isGameObjectCollided(pAIObject);
 	if (pAIObject->GetPassedTime() >= 1.0f){
 		pAIObject->ChangeState(pAIObject->eAISTATE_THINK);
 	}
@@ -89,6 +90,7 @@ void cAIRandomMove::Start(cGameAIObject* pAIObject){
 }
 
 void cAIRandomMove::Execute(cGameAIObject* pAIObject, float fDelta){
+	pAIObject->GetGameObjDeligate()->isGameObjectCollided(pAIObject);
 	if (pAIObject->GetPassedTime() >= 1.0f){
 		pAIObject->ChangeState(pAIObject->eAISTATE_THINK);
 	}
@@ -177,17 +179,17 @@ void cAIThink::Start(cGameAIObject* pAIObject){
 }
 
 void cAIThink::Execute(cGameAIObject* pAIObject, float fDelta){
-	// 일단은 생각은 하는데, 랜덤 이동을 무조건 실시한다.
-	if (pAIObject->GetTargetObject()){
+	// 생각...
+	if (pAIObject->GetTargetObject()){ // 타겟이 있을경우 타겟 갱신
 		pAIObject->ChangeState(pAIObject->eAISTATE_MOVETOTARGET);
 		return;
 	}
 	else if (pAIObject->GetPrevState()->GetCurrentStateType() == pAIObject->eAISTATE_IDLE 
-		&& pAIObject->GetTargetObject()!=NULL){
+		&& pAIObject->GetTargetObject()!=NULL){ // 타겟이 없으면 그냥 아이들...
 		pAIObject->ChangeState(pAIObject->eAISTATE_IDLE);
 		return;
 	}
-	else {
+	else { // 그것도 아니면 예전 활동을 계속
 		pAIObject->ChangeToPrevState();
 		return;
 	}

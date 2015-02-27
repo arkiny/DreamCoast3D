@@ -108,14 +108,14 @@ void cScene::Setup(std::string sFilePath){
 	cGameAIObject* pGameAIObject = new cGameAIObject;
 	pGameAIObject->Setup(std::string("../Resources/Char/Tera/"), std::string("Monster_SnowmanRed.X"));
 	pGameAIObject->SetPosition(D3DXVECTOR3(140.0f, 0.0f, 140.0f));
-	pGameAIObject->SetScale(D3DXVECTOR3(0.06f, 0.06f, 0.06f));
+	pGameAIObject->SetScale(D3DXVECTOR3(0.03f, 0.03f, 0.03f));
 	m_pGameObjManager->AddGameObj(pGameAIObject);
 	SAFE_RELEASE(pGameAIObject);
 
 	pGameAIObject = new cGameAIObject;
 	pGameAIObject->Setup(std::string("../Resources/Char/Tera/"), std::string("Monster_SnowmanRed.X"));
 	pGameAIObject->SetPosition(D3DXVECTOR3(110.0f, 0.0f, 110.0f));
-	pGameAIObject->SetScale(D3DXVECTOR3(0.06f, 0.06f, 0.06f));
+	pGameAIObject->SetScale(D3DXVECTOR3(0.03f, 0.03f, 0.03f));
 	m_pGameObjManager->AddGameObj(pGameAIObject);
 	//pGameAIObject->SetTargetObject(m_pGameObjManager->GetPlayerableGameObject());
 	SAFE_RELEASE(pGameAIObject);
