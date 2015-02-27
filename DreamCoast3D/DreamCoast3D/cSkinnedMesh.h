@@ -8,6 +8,7 @@ enum EANIMBLENDTYPE
 	EANIMBLENDTYPE_CONTINUE_WEIGHT,
 	EANIMBLENDTYPE_FREEZE_POSITION
 };
+#define ANIM_BLEND_TIME 1.01f
 class cSkinnedMesh : public cObject, public iAnimationSetDelegate
 {
 	friend class cSkinnedMeshManager;
@@ -33,7 +34,8 @@ protected:
 	std::vector<cAnimationSet*>	m_vecAnimationSet;
 	int							m_nCurrentAnimation;
 
-	double						m_dAnimFreezePosition;	//애니메이션 블렌딩때 이전 트랙에서 멈춰있을 애니메이션 진행 위치
+	EANIMBLENDTYPE				m_eAnimBlendType;		//애니메이션 블렌딩 방식. 애니메이션 바꿀 때 대입된 인수로 결정된다. : 민우
+	double						m_dAnimFreezePosition;	//애니메이션 블렌딩때 이전 트랙에서 멈춰있을 애니메이션 진행 위치 : 민우
 	
 	LPD3DXMESH					m_pDebugSphereBody;
 	LPD3DXMESH					m_pDebugDetailSphereBody;

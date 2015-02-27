@@ -9,7 +9,7 @@ cSkinnedMesh::cSkinnedMesh(char* szFolder, char* szFilename)
 	, m_dwWorkingPaletteSize(0)
 	, m_pmWorkingPalette(NULL)
 	, m_pEffect(NULL)
-	, m_fAnimationBlendTime(0.3f)
+	, m_fAnimationBlendTime(ANIM_BLEND_TIME)
 	, m_fPassedBlendTime(0.0f)
 	, m_isAnimationBlending(false)
 	, m_nCurrentAnimation(0)
@@ -26,7 +26,7 @@ cSkinnedMesh::cSkinnedMesh(std::string sFolder, std::string sFile)
 	, m_dwWorkingPaletteSize(0)
 	, m_pmWorkingPalette(NULL)
 	, m_pEffect(NULL)
-	, m_fAnimationBlendTime(0.3f)
+	, m_fAnimationBlendTime(ANIM_BLEND_TIME)
 	, m_fPassedBlendTime(0.0f)
 	, m_isAnimationBlending(false)
 	, m_nCurrentAnimation(0)
@@ -96,7 +96,7 @@ cSkinnedMesh::cSkinnedMesh()
 	, m_dwWorkingPaletteSize(0)
 	, m_pmWorkingPalette(NULL)
 	, m_pEffect(NULL)
-	, m_fAnimationBlendTime(0.3f)
+	, m_fAnimationBlendTime(ANIM_BLEND_TIME)
 	, m_fPassedBlendTime(0.0f)
 	, m_isAnimationBlending(false)
 	, m_nCurrentAnimation(0)
@@ -491,6 +491,8 @@ void cSkinnedMesh::SetAnimationIndexBlend(DWORD dwIndex)
 }
 void cSkinnedMesh::SetAnimationIndexBlendEX(DWORD dwIndex, EANIMBLENDTYPE eAnimBlendType)
 {
+	m_eAnimBlendType = eAnimBlendType;
+
 	LPD3DXANIMATIONSET pPrev = NULL;
 	LPD3DXANIMATIONSET pNext = NULL;
 
@@ -525,7 +527,7 @@ void cSkinnedMesh::SetAnimationIndexBlendEX(DWORD dwIndex, EANIMBLENDTYPE eAnimB
 	m_pAnimController->SetTrackAnimationSet(0, pNext);
 	m_pAnimController->SetTrackAnimationSet(1, pPrev);
 
-	m_pAnimController->SetTrackPosition(0, 0);
+	//m_pAnimController->SetTrackPosition(0, 0);
 
 	SAFE_RELEASE(pPrev);
 	SAFE_RELEASE(pNext);
