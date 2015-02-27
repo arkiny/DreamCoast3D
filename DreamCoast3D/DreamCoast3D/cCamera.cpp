@@ -75,10 +75,10 @@ void cCamera::Update(float delta)
 	{
 		m_isMove = false;
 	}
-    if (g_pControlManager->GetInputInfo(VK_CONTROL))
-    {
-        m_isAttack = true;
-    }
+    //if (g_pControlManager->GetInputInfo(VK_CONTROL))
+    //{
+    //    m_isAttack = true;
+    //}
 
 	m_vLookAt = *m_pvTarget;
 

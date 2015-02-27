@@ -23,6 +23,13 @@ protected:
 	float			m_fMin;
 	float			m_fMax;
 
+	float m_fFixedAngleX;
+	float m_fFixedAngleY;
+	float m_fDirection;
+	bool m_isMove;
+	bool m_isAttack;
+	float m_fPassTime;
+
 public:
 	cCamera(void);
 	~cCamera(void);
@@ -49,12 +56,5 @@ public:
 	// MS
 	void UpdateAngle(float fAngle);
     virtual void AttackCameraMoving();
-
-	float m_fFixedAngleX;
-    float m_fFixedAngleY;
-	float m_fDirection;
-	bool m_isMove;
-    bool m_isAttack;
-    float m_fPassTime;
 };
 
