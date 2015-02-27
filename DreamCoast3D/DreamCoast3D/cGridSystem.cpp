@@ -81,16 +81,7 @@ void cGridSystem::AddObjectCustomer(cGameObject* pGameObejct, int nX, int nZ, in
 	{
 		for (int x = nBeginGridX; x < nBeginGridX + nHeight; x++)
 		{
-			if (m_vecTileData[x + z*m_nMapSize].find(pGameObejct)
-				== m_vecTileData[x + z*m_nMapSize].end())
-			{
-				m_vecTileData[x + z*m_nMapSize].insert(pGameObejct);
-				m_vecGameObject[x + z*m_nMapSize].push_back(pGameObejct);
-			}
-			else
-			{
-				m_vecTileData[x + z*m_nMapSize].insert(pGameObejct);
-			}
+			m_vecTileData[x + z*m_nMapSize].insert(pGameObejct);
 		}
 	}
 }
@@ -114,13 +105,9 @@ D3DXVECTOR3 cGridSystem::GetObjectCenter(int nX, int nZ)
 		std::set<cGameObject*> setGameObject;
 		setGameObject = m_vecTileData[nX + nZ*m_nMapSize];
 
-		//std::vector<cGameObject*> vecGameObject;
-		//vecGameObject = m_vecGameObject[nX + nZ*m_nMapSize];
-
 		if (setGameObject.size() > 0)
 		{
 			GameObject = *setGameObject.begin();
-			//GameObject = vecGameObject[0];
 		}
 	}
 	D3DXVECTOR3 ret = GameObject->GetPosition();
@@ -157,30 +144,19 @@ std::vector<cGameObject*> cGridSystem::GetAdjObject(int nX, int nZ)
 
 			if (setGO.size() > 0)
 			{
-				std::vector<cGameObject*> vecGO;
-				vecGO = m_vecGameObject[x + z*m_nMapSize];
-
-				for (int i = 0; i < setGO.size(); i++)
+				for (auto p : setGO)
 				{
-					// vector가 비었는지 확인 비었으면 바로 넣어줌
-					if (vecGameObject.size() == 0)
-					{
-						vecGameObject.push_back(vecGO[i]);
-					}
-
-					// 같은 object일 경우 pass 
-					// 같은 object가 아니면 add
-					else if (setGameObject.find(vecGO[i]) == setGameObject.end())
-					{
-						vecGameObject.push_back(vecGO[i]);
-					}
-					setGameObject.insert(vecGO[i]);
-
+					setGameObject.insert(p);
 				}
 			}
 		}
 		x = nX - 1;
 		if (nX < 1) x = nX;
+	}
+
+	for (auto p : setGameObject)
+	{
+		vecGameObject.push_back(p);
 	}
 
 	return vecGameObject;
@@ -204,32 +180,22 @@ std::vector<cGameObject*> cGridSystem::GetAdjObjectCustomer(int nX, int nZ, int 
 			std::set<cGameObject*> setGO;
 			setGO = m_vecTileData[x + z*m_nMapSize];
 
-			if (setGO.size() > 0)
+			if (setGO.size())
 			{
-				std::vector<cGameObject*> vecGO;
-				vecGO = m_vecGameObject[x + z*m_nMapSize];
-
-				for (int i = 0; i < setGO.size(); i++)
+				for (auto p : setGO)
 				{
-					// vector가 비었는지 확인 비었으면 바로 넣어줌
-					if (vecGameObject.size() == 0)
-					{
-						vecGameObject.push_back(vecGO[i]);
-					}
-
-					// 같은 object일 경우 pass 
-					// 같은 object가 아니면 add
-					else if (setGameObject.find(vecGO[i]) == setGameObject.end())
-					{
-						vecGameObject.push_back(vecGO[i]);
-					}
-					setGameObject.insert(vecGO[i]);
-
+					setGameObject.insert(p);
 				}
 			}
+
 		}
 		x = nX - nSize;
 		if (nX < nSize) x = nX;
+	}
+
+	for (auto p : setGameObject)
+	{
+		vecGameObject.push_back(p);
 	}
 
 	return vecGameObject;
@@ -308,23 +274,35 @@ std::vector<cGameObject*> cGridSystem::GetAdjObjectCircle(int nX, int nZ, int nR
 
 	for (int i = 0; i < vecPoint.size(); i++)
 	{
-		std::vector<cGameObject*> vecGO;
-		vecGO = GetObjectOnGridVec(vecPoint[i]->x, vecPoint[i]->y);
-		if (vecGO.size() > 0)
+		std::set<cGameObject*> setGO;
+		setGO = GetObjectOnGrid(vecPoint[i]->x, vecPoint[i]->y);
+		if (setGO.size())
 		{
-			for (int i = 0; i < vecGO.size(); i++)
+			for (auto p : setGO)
 			{
-				if (vecGameObject.size() == 0)
-				{
-					vecGameObject.push_back(vecGO[i]);
-				}
-				else if (setGameObject.find(vecGO[i]) == setGameObject.end())
-				{
-					vecGameObject.push_back(vecGO[i]);
-				}
-				setGameObject.insert(vecGO[i]);
+				setGameObject.insert(p);
 			}
 		}
+		//if (vecGO.size() > 0)
+		//{
+		//	for (int i = 0; i < vecGO.size(); i++)
+		//	{
+		//		if (vecGameObject.size() == 0)
+		//		{
+		//			vecGameObject.push_back(vecGO[i]);
+		//		}
+		//		else if (setGameObject.find(vecGO[i]) == setGameObject.end())
+		//		{
+		//			vecGameObject.push_back(vecGO[i]);
+		//		}
+		//		setGameObject.insert(vecGO[i]);
+		//	}
+		//}
+	}
+
+	for (auto p : setGameObject)
+	{
+		vecGameObject.push_back(p);
 	}
 
 	return vecGameObject;
