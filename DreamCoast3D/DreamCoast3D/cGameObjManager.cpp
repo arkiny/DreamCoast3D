@@ -166,9 +166,14 @@ bool cGameObjManager::isGameObjectCollided(cGameObject* pFrom){
 							float scale2 = p->GetScale().x;
 					
 							if (isCollided(from, fFrom, scale, to, fTo, scale2)){
-								pFrom->ForcedMoving(-dist, 1.0f);
-								p->ForcedMoving(-dist, 1.5f);
-								ret = true;
+								if (pFrom->GetState() < 1){
+									p->ForcedMoving(-dist, p->GetMoveSpeed() * .1f);
+									ret = true;
+								}
+								else {
+									pFrom->ForcedMoving(-dist, p->GetMoveSpeed() * .1f);
+									p->ForcedMoving(-dist, p->GetMoveSpeed() * .3f);
+								}
 							}
 						}
 					}

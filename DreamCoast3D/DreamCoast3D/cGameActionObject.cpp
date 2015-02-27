@@ -7,7 +7,7 @@ cGameActionObject::cGameActionObject()
 	:cGameObject(),
 	m_pAction(NULL),
 	m_vPrevPosition(0,0,0),
-	m_fMoveSpeed(1.0f)
+	m_fMoveSpeed(10.0f)
 {
 }
 
