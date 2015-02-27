@@ -81,9 +81,9 @@ void cGameAIObject::ChangeToPrevState(){
 void cGameAIObject::OnHitTarget(cGameObject* pTarget){
 	if (pTarget != m_pTargetGameObject){
 		m_pTargetGameObject = pTarget;
-		m_pPrevState = NULL;
-		this->ChangeState(eAISTATE_ONHIT);
 	}
+	m_pPrevState = NULL;
+	this->ChangeState(eAISTATE_ONHIT);
 }
 
 void cGameAIObject::AddGameObjToAggroMap(cGameObject* pGameObj){

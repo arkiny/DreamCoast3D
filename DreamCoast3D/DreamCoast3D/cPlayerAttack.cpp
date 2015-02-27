@@ -47,6 +47,28 @@ void cPlayerAttack::Execute(cGamePlayableObject* pPlayer, float fDelta){
 		pPlayer->SetFront(vDir);
 		pPlayer->SetYangle(angle);
 	}
+
+	D3DXVECTOR3 newPos;
+	if (g_pControlManager->GetInputInfo('W')){
+		D3DXVECTOR3 curPos = pPlayer->GetPosition();
+		D3DXVECTOR3 addVec = (pPlayer->GetFront()*fDelta*pPlayer->GetMoveSpeed());
+		newPos = curPos + addVec;
+		//if (/*pPlayer->GetGridTileSystem()->GetObjectOnGrid((int)curPos.x, (int)curPos.z).size() == 1
+		//	&&*/ pPlayer->GetGameObjDeligate()->isGameObjectCollided(pPlayer) == false){
+		pPlayer->SetPosition(newPos);
+		//}
+	}
+
+	if (g_pControlManager->GetInputInfo('S')){
+		D3DXVECTOR3 curPos = pPlayer->GetPosition();
+		D3DXVECTOR3 addVec = (pPlayer->GetFront()*fDelta*pPlayer->GetMoveSpeed());
+		newPos = curPos - addVec;
+		//if (/*pPlayer->GetGridTileSystem()->GetObjectOnGrid((int)curPos.x, (int)curPos.z).size() == 1
+		//	&&*/ pPlayer->GetGameObjDeligate()->isGameObjectCollided(pPlayer) == false){
+		pPlayer->SetPosition(newPos);
+		//}
+	}
+
 	if (pPlayer->GetSkinnedMesh()->GetCurrentAnimationPeriodTime() < pPlayer->GetStatePassedTime()){
 		pPlayer->ChangeState(pPlayer->EPLAYABLESTATE_IDLE);
 	}
