@@ -101,7 +101,7 @@ int  cAIAttack::GetCurrentStateType(){
 }
 
 void cAIOnHit::Start(cGameAIObject* pAIObject){
-	pAIObject->GetSkinnedMesh()->SetAnimationIndex(1);
+	pAIObject->GetSkinnedMesh()->SetAnimationIndex(3);
 }
 void cAIOnHit::Execute(cGameAIObject* pAIObject, float fDelta){
 	if (pAIObject->GetPassedTime() > 1.0f){
