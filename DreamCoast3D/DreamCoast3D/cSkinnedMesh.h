@@ -4,11 +4,12 @@
 struct ST_BONE;
 enum EANIMBLENDTYPE
 {
-	EANIMBLENDTYPE_NORMAL,
-	EANIMBLENDTYPE_CONTINUE_WEIGHT,
-	EANIMBLENDTYPE_FREEZE_POSITION
+	EANIMBLENDTYPE_NORMAL,				//보통 블렌딩
+	EANIMBLENDTYPE_CONTINUE_WEIGHT,		//밀려난 트랙의 가중치를 보존해서 계속 블렌딩
+	EANIMBLENDTYPE_FREEZE_POSITION		//미구현
 };
-#define ANIM_BLEND_TIME 1.01f
+//애니메이션 블렌드 전환 시간 (숫자는 임시)
+#define ANIM_BLEND_TIME 3.f
 class cSkinnedMesh : public cObject, public iAnimationSetDelegate
 {
 	friend class cSkinnedMeshManager;
@@ -35,6 +36,7 @@ protected:
 	int							m_nCurrentAnimation;
 
 	EANIMBLENDTYPE				m_eAnimBlendType;		//애니메이션 블렌딩 방식. 애니메이션 바꿀 때 대입된 인수로 결정된다. : 민우
+	float						m_fAnimContinueWeight;	//애니메이션 블랜딩때 이전 트랙에서 보존해온 가중치. : 민우
 	double						m_dAnimFreezePosition;	//애니메이션 블렌딩때 이전 트랙에서 멈춰있을 애니메이션 진행 위치 : 민우
 	
 	LPD3DXMESH					m_pDebugSphereBody;
@@ -56,7 +58,7 @@ public:
 	//virtual void SetAnimationIndex(int nIndex);
 	virtual void SetAnimationIndex(DWORD dwIndex);
 	virtual void SetAnimationLoop(DWORD dwIndex, bool isLoop);
-	virtual void SetRandomTrackPosition(); // 테스트용
+	//virtual void SetRandomTrackPosition(); // 테스트용
 	
 	virtual double GetCurrentAnimationPeriodTime();
 
@@ -79,10 +81,11 @@ protected:
 	virtual void SetupBoneMatrixPtrs(ST_BONE* pBone);
 	virtual void Destroy();
 
+	//현재 이 함수를 호출해도 EX함수가 기본형으로 호출된다.
 	virtual void SetAnimationIndexBlend(DWORD dwIndex);
 
+	//애니메이션 블렌딩을 하는 방식을 제어한다. 기본인자가 있다. : 민우
 	virtual void SetAnimationIndexBlendEX(DWORD dwIndex, EANIMBLENDTYPE eAnimBlendType = EANIMBLENDTYPE_NORMAL);
-
 
 	//Setup에서 한 번만 동작한다
 	void GetDebugOriginSphereBody(

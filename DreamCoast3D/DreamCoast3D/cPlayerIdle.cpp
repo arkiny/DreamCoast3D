@@ -14,8 +14,8 @@ cPlayerIdle::~cPlayerIdle()
 
 void cPlayerIdle::Start(cGamePlayableObject* pPlayer){
 	pPlayer->GetSkinnedMesh()->SetAnimationIndex(pPlayer->EPLAYABLESTATE_IDLE);
-	static int a = 0;
-	++a;
+	//static int a = 0;
+	//++a;
 }
 
 void cPlayerIdle::Execute(cGamePlayableObject* pPlayer, float fDelta){

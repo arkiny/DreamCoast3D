@@ -47,10 +47,6 @@ cSkinnedMesh::cSkinnedMesh(std::string sFolder, std::string sFile)
 		pSkinnedMesh->m_pAnimController->GetMaxNumEvents(),
 		&m_pAnimController);
 
-	
-	//// 이펙트가 일어나는 손
-	//D3DXFrameFind(m_pRootFrame, "FxHand01");
-
 	UINT uiNumAnim = m_pAnimController->GetNumAnimationSets();
 	for (UINT i = 0; i < uiNumAnim; ++i)
 	{
@@ -63,21 +59,6 @@ cSkinnedMesh::cSkinnedMesh(std::string sFolder, std::string sFile)
 		m_vecAnimationSet.push_back(pAnimSet);
 	}
 
-	//중복이라 잠깐 닫아둔다 : 민우
-	//// 몸 중앙
-	//D3DXFRAME* pDummyRoot;
-	//pDummyRoot = D3DXFrameFind(m_pRootFrame, "FxCenter");
-	//if (pDummyRoot){
-	//	D3DXMATRIXA16 mat = pDummyRoot->TransformationMatrix;
-	//	D3DXVECTOR3 localCenter(0, 0, 0);
-	//	D3DXVec3TransformCoord(&localCenter, &localCenter, &mat);
-	//	m_stBoundingSphere.m_vCenter = localCenter;
-	//	m_stBoundingSphere.m_fRadius = 30.0f;
-	//	m_stUpdateBoundingSphere.m_vCenter = m_stBoundingSphere.m_vCenter;
-	//	m_stUpdateBoundingSphere.m_fRadius = m_stBoundingSphere.m_fRadius;
-	//	SAFE_RELEASE(m_pDebugSphereBody);
-	//	D3DXCreateSphere(g_pD3DDevice, m_stBoundingSphere.m_fRadius, 10, 10, &m_pDebugSphereBody, NULL);
-	//}
 
 	GetDebugOriginSphereBody(m_mapDebugOriginSphereBody, m_mapDebugUpdateSphereBody);
 
@@ -163,18 +144,17 @@ void cSkinnedMesh::UpdateAndRender(D3DXMATRIXA16* pParentWorldTM)
 	//}
 	m_vecAnimationSet[m_nCurrentAnimation]->Update(g_pTimer->DeltaTime());
 	
-	if (m_isAnimationBlending)
+	//블렌딩 타입 노멀(수정해야됨)
+	if (m_isAnimationBlending && EANIMBLENDTYPE::EANIMBLENDTYPE_NORMAL)
 	{
 		m_fPassedBlendTime += g_pTimer->DeltaTime();
 		if (m_fPassedBlendTime >= m_fAnimationBlendTime)
 		{
 			m_isAnimationBlending = false;
-			//m_isAnimationBlending = true;
-			//m_fPassedBlendTime = 0;
+			
 			m_pAnimController->SetTrackWeight(0, 1.0f);
 			m_pAnimController->SetTrackWeight(1, 0.0f);
 			m_pAnimController->SetTrackEnable(1, false);
-			
 		}
 		else
 		{
@@ -182,6 +162,31 @@ void cSkinnedMesh::UpdateAndRender(D3DXMATRIXA16* pParentWorldTM)
 			m_pAnimController->SetTrackWeight(0, fWeight);
 			m_pAnimController->SetTrackWeight(1, 1.0f - fWeight);
 		}
+	}
+	//블렌딩 타입 가중치 지속
+	else if (m_isAnimationBlending && EANIMBLENDTYPE::EANIMBLENDTYPE_CONTINUE_WEIGHT)
+	{
+		m_fPassedBlendTime += g_pTimer->DeltaTime();
+		//보존되어온 가중치가 모두 소모되면 밀려나는 트랙을 비활성화 한다.
+		if (m_fAnimContinueWeight <= 0)
+		{
+			m_isAnimationBlending = false;
+			
+			m_pAnimController->SetTrackWeight(0, 1.0f);
+			m_pAnimController->SetTrackWeight(1, 0.0f);
+			m_pAnimController->SetTrackEnable(1, false);
+		}
+		else
+		{
+			m_fAnimContinueWeight -= m_fPassedBlendTime / m_fAnimationBlendTime;
+			m_pAnimController->SetTrackWeight(0, 1.0f - m_fAnimContinueWeight);
+			m_pAnimController->SetTrackWeight(1, m_fAnimContinueWeight);
+		}
+	}
+	//블렌딩 타입 포지션 정지
+	else if (m_isAnimationBlending && EANIMBLENDTYPE::EANIMBLENDTYPE_FREEZE_POSITION)
+	{
+		//나중에 스킬과 공격이 제대로 구현되면 뚝딱 만들자 : 민우
 	}
 	
 	//m_pAnimController->AdvanceTime(g_pTimer->DeltaTime() * .5f, NULL);
@@ -450,6 +455,8 @@ void cSkinnedMesh::SetAnimationIndex(DWORD dwIndex)
 
 	cAnimationSet* pCurr = m_vecAnimationSet[m_nCurrentAnimation];
 	cAnimationSet* pNext = m_vecAnimationSet[dwIndex];
+	
+	//이 코드가 같은 애니메이션을 자꾸 중복실행하게 만든다. 상의해봐야 할 부분 : 민우
 	if (pNext->GetIsLoop())
 	{
 		SetAnimationIndexBlend(dwIndex);
@@ -491,12 +498,12 @@ void cSkinnedMesh::SetAnimationIndexBlend(DWORD dwIndex)
 
 	m_fPassedBlendTime = 0.0f;
 	m_isAnimationBlending = true;*/
-	SetAnimationIndexBlendEX(dwIndex, EANIMBLENDTYPE::EANIMBLENDTYPE_NORMAL);
+	SetAnimationIndexBlendEX(dwIndex, EANIMBLENDTYPE::EANIMBLENDTYPE_CONTINUE_WEIGHT);
 }
 void cSkinnedMesh::SetAnimationIndexBlendEX(DWORD dwIndex, EANIMBLENDTYPE eAnimBlendType)
 {
 	m_eAnimBlendType = eAnimBlendType;
-
+	
 	LPD3DXANIMATIONSET pPrev = NULL;
 	LPD3DXANIMATIONSET pNext = NULL;
 
@@ -506,33 +513,43 @@ void cSkinnedMesh::SetAnimationIndexBlendEX(DWORD dwIndex, EANIMBLENDTYPE eAnimB
 		return;
 	}
 	m_pAnimController->GetTrackAnimationSet(0, &pPrev);
-
+	
+	//이전 동작과 새 동작이 같은 동작이면 아무것도 하지 않는다. 이것은 블렌딩을 위한 임시방편이다. : 민우
+	if (pNext == pPrev)
+	{
+		return;
+	}
 	D3DXTRACK_DESC desc;
 	m_pAnimController->GetTrackDesc(0, &desc);
 	m_pAnimController->SetTrackDesc(1, &desc);
-
+	
 	if (eAnimBlendType == EANIMBLENDTYPE::EANIMBLENDTYPE_NORMAL)
 	{
 		m_pAnimController->SetTrackWeight(0, 0.0f);
 		m_pAnimController->SetTrackWeight(1, 1.0f);
+		m_pAnimController->SetTrackEnable(1, true);
+		
 	}
+	//동작이 전환될 때 밀려나는 트랙의 가중치를 보존해서 블렌딩 한다. 같은 패턴의 동작이 빠르게 전환되어도 전혀 어색함이 없다 : 민우
 	else if (eAnimBlendType == EANIMBLENDTYPE::EANIMBLENDTYPE_CONTINUE_WEIGHT)
 	{
 		m_pAnimController->SetTrackWeight(0, 1 - desc.Weight);
 		m_pAnimController->SetTrackWeight(1, desc.Weight);
+		m_fAnimContinueWeight = desc.Weight;
 	}
 	//TODO: 미완성
 	else if (eAnimBlendType == EANIMBLENDTYPE::EANIMBLENDTYPE_FREEZE_POSITION)
 	{
 		//애니메이션 Update할 때 계속 이 Position을 유지 시킨다.
 		m_dAnimFreezePosition = desc.Position;
+		m_pAnimController->SetTrackWeight(0, 0.0f);
+		m_pAnimController->SetTrackWeight(1, 1.0f);
 	}
 
 	m_pAnimController->SetTrackAnimationSet(0, pNext);
 	m_pAnimController->SetTrackAnimationSet(1, pPrev);
-
-	//m_pAnimController->SetTrackPosition(0, 0);
-
+	m_pAnimController->SetTrackPosition(0, 0);
+	
 	SAFE_RELEASE(pPrev);
 	SAFE_RELEASE(pNext);
 
@@ -561,10 +578,11 @@ void cSkinnedMesh::Destroy()
 	this->Release();
 }
 
-void cSkinnedMesh::SetRandomTrackPosition()
-{
-	m_pAnimController->SetTrackPosition(0, (rand() % 100) / 10.0f);
-}
+//아직 쓰이지 않음
+//void cSkinnedMesh::SetRandomTrackPosition()
+//{
+//	m_pAnimController->SetTrackPosition(0, (rand() % 100) / 10.0f);
+//}
 
 double cSkinnedMesh::GetCurrentAnimationPeriodTime(){
 	LPD3DXANIMATIONSET pSet;
