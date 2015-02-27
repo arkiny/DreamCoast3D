@@ -229,13 +229,14 @@ bool cGameObjManager::isGameAttackSphereCollided(
 						D3DXVECTOR3 dist = from - to;
 						float fFrom = pFrom->GetCollisionSphere()->m_fRadius;
 						float fTo = pSphere.second.m_fRadius;
-						float scale = pFrom->GetScale().x;
-						float scale2 = p->GetScale().x;
+						/*float scale = pFrom->GetScale().x;
+						float scale2 = p->GetScale().x;*/
+
+						float scale = 1.0f;
+						float scale2 = 1.0f;
 
 						if (isCollided(from, fFrom, scale, to, fTo, scale2)){
 							p->OnHitTarget(pFrom);
-							//p->ChangeState(5);
-							//p->SetTargetObject(pFrom);
 							m_pCameraDeligate->AttackCameraMoving();
 						}
 					}

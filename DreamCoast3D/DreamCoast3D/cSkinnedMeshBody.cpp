@@ -58,7 +58,8 @@ cSkinnedMeshBody::cSkinnedMeshBody(std::string sFolder, std::string sFile,
 
 	SAFE_RELEASE(m_pDebugSphereBody);
 	//반지름을 1로 해두고 확장해서 렌더 : 민우
-	D3DXCreateSphere(g_pD3DDevice, 1, 10, 10, &m_pDebugSphereBody, NULL);
+	//렌더할때 월드 사이즈가 적용이 안되는득?
+	D3DXCreateSphere(g_pD3DDevice, 12.0f, 10, 10, &m_pDebugSphereBody, NULL);
 
 
 	
