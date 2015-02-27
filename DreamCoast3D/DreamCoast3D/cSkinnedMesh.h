@@ -2,7 +2,12 @@
 #include  "cAnimationSet.h"
 
 struct ST_BONE;
-
+enum EANIMBLENDTYPE
+{
+	EANIMBLENDTYPE_NORMAL,
+	EANIMBLENDTYPE_CONTINUE_WEIGHT,
+	EANIMBLENDTYPE_FREEZE_POSITION
+};
 class cSkinnedMesh : public cObject, public iAnimationSetDelegate
 {
 	friend class cSkinnedMeshManager;
@@ -27,6 +32,8 @@ protected:
 	bool						m_isAnimationBlending;
 	std::vector<cAnimationSet*>	m_vecAnimationSet;
 	int							m_nCurrentAnimation;
+
+	double						m_dAnimFreezePosition;	//애니메이션 블렌딩때 이전 트랙에서 멈춰있을 애니메이션 진행 위치
 	
 	LPD3DXMESH					m_pDebugSphereBody;
 	LPD3DXMESH					m_pDebugDetailSphereBody;
@@ -49,7 +56,7 @@ public:
 	virtual void SetAnimationLoop(DWORD dwIndex, bool isLoop);
 	virtual void SetRandomTrackPosition(); // 테스트용
 	
-	virtual float GetCurrentAnimationPeriodTime();
+	virtual double GetCurrentAnimationPeriodTime();
 
 	virtual ST_BOUNDING_SPHERE&	GetCollisionSphere(){
 		return m_stBoundingSphere;
@@ -71,6 +78,8 @@ protected:
 	virtual void Destroy();
 
 	virtual void SetAnimationIndexBlend(DWORD dwIndex);
+
+	virtual void SetAnimationIndexBlendEX(DWORD dwIndex, EANIMBLENDTYPE eAnimBlendType = EANIMBLENDTYPE_NORMAL);
 
 
 	//Setup에서 한 번만 동작한다

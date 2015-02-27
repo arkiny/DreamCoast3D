@@ -462,7 +462,7 @@ void cSkinnedMesh::SetAnimationIndex(DWORD dwIndex)
 
 void cSkinnedMesh::SetAnimationIndexBlend(DWORD dwIndex)
 {
-	LPD3DXANIMATIONSET pPrev = NULL;
+	/*LPD3DXANIMATIONSET pPrev = NULL;
 	LPD3DXANIMATIONSET pNext = NULL;
 
 	m_pAnimController->GetAnimationSet(dwIndex, &pNext);
@@ -486,9 +486,53 @@ void cSkinnedMesh::SetAnimationIndexBlend(DWORD dwIndex)
 	SAFE_RELEASE(pNext);
 
 	m_fPassedBlendTime = 0.0f;
+	m_isAnimationBlending = true;*/
+	SetAnimationIndexBlendEX(dwIndex, EANIMBLENDTYPE::EANIMBLENDTYPE_NORMAL);
+}
+void cSkinnedMesh::SetAnimationIndexBlendEX(DWORD dwIndex, EANIMBLENDTYPE eAnimBlendType)
+{
+	LPD3DXANIMATIONSET pPrev = NULL;
+	LPD3DXANIMATIONSET pNext = NULL;
+
+	m_pAnimController->GetAnimationSet(dwIndex, &pNext);
+	if (!pNext)
+	{
+		return;
+	}
+	m_pAnimController->GetTrackAnimationSet(0, &pPrev);
+
+	D3DXTRACK_DESC desc;
+	m_pAnimController->GetTrackDesc(0, &desc);
+	m_pAnimController->SetTrackDesc(1, &desc);
+
+	if (eAnimBlendType == EANIMBLENDTYPE::EANIMBLENDTYPE_NORMAL)
+	{
+		m_pAnimController->SetTrackWeight(0, 0.0f);
+		m_pAnimController->SetTrackWeight(1, 1.0f);
+	}
+	else if (eAnimBlendType == EANIMBLENDTYPE::EANIMBLENDTYPE_CONTINUE_WEIGHT)
+	{
+		m_pAnimController->SetTrackWeight(0, 1 - desc.Weight);
+		m_pAnimController->SetTrackWeight(1, desc.Weight);
+	}
+	//TODO: 미완성
+	else if (eAnimBlendType == EANIMBLENDTYPE::EANIMBLENDTYPE_FREEZE_POSITION)
+	{
+		//애니메이션 Update할 때 계속 이 Position을 유지 시킨다.
+		m_dAnimFreezePosition = desc.Position;
+	}
+
+	m_pAnimController->SetTrackAnimationSet(0, pNext);
+	m_pAnimController->SetTrackAnimationSet(1, pPrev);
+
+	m_pAnimController->SetTrackPosition(0, 0);
+
+	SAFE_RELEASE(pPrev);
+	SAFE_RELEASE(pNext);
+
+	m_fPassedBlendTime = 0.0f;
 	m_isAnimationBlending = true;
 }
-
 void cSkinnedMesh::SetAnimationLoop(DWORD dwIndex, bool isLoop)
 {
 	if (dwIndex < m_vecAnimationSet.size())
@@ -516,10 +560,10 @@ void cSkinnedMesh::SetRandomTrackPosition()
 	m_pAnimController->SetTrackPosition(0, (rand() % 100) / 10.0f);
 }
 
-float cSkinnedMesh::GetCurrentAnimationPeriodTime(){
+double cSkinnedMesh::GetCurrentAnimationPeriodTime(){
 	LPD3DXANIMATIONSET pSet;
 	m_pAnimController->GetTrackAnimationSet(0, &pSet);
-	float fPeriodTime = pSet->GetPeriod();
+	double fPeriodTime = pSet->GetPeriod();
 	return fPeriodTime;
 }
 
