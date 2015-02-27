@@ -16,7 +16,7 @@ private:
 	std::vector<bool>	m_vecMovable;
 
 
-	std::vector<POINT> GetAdjCircle(int nX, int nZ, int nRange);
+	std::vector<POINT*> GetAdjCircle(int nX, int nZ, int nRange);
 
 public:
 	cGridSystem();

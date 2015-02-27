@@ -299,19 +299,26 @@ void cGridSystem::RemoveMovingObject(cGameObject* pGameObejct, int nX, int nZ){
 
 std::vector<cGameObject*> cGridSystem::GetAdjObjectCircle(int nX, int nZ, int nRange)
 {
-	std::vector<POINT> vecPoint = GetAdjCircle(nX, nZ, nRange);
+	std::vector<POINT*> vecPoint;
+	vecPoint.reserve(nRange*nRange * 4);
+	vecPoint = GetAdjCircle(nX, nZ, nRange);
 	std::vector<cGameObject*> vecGameObject;
 	std::set<cGameObject*> setGameObject;
+
 
 	for (int i = 0; i < vecPoint.size(); i++)
 	{
 		std::vector<cGameObject*> vecGO;
-		vecGO = GetAdjObjectCustomer(vecPoint[i].x, vecPoint[i].y, nRange);
+		vecGO = GetObjectOnGridVec(vecPoint[i]->x, vecPoint[i]->y);
 		if (vecGO.size() > 0)
 		{
 			for (int i = 0; i < vecGO.size(); i++)
 			{
-				if (setGameObject.count(vecGO[i]) > 0)
+				if (vecGameObject.size() == 0)
+				{
+					vecGameObject.push_back(vecGO[i]);
+				}
+				else if (setGameObject.find(vecGO[i]) == setGameObject.end())
 				{
 					vecGameObject.push_back(vecGO[i]);
 				}
@@ -323,63 +330,120 @@ std::vector<cGameObject*> cGridSystem::GetAdjObjectCircle(int nX, int nZ, int nR
 	return vecGameObject;
 }
 
-std::vector<POINT> cGridSystem::GetAdjCircle(int nX, int nZ, int nRange)
+std::vector<POINT*> cGridSystem::GetAdjCircle(int nX, int nZ, int nRange)
 {
 	int nRan = nRange;
 
-	std::vector<POINT> vecPoint;
+	std::vector<POINT*> vecPoint;
+	std::set<POINT*> setPoint;
+	vecPoint.reserve(nRange*nRange * 4);
 	int x = 0;
 	int z = 0;
 
 	int PosX = nX;
 	int PosY = nZ;
 
-	POINT pos;
 	for (int i = 0; i < nRan; i++)
 	{
-		pos.x = x;
-		pos.y = nRan - z;
+		POINT* pos = new POINT;
+		pos->x = x;
+		pos->y = nRan - z;
 		x += 1;
 		z += 1;
-		vecPoint.push_back(pos);
+		if (setPoint.find(pos) == setPoint.end())
+		{
+			vecPoint.push_back(pos);
+		}
+		setPoint.insert(pos);
 	}
 	x = nRan;
 	z = nRan;
 	for (int i = 0; i < nRan; i++)
 	{
-		pos.x = x;
-		pos.y = -(nRan - z);
+		POINT* pos = new POINT;
+		pos->x = x;
+		pos->y = -(nRan - z);
 		x -= 1;
 		z -= 1;
-		vecPoint.push_back(pos);
+
+		if (setPoint.find(pos) == setPoint.end())
+		{
+			vecPoint.push_back(pos);
+		}
+		setPoint.insert(pos);
 	}
 	x = nRan;
 	z = nRan;
 
 	for (int i = 0; i < nRan; i++)
 	{
-		pos.x = -x;
-		pos.y = +(nRan - z);
+		POINT* pos = new POINT;
+		pos->x = -x;
+		pos->y = +(nRan - z);
 		x -= 1;
 		z -= 1;
-		vecPoint.push_back(pos);
+
+		if (setPoint.find(pos) == setPoint.end())
+		{
+			vecPoint.push_back(pos);
+		}
+		setPoint.insert(pos);
 	}
 	x = 0;
 	z = 0;
 
 	for (int i = 0; i < nRan; i++)
 	{
-		pos.x = -x;
-		pos.y = -(nRan - z);
+		POINT* pos = new POINT;
+		pos->x = -x;
+		pos->y = -(nRan - z);
 		x += 1;
 		z += 1;
-		vecPoint.push_back(pos);
+
+		if (setPoint.find(pos) == setPoint.end())
+		{
+			vecPoint.push_back(pos);
+		}
+		setPoint.insert(pos);
 	}
 
 	for (int i = 0; i < vecPoint.size(); i++)
 	{
-		vecPoint[i].x += PosX;
-		vecPoint[i].y += PosY;
+		vecPoint[i]->x += PosX;
+		vecPoint[i]->y += PosY;
+	}
+
+	std::vector<POINT*> vecTest;
+	vecTest = vecPoint;
+
+	for (int i = 0; i < vecTest.size(); i++)
+	{
+		bool m_isTest = false;
+		int nA = 0;
+		int nB = 0;
+		int x = vecTest[i]->x;
+		int y = vecTest[i]->y;
+		for (nB = y - nRan; nB < y + nRan; nB++)
+		{
+			for (nA = x - nRan; nA < x + nRan; nA++)
+			{
+				POINT* pos = new POINT;
+				pos->x = nA;
+				pos->y = nB;
+				for (int n = 0; n < vecPoint.size(); n++)
+				{
+					if (vecPoint[n]->x == pos->x && vecPoint[n]->y == pos->y)
+					{
+						m_isTest = true;
+						break;
+					}
+				}
+				if (m_isTest == false)
+				{
+					vecPoint.push_back(pos);
+				}
+			}
+		}
 	}
 	return vecPoint;
 }
