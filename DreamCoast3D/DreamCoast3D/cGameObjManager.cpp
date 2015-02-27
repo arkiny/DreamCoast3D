@@ -32,6 +32,7 @@ void cGameObjManager::Update(float fDelta){
 	if (m_setGameObjects.size() > 0){
 		for (auto p : m_setGameObjects){
 			p->Update(fDelta);
+			//p->SetTargetObject(m_pPlayable);
 		}
 	}
 }
@@ -232,7 +233,9 @@ bool cGameObjManager::isGameAttackSphereCollided(
 						float scale2 = p->GetScale().x;
 
 						if (isCollided(from, fFrom, scale, to, fTo, scale2)){
-							p->ChangeState(4);
+							p->OnHitTarget(pFrom);
+							//p->ChangeState(5);
+							//p->SetTargetObject(pFrom);
 							m_pCameraDeligate->AttackCameraMoving();
 						}
 					}

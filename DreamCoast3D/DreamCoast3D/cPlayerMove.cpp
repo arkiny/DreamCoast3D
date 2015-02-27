@@ -65,6 +65,10 @@ void cPlayerMove::Execute(cGamePlayableObject* pPlayer, float fDelta){
 			pPlayer->SetFront(vDir);
 			pPlayer->SetYangle(angle);
 		}
+		if (g_pControlManager->GetInputInfo(VK_LBUTTON)){
+			pPlayer->ChangeState(pPlayer->EPLAYABLESTATE_ATTACK);
+		}
+
 		return;
 	}
 

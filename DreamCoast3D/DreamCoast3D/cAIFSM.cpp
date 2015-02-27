@@ -6,42 +6,52 @@
 #include "cActionMove.h"
 
 void cAIIdle::Start(cGameAIObject* pAIObject){
+	pAIObject->SetPassedTime(0);
 	pAIObject->GetSkinnedMesh()->SetAnimationIndex(pAIObject->eAISTATE_IDLE);
 }
 
 void cAIIdle::Execute(cGameAIObject* pAIObject, float fDelta){
-	pAIObject->SetPassedTime(pAIObject->GetPassedTime() + fDelta);
+	//pAIObject->SetPassedTime(pAIObject->GetPassedTime() + fDelta);
+
 	// Idle 1초마다 나는 생각한다.
-	//if (pAIObject->GetPassedTime() >= 1.0f){
-	//	pAIObject->ChangeState(pAIObject->eAISTATE_THINK);
-	//}
+	if (pAIObject->GetPassedTime() >= 1.0f){
+		pAIObject->ChangeState(pAIObject->eAISTATE_THINK);
+	}
+	
+	return;
 }
 
 void cAIIdle::Exit(cGameAIObject* pAIObject){
- 	pAIObject->SetPassedTime(0);
+ 	//pAIObject->SetPassedTime(0);
 }
 
 int  cAIIdle::GetCurrentStateType(){
-	return 0;
+	return cGameAIObject::eAISTATE_IDLE;
 }
+
+
 
 void cAIMove::Start(cGameAIObject* pAIObject){
 	pAIObject->GetSkinnedMesh()->SetAnimationIndex(pAIObject->eAISTATE_MOVE);
-}
-void cAIMove::Execute(cGameAIObject* pAIObject, float fDelta){
-	
-}
-
-void cAIMove::Exit(cGameAIObject* pAIObject){
 	pAIObject->SetPassedTime(0);
 }
-
-int  cAIMove::GetCurrentStateType(){
-	return 1;
+void cAIMove::Execute(cGameAIObject* pAIObject, float fDelta){
+	if (pAIObject->GetPassedTime() >= 1.0f){
+		pAIObject->ChangeState(pAIObject->eAISTATE_THINK);
+	}
 }
+void cAIMove::Exit(cGameAIObject* pAIObject){
+	//pAIObject->SetPassedTime(0);
+}
+int  cAIMove::GetCurrentStateType(){
+	return cGameAIObject::eAISTATE_MOVE;
+}
+
 
 void cAIRandomMove::Start(cGameAIObject* pAIObject){
 	pAIObject->GetSkinnedMesh()->SetAnimationIndex(pAIObject->eAISTATE_MOVE);
+	pAIObject->SetPassedTime(0);
+	
 	cActionMove* pAction = new cActionMove;
 	D3DXVECTOR3 curPos = pAIObject->GetPosition();
 	pAction->SetFrom(curPos);
@@ -77,43 +87,89 @@ void cAIRandomMove::Start(cGameAIObject* pAIObject){
 	pAIObject->SetAction(pAction);
 	SAFE_RELEASE(pAction);
 }
+
 void cAIRandomMove::Execute(cGameAIObject* pAIObject, float fDelta){
-	
+	if (pAIObject->GetPassedTime() >= 1.0f){
+		pAIObject->ChangeState(pAIObject->eAISTATE_THINK);
+	}
 }
+
 void cAIRandomMove::Exit(cGameAIObject* pAIObject){
+}
+
+int	 cAIRandomMove::GetCurrentStateType(){
+	return cGameAIObject::EAIOBJECTSTATE::eAISTATE_RANDOMMOVE;
+}
+
+void cAIMoveToTarget::Start(cGameAIObject* pAIObject){
+	pAIObject->SetPassedTime(0);
+	pAIObject->GetSkinnedMesh()->SetAnimationIndex(pAIObject->eAISTATE_MOVE);
+	cActionMove* pAction = new cActionMove;
+
+	D3DXVECTOR3 curPos = pAIObject->GetPosition();
+	
+	pAction->SetDelegate(pAIObject);
+
+	D3DXVECTOR3 to = pAIObject->GetTargetObject()->GetPosition();
+	float t = D3DXVec3Length(&(curPos - to));
+	
+	pAction->SetActionTime(t / 10.0f);
+
+	pAction->SetFrom(curPos);
+	pAction->SetTo(to);
+	pAIObject->SetAction(pAction);
+	SAFE_RELEASE(pAction);
+}
+
+void cAIMoveToTarget::Execute(cGameAIObject* pAIObject, float fDelta){
+	if (pAIObject->GetPassedTime() >= .2f){
+		pAIObject->ChangeState(pAIObject->eAISTATE_THINK);
+	}
+}
+
+void cAIMoveToTarget::Exit(cGameAIObject* pAIObject){
 
 }
-int	 cAIRandomMove::GetCurrentStateType(){
-	return 2;
+
+int cAIMoveToTarget::GetCurrentStateType(){
+	return cGameAIObject::EAIOBJECTSTATE::eAISTATE_MOVETOTARGET;
 }
+
 
 void cAIAttack::Start(cGameAIObject* pAIObject){
 	pAIObject->GetSkinnedMesh()->SetAnimationIndex(pAIObject->eAISTATE_ATTACK);
+	pAIObject->SetPassedTime(0);
 }
+
 void cAIAttack::Execute(cGameAIObject* pAIObject, float fDelta){
 
 }
+
 void cAIAttack::Exit(cGameAIObject* pAIObject){
-	pAIObject->SetPassedTime(0);
+	//pAIObject->SetPassedTime(0);
 }
+
 int  cAIAttack::GetCurrentStateType(){
-	return 3;
+	return cGameAIObject::EAIOBJECTSTATE::eAISTATE_ATTACK;
 }
 
 void cAIOnHit::Start(cGameAIObject* pAIObject){
 	pAIObject->GetSkinnedMesh()->SetAnimationIndex(3);
+	pAIObject->SetPassedTime(0);
 }
+
 void cAIOnHit::Execute(cGameAIObject* pAIObject, float fDelta){
 	if (pAIObject->GetPassedTime() > 1.0f){
-		pAIObject->ChangeState(pAIObject->eAISTATE_IDLE);
+		pAIObject->ChangeState(pAIObject->eAISTATE_THINK);
 		return;
 	}
 }
 void cAIOnHit::Exit(cGameAIObject* pAIObject){
-	pAIObject->SetPassedTime(0);
+	//pAIObject->SetPassedTime(0);
 }
+
 int  cAIOnHit::GetCurrentStateType(){
-	return 4;
+	return cGameAIObject::EAIOBJECTSTATE::eAISTATE_ONHIT;
 }
 
 void cAIThink::Start(cGameAIObject* pAIObject){
@@ -122,12 +178,25 @@ void cAIThink::Start(cGameAIObject* pAIObject){
 
 void cAIThink::Execute(cGameAIObject* pAIObject, float fDelta){
 	// 일단은 생각은 하는데, 랜덤 이동을 무조건 실시한다.
-	pAIObject->ChangeState(pAIObject->eAISTATE_RANDOMMOVE);
+	if (pAIObject->GetTargetObject()){
+		pAIObject->ChangeState(pAIObject->eAISTATE_MOVETOTARGET);
+		return;
+	}
+	else if (pAIObject->GetPrevState()->GetCurrentStateType() == pAIObject->eAISTATE_IDLE 
+		&& pAIObject->GetTargetObject()!=NULL){
+		pAIObject->ChangeState(pAIObject->eAISTATE_IDLE);
+		return;
+	}
+	else {
+		pAIObject->ChangeToPrevState();
+		return;
+	}
 }
 
 void cAIThink::Exit(cGameAIObject* pAIObject){
-	
+	//
 }
+
 int  cAIThink::GetCurrentStateType(){
-	return 5;
+	return cGameAIObject::EAIOBJECTSTATE::eAISTATE_THINK;
 }

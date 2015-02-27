@@ -117,6 +117,7 @@ void cScene::Setup(std::string sFilePath){
 	pGameAIObject->SetPosition(D3DXVECTOR3(110.0f, 0.0f, 110.0f));
 	pGameAIObject->SetScale(D3DXVECTOR3(0.06f, 0.06f, 0.06f));
 	m_pGameObjManager->AddGameObj(pGameAIObject);
+	//pGameAIObject->SetTargetObject(m_pGameObjManager->GetPlayerableGameObject());
 	SAFE_RELEASE(pGameAIObject);
 
 	///

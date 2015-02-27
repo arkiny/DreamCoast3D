@@ -22,6 +22,13 @@ class cAIRandomMove : public cAIMove{
 	virtual int GetCurrentStateType();
 };
 
+class cAIMoveToTarget : public cAIMove{
+	virtual void Start(cGameAIObject* pAIObject);
+	virtual void Execute(cGameAIObject* pAIObject, float fDelta);
+	virtual void Exit(cGameAIObject* pAIObject);
+	virtual int GetCurrentStateType();
+};
+
 class cAIAttack : public iAIState{
 	virtual void Start(cGameAIObject* pAIObject);
 	virtual void Execute(cGameAIObject* pAIObject, float fDelta);

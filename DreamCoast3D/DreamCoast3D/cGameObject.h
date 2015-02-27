@@ -68,5 +68,7 @@ public:
 	virtual ST_BOUNDING_SPHERE* GetAttackSphere(){ return NULL;	}
 	virtual void ForcedMoving(D3DXVECTOR3 vDir, float fSpeed) {}
 	virtual float GetMoveSpeed() { return 1.0f; }
+	virtual void SetTargetObject(cGameObject* pTarget) {}
+	virtual void OnHitTarget(cGameObject* pTarget) {}
 };
 
