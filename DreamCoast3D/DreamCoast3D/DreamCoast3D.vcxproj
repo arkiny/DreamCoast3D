@@ -166,6 +166,7 @@
     <ClInclude Include="iActionDelegate.h" />
     <ClInclude Include="iAIState.h" />
     <ClInclude Include="iButtonDelegate.h" />
+    <ClInclude Include="iCameraDeligate.h" />
     <ClInclude Include="iGameObjectDelegate.h" />
     <ClInclude Include="iGameStateObject.h" />
     <ClInclude Include="iMap.h" />
@@ -257,6 +258,7 @@
     <ClCompile Include="iActionDelegate.cpp" />
     <ClCompile Include="iAIState.cpp" />
     <ClCompile Include="iButtonDelegate.cpp" />
+    <ClCompile Include="iCameraDeligate.cpp" />
     <ClCompile Include="iGameObjectDelegate.cpp" />
     <ClCompile Include="iGameStateObject.cpp" />
     <ClCompile Include="iMap.cpp" />

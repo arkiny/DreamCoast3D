@@ -255,6 +255,7 @@
     <ClCompile Include="cAstarNode.cpp">
       <Filter>EachWorks\MS</Filter>
     </ClCompile>
+    <ClCompile Include="iCameraDeligate.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cAction.h">
@@ -523,6 +524,7 @@
     <ClInclude Include="cAstarNode.h">
       <Filter>EachWorks\MS</Filter>
     </ClInclude>
+    <ClInclude Include="iCameraDeligate.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="DreamCoast3D.ico">

@@ -3,7 +3,9 @@
 // 일단 체이싱 카메라
 // 고정 카메라는 필요시 확장
 #include "iMap.h"
-class cCamera : public cObject
+#include "iCameraDeligate.h"
+
+class cCamera : public cObject, public iCameraDeligate
 {
 protected:
 	SYNTHESIZE(iMap*, m_pMap, Map);
@@ -46,7 +48,7 @@ public:
 
 	// MS
 	void UpdateAngle(float fAngle);
-    void AttackCameraMoving();
+    virtual void AttackCameraMoving();
 
 	float m_fFixedAngleX;
     float m_fFixedAngleY;

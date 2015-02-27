@@ -233,6 +233,7 @@ bool cGameObjManager::isGameAttackSphereCollided(
 
 						if (isCollided(from, fFrom, scale, to, fTo, scale2)){
 							p->ChangeState(4);
+							m_pCameraDeligate->AttackCameraMoving();
 						}
 					}
 				}
