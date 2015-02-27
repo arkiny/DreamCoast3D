@@ -169,9 +169,12 @@ void cSkinnedMesh::UpdateAndRender(D3DXMATRIXA16* pParentWorldTM)
 		if (m_fPassedBlendTime >= m_fAnimationBlendTime)
 		{
 			m_isAnimationBlending = false;
+			//m_isAnimationBlending = true;
+			//m_fPassedBlendTime = 0;
 			m_pAnimController->SetTrackWeight(0, 1.0f);
 			m_pAnimController->SetTrackWeight(1, 0.0f);
 			m_pAnimController->SetTrackEnable(1, false);
+			
 		}
 		else
 		{
@@ -181,7 +184,8 @@ void cSkinnedMesh::UpdateAndRender(D3DXMATRIXA16* pParentWorldTM)
 		}
 	}
 	
-	m_pAnimController->AdvanceTime(g_pTimer->DeltaTime() * .5f, NULL);
+	//m_pAnimController->AdvanceTime(g_pTimer->DeltaTime() * .5f, NULL);
+	m_pAnimController->AdvanceTime(g_pTimer->DeltaTime() , NULL);
 
 	if (m_pRootFrame)
 	{
@@ -542,7 +546,7 @@ void cSkinnedMesh::SetAnimationLoop(DWORD dwIndex, bool isLoop)
 		m_vecAnimationSet[dwIndex]->SetIsLoop(isLoop);
 	}
 }
-
+//Heedong.peter.lee
 void cSkinnedMesh::OnFinishAnimation(cAnimationSet* pSender){
 	SetAnimationIndex(pSender->GetPrevAnimation()->GetIndex());
 }
