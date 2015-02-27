@@ -179,9 +179,26 @@ void cAIThink::Start(cGameAIObject* pAIObject){
 }
 
 void cAIThink::Execute(cGameAIObject* pAIObject, float fDelta){
+	std::vector<cGameObject*> vecInsight;
+
+	if (pAIObject->GetAItype() == pAIObject->E_AI_AGGRESSIVE){
+		D3DXVECTOR3 vCenter = pAIObject->GetPosition();
+		vecInsight = pAIObject->GetGameObjDeligate()->GetInSightObject(ST_BOUNDING_SPHERE(vCenter, 10.0f));
+		if (vecInsight.size() > 0){
+			int i = 0;
+		}
+	}
+
 	// 생각...
 	if (pAIObject->GetTargetObject()){ // 타겟이 있을경우 타겟 갱신
 		pAIObject->ChangeState(pAIObject->eAISTATE_MOVETOTARGET);
+		return;
+	}
+	else if (vecInsight.empty() == false){
+		for (auto p : vecInsight){
+			pAIObject->AddGameObjToAggroMap(p);
+		}
+		pAIObject->CheckAggroMapAndSetTarget();
 		return;
 	}
 	else if (pAIObject->GetPrevState()->GetCurrentStateType() == pAIObject->eAISTATE_IDLE 

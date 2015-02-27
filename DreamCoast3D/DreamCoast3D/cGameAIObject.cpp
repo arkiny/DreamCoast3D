@@ -7,9 +7,11 @@ cGameAIObject::cGameAIObject()
 	:m_pCurrentState(NULL),
 	m_pPrevState(NULL),
 	m_fPassedTime(0),
-	m_pTargetGameObject(NULL)
+	m_pTargetGameObject(NULL),
+	m_eAITYPE(E_AI_AGGRESSIVE)
 {
 	m_fMoveSpeed = 30.0f;
+	m_eGameObjectType = eGameObjectType::E_MOP;
 }
 
 
@@ -81,5 +83,19 @@ void cGameAIObject::OnHitTarget(cGameObject* pTarget){
 		m_pTargetGameObject = pTarget;
 		m_pPrevState = NULL;
 		this->ChangeState(eAISTATE_ONHIT);
+	}
+}
+
+void cGameAIObject::AddGameObjToAggroMap(cGameObject* pGameObj){
+	if (pGameObj->GetGameObjectType() == pGameObj->E_PLAYABLE){
+		m_mapAggromap[pGameObj] = 110.0f;
+	}
+}
+
+void cGameAIObject::CheckAggroMapAndSetTarget(){
+	for (auto p : m_mapAggromap){
+		if (p.second > 100.0f){
+			m_pTargetGameObject = p.first;
+		}
 	}
 }

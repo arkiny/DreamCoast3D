@@ -8,6 +8,7 @@ cGameObject::cGameObject()
 	, m_pGridCallback(NULL)
 	, m_stGridPos(0,0)
 	, m_pGameObjDeligate(NULL)
+	, m_eGameObjectType(eGameObjectType::E_NONE)
 {
 	m_pTransform = new cTransform;
 	m_pBoundingBox = new ST_BOUNDING_BOX;

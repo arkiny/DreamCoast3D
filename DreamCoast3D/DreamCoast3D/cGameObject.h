@@ -8,8 +8,18 @@ class cTransform;
 
 class cGameObject : public cObject
 {
+public:
+	enum eGameObjectType{
+		E_PLAYABLE,
+		E_NPC,
+		E_MOP,
+		E_NONE,
+		E_MAX
+	};
+
 protected:
 	SYNTHESIZE(iGameObjectDelegate*, m_pGameObjDeligate, GameObjDeligate);
+	SYNTHESIZE(eGameObjectType, m_eGameObjectType, GameObjectType);
 
 	iGridTileSystem*	m_pGridCallback;
 	ST_TILE_GRIDPOS		m_stGridPos;

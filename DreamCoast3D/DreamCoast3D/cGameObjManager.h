@@ -48,6 +48,7 @@ public:
 	// iGameObjectDelegate override
 	bool isGameObjectCollided(cGameObject* pFrom) override;
 	bool isGameAttackSphereCollided(cGameObject* pFrom, ST_BOUNDING_SPHERE stAttackSphere) override;
+	std::vector<cGameObject*> GetInSightObject(ST_BOUNDING_SPHERE stSphere) override;
 
 protected:
 	bool isCollided(D3DXVECTOR3 vFromCenter,
@@ -58,6 +59,6 @@ protected:
 	// Calculate by Conan
 private:
 	D3DXVECTOR3 PushingForce(D3DXVECTOR3* vFrom, float fFromLength, D3DXVECTOR3* vTo, float fFromTo);
-	std::vector<cGameObject*> GetInSightObject(ST_BOUNDING_SPHERE stSphere);
+	
 };
 

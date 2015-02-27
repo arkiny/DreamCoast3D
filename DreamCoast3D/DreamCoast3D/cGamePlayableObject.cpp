@@ -10,6 +10,7 @@ cGamePlayableObject::cGamePlayableObject()
 	//m_fMoveSpeed(10.0f),
 	m_fPlayerAngleDegree(0.0f)
 {
+	m_eGameObjectType = eGameObjectType::E_PLAYABLE;
 }
 
 cGamePlayableObject::~cGamePlayableObject()

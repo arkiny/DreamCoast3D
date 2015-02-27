@@ -16,12 +16,24 @@ public:
 		eAISTATE_MAX
 	};
 
+	enum E_AI_TYPE{
+		E_AI_PASSIVE,
+		E_AI_AGGRESSIVE,
+		E_AI_BOSS,
+		E_AI_MAX
+	};
+
 protected:
+	SYNTHESIZE(float, m_fPassedTime, PassedTime);
+	SYNTHESIZE(E_AI_TYPE, m_eAITYPE, AItype);
+
 	std::vector<iAIState*>	m_vecPatterns;
 	iAIState*				m_pCurrentState;
 	iAIState*				m_pPrevState;
 	cGameObject*			m_pTargetGameObject;
-	SYNTHESIZE(float, m_fPassedTime, PassedTime);
+
+	std::map<cGameObject*, int> m_mapAggromap;
+
 	//SYNTHESIZE(cGameObject*, m_pTargetGameObject, TargetObject);
 
 public:
@@ -44,5 +56,8 @@ public:
 	virtual cGameObject* GetTargetObject() { return m_pTargetGameObject; }
 	virtual iAIState*	GetCurrentState() { return m_pCurrentState; }
 	virtual iAIState*	GetPrevState(){ return m_pPrevState; }
+
+	virtual void AddGameObjToAggroMap(cGameObject* pGameObj);
+	virtual void CheckAggroMapAndSetTarget();
 };
 
