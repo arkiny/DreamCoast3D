@@ -296,3 +296,90 @@ void cGridSystem::AddMovingObject(cGameObject* pGameObejct, int nX, int nZ){
 void cGridSystem::RemoveMovingObject(cGameObject* pGameObejct, int nX, int nZ){
 	m_vecTileData[nX + nZ*m_nMapSize].erase(pGameObejct);
 }
+
+std::vector<cGameObject*> cGridSystem::GetAdjObjectCircle(int nX, int nZ, int nRange)
+{
+	std::vector<POINT> vecPoint = GetAdjCircle(nX, nZ, nRange);
+	std::vector<cGameObject*> vecGameObject;
+	std::set<cGameObject*> setGameObject;
+
+	for (int i = 0; i < vecPoint.size(); i++)
+	{
+		std::vector<cGameObject*> vecGO;
+		vecGO = GetAdjObjectCustomer(vecPoint[i].x, vecPoint[i].y, nRange);
+		if (vecGO.size() > 0)
+		{
+			for (int i = 0; i < vecGO.size(); i++)
+			{
+				if (setGameObject.count(vecGO[i]) > 0)
+				{
+					vecGameObject.push_back(vecGO[i]);
+				}
+				setGameObject.insert(vecGO[i]);
+			}
+		}
+	}
+
+	return vecGameObject;
+}
+
+std::vector<POINT> cGridSystem::GetAdjCircle(int nX, int nZ, int nRange)
+{
+	int nRan = nRange;
+
+	std::vector<POINT> vecPoint;
+	int x = 0;
+	int z = 0;
+
+	int PosX = nX;
+	int PosY = nZ;
+
+	POINT pos;
+	for (int i = 0; i < nRan; i++)
+	{
+		pos.x = x;
+		pos.y = nRan - z;
+		x += 1;
+		z += 1;
+		vecPoint.push_back(pos);
+	}
+	x = nRan;
+	z = nRan;
+	for (int i = 0; i < nRan; i++)
+	{
+		pos.x = x;
+		pos.y = -(nRan - z);
+		x -= 1;
+		z -= 1;
+		vecPoint.push_back(pos);
+	}
+	x = nRan;
+	z = nRan;
+
+	for (int i = 0; i < nRan; i++)
+	{
+		pos.x = -x;
+		pos.y = +(nRan - z);
+		x -= 1;
+		z -= 1;
+		vecPoint.push_back(pos);
+	}
+	x = 0;
+	z = 0;
+
+	for (int i = 0; i < nRan; i++)
+	{
+		pos.x = -x;
+		pos.y = -(nRan - z);
+		x += 1;
+		z += 1;
+		vecPoint.push_back(pos);
+	}
+
+	for (int i = 0; i < vecPoint.size(); i++)
+	{
+		vecPoint[i].x += PosX;
+		vecPoint[i].y += PosY;
+	}
+	return vecPoint;
+}

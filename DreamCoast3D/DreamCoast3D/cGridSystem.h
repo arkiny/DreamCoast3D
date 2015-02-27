@@ -15,6 +15,9 @@ private:
 	// 1차적으로 일정수준의 맵 컨트롤에 필요할득
 	std::vector<bool>	m_vecMovable;
 
+
+	std::vector<POINT> GetAdjCircle(int nX, int nZ, int nRange);
+
 public:
 	cGridSystem();
 	~cGridSystem();
@@ -41,10 +44,10 @@ public:
 	std::vector<cGameObject*> GetAdjObject(int nX, int nZ);
 	// Grid 좌표 입력시 입력 좌표 중심으로 Size x Size Object들이 vector 형태로 리턴
 	std::vector<cGameObject*> GetAdjObjectCustomer(int nX, int nZ, int nSize);
-
 	// 해당 Grid 위에 Object가 있을시 Object를 삭제함
 	void RemoveObejctOnTile(cGameObject* pGameObejct, int nX, int nZ);
-
+	// 좌표와 범위 입력하면 원형으로 범위 만큼 검사해서 그 위에 있는 오브젝트 검사해서 vector형태로 넘겨줌
+	std::vector<cGameObject*> GetAdjObjectCircle(int nX, int nZ, int nRange);
 
 	void Destroy();
 
