@@ -84,6 +84,15 @@ std::vector<cGameObject*> cGameMapObject::GetAdjObjectCustomer(int nX, int nZ, i
 	}
 }
 
+std::vector<cGameObject*> cGameMapObject::GetAdjObjectCircle(int nX, int nZ, int nRange){
+	if (m_pGridSystem){
+		return m_pGridSystem->GetAdjObjectCircle(nX, nZ, nRange);
+	}
+	else {
+		return std::vector<cGameObject*>();
+	}
+}
+
 void cGameMapObject::RemoveObejctOnTile(cGameObject* pGameObejct, int nX, int nZ){
 	if (m_pGridSystem){
 		m_pGridSystem->RemoveObejctOnTile(pGameObejct, nX, nZ);

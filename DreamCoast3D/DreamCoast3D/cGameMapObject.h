@@ -28,6 +28,7 @@ public:
 	virtual D3DXVECTOR3 GetTileCenterCoord(int nX, int nZ);
 	virtual std::vector<cGameObject*> GetAdjObject(int nX, int nZ);
 	virtual std::vector<cGameObject*> GetAdjObjectCustomer(int nX, int nZ, int nSize);
+	virtual std::vector<cGameObject*> GetAdjObjectCircle(int nX, int nZ, int nRange);
 	virtual void RemoveObejctOnTile(cGameObject* pGameObejct, int nX, int nZ);
 };
 

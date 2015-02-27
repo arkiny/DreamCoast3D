@@ -198,7 +198,7 @@ bool cGameObjManager::isGameAttackSphereCollided(
 	cGameObject* pFrom,
 	ST_BOUNDING_SPHERE stAttackSphere)
 {
-	int nAttackRange = 10;
+	int nAttackRange = 5;
 	D3DXVECTOR3 vFrom;
 	vFrom = pFrom->GetPosition();
 	std::vector<cGameObject*> vecGameObject;
