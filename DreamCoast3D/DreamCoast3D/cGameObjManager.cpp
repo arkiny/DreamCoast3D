@@ -295,3 +295,27 @@ D3DXVECTOR3 cGameObjManager::PushingForce(D3DXVECTOR3* vFrom, float fFromLength,
 
 	return vForce;
 }
+
+// MS
+std::vector<cGameObject*> cGameObjManager::GetInSightObject(ST_BOUNDING_SPHERE stSphere)
+{
+	float fRadius = stSphere.m_fRadius;
+	D3DXVECTOR3 vCenter = stSphere.m_vCenter;
+	std::vector<cGameObject*> vecGameObject;
+
+	for (auto p : m_setGameObjects)
+	{
+		float fDist = 0.f;
+		D3DXVECTOR3 vDist(0.f, 0.f, 0.f);
+		D3DXVECTOR3 vObjectCenter(0.f, 0.f, 0.f);
+		vObjectCenter = p->GetPosition();
+		vDist = vObjectCenter - vCenter;
+		fDist = D3DXVec3Length(&vDist);
+
+		if (fDist <= fRadius)
+		{
+			vecGameObject.push_back(p);
+		}
+	}
+	return vecGameObject;
+}
