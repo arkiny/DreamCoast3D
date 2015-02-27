@@ -10,7 +10,7 @@ cGameAIObject::cGameAIObject()
 	m_pTargetGameObject(NULL),
 	m_eAITYPE(E_AI_AGGRESSIVE)
 {
-	m_fMoveSpeed = 30.0f;
+	m_fMoveSpeed = 10.0f;
 	m_eGameObjectType = eGameObjectType::E_MOP;
 }
 
