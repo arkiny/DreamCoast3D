@@ -5,6 +5,7 @@ class cActionMove : public cAction
 protected:
 	SYNTHESIZE_PASS_BY_REF(D3DXVECTOR3, m_vFrom, From);
 	SYNTHESIZE_PASS_BY_REF(D3DXVECTOR3, m_vTo, To);
+	SYNTHESIZE_PASS_BY_REF(D3DXVECTOR3, m_vPrevPosition, PrevPosition);
 
 public:
 	cActionMove();

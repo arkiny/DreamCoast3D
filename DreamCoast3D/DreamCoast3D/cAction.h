@@ -9,6 +9,7 @@ protected:
 	SYNTHESIZE(float, m_fActionTime, ActionTime);
 	SYNTHESIZE(cGameObject*, m_pOwner, Owner);
 	SYNTHESIZE(iActionDelegate*, m_pDelegate, Delegate);
+	SYNTHESIZE(bool, m_bNoMove, isNoMove);
 
 public:
 	cAction();

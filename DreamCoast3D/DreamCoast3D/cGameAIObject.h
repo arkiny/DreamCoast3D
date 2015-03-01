@@ -27,6 +27,13 @@ protected:
 	SYNTHESIZE(float, m_fPassedTime, PassedTime);
 	SYNTHESIZE(E_AI_TYPE, m_eAITYPE, AItype);
 
+	// TODO 차후 공격사정거리 스탯에 포함될 사항
+	SYNTHESIZE(float, m_fAttackRange, AttackRange);
+
+	// Hack 직관적인 이동과 각도설정을 위해 Action을 폐기
+	SYNTHESIZE(D3DXVECTOR3, m_vFront, Front);
+	SYNTHESIZE(float, m_fAIAngle, AIAngle);
+
 	std::vector<iAIState*>	m_vecPatterns;
 	iAIState*				m_pCurrentState;
 	iAIState*				m_pPrevState;
@@ -47,9 +54,6 @@ public:
 	virtual void ChangeState(int nState) override;
 
 	virtual void ChangeToPrevState();
-
-	virtual void OnActionFinish(cAction* pSender);
-
 	virtual void SetTargetObject(cGameObject* pTarget){ m_pTargetGameObject = pTarget; }
 	
 	virtual void OnHitTarget(cGameObject* pTarget) override;
@@ -59,5 +63,8 @@ public:
 
 	virtual void AddGameObjToAggroMap(cGameObject* pGameObj);
 	virtual void CheckAggroMapAndSetTarget();
+
+	// 현재 미사용
+	virtual void OnActionFinish(cAction* pSender);
 };
 

@@ -4,7 +4,9 @@
 #include "cSkinnedMesh.h"
 #include "cAction.h"
 #include "cActionMove.h"
+#include "cTransform.h"
 
+// 대기상태
 void cAIIdle::Start(cGameAIObject* pAIObject){
 	pAIObject->SetPassedTime(0);
 	pAIObject->GetSkinnedMesh()->SetAnimationIndex(pAIObject->eAISTATE_IDLE);
@@ -30,13 +32,13 @@ int  cAIIdle::GetCurrentStateType(){
 }
 
 
-
+// 일반 움직임
 void cAIMove::Start(cGameAIObject* pAIObject){
 	pAIObject->GetSkinnedMesh()->SetAnimationIndex(pAIObject->eAISTATE_MOVE);
 	pAIObject->SetPassedTime(0);
 }
 void cAIMove::Execute(cGameAIObject* pAIObject, float fDelta){
-	pAIObject->GetGameObjDeligate()->isGameObjectCollided(pAIObject);
+	//pAIObject->GetGameObjDeligate()->isGameObjectCollided(pAIObject);
 	if (pAIObject->GetPassedTime() >= 1.0f){
 		pAIObject->ChangeState(pAIObject->eAISTATE_THINK);
 	}
@@ -48,7 +50,7 @@ int  cAIMove::GetCurrentStateType(){
 	return cGameAIObject::eAISTATE_MOVE;
 }
 
-
+// 랜덤 움직임
 void cAIRandomMove::Start(cGameAIObject* pAIObject){
 	pAIObject->GetSkinnedMesh()->SetAnimationIndex(pAIObject->eAISTATE_MOVE);
 	pAIObject->SetPassedTime(0);
@@ -89,8 +91,9 @@ void cAIRandomMove::Start(cGameAIObject* pAIObject){
 	SAFE_RELEASE(pAction);
 }
 
+
 void cAIRandomMove::Execute(cGameAIObject* pAIObject, float fDelta){
-	pAIObject->GetGameObjDeligate()->isGameObjectCollided(pAIObject);
+	//pAIObject->GetGameObjDeligate()->isGameObjectCollided(pAIObject);
 	if (pAIObject->GetPassedTime() >= 1.0f){
 		pAIObject->ChangeState(pAIObject->eAISTATE_THINK);
 	}
@@ -106,26 +109,48 @@ int	 cAIRandomMove::GetCurrentStateType(){
 void cAIMoveToTarget::Start(cGameAIObject* pAIObject){
 	pAIObject->SetPassedTime(0);
 	pAIObject->GetSkinnedMesh()->SetAnimationIndex(pAIObject->eAISTATE_MOVE);
-	cActionMove* pAction = new cActionMove;
-
-	D3DXVECTOR3 curPos = pAIObject->GetPosition();
-	
-	pAction->SetDelegate(pAIObject);
-
-	D3DXVECTOR3 to = pAIObject->GetTargetObject()->GetPosition();
-	float t = D3DXVec3Length(&(curPos - to));
-	
-	pAction->SetActionTime(t / 10.0f);
-
-	pAction->SetFrom(curPos);
-	pAction->SetTo(to);
-	pAIObject->SetAction(pAction);
-	SAFE_RELEASE(pAction);
 }
 
+// 타겟으로 이동
 void cAIMoveToTarget::Execute(cGameAIObject* pAIObject, float fDelta){
+	
 	if (pAIObject->GetPassedTime() >= .2f){
 		pAIObject->ChangeState(pAIObject->eAISTATE_THINK);
+		return;
+	}
+
+	D3DXVECTOR3 curPos = pAIObject->GetPosition();
+	D3DXVECTOR3 addVec;
+
+	if (pAIObject->GetTargetObject()){
+		D3DXVECTOR3 targetPos = pAIObject->GetTargetObject()->GetPosition();
+		//addVec = targetPos - curPos;
+		D3DXVECTOR3 vDeltaPos = targetPos - curPos;
+		D3DXVec3Normalize(&vDeltaPos, &vDeltaPos);
+
+		pAIObject->SetFront(vDeltaPos);
+
+		addVec = curPos + (fDelta* vDeltaPos*pAIObject->GetMoveSpeed());
+
+		pAIObject->SetPosition(addVec);
+
+		if (fabs(vDeltaPos.x) > 0.0001f)
+		{
+			float fAngle;
+			fAngle = -atan2(vDeltaPos.z, vDeltaPos.x) - D3DXToRadian(-270.0f);
+			pAIObject->SetAIAngle(fAngle);
+			pAIObject->GetTransform()->SetYAxisAngle(fAngle);
+		}
+		else{
+			if (vDeltaPos.z > 0.0f){
+				pAIObject->SetAIAngle(D3DXToRadian(-180.0f));
+				pAIObject->GetTransform()->SetYAxisAngle(D3DXToRadian(-180.0f));
+			}
+			else {
+				pAIObject->SetAIAngle(D3DXToRadian(0.0f));
+				pAIObject->GetTransform()->SetYAxisAngle(D3DXToRadian(0.0f));
+			}
+		}
 	}
 }
 
@@ -137,14 +162,17 @@ int cAIMoveToTarget::GetCurrentStateType(){
 	return cGameAIObject::EAIOBJECTSTATE::eAISTATE_MOVETOTARGET;
 }
 
-
+//////공격
 void cAIAttack::Start(cGameAIObject* pAIObject){
-	pAIObject->GetSkinnedMesh()->SetAnimationIndex(pAIObject->eAISTATE_ATTACK);
+	pAIObject->GetSkinnedMesh()->SetAnimationIndex(3);
 	pAIObject->SetPassedTime(0);
 }
 
 void cAIAttack::Execute(cGameAIObject* pAIObject, float fDelta){
-
+	if (pAIObject->GetSkinnedMesh()->GetCurrentAnimationPeriodTime() < pAIObject->GetPassedTime()){
+		pAIObject->ChangeState(pAIObject->eAISTATE_THINK);
+		return;
+	}
 }
 
 void cAIAttack::Exit(cGameAIObject* pAIObject){
@@ -161,7 +189,7 @@ void cAIOnHit::Start(cGameAIObject* pAIObject){
 }
 
 void cAIOnHit::Execute(cGameAIObject* pAIObject, float fDelta){
-	if (pAIObject->GetPassedTime() > 1.0f){
+	if (pAIObject->GetSkinnedMesh()->GetCurrentAnimationPeriodTime() < pAIObject->GetPassedTime()){
 		pAIObject->ChangeState(pAIObject->eAISTATE_THINK);
 		return;
 	}
@@ -183,33 +211,55 @@ void cAIThink::Execute(cGameAIObject* pAIObject, float fDelta){
 
 	if (pAIObject->GetAItype() == pAIObject->E_AI_AGGRESSIVE){
 		D3DXVECTOR3 vCenter = pAIObject->GetPosition();
-		vecInsight = pAIObject->GetGameObjDeligate()->GetInSightObject(ST_BOUNDING_SPHERE(vCenter, 10.0f));
-		if (vecInsight.size() > 0){
-			int i = 0;
+		vecInsight = pAIObject->GetGameObjDeligate()
+			->GetInSightObject(ST_BOUNDING_SPHERE(vCenter, 10.0f));
+		if (vecInsight.size() <= 1) // 보통은 자기 자신을 포함해서 리턴한다.
+		{
+			pAIObject->SetTargetObject(NULL);
 		}
 	}
 
 	// 생각...
-	if (pAIObject->GetTargetObject()){ // 타겟이 있을경우 타겟 갱신
-		pAIObject->ChangeState(pAIObject->eAISTATE_MOVETOTARGET);
+	// 타겟이 있을경우 타겟 갱신
+	if (pAIObject->GetTargetObject()){ 
+		D3DXVECTOR3 vCurPos = pAIObject->GetPosition();
+		D3DXVECTOR3 vTargetPos = pAIObject->GetTargetObject()->GetPosition();
+		float fAttackRange = pAIObject->GetAttackRange();
+		// pAIObject->GetAttackSphere() // 실질적인 타격 스피어
+		// 적을 향해 이동중에 적이 사거리 내에 있을 경우
+		float fDist = D3DXVec3Length(&(vTargetPos - vCurPos));
+		if (fAttackRange > fDist){
+			pAIObject->ChangeState(pAIObject->eAISTATE_ATTACK);
+			return;
+		}
+		else {
+			pAIObject->ChangeState(pAIObject->eAISTATE_MOVETOTARGET);
+		}
 		return;
 	}
-	else if (vecInsight.empty() == false){
+
+	// 시야 내에 적이 있다면
+	if (vecInsight.size() > 1){
 		for (auto p : vecInsight){
 			pAIObject->AddGameObjToAggroMap(p);
 		}
 		pAIObject->CheckAggroMapAndSetTarget();
 		return;
 	}
-	else if (pAIObject->GetPrevState()->GetCurrentStateType() == pAIObject->eAISTATE_IDLE 
-		&& pAIObject->GetTargetObject()!=NULL){ // 타겟이 없으면 그냥 아이들...
+
+	//if (pAIObject->GetPrevState()->GetCurrentStateType() == pAIObject->eAISTATE_IDLE 
+	//	|| pAIObject->GetTargetObject()==NULL){ // 타겟이 없으면 그냥 아이들...
+	//	pAIObject->ChangeState(pAIObject->eAISTATE_IDLE);
+	//	return;
+	//}
+
+	if (pAIObject->GetTargetObject() == NULL){
 		pAIObject->ChangeState(pAIObject->eAISTATE_IDLE);
-		return;
 	}
-	else { // 그것도 아니면 예전 활동을 계속
-		pAIObject->ChangeToPrevState();
-		return;
-	}
+
+	// 그것도 아니면 예전 활동을 계속
+	pAIObject->ChangeToPrevState();
+	return;
 }
 
 void cAIThink::Exit(cGameAIObject* pAIObject){

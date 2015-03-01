@@ -41,6 +41,7 @@ void cGamePlayableObject::Setup(
 void cGamePlayableObject::Update(float fDelta){
 	cGameActionSkinnedMeshObj::Update(fDelta);
 	m_pCurrentState->Execute(this, fDelta);
+	m_pGameObjDeligate->isGameObjectCollided(this);
 }
 
 void cGamePlayableObject::ChangeState(EPLAYABLESTATE eNewState){
@@ -56,4 +57,8 @@ void cGamePlayableObject::ChangeState(int nState){
 
 int cGamePlayableObject::GetState() {
 	return m_pCurrentState->GetCurrentStateType();
+}
+
+void cGamePlayableObject::OnHitTarget(cGameObject* pTarget){
+	this->ChangeState(this->EPLAYABLESTATE_ONHIT);
 }

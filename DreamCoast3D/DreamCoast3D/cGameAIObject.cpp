@@ -2,16 +2,21 @@
 #include "cGameAIObject.h"
 #include "cAIFSM.h"
 #include "cActionMove.h"
+#include "cTransform.h"
 
 cGameAIObject::cGameAIObject()
 	:m_pCurrentState(NULL),
 	m_pPrevState(NULL),
 	m_fPassedTime(0),
 	m_pTargetGameObject(NULL),
-	m_eAITYPE(E_AI_AGGRESSIVE)
+	m_eAITYPE(E_AI_AGGRESSIVE),
+	m_fAttackRange(2.0f),
+	m_vFront(0, 0, -1),
+	m_fAIAngle(0)
 {
 	m_fMoveSpeed = 10.0f;
 	m_eGameObjectType = eGameObjectType::E_MOP;
+	//SetYangle(2);
 }
 
 
@@ -41,6 +46,7 @@ void cGameAIObject::Update(float fDelta){
 	cGameActionSkinnedMeshObj::Update(fDelta);
 	m_fPassedTime += fDelta;
 	m_pCurrentState->Execute(this, fDelta);
+	m_pGameObjDeligate->isGameObjectCollided(this);
 }
 
 void cGameAIObject::ChangeState(EAIOBJECTSTATE eState){
@@ -57,16 +63,30 @@ void cGameAIObject::ChangeState(int nState){
 }
 
 void cGameAIObject::OnActionFinish(cAction* pSender){
-	cActionMove* pAction = new cActionMove;
-	D3DXVECTOR3 curPos = GetPosition();
-	pAction->SetFrom(curPos);
-	pAction->SetDelegate(this);
-	pAction->SetTo(curPos);
-	// deligate가 콜되지 않게 충분히 큰숫자를 넣어준다.
-	pAction->SetActionTime(100.0f);
-	SetAction(pAction);
-	SAFE_RELEASE(pAction);
-	ChangeState(this->eAISTATE_IDLE);
+	//cActionMove* pAction = new cActionMove;
+	//D3DXVECTOR3 curPos = GetPosition();
+	//pAction->SetFrom(curPos);
+	//pAction->SetDelegate(this);
+	//pAction->SetisNoMove(true);
+	//
+	//if (m_pTargetGameObject){
+	//	D3DXVECTOR3 targetPos = m_pTargetGameObject->GetPosition();
+	//	pAction->SetTo(targetPos);
+	//}
+	//else {
+	//	D3DXMATRIXA16 matR;
+	//	float yangle = m_pTransform->GetYAxisAngle();
+	//	D3DXVECTOR3 vStd(0, 0, -1);
+	//	D3DXVec3TransformNormal(&vStd, &vStd, &matR);
+	//	D3DXVECTOR3 to = curPos + vStd;
+	//	pAction->SetTo(to);
+	//}
+
+	//// deligate가 콜되지 않게 충분히 큰숫자를 넣어준다.
+	//pAction->SetActionTime(100.0f);
+	//SetAction(pAction);
+	//SAFE_RELEASE(pAction);
+	//ChangeState(this->eAISTATE_THINK);
 }
 
 void cGameAIObject::ChangeToPrevState(){
@@ -87,7 +107,7 @@ void cGameAIObject::OnHitTarget(cGameObject* pTarget){
 }
 
 void cGameAIObject::AddGameObjToAggroMap(cGameObject* pGameObj){
-	if (pGameObj->GetGameObjectType() == pGameObj->E_PLAYABLE){
+	if (pGameObj->GetGameObjectType() == pGameObj->E_PLAYABLE && pGameObj != this){
 		m_mapAggromap[pGameObj] = 110.0f;
 	}
 }

@@ -6,7 +6,7 @@ class cGameActionObject : public cGameObject
 {
 protected:
 	D3DXVECTOR3		m_vPrevPosition;
-	cAction*		m_pAction;
+	//cAction*		m_pAction;
 	float			m_fMoveSpeed;
 
 	//SYNTHESIZE(float, m_fMoveSpeed, MoveSpeed);

@@ -6,6 +6,7 @@ cAction::cAction()
 	, m_fActionTime(0.0f)
 	, m_pOwner(NULL)
 	, m_pDelegate(NULL)
+	, m_bNoMove(false)
 {
 }
 

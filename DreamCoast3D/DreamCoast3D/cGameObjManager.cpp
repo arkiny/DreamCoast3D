@@ -3,6 +3,7 @@
 #include "cFrustum.h"
 #include "cTransform.h"
 #include "cGameMapObject.h"
+#include "cGameAIObject.h"
 #include "cGameActionSkinnedMeshObj.h"
 
 cGameObjManager::cGameObjManager()
@@ -169,12 +170,12 @@ bool cGameObjManager::isGameObjectCollided(cGameObject* pFrom){
 							if (isCollided(from, fFrom, scale, to, fTo, scale2)){
 								if (pFrom->GetState() < 1){
 									p->ForcedMoving(-dist, pFrom->GetMoveSpeed() * .1f);
-									ret = true;
 								}
 								else {
 									pFrom->ForcedMoving(-dist, pFrom->GetMoveSpeed() * .1f);
 									p->ForcedMoving(-dist, pFrom->GetMoveSpeed() * .3f);
 								}
+								ret = true;
 							}
 						}
 					}

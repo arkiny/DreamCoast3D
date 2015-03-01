@@ -184,15 +184,6 @@
     <ClCompile Include="cUITextView.cpp">
       <Filter>FrameWork\Object\UIObject</Filter>
     </ClCompile>
-    <ClCompile Include="cUISkillShortCut.cpp">
-      <Filter>EachWorks\HD</Filter>
-    </ClCompile>
-    <ClCompile Include="cUIStatWindow.cpp">
-      <Filter>EachWorks\HD</Filter>
-    </ClCompile>
-    <ClCompile Include="cUIMinimap.cpp">
-      <Filter>EachWorks\HD</Filter>
-    </ClCompile>
     <ClCompile Include="cUIInventory.cpp">
       <Filter>EachWorks\HD\TODO-DistAfter\InGameUI</Filter>
     </ClCompile>
@@ -210,9 +201,6 @@
     </ClCompile>
     <ClCompile Include="cUILoader.cpp">
       <Filter>FrameWork\Loader</Filter>
-    </ClCompile>
-    <ClCompile Include="cUIExpBar.cpp">
-      <Filter>EachWorks\HD</Filter>
     </ClCompile>
     <ClCompile Include="cGameMapHeightGridSystem.cpp">
       <Filter>EachWorks\MS</Filter>
@@ -261,6 +249,21 @@
     </ClCompile>
     <ClCompile Include="iGameStateObject.cpp">
       <Filter>FrameWork\Interfaces</Filter>
+    </ClCompile>
+    <ClCompile Include="cUIExpBar.cpp">
+      <Filter>EachWorks\HD\TODO-DistAfter\InGameUI</Filter>
+    </ClCompile>
+    <ClCompile Include="cUIMinimap.cpp">
+      <Filter>EachWorks\HD\TODO-DistAfter\InGameUI</Filter>
+    </ClCompile>
+    <ClCompile Include="cUISkillShortCut.cpp">
+      <Filter>EachWorks\HD\TODO-DistAfter\InGameUI</Filter>
+    </ClCompile>
+    <ClCompile Include="cUIStatWindow.cpp">
+      <Filter>EachWorks\HD\TODO-DistAfter\InGameUI</Filter>
+    </ClCompile>
+    <ClCompile Include="cActionIdle.cpp">
+      <Filter>FrameWork\Object\GameObject\GameActionObject\Action</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -453,15 +456,6 @@
     <ClInclude Include="cUITextView.h">
       <Filter>FrameWork\Object\UIObject</Filter>
     </ClInclude>
-    <ClInclude Include="cUIStatWindow.h">
-      <Filter>EachWorks\HD</Filter>
-    </ClInclude>
-    <ClInclude Include="cUISkillShortCut.h">
-      <Filter>EachWorks\HD</Filter>
-    </ClInclude>
-    <ClInclude Include="cUIMinimap.h">
-      <Filter>EachWorks\HD</Filter>
-    </ClInclude>
     <ClInclude Include="cUISystemMenu.h">
       <Filter>EachWorks\HD\TODO-DistAfter\InGameUI</Filter>
     </ClInclude>
@@ -480,17 +474,11 @@
     <ClInclude Include="cUILoader.h">
       <Filter>FrameWork\Loader</Filter>
     </ClInclude>
-    <ClInclude Include="cUIExpBar.h">
-      <Filter>EachWorks\HD</Filter>
-    </ClInclude>
     <ClInclude Include="cGameMapHeightGridSystem.h">
       <Filter>EachWorks\MS</Filter>
     </ClInclude>
     <ClInclude Include="cGameSMeshBodyObject.h">
       <Filter>EachWorks\MW</Filter>
-    </ClInclude>
-    <ClInclude Include="cGamePlayableObject.h">
-      <Filter>EachWorks\HD</Filter>
     </ClInclude>
     <ClInclude Include="cPlayerMove.h">
       <Filter>EachWorks\HD\PlayerFSM</Filter>
@@ -536,6 +524,24 @@
     </ClInclude>
     <ClInclude Include="iGameStateObject.h">
       <Filter>FrameWork\Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="cGamePlayableObject.h">
+      <Filter>EachWorks\HD</Filter>
+    </ClInclude>
+    <ClInclude Include="cUIExpBar.h">
+      <Filter>EachWorks\HD\TODO-DistAfter\InGameUI</Filter>
+    </ClInclude>
+    <ClInclude Include="cUIMinimap.h">
+      <Filter>EachWorks\HD\TODO-DistAfter\InGameUI</Filter>
+    </ClInclude>
+    <ClInclude Include="cUISkillShortCut.h">
+      <Filter>EachWorks\HD\TODO-DistAfter\InGameUI</Filter>
+    </ClInclude>
+    <ClInclude Include="cUIStatWindow.h">
+      <Filter>EachWorks\HD\TODO-DistAfter\InGameUI</Filter>
+    </ClInclude>
+    <ClInclude Include="cActionIdle.h">
+      <Filter>FrameWork\Object\GameObject\GameActionObject\Action</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

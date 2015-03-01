@@ -87,6 +87,7 @@
   <ItemGroup>
     <ClInclude Include="Asciitok.h" />
     <ClInclude Include="cAction.h" />
+    <ClInclude Include="cActionIdle.h" />
     <ClInclude Include="cActionMove.h" />
     <ClInclude Include="cActionRepeat.h" />
     <ClInclude Include="cActionSeq.h" />
@@ -179,6 +180,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cAction.cpp" />
+    <ClCompile Include="cActionIdle.cpp" />
     <ClCompile Include="cActionMove.cpp" />
     <ClCompile Include="cActionRepeat.cpp" />
     <ClCompile Include="cActionSeq.cpp" />

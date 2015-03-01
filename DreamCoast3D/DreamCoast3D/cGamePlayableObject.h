@@ -79,7 +79,7 @@ public:
 	virtual void ChangeState(EPLAYABLESTATE eNewState);
 	virtual int GetState() override;
 
-
+	void OnHitTarget(cGameObject* pTarget) override;
 
 	//:¹Î¿ì
 	//void cGamePlayableObject::CalcCollisionSphere(ST_BONE_MESH* pBoneMesh);
