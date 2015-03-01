@@ -69,6 +69,19 @@ cSkinnedMesh::cSkinnedMesh(std::string sFolder, std::string sFile)
 		SAFE_RELEASE(m_pDebugSphereBody);
 		D3DXCreateSphere(g_pD3DDevice, m_stUpdateBoundingSphere.m_fRadius, 10, 10, &m_pDebugSphereBody, NULL);
 	}
+
+	// Attack용 임시처리, HD
+	D3DXVECTOR3 localCenter(0, 0, 0);
+	D3DXMATRIXA16 mat;
+	D3DXFRAME* pFxCenter;
+	pFxCenter = D3DXFrameFind(m_pRootFrame, "FxCenter");
+	if (pFxCenter){
+		mat = pFxCenter->TransformationMatrix;
+		D3DXVec3TransformCoord(&localCenter, &localCenter, &mat);
+		m_stAttacSphere.m_vCenter = localCenter;
+		m_stAttacSphere.m_fRadius = m_mapDebugOriginSphereBody[std::string("FxCenter")].m_fRadius + 2.0f;
+	}
+	//D3DXCreateSphere(g_pD3DDevice, m_stAttacSphere.m_fRadius, 10, 10, &, NULL);
 }
 
 cSkinnedMesh::cSkinnedMesh()
@@ -225,6 +238,12 @@ void cSkinnedMesh::Update(ST_BONE* pCurrent, D3DXMATRIXA16* pmatParent)
 			&m_stUpdateBoundingSphere.m_vCenter,
 			&D3DXVECTOR3(0,0,0),
 			&pCurrent->CombinedTransformationMatrix);
+
+		D3DXVec3TransformCoord(
+			&m_stUpdateAttacSphere.m_vCenter,
+			&D3DXVECTOR3(0,0,0),
+			&pCurrent->CombinedTransformationMatrix
+			);
 	}
 
 	if (pCurrent->pFrameSibling)

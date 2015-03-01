@@ -321,3 +321,62 @@ std::vector<cGameObject*> cGameObjManager::GetInSightObject(ST_BOUNDING_SPHERE s
 	}
 	return vecGameObject;
 }
+
+void cGameObjManager::AttackMobToPlayer(cGameAIObject* pFrom){
+	int nAttackRange = 10;
+	D3DXVECTOR3 vFrom;
+	vFrom = pFrom->GetPosition();
+	std::vector<cGameObject*> vecGameObject;
+	vecGameObject = m_pGridTileSystem->GetAdjObjectCustomer(vFrom.x, vFrom.z, nAttackRange);
+
+	for (auto p : vecGameObject){
+		if (p == pFrom){
+			continue;
+		}
+		else{
+			if (p->GetCollisionSphere()){
+				D3DXVECTOR3 from = pFrom->GetAttackSphere()->m_vCenter;
+				D3DXVECTOR3 to = p->GetCollisionSphere()->m_vCenter;
+				D3DXVECTOR3 dist = from - to;
+
+				float fFrom = pFrom->GetAttackSphere()->m_fRadius;
+				float fTo = p->GetCollisionSphere()->m_fRadius;
+				/*float scale = pFrom->GetScale().x;
+				float scale2 = p->GetScale().x;*/
+				float scale = 1.0f;
+				float scale2 = 1.0f;
+				if (isCollided(from, fFrom, scale, to, fTo, scale2)){
+					std::map<std::string, ST_BOUNDING_SPHERE>* pMap = p->GetUpdatedDetailedSphere();
+					for (auto pSphere : *pMap){
+
+						D3DXVECTOR3 from = pFrom->GetCollisionSphere()->m_vCenter;
+						D3DXVECTOR3 to = pSphere.second.m_vCenter;
+						D3DXVECTOR3 dist = from - to;
+						float fFrom = pFrom->GetCollisionSphere()->m_fRadius;
+						float fTo = pSphere.second.m_fRadius;
+						/*float scale = pFrom->GetScale().x;
+						float scale2 = p->GetScale().x;*/
+
+						float scale = 1.0f;
+						float scale2 = 1.0f;
+
+						if (isCollided(from, fFrom, scale, to, fTo, scale2)){
+							if (p->GetGameObjectType() == p->E_PLAYABLE){
+								p->OnHitTarget(pFrom);
+							}
+						}
+					}
+				}
+			}
+			else{
+				continue;
+			}
+		}
+	}
+	//return false;
+}
+
+ST_STAT_INFO* cGameObjManager::GetPlayerStatInfo(){
+	ST_STAT_INFO* ret = m_pPlayable->GetStatInfo();;
+	return ret;
+}

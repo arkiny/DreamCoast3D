@@ -3,6 +3,7 @@
 #include "cAIFSM.h"
 #include "cActionMove.h"
 #include "cTransform.h"
+#include "cSkinnedMesh.h"
 
 cGameAIObject::cGameAIObject()
 	:m_pCurrentState(NULL),
@@ -12,7 +13,9 @@ cGameAIObject::cGameAIObject()
 	m_eAITYPE(E_AI_AGGRESSIVE),
 	m_fAttackRange(2.0f),
 	m_vFront(0, 0, -1),
-	m_fAIAngle(0)
+	m_fAIAngle(0),
+	m_fAttackSpeed(2.0f),
+	m_fAttackCoolTime(3.0f)
 {
 	m_fMoveSpeed = 10.0f;
 	m_eGameObjectType = eGameObjectType::E_MOP;
@@ -29,6 +32,7 @@ cGameAIObject::~cGameAIObject()
 
 void cGameAIObject::Setup(std::string sFolder, std::string sFile){
 	cGameActionSkinnedMeshObj::Setup(sFolder, sFile);
+	
 	m_vecPatterns.resize(EAIOBJECTSTATE::eAISTATE_MAX);
 	m_vecPatterns[eAISTATE_IDLE] = new cAIIdle;
 	m_vecPatterns[eAISTATE_MOVE] = new cAIMove;
@@ -45,6 +49,12 @@ void cGameAIObject::Setup(std::string sFolder, std::string sFile){
 void cGameAIObject::Update(float fDelta){
 	cGameActionSkinnedMeshObj::Update(fDelta);
 	m_fPassedTime += fDelta;
+
+	m_fAttackCoolTime += fDelta;
+	if (m_fAttackCoolTime > 3.0f){
+		m_fAttackCoolTime = 3.0f;
+	}
+
 	m_pCurrentState->Execute(this, fDelta);
 	m_pGameObjDeligate->isGameObjectCollided(this);
 }

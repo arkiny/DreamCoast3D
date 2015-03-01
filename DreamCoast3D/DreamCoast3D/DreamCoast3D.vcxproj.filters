@@ -184,9 +184,6 @@
     <ClCompile Include="cUITextView.cpp">
       <Filter>FrameWork\Object\UIObject</Filter>
     </ClCompile>
-    <ClCompile Include="cUIInventory.cpp">
-      <Filter>EachWorks\HD\TODO-DistAfter\InGameUI</Filter>
-    </ClCompile>
     <ClCompile Include="cUIPlayerInfo.cpp">
       <Filter>EachWorks\HD\TODO-DistAfter\InGameUI</Filter>
     </ClCompile>
@@ -253,17 +250,20 @@
     <ClCompile Include="cUIExpBar.cpp">
       <Filter>EachWorks\HD\TODO-DistAfter\InGameUI</Filter>
     </ClCompile>
-    <ClCompile Include="cUIMinimap.cpp">
-      <Filter>EachWorks\HD\TODO-DistAfter\InGameUI</Filter>
-    </ClCompile>
-    <ClCompile Include="cUISkillShortCut.cpp">
-      <Filter>EachWorks\HD\TODO-DistAfter\InGameUI</Filter>
-    </ClCompile>
     <ClCompile Include="cUIStatWindow.cpp">
       <Filter>EachWorks\HD\TODO-DistAfter\InGameUI</Filter>
     </ClCompile>
     <ClCompile Include="cActionIdle.cpp">
       <Filter>FrameWork\Object\GameObject\GameActionObject\Action</Filter>
+    </ClCompile>
+    <ClCompile Include="cUISkillShortCut.cpp">
+      <Filter>EachWorks\MW\Todo</Filter>
+    </ClCompile>
+    <ClCompile Include="cUIInventory.cpp">
+      <Filter>EachWorks\MW\Todo</Filter>
+    </ClCompile>
+    <ClCompile Include="cUIMinimap.cpp">
+      <Filter>EachWorks\MS\Todo</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -459,9 +459,6 @@
     <ClInclude Include="cUISystemMenu.h">
       <Filter>EachWorks\HD\TODO-DistAfter\InGameUI</Filter>
     </ClInclude>
-    <ClInclude Include="cUIInventory.h">
-      <Filter>EachWorks\HD\TODO-DistAfter\InGameUI</Filter>
-    </ClInclude>
     <ClInclude Include="cUIPlayerInfo.h">
       <Filter>EachWorks\HD\TODO-DistAfter\InGameUI</Filter>
     </ClInclude>
@@ -531,17 +528,20 @@
     <ClInclude Include="cUIExpBar.h">
       <Filter>EachWorks\HD\TODO-DistAfter\InGameUI</Filter>
     </ClInclude>
-    <ClInclude Include="cUIMinimap.h">
-      <Filter>EachWorks\HD\TODO-DistAfter\InGameUI</Filter>
-    </ClInclude>
-    <ClInclude Include="cUISkillShortCut.h">
-      <Filter>EachWorks\HD\TODO-DistAfter\InGameUI</Filter>
-    </ClInclude>
     <ClInclude Include="cUIStatWindow.h">
       <Filter>EachWorks\HD\TODO-DistAfter\InGameUI</Filter>
     </ClInclude>
     <ClInclude Include="cActionIdle.h">
       <Filter>FrameWork\Object\GameObject\GameActionObject\Action</Filter>
+    </ClInclude>
+    <ClInclude Include="cUISkillShortCut.h">
+      <Filter>EachWorks\MW\Todo</Filter>
+    </ClInclude>
+    <ClInclude Include="cUIInventory.h">
+      <Filter>EachWorks\MW\Todo</Filter>
+    </ClInclude>
+    <ClInclude Include="cUIMinimap.h">
+      <Filter>EachWorks\MS\Todo</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -639,6 +639,12 @@
     </Filter>
     <Filter Include="FrameWork\FX">
       <UniqueIdentifier>{4e55bb74-4fe7-46d3-94b7-d8793094f829}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="EachWorks\MS\Todo">
+      <UniqueIdentifier>{90cc1dc4-9eb5-4efa-a09c-cd7086883edb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="EachWorks\MW\Todo">
+      <UniqueIdentifier>{70713648-0207-4f31-8d70-ff0ba213f875}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

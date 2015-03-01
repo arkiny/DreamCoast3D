@@ -80,5 +80,7 @@ public:
 	virtual float GetMoveSpeed() { return 1.0f; }
 	virtual void SetTargetObject(cGameObject* pTarget) {}
 	virtual void OnHitTarget(cGameObject* pTarget) {}
+	virtual ST_STAT_INFO* GetStatInfo(){ return NULL; }
+	
 };
 

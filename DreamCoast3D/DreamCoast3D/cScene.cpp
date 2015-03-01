@@ -133,7 +133,8 @@ void cScene::Start(){
 	}
 
 	m_pGameObjManager->SetCurrentTileSystem(m_pCurrentMap);
-	
+	m_pUIObjManager->SetGameObjDeligate(m_pGameObjManager);
+
 	m_pCamera->SetTarget(m_pGameObjManager->GetPlayerableGameObject()->GetTransform()->getPosPointer());
 	m_pGameObjManager->SetCameraDeligate(m_pCamera);
 }

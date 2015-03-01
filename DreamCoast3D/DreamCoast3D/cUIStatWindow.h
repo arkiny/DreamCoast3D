@@ -1,6 +1,6 @@
 #pragma once
 
-class cObjectPlayerable;
+class cGamePlayableObject;
 class cUIImageView;
 
 class cUIStatWindow : public cUIWindow
@@ -27,10 +27,6 @@ public:
 	virtual ~cUIStatWindow();
 
 	virtual void Setup();
-	
-	// TODO : 차후 타겟을 정할때 쓸 함수
-	virtual void SetTarget(cObjectPlayerable* pPlayer);
-
 	virtual void Update(float fDelta);
 	virtual void Render();
 };

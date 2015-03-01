@@ -154,6 +154,36 @@ struct ST_TILE_GRIDPOS{
 	ST_TILE_GRIDPOS(int nX, int nZ) : x(nX), z(nZ){}
 };
 
+// TODO 
+// 차후 인벤토리 등을 추가해서
+// 아래 PlayerbleObject, 혹은 플레이어클래스를 새로 상속받아 만들어서
+// 캐릭터 스탯 조절 실시
+// 인벤토리는 중복 적용되지 않게 map으로 간단하게 구현 예정(D2D작업당시 비슷하게)
+typedef struct ST_STAT_INFO{
+	int nStrength = 1;				// 힘
+	int nArmor = 1;					// 방어력
+	int nAgility = 1;				// 민첩성
+	int nAttackSpeed = 1;			// 공속
+	int nMoveSpeed = 10;				// 이동속도
+
+	// 실질적 전투수치
+	float fStatAttackPower =1.0f;		//공격력
+	float fStatDefensePower = 1.0f;	//방어력
+	float fKnockingDownRate = 1.0f;	//다운유발확률
+	float fKnockDownResist = 1.0f;				//다운저항치
+	float fCriticalRate = 1.0f;				//크리티컬확률
+	float fCriticalResist = 1.0f;				//크리티컬저항
+	float fCriticalMultiplier = 1.0f;			//크리티컬배율
+
+	// 기본 체력
+	float fMaxHp = 100.0f;
+	float fCurrentHp = 100.0f;
+	float fMaxMana = 100.0f;
+	float fCurrentMana = 100.0f;
+	float fMaxExp = 100.0f;
+	float fCurrentExp = 0.0f;
+} *LPPLAYERINFO;
+
 // 인터페이스들
 #include "iSceneDelegate.h"
 #include "iActionDelegate.h"

@@ -34,12 +34,16 @@ protected:
 	SYNTHESIZE(D3DXVECTOR3, m_vFront, Front);
 	SYNTHESIZE(float, m_fAIAngle, AIAngle);
 
+	// Check 몬스터의 공격속도 초당 횟수
+	SYNTHESIZE(float, m_fAttackSpeed, AttackSpeed);
+	SYNTHESIZE(float, m_fAttackCoolTime, AttackCoolTime);
+
 	std::vector<iAIState*>	m_vecPatterns;
 	iAIState*				m_pCurrentState;
 	iAIState*				m_pPrevState;
 	cGameObject*			m_pTargetGameObject;
 
-	std::map<cGameObject*, int> m_mapAggromap;
+	std::map<cGameObject*, float> m_mapAggromap;
 
 	//SYNTHESIZE(cGameObject*, m_pTargetGameObject, TargetObject);
 

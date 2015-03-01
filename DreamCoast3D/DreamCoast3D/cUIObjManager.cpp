@@ -44,3 +44,9 @@ void cUIObjManager::Destroy(){
 	}
 	this->Release();
 }
+
+void cUIObjManager::SetGameObjDeligate(iGameObjectDelegate* pGameManager){
+	for (auto p : m_vecUIObjects){
+		p->SetGameObjDeligate(pGameManager);
+	}
+}

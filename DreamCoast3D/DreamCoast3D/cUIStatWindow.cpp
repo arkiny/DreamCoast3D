@@ -3,6 +3,7 @@
 #include "cUIImageView.h"
 #include "cUIImageButton.h"
 #include "cUITextView.h"
+#include "cGamePlayableObject.h"
 
 cUIStatWindow::cUIStatWindow()
 	: m_fMaxHealth(1000.0f)
@@ -64,7 +65,7 @@ void cUIStatWindow::Setup(){
 
 	m_pHealth->SetScale(D3DXVECTOR3(21.4, 1.0f, 1.0f));
 	m_pUIRoot->AddChild(m_pHealth);
-	SAFE_RELEASE(m_pHealth);
+	m_pHealth->Release();
 
 	pImageView = new cUIImageView(m_pSprite);
 	pImageView->SetTextureFilename(std::string("../Resources/UI/UI_CharacterWindow/CharacterWindow_IED.tga"));
@@ -82,8 +83,7 @@ void cUIStatWindow::Setup(){
 	// 21.3 ÀÌ ÁÂ¿ì maxÄ¡
 	m_pMana->SetScale(D3DXVECTOR3(21.3f, 1.0f, 1.0f));
 	pImageView->AddChild(m_pMana);
-	SAFE_RELEASE(m_pMana);
-
+	m_pMana->Release();
 
 	m_pUIRoot->AddChild(pImageView);
 	SAFE_RELEASE(pImageView);
@@ -97,6 +97,12 @@ void cUIStatWindow::Setup(){
 }
 
 void cUIStatWindow::Update(float fDelta){
+	float fcurHP = m_pGameObjDelgate->GetPlayerStatInfo()->fCurrentHp;
+	float fmaxHp = m_pGameObjDelgate->GetPlayerStatInfo()->fMaxHp;
+	float fHPrate = fcurHP / fmaxHp;
+	m_pHealth->SetScale(D3DXVECTOR3(21.4*fHPrate, 1.0f, 1.0f));
+	m_pMana->SetScale(D3DXVECTOR3(21.3f, 1.0f, 1.0f));
+
 	if (m_pUIRoot)
 		m_pUIRoot->Update(fDelta);
 }
@@ -106,8 +112,4 @@ void cUIStatWindow::Render(){
 	{
 		m_pUIRoot->Render();	
 	}
-}
-
-void cUIStatWindow::SetTarget(cObjectPlayerable* pPlayer){
-
 }

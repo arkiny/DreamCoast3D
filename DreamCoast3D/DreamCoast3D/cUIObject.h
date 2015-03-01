@@ -14,6 +14,9 @@ protected:
 	SYNTHESIZE_PASS_BY_REF(ST_SIZE, m_stSize, Size);
 	SYNTHESIZE(int, m_nTag, Tag);
 
+
+	SYNTHESIZE(iGameObjectDelegate*, m_pGameObjDelgate, GameObjDeligate);
+
 public:
 	cUIObject();
 	cUIObject(LPD3DXSPRITE pSprite);

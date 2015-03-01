@@ -18,14 +18,8 @@ void cPlayerAttack::Start(cGamePlayableObject* pPlayer){
 
 void cPlayerAttack::Execute(cGamePlayableObject* pPlayer, float fDelta){
 	pPlayer->SetStatePassedTime(pPlayer->GetStatePassedTime() + fDelta);
-	
 	pPlayer->GetGameObjDeligate()->isGameAttackSphereCollided(pPlayer, *pPlayer->GetAttackSphere());
 	
-	//if (g_pControlManager->GetInputInfo(VK_LBUTTON)){	
-	//return;
-	// do nothing
-	//}
-
 	if (g_pControlManager->GetInputInfo('A')){
 		D3DXMATRIXA16 matR;
 		float angle = pPlayer->GetPlayerAngle();

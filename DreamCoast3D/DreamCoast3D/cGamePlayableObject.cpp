@@ -8,10 +8,14 @@
 cGamePlayableObject::cGamePlayableObject()
 	:m_vecFront(0, 0, -1),
 	//m_fMoveSpeed(10.0f),
-	m_fPlayerAngleDegree(0.0f)
+	m_fPlayerAngleDegree(0.0f),
+	m_fPlayerInvincibleTime(0.5f),
+	m_fPlayerInvincibleCool(1.0f),
+	m_pPlayerStatInfo(NULL)
 {
 	m_eGameObjectType = eGameObjectType::E_PLAYABLE;
 	m_fMoveSpeed = 10.0f;
+	m_pPlayerStatInfo = new ST_STAT_INFO;
 }
 
 cGamePlayableObject::~cGamePlayableObject()
@@ -19,6 +23,7 @@ cGamePlayableObject::~cGamePlayableObject()
 	for (auto p : m_vecStates){
 		delete p;
 	}
+	delete m_pPlayerStatInfo;
 }
 
 void cGamePlayableObject::Setup(
@@ -41,13 +46,23 @@ void cGamePlayableObject::Setup(
 void cGamePlayableObject::Update(float fDelta){
 	cGameActionSkinnedMeshObj::Update(fDelta);
 	m_pCurrentState->Execute(this, fDelta);
+	
 	m_pGameObjDeligate->isGameObjectCollided(this);
+	m_fPlayerInvincibleCool += fDelta;
+
+	if (m_fPlayerInvincibleCool > 2.0f) {
+		// 혹시 모를 오버플로우 대비
+		// TODO: 차후 맥스 경직값을 정해야함
+		m_fPlayerInvincibleCool = 2.0f;
+	}
 }
 
 void cGamePlayableObject::ChangeState(EPLAYABLESTATE eNewState){
-	m_pCurrentState->Exit(this);
-	m_pCurrentState = m_vecStates[eNewState];
-	m_fStatePassedTime = 0.0f;
+	if (m_pCurrentState != m_vecStates[eNewState]){
+		m_pCurrentState->Exit(this);
+		m_pCurrentState = m_vecStates[eNewState];
+		m_fStatePassedTime = 0.0f;
+	}	
 	m_pCurrentState->Start(this);
 }
 
@@ -60,5 +75,10 @@ int cGamePlayableObject::GetState() {
 }
 
 void cGamePlayableObject::OnHitTarget(cGameObject* pTarget){
-	this->ChangeState(this->EPLAYABLESTATE_ONHIT);
+	if (m_pCurrentState != m_vecStates[this->EPLAYABLESTATE_ONHIT]){
+		if (m_fPlayerInvincibleCool > m_fPlayerInvincibleTime){
+			this->ChangeState(this->EPLAYABLESTATE_ONHIT);
+			m_fPlayerInvincibleCool = 0.0f;
+		}
+	}
 }

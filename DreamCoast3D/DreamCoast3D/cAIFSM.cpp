@@ -166,6 +166,7 @@ int cAIMoveToTarget::GetCurrentStateType(){
 void cAIAttack::Start(cGameAIObject* pAIObject){
 	pAIObject->GetSkinnedMesh()->SetAnimationIndex(3);
 	pAIObject->SetPassedTime(0);
+	pAIObject->SetAttackCoolTime(0);
 }
 
 void cAIAttack::Execute(cGameAIObject* pAIObject, float fDelta){
@@ -173,10 +174,12 @@ void cAIAttack::Execute(cGameAIObject* pAIObject, float fDelta){
 		pAIObject->ChangeState(pAIObject->eAISTATE_THINK);
 		return;
 	}
+	pAIObject->GetGameObjDeligate()->AttackMobToPlayer(pAIObject);
 }
 
 void cAIAttack::Exit(cGameAIObject* pAIObject){
 	//pAIObject->SetPassedTime(0);
+	//pAIObject->SetAttackCoolTime(0);
 }
 
 int  cAIAttack::GetCurrentStateType(){
@@ -225,17 +228,24 @@ void cAIThink::Execute(cGameAIObject* pAIObject, float fDelta){
 		D3DXVECTOR3 vCurPos = pAIObject->GetPosition();
 		D3DXVECTOR3 vTargetPos = pAIObject->GetTargetObject()->GetPosition();
 		float fAttackRange = pAIObject->GetAttackRange();
+		// pAIObject->SetAttackCoolTime(pAIObject->GetAttackCoolTime() + fDelta);
 		// pAIObject->GetAttackSphere() // 실질적인 타격 스피어
 		// 적을 향해 이동중에 적이 사거리 내에 있을 경우
 		float fDist = D3DXVec3Length(&(vTargetPos - vCurPos));
 		if (fAttackRange > fDist){
-			pAIObject->ChangeState(pAIObject->eAISTATE_ATTACK);
-			return;
+			if (pAIObject->GetAttackCoolTime() > pAIObject->GetAttackSpeed()){
+				pAIObject->ChangeState(pAIObject->eAISTATE_ATTACK);
+				return;
+			}
+			else{
+				//pAIObject->ChangeState(pAIObject->eAISTATE_MOVETOTARGET);
+				return;
+			}
 		}
 		else {
 			pAIObject->ChangeState(pAIObject->eAISTATE_MOVETOTARGET);
-		}
-		return;
+			return;
+		}		
 	}
 
 	// 시야 내에 적이 있다면

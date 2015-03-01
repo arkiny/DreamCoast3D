@@ -2,8 +2,8 @@
 #include "iGameObjectDelegate.h"
 #include "iCameraDeligate.h"
 class cFrustum;
-class cGameObject;
 class cGameMapObject;
+class cGamePlayableObject;
 
 class cGameObjManager : public cObject, public iGameObjectDelegate
 {
@@ -11,7 +11,7 @@ private:
 	// 프러스텀 컬링용
 	cFrustum*						m_pFrustum;
 
-	cGameObject*					m_pPlayable;
+	cGameObject*			m_pPlayable;
 
 	iGridTileSystem*				m_pGridTileSystem;
 	iCameraDeligate*				m_pCameraDeligate;
@@ -49,6 +49,8 @@ public:
 	bool isGameObjectCollided(cGameObject* pFrom) override;
 	bool isGameAttackSphereCollided(cGameObject* pFrom, ST_BOUNDING_SPHERE stAttackSphere) override;
 	std::vector<cGameObject*> GetInSightObject(ST_BOUNDING_SPHERE stSphere) override;
+	void AttackMobToPlayer(cGameAIObject* pFrom) override;
+	ST_STAT_INFO* GetPlayerStatInfo() override;
 
 protected:
 	bool isCollided(D3DXVECTOR3 vFromCenter,
@@ -56,8 +58,9 @@ protected:
 		D3DXVECTOR3 vToCenter,
 		float fCenterRad, float fToScale);
 
-	// Calculate by Conan
+	
 private:
+	// Calculated by Conan
 	D3DXVECTOR3 PushingForce(D3DXVECTOR3* vFrom, float fFromLength, D3DXVECTOR3* vTo, float fFromTo);
 	
 };

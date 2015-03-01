@@ -20,6 +20,8 @@ public:
 	virtual void AddUI(cUIObject* pUIRoot);
 	virtual void RemoveUI();
 
+	virtual void SetGameObjDeligate(iGameObjectDelegate* pGameManager);
+
 	virtual void Destroy();
 };
 
