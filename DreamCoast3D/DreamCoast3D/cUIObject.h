@@ -16,6 +16,7 @@ protected:
 
 
 	SYNTHESIZE(iGameObjectDelegate*, m_pGameObjDelgate, GameObjDeligate);
+	SYNTHESIZE(iSceneDelegate*, m_pSceneDeligate, SceneDeligate);
 
 public:
 	cUIObject();
@@ -34,8 +35,11 @@ public:
 	virtual ~cUIObject();
 
 	virtual void AddChild(cUIObject* pChild);
-	virtual void Update(float fDelta);
+
 	virtual void Setup(){}
+	virtual void Start(){}
+
+	virtual void Update(float fDelta);
 	virtual void Render();
 	virtual void Destroy();
 

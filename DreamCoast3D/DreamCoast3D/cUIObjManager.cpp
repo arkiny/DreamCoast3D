@@ -50,3 +50,15 @@ void cUIObjManager::SetGameObjDeligate(iGameObjectDelegate* pGameManager){
 		p->SetGameObjDeligate(pGameManager);
 	}
 }
+
+void cUIObjManager::SetSceneDeligate(iSceneDelegate* pSceneManager){
+	for (auto p : m_vecUIObjects){
+		p->SetSceneDeligate(pSceneManager);
+	}
+}
+
+void cUIObjManager::Start(){
+	for (auto p : m_vecUIObjects){
+		p->Start();
+	}
+}

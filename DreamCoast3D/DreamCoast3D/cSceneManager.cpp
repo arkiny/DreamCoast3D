@@ -10,7 +10,6 @@ cSceneManager::cSceneManager()
 {
 }
 
-
 cSceneManager::~cSceneManager()
 {
 	SAFE_RELEASE(m_pCurrentScene);
@@ -41,12 +40,10 @@ void cSceneManager::Update(float delta){
 }
 
 void cSceneManager::Start(){
+	// 일단 첫씬 0번은 미리 로딩
 	cSceneLoader SceneLoader;
-
 	if (!m_vecSceneInfoFilePath.empty()){
-		m_pCurrentScene = SceneLoader.ParseScene(m_vecSceneInfoFilePath[0]);
-		m_pCurrentScene->SetDelegate(this);
-		m_pCurrentScene->Start();
+		ChangeScene(0);
 	}
 }
 
@@ -74,12 +71,13 @@ void cSceneManager::SceneFinished(cScene* pSender){
 void cSceneManager::ChangeScene(int nNextSceneIndex){
 	assert(nNextSceneIndex < m_vecSceneInfoFilePath.size());
 	m_bIsLoading = true;
-	m_pCurrentScene->Exit();
-	SAFE_RELEASE(m_pCurrentScene);
-	g_pSkinnedMeshManager->Destroy();
-	g_pAseManager->Destroy();
-	g_pTextureManager->Destroy();
-
+	if (m_pCurrentScene){
+		m_pCurrentScene->Exit();
+		SAFE_RELEASE(m_pCurrentScene);
+		g_pSkinnedMeshManager->Destroy();
+		g_pAseManager->Destroy();
+		g_pTextureManager->Destroy();
+	}
 	m_pCurrentScene = new cLoadingScene;
 	m_pCurrentScene->Setup(m_vecSceneInfoFilePath[nNextSceneIndex]);
 
