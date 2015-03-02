@@ -12,7 +12,7 @@ private:
 	// 프러스텀 컬링용
 	cFrustum*						m_pFrustum;
 
-	cGameObject*			m_pPlayable;
+	cGameObject*					m_pPlayable;
 
 	iGridTileSystem*				m_pGridTileSystem;
 	iCameraDeligate*				m_pCameraDeligate;

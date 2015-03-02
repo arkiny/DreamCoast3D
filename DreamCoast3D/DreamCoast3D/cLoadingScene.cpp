@@ -17,6 +17,7 @@ cLoadingScene::~cLoadingScene()
 	WaitForSingleObject(LoadNextScene, INFINITE);
 	DeleteCriticalSection(&gCriticalSection);
 	SAFE_RELEASE(m_pFont);
+	SAFE_RELEASE(m_pNextScene);
 }
 
 void cLoadingScene::Setup(std::string sNextScene){
@@ -81,6 +82,7 @@ void cLoadingScene::LoadNextScene(LPVOID pParam){
 		ret->Start();
 	}
 	pLoadingScene->SetNextScene(ret);
+	ret->AddRef();
 
 	pLoadingScene->SetWorkDone(true);
 
