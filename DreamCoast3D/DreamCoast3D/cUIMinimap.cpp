@@ -5,7 +5,7 @@
 #include "cUITextView.h"
 
 cUIMinimap::cUIMinimap()
-	: m_fMiniMapSize(85.0f)
+	: m_fMiniMapSize(93.0f)
 {
 }
 
@@ -34,15 +34,16 @@ void cUIMinimap::Setup(){
 	pImageView->SetPosition(D3DXVECTOR3(right, 20.0f, 0.0f));
 	
 	m_pUIRoot = pImageView;
+}
 
-	pImageView = new cUIImageView(m_pSprite);
-	pImageView->SetTextureFilename(std::string(
-		"../Resources/UI/UI_Particle/Particle.tga"));
-	pImageView->SetPosition(D3DXVECTOR3(170.0f, 170.0f, 0.0f));
-
-	pImageView->SetScale(D3DXVECTOR3(0.05f, 0.05f, 0.05f));
-	m_pUIRoot->AddChild(pImageView);
-	SAFE_RELEASE(pImageView);
+void cUIMinimap::Start()
+{
+	//std::set<cGameObject*> setGameObject = m_pGameObjDelgate->GetObjectData();
+	//SetObject(setGameObject);
+	//cGameObject* pGameObject = m_pGameObjDelgate->GetPlayerData();
+	//D3DXVECTOR3 vec = pGameObject->GetPosition();
+	//SetPlayerPosition(&vec);
+	//SetSight(30.f);
 
 }
 
@@ -50,9 +51,16 @@ void cUIMinimap::Update(float fDelta){
 	if (m_pUIRoot)
 		m_pUIRoot->Update(fDelta);
 
+	//std::set<cGameObject*> setGameObject = m_pGameObjDelgate->GetObjectData();
+	//SetObject(setGameObject);
+	//cGameObject* pGameObject = m_pGameObjDelgate->GetPlayerData();
+	//D3DXVECTOR3 vec = pGameObject->GetPosition();
+	//SetPlayerPosition(&vec);
+	//SetSight(30.f);
 	//UpdateInSightObject(m_stPlayerSightSphere);
 	//UpdateMinimap();
 	//ObjectPositionUpdate();
+
 }
 
 void cUIMinimap::Render(){
@@ -85,6 +93,7 @@ std::vector<cGameObject*> cUIMinimap::UpdateInSightObject(ST_BOUNDING_SPHERE stS
 
 	for (auto p : m_setGameObject)
 	{
+
 		float fDist = 0.f;
 		D3DXVECTOR3 vDist(0.f, 0.f, 0.f);
 		D3DXVECTOR3 vObjectCenter(0.f, 0.f, 0.f);
@@ -119,21 +128,21 @@ void cUIMinimap::UpdateMinimap()
 
 void cUIMinimap::ObjectPositionUpdate()
 {
-	// 0 ~ 170
-	for (int i = 0; i < m_vecGameObjectInSight.size(); i++)
-	{
-		D3DXVECTOR3* vObjectPosition = new D3DXVECTOR3;
-		vObjectPosition = &m_vecPositionGameObjectInSight[i];
-		vObjectPosition->x = (vObjectPosition->x / m_stPlayerSightSphere.m_fRadius) 
-			* (m_fMiniMapSize) + m_fMiniMapSize;
-		vObjectPosition->y = (vObjectPosition->y / m_stPlayerSightSphere.m_fRadius)
-			* (m_fMiniMapSize) + m_fMiniMapSize;
+	//for (int i = 0; i < m_vecGameObjectInSight.size(); i++)
+	//{
+	//	D3DXVECTOR3* vObjectPosition = new D3DXVECTOR3;
+	//	vObjectPosition = &m_vecPositionGameObjectInSight[i];
+	//	vObjectPosition->x = (vObjectPosition->x / m_stPlayerSightSphere.m_fRadius) 
+	//		* (m_fMiniMapSize) + m_fMiniMapSize;
+	//	vObjectPosition->y = (vObjectPosition->y / m_stPlayerSightSphere.m_fRadius)
+	//		* (m_fMiniMapSize) + m_fMiniMapSize;
 
-		cUIImageView* pImageView = new cUIImageView(m_pSprite);
-		pImageView->SetTextureFilename(std::string("../Resources/UI/UI_Particle/Particle.tga"));
-		pImageView->SetPosition(*vObjectPosition);
-		pImageView->SetScale(D3DXVECTOR3(0.05f, 0.05f, 0.05f));
-		m_pUIRoot->AddChild(pImageView);
-		SAFE_RELEASE(pImageView);
-	}
+	//	cUIImageView* pImageView = new cUIImageView(m_pSprite);
+	//	pImageView->SetTextureFilename(std::string("../Resources/UI/UI_Particle/Particle.tga"));
+	//	pImageView->SetPosition(*vObjectPosition);
+	//	pImageView->SetScale(D3DXVECTOR3(0.01f, 0.01f, 0.01f));
+
+	//	m_pUIRoot->AddChild(pImageView);
+	//	SAFE_RELEASE(pImageView);
+	//}
 }
