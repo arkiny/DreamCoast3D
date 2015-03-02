@@ -42,6 +42,9 @@ private:
 
 	virtual void Start();
 
+	LPD3DXSPRITE		 m_pSpriteMiniMap;
+	D3DXIMAGE_INFO		 m_stImageInfo;
+	LPDIRECT3DTEXTURE9	 m_pTexture;
 private:
 
 

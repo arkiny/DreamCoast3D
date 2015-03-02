@@ -6,6 +6,8 @@
 
 cUIMinimap::cUIMinimap()
 	: m_fMiniMapSize(93.0f)
+	, m_pSpriteMiniMap(NULL)
+	, m_pTexture(NULL)
 {
 }
 
@@ -14,6 +16,9 @@ cUIMinimap::~cUIMinimap()
 	SAFE_RELEASE(m_pSprite);
 	if (m_pUIRoot)
 		m_pUIRoot->Destroy();
+
+	SAFE_RELEASE(m_pSpriteMiniMap);
+	SAFE_RELEASE(m_pTexture);
 }
 
 void cUIMinimap::Setup(){
@@ -34,6 +39,23 @@ void cUIMinimap::Setup(){
 	pImageView->SetPosition(D3DXVECTOR3(right, 20.0f, 0.0f));
 	
 	m_pUIRoot = pImageView;
+
+	D3DXCreateSprite(g_pD3DDevice, &m_pSpriteMiniMap);
+	D3DXCreateTextureFromFileEx(
+		g_pD3DDevice,
+		"../Resources/UI/UI_Particle/point.png",
+		D3DX_DEFAULT_NONPOW2,
+		D3DX_DEFAULT_NONPOW2,
+		D3DX_DEFAULT,
+		0,
+		D3DFMT_UNKNOWN,
+		D3DPOOL_MANAGED,
+		D3DX_FILTER_NONE,
+		D3DX_DEFAULT,
+		0,
+		&m_stImageInfo,
+		NULL,
+		&m_pTexture);
 }
 
 void cUIMinimap::Start()
@@ -51,23 +73,51 @@ void cUIMinimap::Update(float fDelta){
 	if (m_pUIRoot)
 		m_pUIRoot->Update(fDelta);
 
-	//std::set<cGameObject*> setGameObject = m_pGameObjDelgate->GetObjectData();
-	//SetObject(setGameObject);
-	//cGameObject* pGameObject = m_pGameObjDelgate->GetPlayerData();
-	//D3DXVECTOR3 vec = pGameObject->GetPosition();
-	//SetPlayerPosition(&vec);
-	//SetSight(30.f);
-	//UpdateInSightObject(m_stPlayerSightSphere);
-	//UpdateMinimap();
-	//ObjectPositionUpdate();
+	std::set<cGameObject*> setGameObject = m_pGameObjDelgate->GetObjectData();
+	SetObject(setGameObject);
+	cGameObject* pGameObject = m_pGameObjDelgate->GetPlayerData();
+	D3DXVECTOR3 vec = pGameObject->GetPosition();
+	SetPlayerPosition(&vec);
+	SetSight(30.f);
+	UpdateInSightObject(m_stPlayerSightSphere);
+	UpdateMinimap();
+	ObjectPositionUpdate();
 
 }
 
 void cUIMinimap::Render(){
+	if (m_pSpriteMiniMap)
+	{
+		for (int i = 0; i < m_vecPositionGameObjectInSight.size(); i++)
+		{
+			m_pSpriteMiniMap->Begin(D3DXSPRITE_ALPHABLEND | D3DXSPRITE_SORT_TEXTURE);
+			RECT rc;
+			SetRect(&rc, 0, 0, m_stImageInfo.Width, m_stImageInfo.Height);
+			D3DXMATRIXA16 matWorld;
+			D3DXMATRIXA16 matS;
+			D3DXMATRIXA16 matR;
+			D3DXMatrixRotationX(&matR, D3DX_PI / 2);
+			D3DXMatrixTranslation(&matWorld, m_vecPositionGameObjectInSight[i].x + 1148,
+				m_vecPositionGameObjectInSight[i].y + 93, 0.5);
+			D3DXMatrixScaling(&matS, 0.5f, 0.5f, 0.f);
+			matWorld = matS*matWorld;
+			m_pSpriteMiniMap->SetTransform(&matWorld);
+			m_pSpriteMiniMap->Draw(m_pTexture,
+				&rc,
+				&D3DXVECTOR3(0, 0, 0),
+				&D3DXVECTOR3(0, 0, 0),
+				D3DCOLOR_XRGB(255, 255, 255));
+			m_pSpriteMiniMap->End();
+		}
+
+	}
+
 	if (m_pSprite)
 	{
 		m_pUIRoot->Render();
 	}
+
+
 }
 
 void cUIMinimap::SetObject(std::set<cGameObject*> setGameObject)
