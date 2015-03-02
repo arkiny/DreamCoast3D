@@ -5,7 +5,7 @@
 #include "cUISkillShortCut.h"
 #include "cUIStatWindow.h"
 #include "cUIExpBar.h"
-
+#include "cUISystemTest.h"
 
 cUILoader::cUILoader()
 {
@@ -86,6 +86,10 @@ cUIObject* cUILoader::ParseUI(){
 			}
 			else if (isEqual(szTypeName, "UIMINIMAP")){
 				ret = new cUIMinimap;
+				ret->Setup();
+			}
+			else if (isEqual(szTypeName, "UIMAIN")){
+				ret = new cUISystemTest;
 				ret->Setup();
 			}
 		}

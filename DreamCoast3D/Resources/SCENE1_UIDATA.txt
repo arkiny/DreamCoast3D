@@ -1,3 +1,6 @@
 *UI_LIST {
-	*UI_COUNT 0	
+	*UI_COUNT 1
+	*UI 0 {
+		*UI_TYPE "UIMAIN"
+	}
 }

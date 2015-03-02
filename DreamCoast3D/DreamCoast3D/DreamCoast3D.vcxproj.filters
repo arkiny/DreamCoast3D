@@ -268,10 +268,18 @@
     <ClCompile Include="cSceneLoader.cpp">
       <Filter>FrameWork\Loader</Filter>
     </ClCompile>
-    <ClCompile Include="cLoadingScene.cpp" />
-    <ClCompile Include="cUISceneChangeButton.cpp" />
-    <ClCompile Include="cUISystemTest.cpp" />
-    <ClCompile Include="iUIManagerDeligate.cpp" />
+    <ClCompile Include="cLoadingScene.cpp">
+      <Filter>FrameWork\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="iUIManagerDeligate.cpp">
+      <Filter>FrameWork\Interfaces</Filter>
+    </ClCompile>
+    <ClCompile Include="cUISceneChangeButton.cpp">
+      <Filter>EachWorks\HD</Filter>
+    </ClCompile>
+    <ClCompile Include="cUISystemTest.cpp">
+      <Filter>EachWorks\HD</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cAction.h">
@@ -553,10 +561,18 @@
     <ClInclude Include="cSceneLoader.h">
       <Filter>FrameWork\Loader</Filter>
     </ClInclude>
-    <ClInclude Include="cLoadingScene.h" />
-    <ClInclude Include="cUISceneChangeButton.h" />
-    <ClInclude Include="cUISystemTest.h" />
-    <ClInclude Include="iUIManagerDeligate.h" />
+    <ClInclude Include="cLoadingScene.h">
+      <Filter>FrameWork\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="iUIManagerDeligate.h">
+      <Filter>FrameWork\Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="cUISystemTest.h">
+      <Filter>EachWorks\HD</Filter>
+    </ClInclude>
+    <ClInclude Include="cUISceneChangeButton.h">
+      <Filter>EachWorks\HD</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="DreamCoast3D.ico">

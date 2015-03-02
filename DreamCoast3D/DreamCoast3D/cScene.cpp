@@ -91,11 +91,12 @@ void cScene::Setup(std::string sFilePath){
 
 	/// TODO 차후 UI 및 하늘 역시 DataDriven으로 처리된후 삭제
 	
-	cUISystemTest* p = new cUISystemTest;
-	p->Setup();
-	m_pUIObjManager->AddUI(p);
-	SAFE_RELEASE(p);
+	//cUISystemTest* p = new cUISystemTest;
+	//p->Setup();
+	//m_pUIObjManager->AddUI(p);
+	//SAFE_RELEASE(p);
 
+	///
 	//cUIStatWindow* p = new cUIStatWindow;
 	//p->Setup();
 	//m_pUIObjManager->AddUI(p);
@@ -117,10 +118,10 @@ void cScene::Setup(std::string sFilePath){
 	//SAFE_RELEASE(p4);
 
 	// Sky
-	cGameMapSkyObject* pGMSO = new cGameMapSkyObject;
-	pGMSO->Setup();
-	m_pGameObjManager->AddGameObj(pGMSO);
-	SAFE_RELEASE(pGMSO);
+	//cGameMapSkyObject* pGMSO = new cGameMapSkyObject;
+	//pGMSO->Setup();
+	//m_pGameObjManager->AddGameObj(pGMSO);
+	//SAFE_RELEASE(pGMSO);
 
 
 	//SAFE_RELEASE(pAseObject);
