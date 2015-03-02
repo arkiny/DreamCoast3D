@@ -1,6 +1,7 @@
 #pragma once
 #include "iGameObjectDelegate.h"
 #include "iCameraDeligate.h"
+
 class cFrustum;
 class cGameMapObject;
 class cGamePlayableObject;
