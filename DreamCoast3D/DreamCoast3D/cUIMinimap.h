@@ -49,6 +49,12 @@ private:
 
 	POINT			     m_posMiniMap;
 	D3DXMATRIXA16		 m_mat;
+
+    D3DXVECTOR3 m_vTest;
+
+    LPD3DXSPRITE		 m_pSpriteMiniMapA;
+    D3DXIMAGE_INFO		 m_stImageInfoA;
+    LPDIRECT3DTEXTURE9	 m_pTextureA;
 private:
 
 
