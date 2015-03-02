@@ -15,6 +15,7 @@ cLoadingScene::cLoadingScene()
 cLoadingScene::~cLoadingScene()
 {
 	WaitForSingleObject(LoadNextScene, INFINITE);
+	LeaveCriticalSection(&gCriticalSection);
 	DeleteCriticalSection(&gCriticalSection);
 	SAFE_RELEASE(m_pFont);
 	if (m_pNextScene->GetRefCount() > 1){
@@ -72,6 +73,9 @@ void cLoadingScene::Exit(){
 
 }
 
+// XXX
+// 로딩중에 창을 종료시 제대로 메모리가 풀리지 않는다.
+// 좀더 함수를 잘게 잘라서 종료 조건을 넣는 것이 바람직 할듯 하다.
 void cLoadingScene::LoadNextScene(LPVOID pParam){
 	cLoadingScene* pLoadingScene = (cLoadingScene*)pParam;
 	EnterCriticalSection(&gCriticalSection);

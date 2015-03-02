@@ -17,6 +17,7 @@ protected:
 
 	iGameObjectDelegate* m_pGameObjDelgate;
 	iSceneDelegate* m_pSceneDeligate;
+	iUIManagerDeligate* m_pUIManagerDeligate;
 	/*SYNTHESIZE(iGameObjectDelegate*, m_pGameObjDelgate, GameObjDeligate);
 	SYNTHESIZE(iSceneDelegate*, m_pSceneDeligate, SceneDeligate);*/
 
@@ -47,6 +48,7 @@ public:
 
 	virtual void SetGameObjDeligate(iGameObjectDelegate* pGameDeligate);
 	virtual void SetSceneDeligate(iSceneDelegate* pSceneDeligate);
+	virtual void SetUIManagerDeligate(iUIManagerDeligate* pUImanagerDeligate);
 
 	virtual void SetPosition(float x, float y)
 	{

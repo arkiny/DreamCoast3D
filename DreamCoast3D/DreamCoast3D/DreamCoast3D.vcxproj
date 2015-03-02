@@ -182,6 +182,7 @@
     <ClInclude Include="iMap.h" />
     <ClInclude Include="iPlayerState.h" />
     <ClInclude Include="iSceneDelegate.h" />
+    <ClInclude Include="iUIManagerDeligate.h" />
     <ClInclude Include="MultiAnimation.hpp" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="stdafx.h" />
@@ -279,6 +280,7 @@
     <ClCompile Include="iMap.cpp" />
     <ClCompile Include="iPlayerState.cpp" />
     <ClCompile Include="iSceneDelegate.cpp" />
+    <ClCompile Include="iUIManagerDeligate.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>

@@ -271,6 +271,7 @@
     <ClCompile Include="cLoadingScene.cpp" />
     <ClCompile Include="cUISceneChangeButton.cpp" />
     <ClCompile Include="cUISystemTest.cpp" />
+    <ClCompile Include="iUIManagerDeligate.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cAction.h">
@@ -555,6 +556,7 @@
     <ClInclude Include="cLoadingScene.h" />
     <ClInclude Include="cUISceneChangeButton.h" />
     <ClInclude Include="cUISystemTest.h" />
+    <ClInclude Include="iUIManagerDeligate.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="DreamCoast3D.ico">

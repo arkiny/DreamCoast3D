@@ -43,8 +43,8 @@ void cUISceneChangeButton::Update(float fDelta){
 		{
 			if (m_eButtonState == E_SELECTED)
 			{
-				if (m_pButtonDelegate){
-					m_pButtonDelegate->OnClick(this);
+				if (m_pUIManagerDeligate){
+					m_pUIManagerDeligate->ChangeScene(m_nTargetScene, this);
 				}
 			}
 			m_eButtonState = E_MOUSE_OVER;

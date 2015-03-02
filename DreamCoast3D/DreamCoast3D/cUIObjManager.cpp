@@ -16,20 +16,29 @@ void cUIObjManager::Setup(){
 }
 
 void cUIObjManager::Update(float fDelta){
-	for (size_t i = 0; i < m_vecUIObjects.size(); i++){
-		m_vecUIObjects[i]->Update(fDelta);
+	for (auto p : m_vecUIObjects){
+		p->Update(fDelta);
+	}
+
+	// XXX 
+	// 자기가 삭제되는 위험한 경우는 무조건 모든 루프가 끝난뒤
+	// 실행되어야 한다.
+	// 루프는 자기가 삭제된 뒤에도 계속 돌기 때문이다.
+	if (m_bSceneChange){
+		m_pSceneManager->ChangeScene(m_nNextScene);
 	}
 }
 
 void cUIObjManager::Render(){
-	for (size_t i = 0; i < m_vecUIObjects.size(); i++){
-		SAFE_RENDER(m_vecUIObjects[i]);
+	for (auto p : m_vecUIObjects){
+		SAFE_RENDER(p);
 	}
 }
 
 void cUIObjManager::AddUI(cUIObject* pUIObj){
 	if (pUIObj){
 		SAFE_ADD_REF(pUIObj);
+		pUIObj->SetUIManagerDeligate(this);
 		m_vecUIObjects.push_back(pUIObj);
 	}
 }
@@ -55,10 +64,16 @@ void cUIObjManager::SetSceneDeligate(iSceneDelegate* pSceneManager){
 	for (auto p : m_vecUIObjects){
 		p->SetSceneDeligate(pSceneManager);
 	}
+	m_pSceneManager = pSceneManager;
 }
 
 void cUIObjManager::Start(){
 	for (auto p : m_vecUIObjects){
 		p->Start();
 	}
+}
+
+void cUIObjManager::ChangeScene(int nScene, cUIObject* pSender){
+	m_nNextScene = nScene;
+	m_bSceneChange = true;
 }
