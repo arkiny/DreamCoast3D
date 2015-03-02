@@ -39,12 +39,16 @@ private:
 	ST_BOUNDING_SPHERE m_stPlayerSightSphere;
 
 	float m_fMiniMapSize;
+	float m_fAngle;
 
 	virtual void Start();
 
 	LPD3DXSPRITE		 m_pSpriteMiniMap;
 	D3DXIMAGE_INFO		 m_stImageInfo;
 	LPDIRECT3DTEXTURE9	 m_pTexture;
+
+	POINT			     m_posMiniMap;
+	D3DXMATRIXA16		 m_mat;
 private:
 
 

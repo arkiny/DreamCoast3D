@@ -5,10 +5,11 @@
 #include "cUITextView.h"
 
 cUIMinimap::cUIMinimap()
-	: m_fMiniMapSize(93.0f)
+	: m_fMiniMapSize(70.0f)
 	, m_pSpriteMiniMap(NULL)
 	, m_pTexture(NULL)
 {
+	m_posMiniMap = { 1148, 93 };
 }
 
 cUIMinimap::~cUIMinimap()
@@ -60,13 +61,13 @@ void cUIMinimap::Setup(){
 
 void cUIMinimap::Start()
 {
-	m_pGameObjDelgate->GetPlayerStatInfo();
-	std::set<cGameObject*> setGameObject = m_pGameObjDelgate->GetObjectData();
-	SetObject(setGameObject);
-	cGameObject* pGameObject = m_pGameObjDelgate->GetPlayerData();
-	D3DXVECTOR3 vec = m_pGameObjDelgate->GetPlayerData()->GetPosition();
-	SetPlayerPosition(&vec);
-	SetSight(30.f);
+	//m_pGameObjDelgate->GetPlayerStatInfo();
+	//std::set<cGameObject*> setGameObject = m_pGameObjDelgate->GetObjectData();
+	//SetObject(setGameObject);
+	//cGameObject* pGameObject = m_pGameObjDelgate->GetPlayerData();
+	//D3DXVECTOR3 vec = m_pGameObjDelgate->GetPlayerData()->GetPosition();
+	//SetPlayerPosition(&vec);
+	//SetSight(30.f);
 
 	////cGameObject* pGameObject = 
 	//D3DXVECTOR3 vec = m_pGameObjDelgate->GetPlayerData()->GetPosition();
@@ -81,8 +82,9 @@ void cUIMinimap::Update(float fDelta){
 	SetObject(setGameObject);
 	cGameObject* pGameObject = m_pGameObjDelgate->GetPlayerData();
 	D3DXVECTOR3 vec = pGameObject->GetPosition();
+	m_fAngle = pGameObject->GetYangle();
 	SetPlayerPosition(&vec);
-	SetSight(30.f);
+	SetSight(50.f);
 	UpdateInSightObject(m_stPlayerSightSphere);
 	UpdateMinimap();
 	ObjectPositionUpdate();
@@ -111,13 +113,14 @@ void cUIMinimap::Render(){
 			RECT rc;
 			SetRect(&rc, 0, 0, m_stImageInfo.Width, m_stImageInfo.Height);
 			D3DXMATRIXA16 matWorld;
-			D3DXMATRIXA16 matS;
-			D3DXMATRIXA16 matR;
-			D3DXMatrixRotationX(&matR, D3DX_PI / 2);
-			D3DXMatrixTranslation(&matWorld, m_vecPositionGameObjectInSight[i].x + 1148,
-				m_vecPositionGameObjectInSight[i].y + 93, 0.5);
-			D3DXMatrixScaling(&matS, 0.5f, 0.5f, 0.f);
-			matWorld = matS*matWorld;
+			D3DXMatrixIdentity(&matWorld);
+			//D3DXMATRIXA16 matS;
+			//D3DXMATRIXA16 matR;
+			//D3DXMatrixRotationX(&matR, D3DX_PI / 2);
+			D3DXMatrixTranslation(&matWorld, m_vecPositionGameObjectInSight[i].x,
+				m_vecPositionGameObjectInSight[i].y, 0.5);
+			//D3DXMatrixScaling(&matS, 0.5f, 0.5f, 0.f);
+			//matWorld = matS*matWorld;
 			m_pSpriteMiniMap->SetTransform(&matWorld);
 			m_pSpriteMiniMap->Draw(m_pTexture,
 				&rc,
@@ -195,21 +198,41 @@ void cUIMinimap::UpdateMinimap()
 
 void cUIMinimap::ObjectPositionUpdate()
 {
-	//for (int i = 0; i < m_vecGameObjectInSight.size(); i++)
-	//{
-	//	D3DXVECTOR3* vObjectPosition = new D3DXVECTOR3;
-	//	vObjectPosition = &m_vecPositionGameObjectInSight[i];
-	//	vObjectPosition->x = (vObjectPosition->x / m_stPlayerSightSphere.m_fRadius) 
-	//		* (m_fMiniMapSize) + m_fMiniMapSize;
-	//	vObjectPosition->y = (vObjectPosition->y / m_stPlayerSightSphere.m_fRadius)
-	//		* (m_fMiniMapSize) + m_fMiniMapSize;
+	for (int i = 0; i < m_vecGameObjectInSight.size(); i++)
+	{
+		D3DXVECTOR3* vObjectPosition = new D3DXVECTOR3;
+		vObjectPosition = &m_vecPositionGameObjectInSight[i];
+		vObjectPosition->x = (vObjectPosition->x / m_stPlayerSightSphere.m_fRadius)	* (m_fMiniMapSize);
+		vObjectPosition->y = (vObjectPosition->y / m_stPlayerSightSphere.m_fRadius) * (m_fMiniMapSize);
 
-	//	cUIImageView* pImageView = new cUIImageView(m_pSprite);
-	//	pImageView->SetTextureFilename(std::string("../Resources/UI/UI_Particle/Particle.tga"));
-	//	pImageView->SetPosition(*vObjectPosition);
-	//	pImageView->SetScale(D3DXVECTOR3(0.01f, 0.01f, 0.01f));
+		D3DXMATRIXA16 matS;
+		D3DXMATRIXA16 matR;
+		D3DXMATRIXA16 matT;
+		D3DXMatrixRotationZ(&matR, m_fAngle);
+		D3DXMatrixTranslation(&matT, m_vecPositionGameObjectInSight[i].x + 1148,
+			m_vecPositionGameObjectInSight[i].y + 93, 0.5);
+		D3DXMatrixScaling(&matS, 0.001f, 0.001f, 1.f);
 
-	//	m_pUIRoot->AddChild(pImageView);
-	//	SAFE_RELEASE(pImageView);
-	//}
-}
+		m_mat = matS*matR*matT;
+
+		D3DXVec3TransformCoord(&m_vecPositionGameObjectInSight[i], vObjectPosition, &m_mat);
+		m_vecPositionGameObjectInSight[i].z = 0.0f;
+	}
+}	
+//for (int i = 0; i < m_vecGameObjectInSight.size(); i++)
+//{
+//	D3DXVECTOR3* vObjectPosition = new D3DXVECTOR3;
+//	vObjectPosition = &m_vecPositionGameObjectInSight[i];
+//	vObjectPosition->x = (vObjectPosition->x / m_stPlayerSightSphere.m_fRadius) 
+//		* (m_fMiniMapSize) + m_fMiniMapSize;
+//	vObjectPosition->y = (vObjectPosition->y / m_stPlayerSightSphere.m_fRadius)
+//		* (m_fMiniMapSize) + m_fMiniMapSize;
+
+//	cUIImageView* pImageView = new cUIImageView(m_pSprite);
+//	pImageView->SetTextureFilename(std::string("../Resources/UI/UI_Particle/Particle.tga"));
+//	pImageView->SetPosition(*vObjectPosition);
+//	pImageView->SetScale(D3DXVECTOR3(0.01f, 0.01f, 0.01f));
+
+//	m_pUIRoot->AddChild(pImageView);
+//	SAFE_RELEASE(pImageView);
+//}
