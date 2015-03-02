@@ -26,4 +26,5 @@ void cAseManager::Destroy(){
 	for (auto p : m_mapGameObjectASE){
 		SAFE_RELEASE(p.second);
 	}
+	m_mapGameObjectASE.clear();
 }

@@ -80,8 +80,13 @@
   <ItemGroup>
     <Text Include="..\Resources\MAINDATA.txt" />
     <Text Include="..\Resources\SCENE1_GAMEOBJDATA.txt" />
+    <Text Include="..\Resources\SCENE1_MAIN.txt" />
     <Text Include="..\Resources\SCENE1_MAPDATA.txt" />
     <Text Include="..\Resources\SCENE1_UIDATA.txt" />
+    <Text Include="..\Resources\SCENE2_GAMEOBJDATA.txt" />
+    <Text Include="..\Resources\SCENE2_MAIN.txt" />
+    <Text Include="..\Resources\SCENE2_MAPDATA.txt" />
+    <Text Include="..\Resources\SCENE2_UIDATA.txt" />
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
@@ -131,6 +136,7 @@
     <ClInclude Include="cPlayerMove.h" />
     <ClInclude Include="cPlayerIdle.h" />
     <ClInclude Include="cPlayerOnHit.h" />
+    <ClInclude Include="cSceneLoader.h" />
     <ClInclude Include="cSkinnedMeshBody.h" />
     <ClInclude Include="cUIExpBar.h" />
     <ClInclude Include="cUIGameMainMenu.h" />
@@ -224,6 +230,7 @@
     <ClCompile Include="cPlayerMove.cpp" />
     <ClCompile Include="cPlayerIdle.cpp" />
     <ClCompile Include="cPlayerOnHit.cpp" />
+    <ClCompile Include="cSceneLoader.cpp" />
     <ClCompile Include="cSkinnedMeshBody.cpp" />
     <ClCompile Include="cUIExpBar.cpp" />
     <ClCompile Include="cUIGameMainMenu.cpp" />

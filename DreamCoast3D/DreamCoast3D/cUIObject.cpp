@@ -7,6 +7,7 @@ cUIObject::cUIObject()
 	, m_vPosition(0, 0, 0)
 	, m_vScale(1, 1, 1)
 	, m_pSprite(NULL)
+	, m_pGameObjDelgate(NULL)
 {
 }
 
@@ -15,6 +16,7 @@ cUIObject::cUIObject(LPD3DXSPRITE pSprite)
 	, m_vPosition(0, 0, 0)
 	, m_vScale(1, 1, 1)
 	, m_pSprite(pSprite)
+	, m_pGameObjDelgate(NULL)
 {
 	m_pSprite->AddRef();
 }

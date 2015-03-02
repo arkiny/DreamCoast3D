@@ -82,4 +82,6 @@ void cTextureManager::Destroy()
 	{
 		SAFE_RELEASE(p.second);
 	}
+	m_mapTexture.clear();
+	m_mapImageInfo.clear();
 }

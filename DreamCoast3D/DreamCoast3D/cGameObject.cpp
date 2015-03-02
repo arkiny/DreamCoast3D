@@ -121,8 +121,10 @@ float cGameObject::GetYangle(){
 }
 
 void cGameObject::SetGridTileSystem(iGridTileSystem* pGrid){
-	m_pGridCallback = pGrid;
-	m_stGridPos.x = static_cast<int>(floorf(m_pTransform->GetPosition().x));
-	m_stGridPos.z = static_cast<int>(floorf(m_pTransform->GetPosition().z));
-	pGrid->AddObjectOnGrid(this, m_stGridPos.x, m_stGridPos.z);
+	if (pGrid){
+		m_pGridCallback = pGrid;
+		m_stGridPos.x = static_cast<int>(floorf(m_pTransform->GetPosition().x));
+		m_stGridPos.z = static_cast<int>(floorf(m_pTransform->GetPosition().z));
+		pGrid->AddObjectOnGrid(this, m_stGridPos.x, m_stGridPos.z);
+	}
 }

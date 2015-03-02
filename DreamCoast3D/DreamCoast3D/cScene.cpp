@@ -8,6 +8,9 @@
 #include "cUIObjManager.h"
 #include "cCameraEditing.h"
 #include "cTransform.h"
+#include "cGameObjLoader.h"
+#include "cMapLoader.h"
+#include "cUILoader.h"
 
 /// TODO
 // 차후 데이타 드리븐 완료후 삭제해야할것들
@@ -40,6 +43,11 @@ cScene::~cScene()
 	for (auto p : m_vecGameMaps){
 		SAFE_RELEASE(p);
 	}	
+	m_vecGameMaps.clear();
+	for (auto p : m_vecLightSources){
+		SAFE_RELEASE(p);
+	}
+	m_vecLightSources.clear();
 }
 
 void cScene::Setup(std::string sFilePath){
@@ -119,11 +127,20 @@ void cScene::Setup(std::string sFilePath){
 	//m_pGameObjManager->AddGameObj(pGameAIObject);
 	////pGameAIObject->SetTargetObject(m_pGameObjManager->GetPlayerableGameObject());
 	//SAFE_RELEASE(pGameAIObject);
-
-	///
 }
 
 void cScene::Start(){
+	/// 리소스 로딩
+	cGameObjLoader cGOL;
+	cGOL.LoadGameObjectsFromFile(this->GetGameObjMng(), m_sGameObjPath);
+
+	cMapLoader cML;
+	cML.LoadGameMapFromFile(this, m_sGameMapPath);
+
+	cUILoader cUL;
+	cUL.LoadGameUIFromFile(this->GetUIObjMng(), m_sGameUIPath);
+	/// end 리소스 로딩
+
 	g_pD3DDevice->SetRenderState(D3DRS_NORMALIZENORMALS, true);
 	g_pD3DDevice->SetRenderState(D3DRS_LIGHTING, true);
 	
@@ -132,32 +149,38 @@ void cScene::Start(){
 		p->Start();
 	}
 
-	m_pGameObjManager->SetCurrentTileSystem(m_pCurrentMap);
-	m_pUIObjManager->SetGameObjDeligate(m_pGameObjManager);
-
-	m_pCamera->SetTarget(m_pGameObjManager->GetPlayerableGameObject()->GetTransform()->getPosPointer());
-	m_pGameObjManager->SetCameraDeligate(m_pCamera);
+	// 첫 맵 설정
+	if (!m_vecGameMaps.empty()){
+		this->SetCurrentMap(0);
+		m_pGameObjManager->SetCurrentTileSystem(m_pCurrentMap);
+		m_pUIObjManager->SetGameObjDeligate(m_pGameObjManager);
+		m_pCamera->SetTarget(m_pGameObjManager->GetPlayerableGameObject()->GetTransform()->getPosPointer());
+		m_pGameObjManager->SetCameraDeligate(m_pCamera);
+	}
 }
 
 void cScene::Update(float delta){
-	m_pCamera->Update(delta);
-	m_pPlayableObject = (cGamePlayableObject*)m_pGameObjManager->GetPlayerableGameObject();
-	m_pCamera->UpdateAngle(m_pPlayableObject->GetPlayerAngle());
+	if (m_pCurrentMap){
+		m_pCamera->Update(delta);
+		m_pPlayableObject = (cGamePlayableObject*)m_pGameObjManager->GetPlayerableGameObject();
+		m_pCamera->UpdateAngle(m_pPlayableObject->GetPlayerAngle());
+	
+		if (m_pCurrentMap){
+			m_pCurrentMap->Update(delta);
+		}
+
+		if (m_pGameObjManager){
+			m_pGameObjManager->Update(delta);
+		}
+
+		if (m_pCurrentMap && m_pGameObjManager){
+			m_pGameObjManager->AdjustYPositionByHeightMap(m_pCurrentMap);
+		}
+	}
 	if (m_pUIObjManager){
 		m_pUIObjManager->Update(delta);
 	}
 
-	if (m_pCurrentMap){
-		m_pCurrentMap->Update(delta);
-	}
-	
-	if (m_pGameObjManager){
-		m_pGameObjManager->Update(delta);
-	}
-
-	if (m_pCurrentMap && m_pGameObjManager){
-		m_pGameObjManager->AdjustYPositionByHeightMap(m_pCurrentMap);
-	}
 }
 
 void cScene::Render(){
@@ -168,6 +191,11 @@ void cScene::Render(){
 	SAFE_RENDER(m_pUIObjManager);
 
 	SAFE_RENDER(m_pCamera);
+}
+
+void cScene::Exit(){
+	// 리소스 해제
+	
 }
 
 void cScene::AddGameObj(cGameObject* pGameObj){
@@ -183,9 +211,6 @@ void cScene::AddStaticGameObj(cGameObject* pGameObj){
 }
 
 void cScene::Destroy(){
-	for (auto p : m_vecLightSources){
-		SAFE_RELEASE(p);
-	}
 	this->Release();
 }
 

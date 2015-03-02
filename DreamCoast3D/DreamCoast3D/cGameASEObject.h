@@ -4,6 +4,8 @@ class cASEInstance;
 class cGameASEObject : public cGameObject
 {
 protected:
+	SYNTHESIZE(std::string, m_sMapFilePath, MapFilePath);
+	SYNTHESIZE(std::string, m_sMapFolderPath, MapFolderPath);
 	cASEInstance*				m_pASEInstance;
 	LPD3DXMESH					m_pDebugBoxMesh;
 public:

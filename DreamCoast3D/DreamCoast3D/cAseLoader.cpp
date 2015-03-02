@@ -225,6 +225,7 @@ void cAseLoader::ProcessMapDiffuse(cMtlTex* pMtlTex)
 		{
 			char* szFilename = GetToken();
 			pMtlTex->pTex = g_pTextureManager->GetTexture(m_sFolder + std::string(szFilename));
+			//pMtlTex->pTex->AddRef();
 		}
 	} while (nLevel > 0);
 }

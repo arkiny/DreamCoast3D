@@ -265,6 +265,9 @@
     <ClCompile Include="cUIMinimap.cpp">
       <Filter>EachWorks\MS\Todo</Filter>
     </ClCompile>
+    <ClCompile Include="cSceneLoader.cpp">
+      <Filter>FrameWork\Loader</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cAction.h">
@@ -543,6 +546,9 @@
     <ClInclude Include="cUIMinimap.h">
       <Filter>EachWorks\MS\Todo</Filter>
     </ClInclude>
+    <ClInclude Include="cSceneLoader.h">
+      <Filter>FrameWork\Loader</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="DreamCoast3D.ico">
@@ -666,6 +672,21 @@
       <Filter>FrameWork\Resource</Filter>
     </Text>
     <Text Include="..\Resources\SCENE1_UIDATA.txt">
+      <Filter>FrameWork\Resource</Filter>
+    </Text>
+    <Text Include="..\Resources\SCENE2_MAPDATA.txt">
+      <Filter>FrameWork\Resource</Filter>
+    </Text>
+    <Text Include="..\Resources\SCENE2_UIDATA.txt">
+      <Filter>FrameWork\Resource</Filter>
+    </Text>
+    <Text Include="..\Resources\SCENE2_GAMEOBJDATA.txt">
+      <Filter>FrameWork\Resource</Filter>
+    </Text>
+    <Text Include="..\Resources\SCENE1_MAIN.txt">
+      <Filter>FrameWork\Resource</Filter>
+    </Text>
+    <Text Include="..\Resources\SCENE2_MAIN.txt">
       <Filter>FrameWork\Resource</Filter>
     </Text>
   </ItemGroup>

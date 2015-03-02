@@ -18,6 +18,7 @@ void cSkinnedMeshManager::Destroy()
 		it.second->Destroy();
 		//SAFE_RELEASE(it.second);
 	}
+	m_mapSkinnedMesh.clear();
 }
 
 cSkinnedMesh* cSkinnedMeshManager::GetSkinnedMesh(char* szFolder, char* szFilename)
