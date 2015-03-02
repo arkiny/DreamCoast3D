@@ -58,7 +58,7 @@ public:
 	cGameObject* GetPlayerData() override;
 	std::set<cGameObject*> GetObjectData() override;
 
-	cGameObject* m_pPlayer;
+	//cGameObject* m_pPlayer;
 
 protected:
 	bool isCollided(D3DXVECTOR3 vFromCenter,

@@ -210,10 +210,10 @@ void cScene::Update(float delta){
 			m_pGameObjManager->AdjustYPositionByHeightMap(m_pCurrentMap);
 		}
 	}
+
 	if (m_pUIObjManager){
 		m_pUIObjManager->Update(delta);
 	}
-
 }
 
 void cScene::Render(){

@@ -377,15 +377,15 @@ void cGameObjManager::AttackMobToPlayer(cGameAIObject* pFrom){
 }
 
 ST_STAT_INFO* cGameObjManager::GetPlayerStatInfo(){
-	ST_STAT_INFO* ret = m_pPlayable->GetStatInfo();;
+	ST_STAT_INFO* ret = m_pPlayable->GetStatInfo();
 	return ret;
 }
 
-void cGameObjManager::SetPlayerData(cGameObject* pPlayer)
-{
-	m_pPlayer = nullptr;
-	m_pPlayer = new cGameObject;
-	m_pPlayer = pPlayer;
+void cGameObjManager::SetPlayerData(cGameObject* pPlayer){
+//{
+//	//m_pPlayer = nullptr;
+//	//m_pPlayer = new cGameObject;
+//	//m_pPlayer = pPlayer;
 }
 
 std::set<cGameObject*> cGameObjManager::GetObjectData()
@@ -397,5 +397,5 @@ std::set<cGameObject*> cGameObjManager::GetObjectData()
 
 cGameObject* cGameObjManager::GetPlayerData()
 {
-	return m_pPlayer;
+	return m_pPlayable;
 }

@@ -60,19 +60,23 @@ void cUIMinimap::Setup(){
 
 void cUIMinimap::Start()
 {
-	//std::set<cGameObject*> setGameObject = m_pGameObjDelgate->GetObjectData();
-	//SetObject(setGameObject);
-	//cGameObject* pGameObject = m_pGameObjDelgate->GetPlayerData();
-	//D3DXVECTOR3 vec = pGameObject->GetPosition();
+	m_pGameObjDelgate->GetPlayerStatInfo();
+	std::set<cGameObject*> setGameObject = m_pGameObjDelgate->GetObjectData();
+	SetObject(setGameObject);
+	cGameObject* pGameObject = m_pGameObjDelgate->GetPlayerData();
+	D3DXVECTOR3 vec = m_pGameObjDelgate->GetPlayerData()->GetPosition();
+	SetPlayerPosition(&vec);
+	SetSight(30.f);
+
+	////cGameObject* pGameObject = 
+	//D3DXVECTOR3 vec = m_pGameObjDelgate->GetPlayerData()->GetPosition();
 	//SetPlayerPosition(&vec);
 	//SetSight(30.f);
-
 }
 
 void cUIMinimap::Update(float fDelta){
 	if (m_pUIRoot)
 		m_pUIRoot->Update(fDelta);
-
 	std::set<cGameObject*> setGameObject = m_pGameObjDelgate->GetObjectData();
 	SetObject(setGameObject);
 	cGameObject* pGameObject = m_pGameObjDelgate->GetPlayerData();
@@ -82,6 +86,19 @@ void cUIMinimap::Update(float fDelta){
 	UpdateInSightObject(m_stPlayerSightSphere);
 	UpdateMinimap();
 	ObjectPositionUpdate();
+	//float x = m_pGameObjDelgate->GetPlayerStatInfo()->fCurrentHp;
+	//D3DXVECTOR3 vec = m_pGameObjDelgate->GetPlayerData()->GetPosition();
+	//cGameObject* pGameObject = m_pGameObjDelgate->GetPlayerData();
+
+	//std::set<cGameObject*> setGameObject = m_pGameObjDelgate->GetObjectData();
+	//SetObject(setGameObject);
+	//cGameObject* pGameObject = m_pGameObjDelgate->GetPlayerData();
+	//D3DXVECTOR3 vec = pGameObject->GetPosition();
+	//SetPlayerPosition(&vec);
+	//SetSight(30.f);
+	//UpdateInSightObject(m_stPlayerSightSphere);
+	//UpdateMinimap();
+	//ObjectPositionUpdate();
 
 }
 
