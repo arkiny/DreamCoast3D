@@ -17,7 +17,9 @@ cLoadingScene::~cLoadingScene()
 	WaitForSingleObject(LoadNextScene, INFINITE);
 	DeleteCriticalSection(&gCriticalSection);
 	SAFE_RELEASE(m_pFont);
-	SAFE_RELEASE(m_pNextScene);
+	if (m_pNextScene->GetRefCount() > 1){
+		SAFE_RELEASE(m_pNextScene);
+	}
 }
 
 void cLoadingScene::Setup(std::string sNextScene){
@@ -76,14 +78,13 @@ void cLoadingScene::LoadNextScene(LPVOID pParam){
 	
 	cSceneLoader SceneLoader;
 	cScene* ret = SceneLoader.ParseScene(pLoadingScene->GetNextScenePath());
-	
+	ret->AddRef();
+
 	if (ret){
 		ret->SetDelegate(pLoadingScene->GetDelegate());
 		ret->Start();
 	}
 	pLoadingScene->SetNextScene(ret);
-	ret->AddRef();
-
 	pLoadingScene->SetWorkDone(true);
 
 	LeaveCriticalSection(&gCriticalSection);

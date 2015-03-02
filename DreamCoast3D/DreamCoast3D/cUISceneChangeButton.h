@@ -6,6 +6,7 @@ class cUISceneChangeButton :
 {
 protected:
 	SYNTHESIZE(int, m_nTargetScene, TargetScene);
+	SYNTHESIZE(iButtonDelegate*, m_pButtonDelegate, ButtonDeligate);
 
 public:
 	cUISceneChangeButton(LPD3DXSPRITE pSprite);

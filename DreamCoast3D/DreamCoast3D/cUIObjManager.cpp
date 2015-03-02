@@ -16,15 +16,14 @@ void cUIObjManager::Setup(){
 }
 
 void cUIObjManager::Update(float fDelta){
-	for (auto p : m_vecUIObjects){
-		p->Update(fDelta);
-		if (m_vecUIObjects.empty()) return;
+	for (size_t i = 0; i < m_vecUIObjects.size(); i++){
+		m_vecUIObjects[i]->Update(fDelta);
 	}
 }
 
 void cUIObjManager::Render(){
-	for (auto p : m_vecUIObjects){
-		SAFE_RENDER(p);
+	for (size_t i = 0; i < m_vecUIObjects.size(); i++){
+		SAFE_RENDER(m_vecUIObjects[i]);
 	}
 }
 

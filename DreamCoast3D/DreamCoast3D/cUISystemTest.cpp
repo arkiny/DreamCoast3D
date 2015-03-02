@@ -23,8 +23,9 @@ void cUISystemTest::Setup(){
 		std::string("../Resources/UI/UI_AcceptButtonOn.png"),
 		std::string("../Resources/UI/UI_AcceptButtonClick.png"));
 	pTestButton->SetPosition(D3DXVECTOR3(0, 100, 0));
-	m_pUIRoot = pTestButton;
+	pTestButton->SetButtonDeligate(this);
 	pTestButton->SetTargetScene(1);
+	m_pUIRoot = pTestButton;
 }
 
 void cUISystemTest::Start(){
@@ -43,5 +44,11 @@ void cUISystemTest::Render(){
 	if (m_pSprite)
 	{
 		m_pUIRoot->Render();
+	}
+}
+
+void cUISystemTest::OnClick(cUIImageButton* pSender){
+	if (m_pSceneDeligate){
+		m_pSceneDeligate->ChangeScene(1);
 	}
 }
