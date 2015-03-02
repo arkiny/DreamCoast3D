@@ -9,6 +9,7 @@ private:
 	std::vector<std::string>	m_vecSceneInfoFilePath;
 
 	cScene*						m_pCurrentScene;
+	bool						m_bIsLoading = false;
 
 public:
 	cSceneManager();
@@ -29,5 +30,6 @@ public:
 	// delegate override
 	void SceneFinished(cScene* pSender) override;
 	void ChangeScene(int nNextSceneIndex) override;
+	void ChangeSceneFromLoader(cScene* pNextScene) override;
 };
 

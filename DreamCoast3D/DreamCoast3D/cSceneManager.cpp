@@ -3,6 +3,7 @@
 #include "cScene.h"
 #include "cSceneExample.h"
 #include "cSceneLoader.h"
+#include "cLoadingScene.h"
 
 cSceneManager::cSceneManager()
 	:m_pCurrentScene(NULL)
@@ -26,13 +27,15 @@ void cSceneManager::Update(float delta){
 		m_pCurrentScene->Update(delta);
 	}
 
-	if (GetAsyncKeyState('1') /*&& m_pCurrentScene != m_vecScenes[0]*/){
-		ChangeScene(0);
-		return;
-	}
-	if (GetAsyncKeyState('2') /*&& m_pCurrentScene != m_vecScenes[1]*/){
-		ChangeScene(1);
-		return;
+	if (m_bIsLoading == false){
+		if (GetAsyncKeyState('1') /*&& m_pCurrentScene != m_vecScenes[0]*/){
+			ChangeScene(0);
+			return;
+		}
+		if (GetAsyncKeyState('2') /*&& m_pCurrentScene != m_vecScenes[1]*/){
+			ChangeScene(1);
+			return;
+		}
 	}
 	//}
 }
@@ -42,6 +45,7 @@ void cSceneManager::Start(){
 
 	if (!m_vecSceneInfoFilePath.empty()){
 		m_pCurrentScene = SceneLoader.ParseScene(m_vecSceneInfoFilePath[0]);
+		m_pCurrentScene->SetDelegate(this);
 		m_pCurrentScene->Start();
 	}
 }
@@ -69,15 +73,26 @@ void cSceneManager::SceneFinished(cScene* pSender){
 
 void cSceneManager::ChangeScene(int nNextSceneIndex){
 	assert(nNextSceneIndex < m_vecSceneInfoFilePath.size());
+	m_bIsLoading = true;
 	m_pCurrentScene->Exit();
 	SAFE_RELEASE(m_pCurrentScene);
 	g_pSkinnedMeshManager->Destroy();
 	g_pAseManager->Destroy();
 	g_pTextureManager->Destroy();
 
-	cSceneLoader SceneLoader;
-	m_pCurrentScene = SceneLoader.ParseScene(m_vecSceneInfoFilePath[nNextSceneIndex]);
+	m_pCurrentScene = new cLoadingScene;
+	m_pCurrentScene->Setup(m_vecSceneInfoFilePath[nNextSceneIndex]);
 
 	// 리소스 로딩
+	m_pCurrentScene->SetDelegate(this);
 	m_pCurrentScene->Start();
+}
+
+void cSceneManager::ChangeSceneFromLoader(cScene* pNextScene){
+	m_pCurrentScene->Exit();
+	SAFE_RELEASE(m_pCurrentScene);
+
+	m_pCurrentScene = pNextScene;
+	m_pCurrentScene->SetDelegate(this);
+	m_bIsLoading = false;
 }

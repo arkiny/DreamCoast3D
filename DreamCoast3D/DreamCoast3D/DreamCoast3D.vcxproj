@@ -130,6 +130,7 @@
     <ClInclude Include="cGameTimer.h" />
     <ClInclude Include="cGridSystem.h" />
     <ClInclude Include="cLoader.h" />
+    <ClInclude Include="cLoadingScene.h" />
     <ClInclude Include="cMapLoader.h" />
     <ClInclude Include="cMtlTex.h" />
     <ClInclude Include="cPlayerAttack.h" />
@@ -224,6 +225,7 @@
     <ClCompile Include="cGameTimer.cpp" />
     <ClCompile Include="cGridSystem.cpp" />
     <ClCompile Include="cLoader.cpp" />
+    <ClCompile Include="cLoadingScene.cpp" />
     <ClCompile Include="cMapLoader.cpp" />
     <ClCompile Include="cMtlTex.cpp" />
     <ClCompile Include="cPlayerAttack.cpp" />

@@ -36,9 +36,12 @@ cScene::~cScene()
 {
 	SAFE_RELEASE(m_pCamera);	
 	
-	m_pGameObjManager->Destroy();
-	m_pUIObjManager->Destroy();
-
+	if (m_pGameObjManager){
+		m_pGameObjManager->Destroy();
+	}
+	if (m_pUIObjManager){
+		m_pUIObjManager->Destroy();
+	}
 	SAFE_RELEASE(m_pCurrentMap);
 	for (auto p : m_vecGameMaps){
 		SAFE_RELEASE(p);
