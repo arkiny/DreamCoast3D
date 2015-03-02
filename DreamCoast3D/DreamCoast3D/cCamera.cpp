@@ -75,10 +75,10 @@ void cCamera::Update(float delta)
 	{
 		m_isMove = false;
 	}
-    //if (g_pControlManager->GetInputInfo(VK_CONTROL))
-    //{
-    //    m_isAttack = true;
-    //}
+    if (g_pControlManager->GetInputInfo(VK_CONTROL))
+    {
+        m_isAttack = true;
+    }
 
 	m_vLookAt = *m_pvTarget;
 
@@ -215,7 +215,7 @@ void cCamera::AttackCameraMoving()
 {
     {
         float fAttackTime = 0.2f;
-        float nCameraMove = 0.1f;
+        float nCameraMove = 0.05f;
         float fDist = 0.2f;
         float fShake = 0;
         float fPower = 0;
@@ -237,7 +237,7 @@ void cCamera::AttackCameraMoving()
             m_vEye.z -= nCameraMove;
             m_vLookAt.z -= nCameraMove;
 
-            m_fDist += fDist;
+            //m_fDist += fDist;
 
         }
         else
@@ -247,7 +247,7 @@ void cCamera::AttackCameraMoving()
             m_vEye.z += nCameraMove;
             m_vLookAt.z += nCameraMove;
 
-            m_fDist -= fDist;
+           //m_fDist -= fDist;
         }
     }
 }
