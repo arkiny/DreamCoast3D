@@ -8,6 +8,7 @@ cUIObject::cUIObject()
 	, m_vScale(1, 1, 1)
 	, m_pSprite(NULL)
 	, m_pGameObjDelgate(NULL)
+	, m_pSceneDeligate(NULL)
 {
 }
 

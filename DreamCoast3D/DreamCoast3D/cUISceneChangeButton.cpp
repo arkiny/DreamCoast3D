@@ -13,6 +13,8 @@ cUISceneChangeButton::~cUISceneChangeButton()
 }
 
 void cUISceneChangeButton::Update(float fDelta){
+	cUIObject::Update(fDelta);
+
 	RECT rc;
 	rc.left = (LONG)m_matWorld._41;
 	rc.top = (LONG)m_matWorld._42;
@@ -41,8 +43,10 @@ void cUISceneChangeButton::Update(float fDelta){
 		{
 			if (m_eButtonState == E_SELECTED)
 			{
-				if (m_pDelegate)
+				if (m_pSceneDeligate){
 					m_pSceneDeligate->ChangeScene(m_nTargetScene);
+					return;
+				}
 			}
 			m_eButtonState = E_MOUSE_OVER;
 		}
@@ -59,5 +63,4 @@ void cUISceneChangeButton::Update(float fDelta){
 			m_eButtonState = E_NORMAL;
 		}
 	}
-	cUIObject::Update(fDelta);
 }

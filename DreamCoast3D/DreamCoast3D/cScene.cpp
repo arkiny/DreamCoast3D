@@ -21,7 +21,7 @@
 #include "cGameMapSkyObject.h"
 #include "cGamePlayableObject.h"
 #include "cGameAIObject.h"
-#include "cUISceneChangeButton.h"
+#include "cUISystemTest.h"
 
 
 cScene::cScene() 
@@ -30,6 +30,7 @@ cScene::cScene()
 	, m_pCurrentMap(NULL)
 	, m_pUIObjManager(NULL)
 	, m_pPlayableObject(NULL)
+	, m_pDelegate(NULL)
 {
 }
 
@@ -89,6 +90,12 @@ void cScene::Setup(std::string sFilePath){
 	m_pUIObjManager->SetDesc("UIObject Manager for Example1");
 
 	/// TODO 차후 UI 및 하늘 역시 DataDriven으로 처리된후 삭제
+	
+	cUISystemTest* p = new cUISystemTest;
+	p->Setup();
+	m_pUIObjManager->AddUI(p);
+	SAFE_RELEASE(p);
+
 	//cUIStatWindow* p = new cUIStatWindow;
 	//p->Setup();
 	//m_pUIObjManager->AddUI(p);
@@ -169,16 +176,20 @@ void cScene::Start(){
 
 		// 타일맵에 현재 맵 추가
 		m_pGameObjManager->SetCurrentTileSystem(m_pCurrentMap);
-
+	}
+	if (m_pUIObjManager){
 		// UI에 게임오브젝트 델리게이트 어태치
-		m_pUIObjManager->SetGameObjDeligate(m_pGameObjManager);
-
-		// UI에 씬매니저 델리게이트 어태치
-		m_pUIObjManager->SetSceneDeligate(m_pDelegate);
-
+		if (m_pGameObjManager){
+			m_pUIObjManager->SetGameObjDeligate(m_pGameObjManager);
+		}
+		if (m_pDelegate){
+			// UI에 씬매니저 델리게이트 어태치
+			m_pUIObjManager->SetSceneDeligate(m_pDelegate);
+		}
 		// UI매니저 시작
 		m_pUIObjManager->Start();
 	}
+		
 }
 
 void cScene::Update(float delta){
@@ -218,6 +229,13 @@ void cScene::Render(){
 void cScene::Exit(){
 	// 리소스 해제
 	
+}
+
+void cScene::SetDelegate(iSceneDelegate* pSceneDeligate){
+	m_pDelegate = pSceneDeligate;
+	if (m_pUIObjManager){
+		m_pUIObjManager->SetSceneDeligate(pSceneDeligate);
+	}
 }
 
 void cScene::AddGameObj(cGameObject* pGameObj){

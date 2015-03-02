@@ -21,12 +21,16 @@ class cScene : public cObject
 //	};
 
 protected:
-	SYNTHESIZE(iSceneDelegate*, m_pDelegate, Delegate);
+	//SYNTHESIZE(iSceneDelegate*, m_pDelegate, Delegate);
+
+
 	SYNTHESIZE(cScene*, m_pNextScene, NextScene);
 
 	SYNTHESIZE(std::string, m_sGameMapPath, GameMapPath);
 	SYNTHESIZE(std::string, m_sGameObjPath, GameObjPath);
 	SYNTHESIZE(std::string, m_sGameUIPath, GameUIPath);
+
+	iSceneDelegate* m_pDelegate;
 
 	// 게임 오브젝트들을 가지고 처리해주는 매니저
 	// 각 씬마다 변경시 갱신해줘야 한다.
@@ -66,6 +70,9 @@ public:
 	// 모든 리소스를 해제한다.
 	virtual void Exit();
 
+
+	virtual void SetDelegate(iSceneDelegate* pSceneDeligate);
+	virtual iSceneDelegate* GetDelegate(){ return m_pDelegate; }
 
 	virtual void AddGameObj(cGameObject* pGameObj);
 	virtual void AddUIObj(cUIObject* pUIObj);

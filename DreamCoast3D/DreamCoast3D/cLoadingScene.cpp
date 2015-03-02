@@ -77,9 +77,11 @@ void cLoadingScene::LoadNextScene(LPVOID pParam){
 	cScene* ret = SceneLoader.ParseScene(pLoadingScene->GetNextScenePath());
 	
 	if (ret){
+		ret->SetDelegate(pLoadingScene->GetDelegate());
 		ret->Start();
 	}
 	pLoadingScene->SetNextScene(ret);
+
 	pLoadingScene->SetWorkDone(true);
 
 	LeaveCriticalSection(&gCriticalSection);

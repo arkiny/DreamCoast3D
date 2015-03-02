@@ -18,6 +18,7 @@ void cUIObjManager::Setup(){
 void cUIObjManager::Update(float fDelta){
 	for (auto p : m_vecUIObjects){
 		p->Update(fDelta);
+		if (m_vecUIObjects.empty()) return;
 	}
 }
 

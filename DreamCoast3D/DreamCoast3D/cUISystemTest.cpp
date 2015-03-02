@@ -24,6 +24,7 @@ void cUISystemTest::Setup(){
 		std::string("../Resources/UI/UI_AcceptButtonClick.png"));
 	pTestButton->SetPosition(D3DXVECTOR3(0, 100, 0));
 	m_pUIRoot = pTestButton;
+	pTestButton->SetTargetScene(1);
 }
 
 void cUISystemTest::Start(){
