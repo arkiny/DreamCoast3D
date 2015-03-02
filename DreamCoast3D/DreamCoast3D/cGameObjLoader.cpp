@@ -6,6 +6,7 @@
 #include "cGameActionSkinnedMeshObj.h"
 #include "cGameSMeshBodyObject.h"
 #include "cGamePlayableObject.h"
+#include "cGameAIObject.h"
 
 //Template
 //int nLevel = 0;
@@ -58,6 +59,11 @@ void cGameObjLoader::LoadGameObjectsFromFile(OUT cGameObjManager* pGameManager, 
 			cGameObject* p = ParsePlayerbleObj();
 			pGameManager->AddGameObj(p);
 			pGameManager->SetPlayableGameObject(p);
+			SAFE_RELEASE(p);
+		}
+		else if (isEqual(szToken, "*GAMEAIOBJ")){
+			cGameObject* p = ParseGameAIObj();
+			pGameManager->AddGameObj(p);
 			SAFE_RELEASE(p);
 		}
 		else if (isEqual(szToken, "#")){
@@ -268,7 +274,7 @@ cGameObject* cGameObjLoader::ParsePlayerbleObj(){
 			scale.z = GetFloat();
 		}
 		else if (isEqual(szToken, "*SETINITANIMATION")){
-			int nIndex = GetInteger();	
+			int nIndex = GetInteger();
 			/*ret->GetSkinnedMesh()->SetAnimationIndex(nIndex);*/
 		}
 	} while (nLevel > 0);
@@ -286,7 +292,69 @@ cGameObject* cGameObjLoader::ParsePlayerbleObj(){
 	//ret->GetSkinnedMesh()->SetAnimationLoop(4, true);
 
 	ret->GetSkinnedMesh()->SetAnimationIndex(0);
-	
+
 	return ret;
 }
 //*PLAYABLEOBJ
+
+cGameObject* cGameObjLoader::ParseGameAIObj(){
+	cGameAIObject* ret = NULL;
+	int nBodyIndex = -1, nAniIndex = -1, nPattern = -1;
+	D3DXVECTOR3 pos(0, 0, 0), scale(1.0f, 1.0f, 1.0f);
+	int nLevel = 0;
+	do{
+		char* szToken = GetToken();
+		if (isEqual(szToken, "{")){
+			++nLevel;
+		}
+		else if (isEqual(szToken, "}")){
+			--nLevel;
+		}
+		else if (isEqual(szToken, "*SKINNEDMESH_REF")){
+			nBodyIndex = GetInteger();
+		}
+		else if (isEqual(szToken, "*POISTION")){
+			pos.x = GetFloat();
+			pos.y = GetFloat();
+			pos.z = GetFloat();
+		}
+		else if (isEqual(szToken, "*SCALE")){
+			scale.x = GetFloat();
+			scale.y = GetFloat();
+			scale.z = GetFloat();
+		}
+		else if (isEqual(szToken, "*GAMEAIOBJ_AI_PATTERN")){
+			nPattern = GetInteger();
+		}
+		else if (isEqual(szToken, "*SETINITANIMATION")){
+			nAniIndex = GetInteger();
+			/*ret->GetSkinnedMesh()->SetAnimationIndex(nIndex);*/
+		}
+	} while (nLevel > 0);
+
+	ret = new cGameAIObject;
+	ret->Setup(m_vecsFolders[nBodyIndex], m_vecsFiles[nBodyIndex]);
+	ret->SetPosition(pos);
+	ret->SetScale(scale);
+
+	ret->GetSkinnedMesh()->SetAnimationLoop(0, true);
+	ret->GetSkinnedMesh()->SetAnimationLoop(1, true);
+	ret->GetSkinnedMesh()->SetAnimationLoop(2, true);
+	ret->GetSkinnedMesh()->SetAnimationLoop(3, true);
+
+	if (nAniIndex > 0){
+		ret->GetSkinnedMesh()->SetAnimationIndex(nAniIndex);
+	}
+	else {
+		ret->GetSkinnedMesh()->SetAnimationIndex(0);
+	}
+
+	if (nPattern > 0){
+		ret->SetAItype((cGameAIObject::E_AI_TYPE)nPattern);
+	}
+	else {
+		ret->SetAItype(ret->E_AI_PASSIVE);
+	}
+	ret->Start();
+	return ret;
+}

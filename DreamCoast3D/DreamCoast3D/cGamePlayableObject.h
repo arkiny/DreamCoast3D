@@ -9,9 +9,6 @@ __interface iPlayableCharacter{
 	void GetInventoryPointer();
 };
 
-
-
-
 // 만수 그리드 맵을 위한 임시 테스팅베드 플레이어 캐릭터면서 차후 
 // 개선하여 실제 플레이어블 캐릭터가 될 클래스
 class cGamePlayableObject : public cGameSMeshBodyObject

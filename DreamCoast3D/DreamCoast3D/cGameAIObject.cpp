@@ -41,7 +41,9 @@ void cGameAIObject::Setup(std::string sFolder, std::string sFile){
 	m_vecPatterns[eAISTATE_THINK] = new cAIThink;
 	m_vecPatterns[eAISTATE_RANDOMMOVE] = new cAIRandomMove;
 	m_vecPatterns[eAISTATE_MOVETOTARGET] = new cAIMoveToTarget;
-	
+}
+
+void cGameAIObject::Start(){
 	m_pCurrentState = m_vecPatterns[eAISTATE_IDLE];
 	m_pCurrentState->Start(this);
 }

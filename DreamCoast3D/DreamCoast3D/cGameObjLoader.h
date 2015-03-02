@@ -16,6 +16,7 @@ protected:
 	cGameObject* ParseAndLoadSkinnedBodyMesh();
 	cGameObject* ParseGameActionSkinnedMeshObj();
 	cGameObject* ParsePlayerbleObj();
+	cGameObject* ParseGameAIObj();
 
 public:
 	cGameObjLoader();

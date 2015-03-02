@@ -81,6 +81,6 @@ public:
 	virtual void SetTargetObject(cGameObject* pTarget) {}
 	virtual void OnHitTarget(cGameObject* pTarget) {}
 	virtual ST_STAT_INFO* GetStatInfo(){ return NULL; }
-	
+	virtual void Start() {}
 };
 

@@ -52,6 +52,8 @@ public:
 	virtual ~cGameAIObject();
 
 	virtual void Setup(std::string sFolder, std::string sFile);
+	
+	virtual void Start() override;
 	virtual void Update(float fDelta);
 
 	virtual void ChangeState(EAIOBJECTSTATE eState);
@@ -67,6 +69,8 @@ public:
 
 	virtual void AddGameObjToAggroMap(cGameObject* pGameObj);
 	virtual void CheckAggroMapAndSetTarget();
+
+
 
 	// 현재 미사용
 	virtual void OnActionFinish(cAction* pSender);
