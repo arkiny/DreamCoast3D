@@ -15,8 +15,10 @@ protected:
 	SYNTHESIZE(int, m_nTag, Tag);
 
 
-	SYNTHESIZE(iGameObjectDelegate*, m_pGameObjDelgate, GameObjDeligate);
-	SYNTHESIZE(iSceneDelegate*, m_pSceneDeligate, SceneDeligate);
+	iGameObjectDelegate* m_pGameObjDelgate;
+	iSceneDelegate* m_pSceneDeligate;
+	/*SYNTHESIZE(iGameObjectDelegate*, m_pGameObjDelgate, GameObjDeligate);
+	SYNTHESIZE(iSceneDelegate*, m_pSceneDeligate, SceneDeligate);*/
 
 public:
 	cUIObject();
@@ -42,6 +44,9 @@ public:
 	virtual void Update(float fDelta);
 	virtual void Render();
 	virtual void Destroy();
+
+	virtual void SetGameObjDeligate(iGameObjectDelegate* pGameDeligate);
+	virtual void SetSceneDeligate(iSceneDelegate* pSceneDeligate);
 
 	virtual void SetPosition(float x, float y)
 	{

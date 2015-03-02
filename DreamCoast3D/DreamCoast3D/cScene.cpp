@@ -21,6 +21,7 @@
 #include "cGameMapSkyObject.h"
 #include "cGamePlayableObject.h"
 #include "cGameAIObject.h"
+#include "cUISceneChangeButton.h"
 
 
 cScene::cScene() 
@@ -114,6 +115,7 @@ void cScene::Setup(std::string sFilePath){
 	m_pGameObjManager->AddGameObj(pGMSO);
 	SAFE_RELEASE(pGMSO);
 
+
 	//SAFE_RELEASE(pAseObject);
 
 	//cGameAIObject* pGameAIObject = new cGameAIObject;
@@ -152,11 +154,19 @@ void cScene::Start(){
 		p->Start();
 	}
 
+
+
 	// 첫 맵 설정
 	// TODO : 차후 맵간 이동이 있을 것이므로 해당 맵간 로딩도 멀티쓰레드 로딩을 생각해볼 것
 
 	if (!m_vecGameMaps.empty()){
 		this->SetCurrentMap(0);
+		// 카메라에 타겟 설정
+		m_pCamera->SetTarget(m_pGameObjManager->GetPlayerableGameObject()->GetTransform()->getPosPointer());
+
+		// 게임 오브젝트매니저에 카메라 설정
+		m_pGameObjManager->SetCameraDeligate(m_pCamera);
+
 		// 타일맵에 현재 맵 추가
 		m_pGameObjManager->SetCurrentTileSystem(m_pCurrentMap);
 
@@ -168,12 +178,6 @@ void cScene::Start(){
 
 		// UI매니저 시작
 		m_pUIObjManager->Start();
-
-		// 카메라에 타겟 설정
-		m_pCamera->SetTarget(m_pGameObjManager->GetPlayerableGameObject()->GetTransform()->getPosPointer());
-
-		// 게임 오브젝트매니저에 카메라 설정
-		m_pGameObjManager->SetCameraDeligate(m_pCamera);
 	}
 }
 

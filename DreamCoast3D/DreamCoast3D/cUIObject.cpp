@@ -17,6 +17,7 @@ cUIObject::cUIObject(LPD3DXSPRITE pSprite)
 	, m_vScale(1, 1, 1)
 	, m_pSprite(pSprite)
 	, m_pGameObjDelgate(NULL)
+	, m_pSceneDeligate(NULL)
 {
 	m_pSprite->AddRef();
 }
@@ -63,4 +64,18 @@ void cUIObject::Destroy(){
 	}
 
 	Release();
+}
+
+void cUIObject::SetGameObjDeligate(iGameObjectDelegate* pGameDeligate){
+	for (auto p : m_vecChild){
+		p->SetGameObjDeligate(pGameDeligate);
+	}
+	m_pGameObjDelgate = pGameDeligate;
+}
+
+void cUIObject::SetSceneDeligate(iSceneDelegate* pSceneDeligate){
+	for (auto p : m_vecChild){
+		p->SetSceneDeligate(pSceneDeligate);
+	}
+	m_pSceneDeligate = pSceneDeligate;
 }

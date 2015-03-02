@@ -146,6 +146,7 @@
     <ClInclude Include="cUILoader.h" />
     <ClInclude Include="cUIMinimap.h" />
     <ClInclude Include="cUIPlayerInfo.h" />
+    <ClInclude Include="cUISceneChangeButton.h" />
     <ClInclude Include="cUISkillShortCut.h" />
     <ClInclude Include="cSkinnedMesh.h" />
     <ClInclude Include="cSkinnedMeshManager.h" />
@@ -167,6 +168,7 @@
     <ClInclude Include="cTransform.h" />
     <ClInclude Include="cUIStatWindow.h" />
     <ClInclude Include="cUISystemMenu.h" />
+    <ClInclude Include="cUISystemTest.h" />
     <ClInclude Include="cUITextView.h" />
     <ClInclude Include="cUIWindow.h" />
     <ClInclude Include="cZealot.h" />
@@ -241,6 +243,7 @@
     <ClCompile Include="cUILoader.cpp" />
     <ClCompile Include="cUIMinimap.cpp" />
     <ClCompile Include="cUIPlayerInfo.cpp" />
+    <ClCompile Include="cUISceneChangeButton.cpp" />
     <ClCompile Include="cUISkillShortCut.cpp" />
     <ClCompile Include="cSkinnedMesh.cpp" />
     <ClCompile Include="cSkinnedMeshManager.cpp" />
@@ -262,6 +265,7 @@
     <ClCompile Include="cTransform.cpp" />
     <ClCompile Include="cUIStatWindow.cpp" />
     <ClCompile Include="cUISystemMenu.cpp" />
+    <ClCompile Include="cUISystemTest.cpp" />
     <ClCompile Include="cUITextView.cpp" />
     <ClCompile Include="cUIWindow.cpp" />
     <ClCompile Include="cZealot.cpp" />

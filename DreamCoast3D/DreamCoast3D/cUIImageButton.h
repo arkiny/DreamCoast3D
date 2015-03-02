@@ -20,7 +20,7 @@ protected:
 
 public:
 	cUIImageButton(LPD3DXSPRITE pSprite);
-	~cUIImageButton(void);
+	virtual ~cUIImageButton(void);
 
 	virtual void Setup(
 		std::string sNormal,
