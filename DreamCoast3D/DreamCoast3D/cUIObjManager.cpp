@@ -25,7 +25,12 @@ void cUIObjManager::Update(float fDelta){
 	// 실행되어야 한다.
 	// 루프는 자기가 삭제된 뒤에도 계속 돌기 때문이다.
 	if (m_bSceneChange){
-		m_pSceneManager->ChangeScene(m_nNextScene);
+		if (m_nNextScene >= 0){
+			m_pSceneManager->ChangeScene(m_nNextScene);
+		}
+		else if (m_nNextScene < -1){
+			PostQuitMessage(NULL);
+		}
 	}
 }
 

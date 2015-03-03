@@ -11,6 +11,7 @@
 #include "cGameObjLoader.h"
 #include "cMapLoader.h"
 #include "cUILoader.h"
+#include "cEffectManager.h"
 
 /// TODO
 // 차후 데이타 드리븐 완료후 삭제해야할것들
@@ -22,6 +23,7 @@
 #include "cGamePlayableObject.h"
 #include "cGameAIObject.h"
 #include "cUISystemTest.h"
+#include "cEffectFireBall.h"
 
 
 cScene::cScene() 
@@ -31,6 +33,7 @@ cScene::cScene()
 	, m_pUIObjManager(NULL)
 	, m_pPlayableObject(NULL)
 	, m_pDelegate(NULL)
+	, m_pEffectManager(NULL)
 {
 }
 
@@ -43,6 +46,9 @@ cScene::~cScene()
 	}
 	if (m_pUIObjManager){
 		m_pUIObjManager->Destroy();
+	}
+	if (m_pEffectManager){
+		m_pEffectManager->Destroy();
 	}
 	SAFE_RELEASE(m_pCurrentMap);
 	for (auto p : m_vecGameMaps){
@@ -88,6 +94,16 @@ void cScene::Setup(std::string sFilePath){
 	m_pUIObjManager = new cUIObjManager;
 	m_pUIObjManager->Setup();
 	m_pUIObjManager->SetDesc("UIObject Manager for Example1");
+
+	m_pEffectManager = new cEffectManager;
+	m_pEffectManager->Setup();
+	m_pEffectManager->SetDesc("EffectManager");
+
+	cEffectFireBall* p = new cEffectFireBall;
+	p->Setup();
+
+	m_pEffectManager->AddEffect(p);
+	p->Release();
 
 	/// TODO 차후 UI 및 하늘 역시 DataDriven으로 처리된후 삭제
 	
@@ -191,6 +207,12 @@ void cScene::Start(){
 		m_pUIObjManager->Start();
 	}
 		
+	if (m_pEffectManager){
+		if (m_pGameObjManager){
+			m_pGameObjManager->SetEffectDeligate(m_pEffectManager);
+		}
+		m_pEffectManager->Start();
+	}
 }
 
 void cScene::Update(float delta){
@@ -212,6 +234,10 @@ void cScene::Update(float delta){
 		}
 	}
 
+	if (m_pEffectManager){
+		m_pEffectManager->Update(delta);
+	}
+
 	if (m_pUIObjManager){
 		m_pUIObjManager->Update(delta);
 	}
@@ -225,6 +251,8 @@ void cScene::Render(){
 	SAFE_RENDER(m_pUIObjManager);
 
 	SAFE_RENDER(m_pCamera);
+
+	SAFE_RENDER(m_pEffectManager);
 }
 
 void cScene::Exit(){

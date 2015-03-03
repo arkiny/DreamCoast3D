@@ -5,6 +5,7 @@ class cLightSource;
 class cGameObjManager;
 class cUIObjManager;
 class cGameMapObject;
+class cEffectManager;
 
 // MS
 class cGamePlayableObject;
@@ -51,6 +52,8 @@ protected:
 	// 각 씬은 각 씬에 맞는 다른 카메라를 가지고 있다.
 	// 여러개의 카메라를 가지는 것은 차후 고민해서 추가
 	cCamera*							m_pCamera;
+
+	cEffectManager*						m_pEffectManager;
 	
 
 public:

@@ -109,6 +109,10 @@
     <ClInclude Include="cCameraEditing.h" />
     <ClInclude Include="cControlManager.h" />
     <ClInclude Include="cDeviceManager.h" />
+    <ClInclude Include="cEffect.h" />
+    <ClInclude Include="cEffectFireBall.h" />
+    <ClInclude Include="cEffectManager.h" />
+    <ClInclude Include="cEffectResourceManager.h" />
     <ClInclude Include="cFontManager.h" />
     <ClInclude Include="cGameAIObject.h" />
     <ClInclude Include="cGameASEObject.h" />
@@ -181,6 +185,7 @@
     <ClInclude Include="iAIState.h" />
     <ClInclude Include="iButtonDelegate.h" />
     <ClInclude Include="iCameraDeligate.h" />
+    <ClInclude Include="iEffectManagerDeligate.h" />
     <ClInclude Include="iGameObjectDelegate.h" />
     <ClInclude Include="iGameStateObject.h" />
     <ClInclude Include="iMap.h" />
@@ -210,6 +215,10 @@
     <ClCompile Include="cCameraEditing.cpp" />
     <ClCompile Include="cControlManager.cpp" />
     <ClCompile Include="cDeviceManager.cpp" />
+    <ClCompile Include="cEffect.cpp" />
+    <ClCompile Include="cEffectFireBall.cpp" />
+    <ClCompile Include="cEffectManager.cpp" />
+    <ClCompile Include="cEffectResourceManager.cpp" />
     <ClCompile Include="cFontManager.cpp" />
     <ClCompile Include="cGameAIObject.cpp" />
     <ClCompile Include="cGameASEObject.cpp" />
@@ -282,6 +291,7 @@
     <ClCompile Include="iAIState.cpp" />
     <ClCompile Include="iButtonDelegate.cpp" />
     <ClCompile Include="iCameraDeligate.cpp" />
+    <ClCompile Include="iEffectManagerDeligate.cpp" />
     <ClCompile Include="iGameObjectDelegate.cpp" />
     <ClCompile Include="iGameStateObject.cpp" />
     <ClCompile Include="iMap.cpp" />

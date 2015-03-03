@@ -42,6 +42,18 @@ void cUISystemTest::Setup(){
 	pTestButton->SetTargetScene(1);
 	pUIImageView->AddChild(pTestButton);
 	pTestButton->Release();
+
+
+	pTestButton = new cUISceneChangeButton(m_pSprite);
+	pTestButton->Setup(
+		std::string("../Resources/UI/UI_AcceptButton.png"),
+		std::string("../Resources/UI/UI_AcceptButtonOn.png"),
+		std::string("../Resources/UI/UI_AcceptButtonClick.png"));
+	pTestButton->SetPosition(D3DXVECTOR3(90, 150, 0));
+	pTestButton->SetButtonDeligate(this);
+	pTestButton->SetTargetScene(-2);
+	pUIImageView->AddChild(pTestButton);
+	pTestButton->Release();
 }
 
 void cUISystemTest::Start(){

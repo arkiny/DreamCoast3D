@@ -23,6 +23,7 @@
 #include <list>
 #include <map>
 #include <set>
+#include <queue>
 #include <string>
 #include <assert.h>
 
@@ -192,6 +193,7 @@ typedef struct ST_STAT_INFO{
 #include "iGameObjectDelegate.h"
 #include "iGameStateObject.h"
 #include "iUIManagerDeligate.h"
+#include "iEffectManagerDeligate.h"
 
 // 모두가 알아야 하는 클래스들
 #include "cObject.h"

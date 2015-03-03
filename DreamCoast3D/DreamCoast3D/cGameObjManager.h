@@ -16,7 +16,7 @@ private:
 
 	iGridTileSystem*				m_pGridTileSystem;
 	iCameraDeligate*				m_pCameraDeligate;
-	
+	iEffectManagerDelegate*			m_pEffectDelegate;
 
 	// HACK : Playable과 몬스터와 사물을 나눠놓을까?
 	std::set<cGameObject*>			m_setGameObjects;
@@ -31,6 +31,8 @@ public:
 	void Render();
 
 	void SetCurrentTileSystem(iGridTileSystem* pGridSystem);
+	void SetEffectDeligate(iEffectManagerDelegate* pEffectDeligate);
+
 	void SetCameraDeligate(iCameraDeligate* pCamera){ m_pCameraDeligate = pCamera; }
 
 	void AddGameObj(cGameObject* pGameObj);

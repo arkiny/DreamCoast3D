@@ -13,12 +13,12 @@ cUISystemMenu::cUISystemMenu()
 cUISystemMenu::~cUISystemMenu()
 {
 	SAFE_RELEASE(m_pSprite);
-	for (auto p : m_vecButtons){
-		SAFE_RELEASE(p);
-	}
-	for (auto p : m_vecPopUpWindow){
-		SAFE_RELEASE(p);
-	}
+	//for (auto p : m_vecButtons){
+	//	SAFE_RELEASE(p);
+	//}
+	//for (auto p : m_vecPopUpWindow){
+	//	SAFE_RELEASE(p);
+	//}
 	//SAFE_RELEASE(m_pPopUpSystemMenuUI);
 	if (m_pUIRoot)
 		m_pUIRoot->Destroy();

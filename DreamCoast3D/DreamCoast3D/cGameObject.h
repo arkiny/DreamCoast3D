@@ -14,11 +14,13 @@ public:
 		E_NPC,
 		E_MOP,
 		E_NONE,
+		E_EFFECT,
 		E_MAX
 	};
 
 protected:
 	SYNTHESIZE(iGameObjectDelegate*, m_pGameObjDeligate, GameObjDeligate);
+	SYNTHESIZE(iEffectManagerDelegate*, m_pEffectDelegate, EffectDelegate);
 	SYNTHESIZE(eGameObjectType, m_eGameObjectType, GameObjectType);
 
 	iGridTileSystem*	m_pGridCallback;

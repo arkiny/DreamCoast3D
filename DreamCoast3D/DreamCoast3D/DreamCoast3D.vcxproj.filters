@@ -289,6 +289,11 @@
     <ClCompile Include="cUIImageButtonMenu.cpp">
       <Filter>EachWorks\HD</Filter>
     </ClCompile>
+    <ClCompile Include="cEffect.cpp" />
+    <ClCompile Include="cEffectManager.cpp" />
+    <ClCompile Include="cEffectResourceManager.cpp" />
+    <ClCompile Include="cEffectFireBall.cpp" />
+    <ClCompile Include="iEffectManagerDeligate.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cAction.h">
@@ -591,6 +596,11 @@
     <ClInclude Include="cUIImageButtonMenu.h">
       <Filter>EachWorks\HD</Filter>
     </ClInclude>
+    <ClInclude Include="cEffect.h" />
+    <ClInclude Include="cEffectManager.h" />
+    <ClInclude Include="cEffectResourceManager.h" />
+    <ClInclude Include="cEffectFireBall.h" />
+    <ClInclude Include="iEffectManagerDeligate.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="DreamCoast3D.ico">
@@ -693,6 +703,9 @@
     </Filter>
     <Filter Include="EachWorks\MW\Todo">
       <UniqueIdentifier>{70713648-0207-4f31-8d70-ff0ba213f875}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="FrameWork\Effects">
+      <UniqueIdentifier>{23350a21-4445-4722-87d7-2533f61ceb20}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

@@ -131,6 +131,12 @@ void cGameObjManager::AdjustYPositionByHeightMap(iMap* pMap){
 	}
 }
 
+void cGameObjManager::SetEffectDeligate(iEffectManagerDelegate* pEffectDeligate){
+	for (auto p : m_setGameObjects){
+		p->SetEffectDelegate(pEffectDeligate);
+	}
+}
+
 void cGameObjManager::SetPlayableGameObject(cGameObject* pPlayer){
 	if (pPlayer && pPlayer != m_pPlayable){
 		pPlayer->AddRef();
