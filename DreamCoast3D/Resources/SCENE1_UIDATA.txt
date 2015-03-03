@@ -5,8 +5,4 @@
 		*UI_TYPE "UIMAIN"
 
 	}
-
-	*UI 1 {
-		*UI_TYPE "UIINVENTORY"
-	}
 }
