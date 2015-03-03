@@ -265,9 +265,6 @@
     <ClCompile Include="cSceneLoader.cpp">
       <Filter>FrameWork\Loader</Filter>
     </ClCompile>
-    <ClCompile Include="cLoadingScene.cpp" />
-    <ClCompile Include="cUISceneChangeButton.cpp" />
-    <ClCompile Include="cUISystemTest.cpp" />
     <ClCompile Include="cUIIcon.cpp">
       <Filter>EachWorks\MW\Todo</Filter>
     </ClCompile>
@@ -275,6 +272,18 @@
       <Filter>EachWorks\HD</Filter>
     </ClCompile>
     <ClCompile Include="cUISystemMenu.cpp">
+      <Filter>EachWorks\HD</Filter>
+    </ClCompile>
+    <ClCompile Include="iUIManagerDeligate.cpp">
+      <Filter>FrameWork\Interfaces</Filter>
+    </ClCompile>
+    <ClCompile Include="cLoadingScene.cpp">
+      <Filter>EachWorks\HD</Filter>
+    </ClCompile>
+    <ClCompile Include="cUISceneChangeButton.cpp">
+      <Filter>EachWorks\HD</Filter>
+    </ClCompile>
+    <ClCompile Include="cUISystemTest.cpp">
       <Filter>EachWorks\HD</Filter>
     </ClCompile>
   </ItemGroup>
@@ -555,9 +564,6 @@
     <ClInclude Include="cSceneLoader.h">
       <Filter>FrameWork\Loader</Filter>
     </ClInclude>
-    <ClInclude Include="cLoadingScene.h" />
-    <ClInclude Include="cUISceneChangeButton.h" />
-    <ClInclude Include="cUISystemTest.h" />
     <ClInclude Include="cUIIcon.h">
       <Filter>EachWorks\MW\Todo</Filter>
     </ClInclude>
@@ -565,6 +571,18 @@
       <Filter>EachWorks\HD</Filter>
     </ClInclude>
     <ClInclude Include="cUISystemMenu.h">
+      <Filter>EachWorks\HD</Filter>
+    </ClInclude>
+    <ClInclude Include="iUIManagerDeligate.h">
+      <Filter>FrameWork\Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="cLoadingScene.h">
+      <Filter>EachWorks\HD</Filter>
+    </ClInclude>
+    <ClInclude Include="cUISystemTest.h">
+      <Filter>EachWorks\HD</Filter>
+    </ClInclude>
+    <ClInclude Include="cUISceneChangeButton.h">
       <Filter>EachWorks\HD</Filter>
     </ClInclude>
   </ItemGroup>
