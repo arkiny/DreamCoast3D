@@ -253,7 +253,17 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 			PostQuitMessage(0);
 		break;
 	//
-
+	//UI입력용으로 만들었다 : 민우
+	case WM_LBUTTONDOWN:
+		break;
+	case WM_LBUTTONUP:
+		break;
+	case WM_RBUTTONDOWN:
+		break;
+	case WM_RBUTTONUP:
+		break;
+	case WM_MOUSEMOVE:
+		break;
 	default:
 		return DefWindowProc(hWnd, message, wParam, lParam);
 	}

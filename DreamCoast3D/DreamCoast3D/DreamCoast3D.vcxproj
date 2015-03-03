@@ -142,6 +142,7 @@
     <ClInclude Include="cUIExpBar.h" />
     <ClInclude Include="cUIGameMainMenu.h" />
     <ClInclude Include="cUIGameSystemShortCut.h" />
+    <ClInclude Include="cUIIcon.h" />
     <ClInclude Include="cUIInventory.h" />
     <ClInclude Include="cUILoader.h" />
     <ClInclude Include="cUIMinimap.h" />
@@ -239,6 +240,7 @@
     <ClCompile Include="cUIExpBar.cpp" />
     <ClCompile Include="cUIGameMainMenu.cpp" />
     <ClCompile Include="cUIGameSystemShortCut.cpp" />
+    <ClCompile Include="cUIIcon.cpp" />
     <ClCompile Include="cUIInventory.cpp" />
     <ClCompile Include="cUILoader.cpp" />
     <ClCompile Include="cUIMinimap.cpp" />

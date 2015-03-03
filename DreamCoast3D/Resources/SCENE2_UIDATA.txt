@@ -11,5 +11,5 @@
 	}
 	*UI 3 {
 		*UI_TYPE "UIMINIMAP"
-	}	
+	}
 }

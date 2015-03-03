@@ -5,6 +5,7 @@
 #include "cUISkillShortCut.h"
 #include "cUIStatWindow.h"
 #include "cUIExpBar.h"
+#include "cUIInventory.h"
 
 
 cUILoader::cUILoader()
@@ -86,6 +87,11 @@ cUIObject* cUILoader::ParseUI(){
 			}
 			else if (isEqual(szTypeName, "UIMINIMAP")){
 				ret = new cUIMinimap;
+				ret->Setup();
+			}
+			else if (isEqual(szTypeName, "UIINVENTORY"))
+			{
+				ret = new cUIInventory;
 				ret->Setup();
 			}
 		}
