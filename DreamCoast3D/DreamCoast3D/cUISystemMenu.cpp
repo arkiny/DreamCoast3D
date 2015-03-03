@@ -5,7 +5,7 @@
 
 
 cUISystemMenu::cUISystemMenu()
-	:m_pPopUpUI(NULL)
+	:m_pPopUpSystemMenuUI(NULL)
 {
 }
 
@@ -13,11 +13,9 @@ cUISystemMenu::cUISystemMenu()
 cUISystemMenu::~cUISystemMenu()
 {
 	SAFE_RELEASE(m_pSprite);
+	SAFE_RELEASE(m_pPopUpSystemMenuUI);
 	if (m_pUIRoot)
 		m_pUIRoot->Destroy();
-	if (m_pPopUpUI){
-		m_pPopUpUI->Destroy();
-	}
 }
 
 void cUISystemMenu::Setup(){
@@ -25,7 +23,7 @@ void cUISystemMenu::Setup(){
 
 	cUIPopupWindow* p = new cUIPopupWindow;
 	p->Setup();
-	m_pPopUpUI = p;
+	m_pPopUpSystemMenuUI = p;
 
 	// 시작 버튼
 	cUIImageButton* pTestButton = new cUIImageButton(m_pSprite);
@@ -42,8 +40,10 @@ void cUISystemMenu::Update(float fDelta){
 	if (m_pUIRoot){
 		m_pUIRoot->Update(fDelta);
 	}
-	if (m_pPopUpUI){
-		m_pUIRoot->Update(fDelta);
+
+	// TODO 차후 분리
+	if (m_pPopUpSystemMenuUI){
+		m_pPopUpSystemMenuUI->Update(fDelta);
 	}
 }
 
@@ -51,18 +51,20 @@ void cUISystemMenu::Render(){
 	if (m_pUIRoot){
 		m_pUIRoot->Render();
 	}
-	if (m_pPopUpUI){
-		m_pPopUpUI->Render();
+
+	// TODO 차후 분리
+	if (m_pPopUpSystemMenuUI){
+		m_pPopUpSystemMenuUI->Render();
 	}
 }
 
 void cUISystemMenu::OnClick(cUIImageButton* pSender){
-	if (m_pPopUpUI){
-		if (m_pPopUpUI->GetisPopped() == false){
-			m_pPopUpUI->SetisPopped(true);
+	if (m_pPopUpSystemMenuUI){
+		if (m_pPopUpSystemMenuUI->GetisPopped() == false){
+			m_pPopUpSystemMenuUI->SetisPopped(true);
 		}
 		else {
-			m_pPopUpUI->SetisPopped(false);
+			m_pPopUpSystemMenuUI->SetisPopped(false);
 		}
 	}
 }

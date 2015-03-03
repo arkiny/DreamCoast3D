@@ -7,7 +7,7 @@ class cUILoader : public cLoader
 {
 private:
 	void ParseUIList(OUT cUIObjManager* pUIManager);
-	cUIObject* ParseUI();
+	void ParseUI(OUT cUIObjManager* pUIManager);
 
 public:
 	cUILoader();

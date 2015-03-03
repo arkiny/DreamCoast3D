@@ -6,8 +6,7 @@ class cUIPopupWindow;
 class cUISystemMenu : public cUIWindow, public iButtonDelegate
 {
 protected:
-	cUIPopupWindow*	m_pPopUpUI;
-	bool			m_bPoppedUP;
+	SYNTHESIZE(cUIPopupWindow*, m_pPopUpSystemMenuUI, PopUpSystemMenuUI);
 
 public:
 	cUISystemMenu();

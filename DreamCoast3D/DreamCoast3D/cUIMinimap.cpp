@@ -105,7 +105,7 @@ void cUIMinimap::Update(float fDelta){
 	D3DXVECTOR3 vec = pGameObject->GetPosition();
 	m_fAngle = pGameObject->GetYangle();
 	SetPlayerPosition(&vec);
-	SetSight(50.f);
+	SetSight(30.f);
 	UpdateInSightObject(m_stPlayerSightSphere);
 	UpdateMinimap();
 	ObjectPositionUpdate();

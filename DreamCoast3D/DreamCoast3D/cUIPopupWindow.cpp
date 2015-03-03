@@ -19,6 +19,7 @@ cUIPopupWindow::~cUIPopupWindow()
 }
 
 void cUIPopupWindow::Setup(){
+	D3DXCreateSprite(g_pD3DDevice, &m_pSprite);
 	cUIImageView* pUIImageView = new cUIImageView(m_pSprite);
 	pUIImageView->SetTextureFilename(std::string("../Resources/UI/UI_Lobby/Login_I3C.tga"));
 	pUIImageView->SetScale(D3DXVECTOR3(1.0f, 1.0f, 1.0f));

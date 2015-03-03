@@ -7,6 +7,7 @@
 #include "cUIExpBar.h"
 #include "cUIInventory.h"
 #include "cUISystemTest.h"
+#include "cUISystemMenu.h"
 
 
 cUILoader::cUILoader()
@@ -52,17 +53,13 @@ void cUILoader::ParseUIList(OUT cUIObjManager* pUIManager){
 		}
 		else if (isEqual(szToken, "*UI")){
 			int nUINum = GetInteger();
-			cUIObject* p = ParseUI();
-			if (p){
-				pUIManager->AddUI(p);
-				SAFE_RELEASE(p);
-			}
+			ParseUI(pUIManager);
 		}
 	} while (nLevel > 0);
 }
 
-cUIObject* cUILoader::ParseUI(){
-	cUIObject* ret = NULL;
+void cUILoader::ParseUI(OUT cUIObjManager* pUIManager){
+	//cUIObject* ret = NULL;
 	int nLevel = 0;
 	do{
 		char* szToken = GetToken();
@@ -75,32 +72,64 @@ cUIObject* cUILoader::ParseUI(){
 		else if (isEqual(szToken, "*UI_TYPE")){
 			char* szTypeName = GetToken();
 			if (isEqual(szTypeName, "UISTAT")){
-				ret = new cUIStatWindow;
-				ret->Setup();
+				cUIObject* p = new cUIStatWindow;
+				p->Setup();
+				if (p){
+					pUIManager->AddUI(p);
+					SAFE_RELEASE(p);
+				}
 			}
 			else if (isEqual(szTypeName, "UISKILL")){
-				ret = new cUISkillShortCut;
-				ret->Setup();
+				cUIObject* p = new cUISkillShortCut;
+				p->Setup();
+				if (p){
+					pUIManager->AddUI(p);
+					SAFE_RELEASE(p);
+				}
 			}
 			else if (isEqual(szTypeName, "UIEXP")){
-				ret = new cUIExpBar;
-				ret->Setup();
+				cUIObject* p = new cUIExpBar;
+				p->Setup();
+				if (p){
+					pUIManager->AddUI(p);
+					SAFE_RELEASE(p);
+				}
 			}
 			else if (isEqual(szTypeName, "UIMINIMAP")){
-				ret = new cUIMinimap;
-				ret->Setup();
+				cUIObject* p = new cUIMinimap;
+				p->Setup();
+				if (p){
+					pUIManager->AddUI(p);
+					SAFE_RELEASE(p);
+				}
 			}
 
 			else if (isEqual(szTypeName, "UIINVENTORY")){
-				ret = new cUIInventory;
-				ret->Setup();
+				cUIObject* p = new cUIInventory;
+				p->Setup();
+				if (p){
+					pUIManager->AddUI(p);
+					SAFE_RELEASE(p);
+				}
 			}
 			else if (isEqual(szTypeName, "UIMAIN")){
-				ret = new cUISystemTest;
-				ret->Setup();
+				cUIObject* p = new cUISystemTest;
+				p->Setup();
+				if (p){
+					pUIManager->AddUI(p);
+					SAFE_RELEASE(p);
+				}
+			}
+			else if (isEqual(szTypeName, "UISYSTEMMENU")){
+				cUIObject* p = new cUISystemMenu;
+				p->Setup();
+				if (p){
+					pUIManager->AddUI(p);
+					SAFE_RELEASE(p);
+				}
 			}
 		}
 	} while (nLevel > 0);
 
-	return ret;
+	//return ret;
 }

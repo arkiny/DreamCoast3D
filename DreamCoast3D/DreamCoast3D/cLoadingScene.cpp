@@ -60,7 +60,7 @@ void cLoadingScene::Update(float fDelta){
 void cLoadingScene::Render(){
 	std::stringstream s;
 	s.precision(2);
-	s << m_fLoadingTime << "sec" << std::endl;
+	s << std::fixed << m_fLoadingTime << "sec" << std::endl;
 	m_pFont->DrawText(NULL,				 //pSprite
 		s.str().c_str(),	 //pString
 		-1,					//Count
