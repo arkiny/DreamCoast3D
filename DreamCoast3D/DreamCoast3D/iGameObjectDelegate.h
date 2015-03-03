@@ -14,5 +14,5 @@ __interface iGameObjectDelegate{
 	// MS
 	cGameObject* GetPlayerData();
 	std::set<cGameObject*> GetObjectData();
-	bool isCollidedStaticObject(cGameObject* pFrom);
+	D3DXVECTOR3 isCollidedStaticObject(cGameObject* pFrom);
 };

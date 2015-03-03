@@ -130,9 +130,16 @@ void cAIMoveToTarget::Execute(cGameAIObject* pAIObject, float fDelta){
 
 		pAIObject->SetFront(vDeltaPos);
 
-		addVec = curPos + (fDelta* vDeltaPos*pAIObject->GetMoveSpeed());
+		D3DXVECTOR3 newPos(0.f, 0.f, 0.f);
+		addVec = vDeltaPos;
 
-		pAIObject->SetPosition(addVec);
+		D3DXVec3Normalize(&addVec, &addVec);
+		D3DXVECTOR3 vForce(0.f, 0.f, 0.f);
+		vForce = pAIObject->GetGameObjDeligate()->isCollidedStaticObject(pAIObject) + addVec;
+		D3DXVec3Normalize(&vForce, &vForce);
+
+		newPos = curPos + (vForce*fDelta* pAIObject->GetMoveSpeed());
+		pAIObject->SetPosition(newPos);
 
 		if (fabs(vDeltaPos.x) > 0.0001f)
 		{
