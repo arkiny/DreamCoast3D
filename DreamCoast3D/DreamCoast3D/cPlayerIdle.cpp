@@ -19,8 +19,9 @@ void cPlayerIdle::Start(cGamePlayableObject* pPlayer){
 }
 
 void cPlayerIdle::Execute(cGamePlayableObject* pPlayer, float fDelta){
-
 	pPlayer->GetGameObjDeligate()->isGameObjectCollided(pPlayer);
+	// MS
+	pPlayer->GetGameObjDeligate()->SetPlayerData(pPlayer);
 
 	if (g_pControlManager->GetInputInfo('W') || 
 		g_pControlManager->GetInputInfo('A') || 

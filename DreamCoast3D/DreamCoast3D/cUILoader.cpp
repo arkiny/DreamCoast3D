@@ -6,6 +6,7 @@
 #include "cUIStatWindow.h"
 #include "cUIExpBar.h"
 #include "cUIInventory.h"
+#include "cUISystemTest.h"
 
 
 cUILoader::cUILoader()
@@ -89,9 +90,13 @@ cUIObject* cUILoader::ParseUI(){
 				ret = new cUIMinimap;
 				ret->Setup();
 			}
-			else if (isEqual(szTypeName, "UIINVENTORY"))
-			{
+
+			else if (isEqual(szTypeName, "UIINVENTORY")){
 				ret = new cUIInventory;
+				ret->Setup();
+			}
+			else if (isEqual(szTypeName, "UIMAIN")){
+				ret = new cUISystemTest;
 				ret->Setup();
 			}
 		}

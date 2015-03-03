@@ -12,7 +12,7 @@ private:
 	// 프러스텀 컬링용
 	cFrustum*						m_pFrustum;
 
-	cGameObject*			m_pPlayable;
+	cGameObject*					m_pPlayable;
 
 	iGridTileSystem*				m_pGridTileSystem;
 	iCameraDeligate*				m_pCameraDeligate;
@@ -52,6 +52,13 @@ public:
 	std::vector<cGameObject*> GetInSightObject(ST_BOUNDING_SPHERE stSphere) override;
 	void AttackMobToPlayer(cGameAIObject* pFrom) override;
 	ST_STAT_INFO* GetPlayerStatInfo() override;
+
+	//MS
+	void SetPlayerData(cGameObject* pPlayer) override;
+	cGameObject* GetPlayerData() override;
+	std::set<cGameObject*> GetObjectData() override;
+
+	//cGameObject* m_pPlayer;
 
 protected:
 	bool isCollided(D3DXVECTOR3 vFromCenter,

@@ -7,6 +7,7 @@
 #include "cGameSMeshBodyObject.h"
 #include "cGamePlayableObject.h"
 #include "cGameAIObject.h"
+#include "cGameMapSkyObject.h"
 
 //Template
 //int nLevel = 0;
@@ -63,6 +64,13 @@ void cGameObjLoader::LoadGameObjectsFromFile(OUT cGameObjManager* pGameManager, 
 		}
 		else if (isEqual(szToken, "*GAMEAIOBJ")){
 			cGameObject* p = ParseGameAIObj();
+			pGameManager->AddGameObj(p);
+			SAFE_RELEASE(p);
+		}
+		// TODO 하늘은 좀더 수정이 필요함
+		else if (isEqual(szToken, "*GAMESKYOBJ")){
+			cGameObject* p = new cGameMapSkyObject;
+			p->Setup();
 			pGameManager->AddGameObj(p);
 			SAFE_RELEASE(p);
 		}

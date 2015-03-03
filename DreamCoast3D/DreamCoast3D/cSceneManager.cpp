@@ -91,6 +91,5 @@ void cSceneManager::ChangeSceneFromLoader(cScene* pNextScene){
 	SAFE_RELEASE(m_pCurrentScene);
 
 	m_pCurrentScene = pNextScene;
-	m_pCurrentScene->SetDelegate(this);
 	m_bIsLoading = false;
 }

@@ -6,7 +6,7 @@ class cLoadingScene : public cScene
 protected:
 	volatile int m_nLoadCount = 0;
 	volatile bool m_bBoolWorkDone = false;
-
+	
 	float		m_fLoadingTime = 0.0f;
 	LPD3DXFONT	m_pFont;
 	RECT		m_recFontRect;

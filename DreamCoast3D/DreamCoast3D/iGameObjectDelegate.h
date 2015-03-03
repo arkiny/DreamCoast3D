@@ -10,4 +10,9 @@ __interface iGameObjectDelegate{
 	void AttackMobToPlayer(cGameAIObject* pFrom);
 	std::vector<cGameObject*> GetInSightObject(ST_BOUNDING_SPHERE stSphere);
 	ST_STAT_INFO* GetPlayerStatInfo();
+
+	// MS
+	void SetPlayerData(cGameObject* pPlayer);
+	cGameObject* GetPlayerData();
+	std::set<cGameObject*> GetObjectData();
 };

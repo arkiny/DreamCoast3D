@@ -14,10 +14,20 @@ public:
 
 	// MS
 
+
+
+	//cUIImageView* m_pMiniMapObject;
+	//LPD3DXSPRITE m_pMiniMapSprite;
+
+	//cUIObject* m_pMapRoot;
+
+
+private:
+
 	virtual void SetObject(std::set<cGameObject*> setGameObject);
 	virtual void SetPlayerPosition(D3DXVECTOR3* vPlayerPosition);
 	virtual void SetSight(float fSightRange);
-	
+
 	std::vector<D3DXVECTOR3> m_vecPositionGameObjectInSight;
 	std::set<cGameObject*> m_setGameObject;
 
@@ -28,14 +38,23 @@ public:
 	std::vector<cGameObject*> m_vecGameObjectInSight;
 	ST_BOUNDING_SPHERE m_stPlayerSightSphere;
 
-	std::vector<ST_PC_VERTEX> m_vecParticle;
-
 	float m_fMiniMapSize;
-private:
+	float m_fAngle;
 
+	virtual void Start();
 
+	LPD3DXSPRITE		 m_pSpriteMiniMap;
+	D3DXIMAGE_INFO		 m_stImageInfo;
+	LPDIRECT3DTEXTURE9	 m_pTexture;
 
+	POINT			     m_posMiniMap;
+	D3DXMATRIXA16		 m_mat;
 
+    D3DXVECTOR3 m_vTest;
+
+    LPD3DXSPRITE		 m_pSpriteMiniMapA;
+    D3DXIMAGE_INFO		 m_stImageInfoA;
+    LPDIRECT3DTEXTURE9	 m_pTextureA;
 private:
 
 

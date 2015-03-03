@@ -1,5 +1,11 @@
 *UI_LIST {
-	*UI_COUNT 1
+	*UI_COUNT 2
+
+	*UI 0 {
+		*UI_TYPE "UIMAIN"
+
+	}
+
 	*UI 1 {
 		*UI_TYPE "UIINVENTORY"
 	}

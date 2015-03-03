@@ -85,3 +85,9 @@ void cUIExample::OnClick(cUIImageButton* pSender){
 		m_pTextview->SetText(std::string("취소 버튼 눌렸음"));
 	}
 }
+
+//void cUIExample::OnClick(cUIImageButton* pSender){
+//	if (m_pSceneDeligate){
+//		m_pSceneDeligate->ChangeScene(1);
+//	}
+//}

@@ -12,5 +12,7 @@ public:
 	virtual void Setup();
 	virtual void Update(float fDelta);
 	virtual void Render();
+
+	void SetUIManagerDeligate(iUIManagerDeligate* pUImanagerDeligate);
 };
 
