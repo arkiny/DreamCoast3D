@@ -8,6 +8,7 @@
 #include "cUIInventory.h"
 #include "cUISystemTest.h"
 #include "cUISystemMenu.h"
+#include "cUIPopupWindow.h"
 
 
 cUILoader::cUILoader()
@@ -121,11 +122,22 @@ void cUILoader::ParseUI(OUT cUIObjManager* pUIManager){
 				}
 			}
 			else if (isEqual(szTypeName, "UISYSTEMMENU")){
-				cUIObject* p = new cUISystemMenu;
-				p->Setup();
-				if (p){
-					pUIManager->AddUI(p);
-					SAFE_RELEASE(p);
+				cUISystemMenu* p1 = new cUISystemMenu;
+				p1->Setup();
+
+				cUIPopupWindow* p2 = new cUIPopupWindow;
+				p2->Setup();
+				
+				p1->SetPopUpSystemMenuUI(p2);
+
+				if (p1){
+					pUIManager->AddUI(p1);
+					SAFE_RELEASE(p1);
+				}
+
+				if (p2){
+					pUIManager->AddUI(p2);
+					SAFE_RELEASE(p2);
 				}
 			}
 		}

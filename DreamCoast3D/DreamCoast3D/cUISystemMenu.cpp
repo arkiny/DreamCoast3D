@@ -13,7 +13,7 @@ cUISystemMenu::cUISystemMenu()
 cUISystemMenu::~cUISystemMenu()
 {
 	SAFE_RELEASE(m_pSprite);
-	SAFE_RELEASE(m_pPopUpSystemMenuUI);
+	//SAFE_RELEASE(m_pPopUpSystemMenuUI);
 	if (m_pUIRoot)
 		m_pUIRoot->Destroy();
 }
@@ -21,9 +21,9 @@ cUISystemMenu::~cUISystemMenu()
 void cUISystemMenu::Setup(){
 	D3DXCreateSprite(g_pD3DDevice, &m_pSprite);
 
-	cUIPopupWindow* p = new cUIPopupWindow;
-	p->Setup();
-	m_pPopUpSystemMenuUI = p;
+	//cUIPopupWindow* p = new cUIPopupWindow;
+	//p->Setup();
+	//m_pPopUpSystemMenuUI = p;
 
 	// 시작 버튼
 	cUIImageButton* pTestButton = new cUIImageButton(m_pSprite);
@@ -31,8 +31,15 @@ void cUISystemMenu::Setup(){
 		std::string("../Resources/UI/UI_AcceptButton.png"),
 		std::string("../Resources/UI/UI_AcceptButtonOn.png"),
 		std::string("../Resources/UI/UI_AcceptButtonClick.png"));
-	pTestButton->SetPosition(D3DXVECTOR3(90, 100, 0));
 	pTestButton->SetDelegate(this);
+
+	RECT tempRect;
+	GetClientRect(g_hWnd, &tempRect);
+
+	float x = tempRect.right - pTestButton->GetSize().fWidth;
+	float y = tempRect.bottom - pTestButton->GetSize().fHeight;
+	pTestButton->SetPosition(D3DXVECTOR3(x, y - 10.0f, 0));
+
 	m_pUIRoot = pTestButton;
 }
 
@@ -40,21 +47,11 @@ void cUISystemMenu::Update(float fDelta){
 	if (m_pUIRoot){
 		m_pUIRoot->Update(fDelta);
 	}
-
-	// TODO 차후 분리
-	if (m_pPopUpSystemMenuUI){
-		m_pPopUpSystemMenuUI->Update(fDelta);
-	}
 }
 
 void cUISystemMenu::Render(){
 	if (m_pUIRoot){
 		m_pUIRoot->Render();
-	}
-
-	// TODO 차후 분리
-	if (m_pPopUpSystemMenuUI){
-		m_pPopUpSystemMenuUI->Render();
 	}
 }
 

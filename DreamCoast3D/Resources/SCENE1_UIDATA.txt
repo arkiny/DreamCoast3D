@@ -9,8 +9,4 @@
 	*UI 1 {
 		*UI_TYPE "UIINVENTORY"
 	}
-
-	*UI 2{
-		*UI_TYPE "UISYSTEMMENU"
-	}
 }

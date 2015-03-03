@@ -34,7 +34,7 @@ void cUIPopupWindow::Setup(){
 		std::string("../Resources/UI/UI_AcceptButtonClick.png"));
 	pTestButton->SetPosition(D3DXVECTOR3(90, 100, 0));
 	pTestButton->SetButtonDeligate(this);
-	pTestButton->SetTargetScene(1);
+	pTestButton->SetTargetScene(0);
 	pUIImageView->AddChild(pTestButton);
 	pTestButton->Release();
 }
