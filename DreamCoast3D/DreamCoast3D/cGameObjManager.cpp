@@ -393,9 +393,9 @@ cGameObject* cGameObjManager::GetPlayerData()
 	return m_pPlayable;
 }
 
-bool cGameObjManager::isCollidedStaticObject(cGameObject* pFrom)
+D3DXVECTOR3 cGameObjManager::isCollidedStaticObject(cGameObject* pFrom)
 {
-	bool isColliedStaticObj = false;
+	D3DXVECTOR3 vFinal(0.f, 0.f, 0.f);
 
 	std::set<cGameObject*> setGameObject = m_setStaticGameObjects;
 
@@ -415,8 +415,6 @@ bool cGameObjManager::isCollidedStaticObject(cGameObject* pFrom)
 		{
 			if (setGameObject.count(p) > 0)
 			{
-				isColliedStaticObj = true;
-
 				D3DXVECTOR3 vPlayer(0.f, 0.f, 0.f);
 				D3DXVECTOR3 vObject(0.f, 0.f, 0.f);
 				D3DXVECTOR3 vForce(0.f, 0.f, 0.f);
@@ -430,8 +428,18 @@ bool cGameObjManager::isCollidedStaticObject(cGameObject* pFrom)
 				vRepulsiveForce = vPlayer - vObject;
 
 				float fDist = D3DXVec3Length(&vRepulsiveForce);
+
 				vForce = vRepulsiveForce / fDist;
-				pFrom->ForcedMoving(vForce, pFrom->GetMoveSpeed());
+
+				D3DXVECTOR3 vObjectForce(0.f, 0.f, 0.f);
+				vObjectForce = vForce*pFrom->GetMoveSpeed();
+				D3DXVECTOR3 vPlayerForce(0.f, 0.f, 0.f);
+				//vPlayerForce = ;
+
+				float fDot = D3DXVec3Dot(&vObjectForce, &vPlayerForce);
+				
+				//pFrom->ForcedMoving(vForce, pFrom->GetMoveSpeed());
+				vFinal = vForce;
 			}
 
 			else
@@ -441,6 +449,5 @@ bool cGameObjManager::isCollidedStaticObject(cGameObject* pFrom)
 
 		}
 	}
-
-	return isColliedStaticObj;
+	return vFinal;
 }
