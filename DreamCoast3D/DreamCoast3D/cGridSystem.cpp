@@ -135,9 +135,9 @@ std::vector<cGameObject*> cGridSystem::GetAdjObject(int nX, int nZ)
 	if (nX < 1) x = nX;
 	if (nZ < 1)	z = nZ;
 
-	for (z; z < nZ + 1; z++)
+	for (z; z <= nZ + 1; z++)
 	{
-		for (x; x < nX + 1; x++)
+		for (x; x <= nX + 1; x++)
 		{
 			std::set<cGameObject*> setGO;
 			setGO = m_vecTileData[x + z*m_nMapSize];
@@ -173,9 +173,9 @@ std::vector<cGameObject*> cGridSystem::GetAdjObjectCustomer(int nX, int nZ, int 
 	if (nX < nSize) x = nX;
 	if (nZ < nSize)	z = nZ;
 
-	for (z; z < nZ + nSize; z++)
+	for (z; z <= nZ + nSize; z++)
 	{
-		for (x; x < nX + nSize; x++)
+		for (x; x <= nX + nSize; x++)
 		{
 			std::set<cGameObject*> setGO;
 			setGO = m_vecTileData[x + z*m_nMapSize];

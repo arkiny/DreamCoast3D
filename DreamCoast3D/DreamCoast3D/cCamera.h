@@ -56,5 +56,7 @@ public:
 	// MS
 	void UpdateAngle(float fAngle);
     virtual void AttackCameraMoving();
+
+	int m_nRunout;
 };
 

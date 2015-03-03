@@ -13,6 +13,7 @@ cCamera::cCamera(void)
 	, m_fDist(5.0f)
 	, m_fMin(5.0f)
 	, m_fMax(400.0f)
+	, m_nRunout(0)
 {
 	//m_fDist = D3DXVec3Length(&m_vEye);
 
@@ -213,41 +214,60 @@ void cCamera::UpdateAngle(float fAngle)
 
 void cCamera::AttackCameraMoving()
 {
-    {
-        float fAttackTime = 0.2f;
-        float nCameraMove = 0.05f;
-        float fDist = 0.2f;
-        float fShake = 0;
-        float fPower = 0;
-        float fTimeInterval = 0.1f;
+    //{
+    //    float fAttackTime = 0.2f;
+    //    float nCameraMove = 0.05f;
+    //    float fDist = 0.2f;
+    //    float fShake = 0;
+    //    float fPower = 0;
+    //    float fTimeInterval = 0.1f;
 
-        m_fPassTime -= g_pTimer->DeltaTime();
-        
-        if (m_fPassTime < 0.0f)
-        {
-            m_isAttack = false;
-            m_fPassTime = fAttackTime;
-        }
-        fShake = m_fPassTime / fTimeInterval;
+    //    m_fPassTime -= g_pTimer->DeltaTime();
+    //    
+    //    if (m_fPassTime < 0.0f)
+    //    {
+    //        m_isAttack = false;
+    //        m_fPassTime = fAttackTime;
+    //    }
+    //    fShake = m_fPassTime / fTimeInterval;
 
-        if (fShake > 1)
-        {
-            m_vEye.x += nCameraMove;
-            m_vLookAt.x += nCameraMove;
-            m_vEye.z -= nCameraMove;
-            m_vLookAt.z -= nCameraMove;
+    //    if (fShake > 1)
+    //    {
+    //        m_vEye.x += nCameraMove;
+    //        m_vLookAt.x += nCameraMove;
+    //        m_vEye.z -= nCameraMove;
+    //        m_vLookAt.z -= nCameraMove;
 
-            //m_fDist += fDist;
 
-        }
-        else
-        {
-            m_vEye.x -= nCameraMove;
-            m_vLookAt.x -= nCameraMove;
-            m_vEye.z += nCameraMove;
-            m_vLookAt.z += nCameraMove;
+    //    }
+    //    else
+    //    {
+    //        m_vEye.x -= nCameraMove;
+    //        m_vLookAt.x -= nCameraMove;
+    //        m_vEye.z += nCameraMove;
+    //        m_vLookAt.z += nCameraMove;
+    //    }
+    //}
 
-           //m_fDist -= fDist;
-        }
-    }
+	float nCameraMove = 0.05f;
+	while (m_nRunout < 2)
+	{
+		m_nRunout += 1;
+
+		if (m_nRunout == 1)
+		{
+			m_vEye.x += 3;
+			m_vLookAt.x += 3;
+			m_vEye.z -= 3;
+			m_vLookAt.z -= 3;
+		}
+
+		if (m_nRunout == 2)
+		{
+			m_vEye.x -= 3;
+			m_vLookAt.x -= 3;
+			m_vEye.z += 3;
+			m_vLookAt.z += 3;
+		}
+	}
 }
