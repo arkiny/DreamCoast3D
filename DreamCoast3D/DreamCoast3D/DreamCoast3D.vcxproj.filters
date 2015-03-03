@@ -187,9 +187,6 @@
     <ClCompile Include="cUIPlayerInfo.cpp">
       <Filter>EachWorks\HD\TODO-DistAfter\InGameUI</Filter>
     </ClCompile>
-    <ClCompile Include="cUISystemMenu.cpp">
-      <Filter>EachWorks\HD\TODO-DistAfter\InGameUI</Filter>
-    </ClCompile>
     <ClCompile Include="cUIGameSystemShortCut.cpp">
       <Filter>EachWorks\HD\TODO-DistAfter\InGameUI</Filter>
     </ClCompile>
@@ -273,6 +270,12 @@
     <ClCompile Include="cUISystemTest.cpp" />
     <ClCompile Include="cUIIcon.cpp">
       <Filter>EachWorks\MW\Todo</Filter>
+    </ClCompile>
+    <ClCompile Include="cUIPopupWindow.cpp">
+      <Filter>EachWorks\HD</Filter>
+    </ClCompile>
+    <ClCompile Include="cUISystemMenu.cpp">
+      <Filter>EachWorks\HD</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -465,9 +468,6 @@
     <ClInclude Include="cUITextView.h">
       <Filter>FrameWork\Object\UIObject</Filter>
     </ClInclude>
-    <ClInclude Include="cUISystemMenu.h">
-      <Filter>EachWorks\HD\TODO-DistAfter\InGameUI</Filter>
-    </ClInclude>
     <ClInclude Include="cUIPlayerInfo.h">
       <Filter>EachWorks\HD\TODO-DistAfter\InGameUI</Filter>
     </ClInclude>
@@ -560,6 +560,12 @@
     <ClInclude Include="cUISystemTest.h" />
     <ClInclude Include="cUIIcon.h">
       <Filter>EachWorks\MW\Todo</Filter>
+    </ClInclude>
+    <ClInclude Include="cUIPopupWindow.h">
+      <Filter>EachWorks\HD</Filter>
+    </ClInclude>
+    <ClInclude Include="cUISystemMenu.h">
+      <Filter>EachWorks\HD</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

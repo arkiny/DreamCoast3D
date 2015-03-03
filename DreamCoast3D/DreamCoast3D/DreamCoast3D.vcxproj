@@ -147,6 +147,7 @@
     <ClInclude Include="cUILoader.h" />
     <ClInclude Include="cUIMinimap.h" />
     <ClInclude Include="cUIPlayerInfo.h" />
+    <ClInclude Include="cUIPopupWindow.h" />
     <ClInclude Include="cUISceneChangeButton.h" />
     <ClInclude Include="cUISkillShortCut.h" />
     <ClInclude Include="cSkinnedMesh.h" />
@@ -246,6 +247,7 @@
     <ClCompile Include="cUILoader.cpp" />
     <ClCompile Include="cUIMinimap.cpp" />
     <ClCompile Include="cUIPlayerInfo.cpp" />
+    <ClCompile Include="cUIPopupWindow.cpp" />
     <ClCompile Include="cUISceneChangeButton.cpp" />
     <ClCompile Include="cUISkillShortCut.cpp" />
     <ClCompile Include="cSkinnedMesh.cpp" />
