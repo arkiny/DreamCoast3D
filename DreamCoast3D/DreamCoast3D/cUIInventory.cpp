@@ -67,15 +67,19 @@ void cUIInventory::Setup()
 }
 void cUIInventory::Update(float fDelta)
 {
-	if (m_pUIRoot)
-		m_pUIRoot->Update(fDelta);
+	if (m_bShow){
+		if (m_pUIRoot)
+			m_pUIRoot->Update(fDelta);
+	}
 }
 
 void cUIInventory::Render()
 {
-	if (m_pSprite)
-	{
-		m_pUIRoot->Render();
+	if (m_bShow){
+		if (m_pSprite)
+		{
+			m_pUIRoot->Render();
+		}
 	}
 }
 void cUIInventory::AddItem(cUIIcon& UIIcon)

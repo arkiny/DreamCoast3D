@@ -2,8 +2,9 @@
 #include "cUIWindow.h"
 //#include "cUITextView.h"
 #include "cUIIcon.h"
+#include "cUIPopupWindow.h"
 
-class cUIInventory : public cUIWindow
+class cUIInventory : public cUIPopupWindow
 {
 protected:
 	
