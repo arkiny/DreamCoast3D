@@ -243,7 +243,7 @@ bool cGameObjManager::isGameAttackSphereCollided(
 						float scale2 = 1.0f;
 
 						if (isCollided(from, fFrom, scale, to, fTo, scale2)){
-							p->OnHitTarget(pFrom);
+							p->OnHitTarget(pFrom, 10.0f, pSphere.second.m_vCenter);
 							m_pCameraDeligate->AttackCameraMoving();
 						}
 					}
@@ -368,7 +368,7 @@ void cGameObjManager::AttackMobToPlayer(cGameAIObject* pFrom){
 
 						if (isCollided(from, fFrom, scale, to, fTo, scale2)){
 							if (p->GetGameObjectType() == p->E_PLAYABLE){
-								p->OnHitTarget(pFrom);
+								p->OnHitTarget(pFrom, 10.0f, pSphere.second.m_vCenter);
 							}
 						}
 					}

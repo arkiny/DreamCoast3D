@@ -99,11 +99,11 @@ void cScene::Setup(std::string sFilePath){
 	m_pEffectManager->Setup();
 	m_pEffectManager->SetDesc("EffectManager");
 
-	cEffectFireBall* p = new cEffectFireBall;
+	/*cEffectFireBall* p = new cEffectFireBall;
 	p->Setup();
 
 	m_pEffectManager->AddEffect(p);
-	p->Release();
+	p->Release();*/
 
 	/// TODO 차후 UI 및 하늘 역시 DataDriven으로 처리된후 삭제
 	

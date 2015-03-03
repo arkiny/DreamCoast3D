@@ -58,7 +58,7 @@ public:
 	virtual void ChangeState(EPLAYABLESTATE eNewState);
 	virtual int GetState() override;
 
-	void OnHitTarget(cGameObject* pTarget) override;
+	void OnHitTarget(cGameObject* pTarget, float fDamage, D3DXVECTOR3 vHitPosition) override;
 	
 	ST_STAT_INFO* GetStatInfo() override { return m_pPlayerStatInfo; }
 	//:¹Î¿ì

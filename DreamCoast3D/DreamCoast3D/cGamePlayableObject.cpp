@@ -4,6 +4,7 @@
 #include "cPlayerMove.h"
 #include "cPlayerAttack.h"
 #include "cPlayerOnHit.h"
+#include "cEffectFireBall.h"
 
 cGamePlayableObject::cGamePlayableObject()
 	:m_vecFront(0, 0, -1),
@@ -74,11 +75,26 @@ int cGamePlayableObject::GetState() {
 	return m_pCurrentState->GetCurrentStateType();
 }
 
-void cGamePlayableObject::OnHitTarget(cGameObject* pTarget){
+void cGamePlayableObject::OnHitTarget(cGameObject* pTarget, float fDamage, D3DXVECTOR3 vHitPosition){
 	if (m_pCurrentState != m_vecStates[this->EPLAYABLESTATE_ONHIT]){
 		if (m_fPlayerInvincibleCool > m_fPlayerInvincibleTime){
-			this->ChangeState(this->EPLAYABLESTATE_ONHIT);
+			
 			m_fPlayerInvincibleCool = 0.0f;
+			cEffectFireBall* p = new cEffectFireBall;
+			p->Setup();
+		
+			
+			D3DXVECTOR3 playerPos = this->GetPosition();
+			playerPos.y = playerPos.y + 1.0f;
+			p->SetPosition(playerPos);
+			
+			// todo : 피격 부위 구체화
+			//p->SetPosition(vHitPosition);
+			this->GetEffectDelegate()->AddEffect(p);
+			p->Release();
+			this->GetStatInfo()->fCurrentHp -= 10.0f;
+
+			this->ChangeState(this->EPLAYABLESTATE_ONHIT);
 		}
 	}
 }

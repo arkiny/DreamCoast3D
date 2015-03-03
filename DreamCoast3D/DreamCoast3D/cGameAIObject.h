@@ -62,7 +62,7 @@ public:
 	virtual void ChangeToPrevState();
 	virtual void SetTargetObject(cGameObject* pTarget){ m_pTargetGameObject = pTarget; }
 	
-	virtual void OnHitTarget(cGameObject* pTarget) override;
+	virtual void OnHitTarget(cGameObject* pTarget, float fDamage, D3DXVECTOR3 vHitPosition) override;
 	virtual cGameObject* GetTargetObject() { return m_pTargetGameObject; }
 	virtual iAIState*	GetCurrentState() { return m_pCurrentState; }
 	virtual iAIState*	GetPrevState(){ return m_pPrevState; }

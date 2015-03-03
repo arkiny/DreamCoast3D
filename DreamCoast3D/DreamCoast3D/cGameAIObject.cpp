@@ -4,6 +4,7 @@
 #include "cActionMove.h"
 #include "cTransform.h"
 #include "cSkinnedMesh.h"
+#include "cEffectFireBall.h"
 
 cGameAIObject::cGameAIObject()
 	:m_pCurrentState(NULL),
@@ -110,12 +111,24 @@ void cGameAIObject::ChangeToPrevState(){
 	//m_pCurrentState->Start(this);
 }
 
-void cGameAIObject::OnHitTarget(cGameObject* pTarget){
+void cGameAIObject::OnHitTarget(cGameObject* pTarget, float fDamage, D3DXVECTOR3 vHitPosition){
 	if (pTarget != m_pTargetGameObject){
 		m_pTargetGameObject = pTarget;
 	}
 	m_pPrevState = NULL;
+
+	cEffectFireBall* p = new cEffectFireBall;
+	p->Setup();
+	//D3DXVECTOR3 playerPos = this->GetPosition();
+	//playerPos.y = playerPos.y + 1.0f;
+	p->SetPosition(vHitPosition);
+	this->GetEffectDelegate()->AddEffect(p);
+	p->Release();
+
+	// TODO 데미지에 따라 체력 저하
+
 	this->ChangeState(eAISTATE_ONHIT);
+
 }
 
 void cGameAIObject::AddGameObjToAggroMap(cGameObject* pGameObj){

@@ -2,7 +2,6 @@
 #include "cPlayerOnHit.h"
 #include "cGamePlayableObject.h"
 #include "cSkinnedMesh.h"
-#include "cEffectFireBall.h"
 
 cPlayerOnHit::cPlayerOnHit()
 {
@@ -15,14 +14,6 @@ cPlayerOnHit::~cPlayerOnHit()
 
 void cPlayerOnHit::Start(cGamePlayableObject* pPlayer){
 	pPlayer->GetSkinnedMesh()->SetAnimationIndex(pPlayer->EPLAYABLESTATE_ONHIT);
-	pPlayer->GetStatInfo()->fCurrentHp -= 10.0f;
-	cEffectFireBall* p = new cEffectFireBall;
-	p->Setup();
-	D3DXVECTOR3 playerPos = pPlayer->GetPosition();
-	playerPos.y = playerPos.y + 1.0f;
-	p->SetPosition(playerPos);
-	pPlayer->GetEffectDelegate()->AddEffect(p);
-	p->Release();
 }
 
 void cPlayerOnHit::Execute(cGamePlayableObject* pPlayer, float fDelta){

@@ -81,7 +81,7 @@ public:
 	virtual void ForcedMoving(D3DXVECTOR3 vDir, float fSpeed) {}
 	virtual float GetMoveSpeed() { return 1.0f; }
 	virtual void SetTargetObject(cGameObject* pTarget) {}
-	virtual void OnHitTarget(cGameObject* pTarget) {}
+	virtual void OnHitTarget(cGameObject* pTarget, float fDamage, D3DXVECTOR3 vHitPosition) {}
 	virtual ST_STAT_INFO* GetStatInfo(){ return NULL; }
 	virtual void Start() {}
 };
