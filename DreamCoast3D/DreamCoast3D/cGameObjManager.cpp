@@ -431,7 +431,7 @@ bool cGameObjManager::isCollidedStaticObject(cGameObject* pFrom)
 
 				float fDist = D3DXVec3Length(&vRepulsiveForce);
 				vForce = vRepulsiveForce / fDist;
-				pFrom->ForcedMoving(vForce, 10.f);
+				pFrom->ForcedMoving(vForce, pFrom->GetMoveSpeed());
 			}
 
 			else
