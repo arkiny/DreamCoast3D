@@ -727,5 +727,8 @@
     <Text Include="..\Resources\SCENE2_MAIN.txt">
       <Filter>FrameWork\Resource</Filter>
     </Text>
+    <Text Include="..\Resources\SCENE2_UIDATA - BackUP.txt">
+      <Filter>FrameWork\Resource</Filter>
+    </Text>
   </ItemGroup>
 </Project>

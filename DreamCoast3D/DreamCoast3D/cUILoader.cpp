@@ -123,7 +123,12 @@ void cUILoader::ParseUI(OUT cUIObjManager* pUIManager){
 				}
 			}
 			else if (isEqual(szTypeName, "UISYSTEMMENU")){
-				cUISystemMenu* p1 = new cUISystemMenu;
+				std::string token = GetToken();
+				if (token == "*UI_SHORTCUT"){
+					ParseShortCutMenu(pUIManager);
+				}
+				// TODO
+				/*cUISystemMenu* p1 = new cUISystemMenu;
 				p1->Setup();
 
 				cUIPopupWindow* p2 = new cUIPopupWindow;
@@ -184,10 +189,137 @@ void cUILoader::ParseUI(OUT cUIObjManager* pUIManager){
 				if (p1){
 					pUIManager->AddUI(p1);
 					p1->Release();
-				}
+				}*/
+			}
+		}
+	} while (nLevel > 0);
+}
+
+void cUILoader::ParseShortCutMenu(OUT cUIObjManager* pUIManager){
+	cUISystemMenu* p1 = new cUISystemMenu;
+	p1->Setup();
+
+	int nLevel = 0;
+	do{
+		char* szToken = GetToken();
+		if (isEqual(szToken, "{")){
+			++nLevel;
+		}
+		else if (isEqual(szToken, "}")){
+			--nLevel;
+		}
+		else if (isEqual(szToken, "*UI_SHORTCUT_COUNT")){
+			int nUI = GetInteger();
+		}
+		else if (isEqual(szToken, "*UI_SHORTCUT_SET")){
+			int nUINum = GetInteger();
+			ParseShortCutSet(pUIManager, p1);
+		}
+	} while (nLevel > 0);
+
+	if (p1){
+		pUIManager->AddUI(p1);
+		p1->Release();
+	}
+}
+
+void cUILoader::ParseShortCutSet(OUT cUIObjManager* pUIManager, OUT cUISystemMenu* pShortCutMenu){
+	cUIPopupWindow* pPopWindow = NULL;
+	cUIImageButtonMenu* pButton = NULL;
+	int nLevel = 0;
+	do{
+		char* szToken = GetToken();
+		if (isEqual(szToken, "{")){
+			++nLevel;
+		}
+		else if (isEqual(szToken, "}")){
+			--nLevel;
+		}
+		else if (isEqual(szToken, "*UI_SHORTCUT_POPUP")){
+			pPopWindow = ParseShortCutPopup();
+		}
+		else if (isEqual(szToken, "*UI_SHORTCUT_BUTTON")){
+			pButton = ParseShortCutButton();
+		}
+	} while (nLevel > 0);
+
+	if (pPopWindow && pButton){
+		pShortCutMenu->AddPopUpWindowAndButton(pButton, pPopWindow);
+		pButton->Release();
+		pPopWindow->Release();
+
+		pUIManager->AddUI(pPopWindow);
+		pUIManager->AddUI(pButton);
+		pButton->Release();
+		pPopWindow->Release();
+	}
+	else{
+		assert(false && "shortcut loader errer");
+	}
+}
+
+cUIPopupWindow* cUILoader::ParseShortCutPopup(){
+	cUIPopupWindow* ret = NULL;
+
+	int nLevel = 0;
+	do{
+		char* szToken = GetToken();
+		if (isEqual(szToken, "{")){
+			++nLevel;
+		}
+		else if (isEqual(szToken, "}")){
+			--nLevel;
+		}
+		else if (isEqual(szToken, "*UI_POPUP_TYPE")){
+			///
+			char* szTypeName = GetToken();
+			if (isEqual(szTypeName, "POPUPWINDOW")){
+				ret = new cUIPopupWindow;
+				ret->Setup();
+			}
+			else if (isEqual(szTypeName, "UIINVENTORY")){
+				ret = new cUIInventory;
+				ret->Setup();
 			}
 		}
 	} while (nLevel > 0);
 
-	//return ret;
+	return ret;
+}
+
+cUIImageButtonMenu* cUILoader::ParseShortCutButton(){
+	D3DXVECTOR3 vPosition(-1, -1, 0);
+	std::string sNormal, sOn, sClick;
+	int nLevel = 0;
+	do{
+		char* szToken = GetToken();
+		if (isEqual(szToken, "{")){
+			++nLevel;
+		}
+		else if (isEqual(szToken, "}")){
+			--nLevel;
+		}
+		else if (isEqual(szToken, "*UI_BUTTON_POSITION")){
+			vPosition.x = GetFloat();
+			vPosition.y = GetFloat();
+		}
+		else if (isEqual(szToken, "*UI_BUTTON_IMAGE_SRC_NORMAL")){
+			sNormal = GetToken();
+		}
+		else if (isEqual(szToken, "*UI_BUTTON_IMAGE_SRC_ON")){
+			sOn = GetToken();
+		}
+		else if (isEqual(szToken, "*UI_BUTTON_IMAGE_SRC_CLICK")){
+			sClick = GetToken();
+		}
+	} while (nLevel > 0);
+
+	LPD3DXSPRITE sprite;
+	D3DXCreateSprite(g_pD3DDevice, &sprite);
+	cUIImageButtonMenu* pTestButton = new cUIImageButtonMenu(sprite);
+	sprite->Release();
+	pTestButton->Setup(sNormal, sOn, sClick);
+	pTestButton->SetPosition(vPosition);
+
+	return pTestButton;
 }

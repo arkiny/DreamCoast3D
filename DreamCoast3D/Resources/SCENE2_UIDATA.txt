@@ -12,7 +12,35 @@
 	*UI 3 {
 		*UI_TYPE "UIMINIMAP"
 	}
-	*UI 4{
+	*UI 4 {
 		*UI_TYPE "UISYSTEMMENU"
+		*UI_SHORTCUT {
+
+			*UI_SHORTCUT_COUNT 2
+		
+			*UI_SHORTCUT_SET 0 {
+				*UI_SHORTCUT_POPUP {
+					*UI_POPUP_TYPE "POPUPWINDOW"
+				}
+				*UI_SHORTCUT_BUTTON {
+					*UI_BUTTON_POSITION 1165.0 659.0
+					*UI_BUTTON_IMAGE_SRC_NORMAL "../Resources/UI/UI_AcceptButton.png"
+					*UI_BUTTON_IMAGE_SRC_ON "../Resources/UI/UI_AcceptButtonOn.png"
+					*UI_BUTTON_IMAGE_SRC_CLICK "../Resources/UI/UI_AcceptButtonClick.png"
+				}
+			}
+
+			*UI_SHORTCUT_SET 1 {
+				*UI_SHORTCUT_POPUP {
+					*UI_POPUP_TYPE "UIINVENTORY"
+				}
+				*UI_SHORTCUT_BUTTON {
+					*UI_BUTTON_POSITION 1040.0 659.0
+					*UI_BUTTON_IMAGE_SRC_NORMAL "../Resources/UI/UI_AcceptButton.png"
+					*UI_BUTTON_IMAGE_SRC_ON "../Resources/UI/UI_AcceptButtonOn.png"
+					*UI_BUTTON_IMAGE_SRC_CLICK "../Resources/UI/UI_AcceptButtonClick.png"
+				}		
+			}
+		}
 	}
 }

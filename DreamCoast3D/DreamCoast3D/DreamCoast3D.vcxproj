@@ -86,6 +86,7 @@
     <Text Include="..\Resources\SCENE2_GAMEOBJDATA.txt" />
     <Text Include="..\Resources\SCENE2_MAIN.txt" />
     <Text Include="..\Resources\SCENE2_MAPDATA.txt" />
+    <Text Include="..\Resources\SCENE2_UIDATA - BackUP.txt" />
     <Text Include="..\Resources\SCENE2_UIDATA.txt" />
     <Text Include="ReadMe.txt" />
   </ItemGroup>
