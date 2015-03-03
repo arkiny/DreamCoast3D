@@ -286,7 +286,9 @@
     <ClCompile Include="cUISystemTest.cpp">
       <Filter>EachWorks\HD</Filter>
     </ClCompile>
-    <ClCompile Include="cUIImageButtonMenu.cpp" />
+    <ClCompile Include="cUIImageButtonMenu.cpp">
+      <Filter>EachWorks\HD</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cAction.h">
@@ -586,7 +588,9 @@
     <ClInclude Include="cUISceneChangeButton.h">
       <Filter>EachWorks\HD</Filter>
     </ClInclude>
-    <ClInclude Include="cUIImageButtonMenu.h" />
+    <ClInclude Include="cUIImageButtonMenu.h">
+      <Filter>EachWorks\HD</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="DreamCoast3D.ico">

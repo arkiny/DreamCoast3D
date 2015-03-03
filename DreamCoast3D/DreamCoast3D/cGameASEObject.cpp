@@ -44,17 +44,20 @@ void cGameASEObject::Update(float fDelta){
 
 void cGameASEObject::Render(){
 	m_pASEInstance->Render(GetTransformMatrix());
-	if (m_pDebugBoxMesh){
-		g_pD3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
-		D3DXMATRIXA16 matT;
-		D3DXMatrixTranslation(&matT, 
-			0, 
-			(m_pASEInstance->GetBoundingBox().vMax.y - m_pASEInstance->GetBoundingBox().vMin.y)/2.0f, 
-			0);
-		matT = matT * *GetTransformMatrix();
-		g_pD3DDevice->SetTransform(D3DTS_WORLD, &matT);
-		m_pDebugBoxMesh->DrawSubset(0);
-		g_pD3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
+
+	if (GetAsyncKeyState(VK_TAB)){
+		if (m_pDebugBoxMesh){
+			g_pD3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
+			D3DXMATRIXA16 matT;
+			D3DXMatrixTranslation(&matT,
+				0,
+				(m_pASEInstance->GetBoundingBox().vMax.y - m_pASEInstance->GetBoundingBox().vMin.y) / 2.0f,
+				0);
+			matT = matT * *GetTransformMatrix();
+			g_pD3DDevice->SetTransform(D3DTS_WORLD, &matT);
+			m_pDebugBoxMesh->DrawSubset(0);
+			g_pD3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
+		}
 	}
 }
 
