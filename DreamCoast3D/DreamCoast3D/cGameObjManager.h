@@ -54,11 +54,9 @@ public:
 	ST_STAT_INFO* GetPlayerStatInfo() override;
 
 	//MS
-	void SetPlayerData(cGameObject* pPlayer) override;
 	cGameObject* GetPlayerData() override;
 	std::set<cGameObject*> GetObjectData() override;
-
-	//cGameObject* m_pPlayer;
+	bool isCollidedStaticObject(cGameObject* pFrom) override;
 
 protected:
 	bool isCollided(D3DXVECTOR3 vFromCenter,

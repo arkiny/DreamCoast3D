@@ -17,6 +17,8 @@ void cPlayerMove::Start(cGamePlayableObject* pPlayer){
 }
 
 void cPlayerMove::Execute(cGamePlayableObject* pPlayer, float fDelta){
+
+	pPlayer->GetGameObjDeligate()->isCollidedStaticObject(pPlayer);
 	D3DXVECTOR3 newPos;
 	if (g_pControlManager->GetInputInfo('W') ||
 		g_pControlManager->GetInputInfo('A') ||

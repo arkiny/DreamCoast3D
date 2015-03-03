@@ -381,13 +381,6 @@ ST_STAT_INFO* cGameObjManager::GetPlayerStatInfo(){
 	return ret;
 }
 
-void cGameObjManager::SetPlayerData(cGameObject* pPlayer){
-//{
-//	//m_pPlayer = nullptr;
-//	//m_pPlayer = new cGameObject;
-//	//m_pPlayer = pPlayer;
-}
-
 std::set<cGameObject*> cGameObjManager::GetObjectData()
 {
 	std::set<cGameObject*> setGameObject;
@@ -398,4 +391,56 @@ std::set<cGameObject*> cGameObjManager::GetObjectData()
 cGameObject* cGameObjManager::GetPlayerData()
 {
 	return m_pPlayable;
+}
+
+bool cGameObjManager::isCollidedStaticObject(cGameObject* pFrom)
+{
+	bool isColliedStaticObj = false;
+
+	std::set<cGameObject*> setGameObject = m_setStaticGameObjects;
+
+	int nSearchRange = 1;
+	D3DXVECTOR3 vFrom;
+	vFrom = pFrom->GetPosition();
+	std::vector<cGameObject*> vecGameObject;
+	vecGameObject = m_pGridTileSystem->GetAdjObjectCustomer(vFrom.x, vFrom.z, nSearchRange);
+
+	for (auto p : vecGameObject)
+	{
+		if (p == pFrom)
+		{
+			continue;
+		}
+		else
+		{
+			if (setGameObject.count(p) > 0)
+			{
+				isColliedStaticObj = true;
+
+				D3DXVECTOR3 vPlayer(0.f, 0.f, 0.f);
+				D3DXVECTOR3 vObject(0.f, 0.f, 0.f);
+				D3DXVECTOR3 vForce(0.f, 0.f, 0.f);
+				D3DXVECTOR3 vRepulsiveForce(0.f, 0.f, 0.f);
+
+				vPlayer = pFrom->GetPosition();
+				vPlayer.y = 0.f;
+				vObject = p->GetPosition();
+				vObject.y = 0.f;
+
+				vRepulsiveForce = vPlayer - vObject;
+
+				float fDist = D3DXVec3Length(&vRepulsiveForce);
+				vForce = vRepulsiveForce / fDist;
+				pFrom->ForcedMoving(vForce, 10.f);
+			}
+
+			else
+			{
+				continue;
+			}
+
+		}
+	}
+
+	return isColliedStaticObj;
 }

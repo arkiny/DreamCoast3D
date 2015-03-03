@@ -12,7 +12,7 @@ __interface iGameObjectDelegate{
 	ST_STAT_INFO* GetPlayerStatInfo();
 
 	// MS
-	void SetPlayerData(cGameObject* pPlayer);
 	cGameObject* GetPlayerData();
 	std::set<cGameObject*> GetObjectData();
+	bool isCollidedStaticObject(cGameObject* pFrom);
 };
