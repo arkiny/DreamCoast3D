@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "cSceneLoader.h"
 #include "cScene.h"
+#include "cSceneEditMode.h"
 #include "cLightSource.h"
 #include "cCamera.h"
 #include "cCameraEditing.h"
@@ -22,11 +23,18 @@ cScene* cSceneLoader::ParseScene(char* szFilePath){
 cScene* cSceneLoader::ParseScene(std::string sFilePath){
 	fopen_s(&m_fp, (sFilePath).c_str(), "r");
 
-	cScene* ret = new cScene;
-	ret->Setup(std::string(""));
+	cScene* ret = NULL;
 
 	while (char* szToken = GetToken()){
-		if (isEqual(szToken, "*CAMERA_LIST")){
+		if (isEqual(szToken, "*SCENE")){
+			ret = new cScene;
+			ret->Setup(std::string(""));
+		}
+		else if (isEqual(szToken, "*SCENE_EDIT")){
+			ret = new cSceneEditMode;
+			ret->Setup(std::string(""));
+		}
+		else if (isEqual(szToken, "*CAMERA_LIST")){
 			// TODO 차후 다중 카메라 사용시 수정 
 			ParseCameraList(ret);
 		}

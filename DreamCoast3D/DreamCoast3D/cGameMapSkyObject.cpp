@@ -5,6 +5,7 @@
 cGameMapSkyObject::cGameMapSkyObject()
 	: m_pMesh(NULL)
 {
+	m_eGameObjectType = E_SKY;
 	ZeroMemory(&m_stMaterial, sizeof(D3DMATERIAL9));
 }
 

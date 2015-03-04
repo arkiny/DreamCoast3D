@@ -14,6 +14,7 @@ cCamera::cCamera(void)
 	, m_fMin(5.0f)
 	, m_fMax(400.0f)
 	, m_nRunout(0)
+	, m_pMap(NULL)
 {
 	//m_fDist = D3DXVec3Length(&m_vEye);
 
@@ -182,13 +183,14 @@ void cCamera::Update(float delta)
 		m_vLookAt.y += 1.0f;
 	}
 
-	bool isLand;
-	float fHeight = m_pMap->GetHeight(isLand, &m_vEye);
-	
-	if (m_vEye.y < fHeight + m_fMin){
-		m_vEye.y = fHeight + m_fMin;
-	}
+	if (m_pMap){
+		bool isLand;
+		float fHeight = m_pMap->GetHeight(isLand, &m_vEye);
 
+		if (m_vEye.y < fHeight + m_fMin){
+			m_vEye.y = fHeight + m_fMin;
+		}
+	}
 	D3DXVECTOR3 dist = m_vEye - m_vLookAt;
 	float fAfterDist = D3DXVec3Length(&dist);
     if (m_isAttack)

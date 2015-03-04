@@ -1,4 +1,4 @@
-*SCENE 0 {
+*SCENE_EDIT 0 {
 	*CAMERA_LIST {
 		*CAMERA_COUNT 1
 		*CAMERA 0 {
@@ -27,14 +27,14 @@
 	}
 	
 	*UI_LIST {
-		*UI_LIST_PATH "../Resources/SCENE1_UIDATA.txt"
+		*UI_LIST_PATH "../Resources/SCENE4_UIDATA.txt"
 	}
 		
 	*GAMEMAP_LIST {
-		*GAMEMAP_PATH "../Resources/SCENE1_MAPDATA.txt"
+		*GAMEMAP_PATH "../Resources/SCENE4_MAPDATA.txt"
 	}
 		
 	*GAMEOBJECT_LIST {
-		*GAMEOBJECT_PATH "../Resources/SCENE1_GAMEOBJDATA.txt"
+		*GAMEOBJECT_PATH "../Resources/SCENE4_GAMEOBJDATA.txt"
 	}	
 }

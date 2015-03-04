@@ -88,6 +88,14 @@
     <Text Include="..\Resources\SCENE2_MAPDATA.txt" />
     <Text Include="..\Resources\SCENE2_UIDATA - BackUP.txt" />
     <Text Include="..\Resources\SCENE2_UIDATA.txt" />
+    <Text Include="..\Resources\SCENE3_GAMEOBJDATA.txt" />
+    <Text Include="..\Resources\SCENE3_MAIN.txt" />
+    <Text Include="..\Resources\SCENE3_MAPDATA.txt" />
+    <Text Include="..\Resources\SCENE3_UIDATA.txt" />
+    <Text Include="..\Resources\SCENE4_GAMEOBJDATA.txt" />
+    <Text Include="..\Resources\SCENE4_MAIN.txt" />
+    <Text Include="..\Resources\SCENE4_MAPDATA.txt" />
+    <Text Include="..\Resources\SCENE4_UIDATA.txt" />
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
@@ -137,11 +145,13 @@
     <ClInclude Include="cLoader.h" />
     <ClInclude Include="cLoadingScene.h" />
     <ClInclude Include="cMapLoader.h" />
+    <ClInclude Include="cMapLoader4Edit.h" />
     <ClInclude Include="cMtlTex.h" />
     <ClInclude Include="cPlayerAttack.h" />
     <ClInclude Include="cPlayerMove.h" />
     <ClInclude Include="cPlayerIdle.h" />
     <ClInclude Include="cPlayerOnHit.h" />
+    <ClInclude Include="cSceneEditMode.h" />
     <ClInclude Include="cSceneLoader.h" />
     <ClInclude Include="cSkinnedMeshBody.h" />
     <ClInclude Include="cUIExpBar.h" />
@@ -243,11 +253,13 @@
     <ClCompile Include="cLoader.cpp" />
     <ClCompile Include="cLoadingScene.cpp" />
     <ClCompile Include="cMapLoader.cpp" />
+    <ClCompile Include="cMapLoader4Edit.cpp" />
     <ClCompile Include="cMtlTex.cpp" />
     <ClCompile Include="cPlayerAttack.cpp" />
     <ClCompile Include="cPlayerMove.cpp" />
     <ClCompile Include="cPlayerIdle.cpp" />
     <ClCompile Include="cPlayerOnHit.cpp" />
+    <ClCompile Include="cSceneEditMode.cpp" />
     <ClCompile Include="cSceneLoader.cpp" />
     <ClCompile Include="cSkinnedMeshBody.cpp" />
     <ClCompile Include="cUIExpBar.cpp" />

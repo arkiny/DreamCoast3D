@@ -7,6 +7,7 @@ cGameMapObject::cGameMapObject()
 	m_pGridSystem(NULL)
 {
 	m_nIndex = -1;
+	m_eGameObjectType = E_MAP;
 	memset(&m_arrAdjMapIndex, -1, sizeof(int) * ARRAYSIZE(m_arrAdjMapIndex));
 }
 

@@ -289,11 +289,25 @@
     <ClCompile Include="cUIImageButtonMenu.cpp">
       <Filter>EachWorks\HD</Filter>
     </ClCompile>
-    <ClCompile Include="cEffect.cpp" />
-    <ClCompile Include="cEffectManager.cpp" />
-    <ClCompile Include="cEffectResourceManager.cpp" />
-    <ClCompile Include="cEffectFireBall.cpp" />
-    <ClCompile Include="iEffectManagerDeligate.cpp" />
+    <ClCompile Include="cEffect.cpp">
+      <Filter>FrameWork\Effects</Filter>
+    </ClCompile>
+    <ClCompile Include="cEffectFireBall.cpp">
+      <Filter>FrameWork\Effects</Filter>
+    </ClCompile>
+    <ClCompile Include="cEffectManager.cpp">
+      <Filter>FrameWork\Effects</Filter>
+    </ClCompile>
+    <ClCompile Include="cEffectResourceManager.cpp">
+      <Filter>FrameWork\Effects</Filter>
+    </ClCompile>
+    <ClCompile Include="iEffectManagerDeligate.cpp">
+      <Filter>FrameWork\Effects</Filter>
+    </ClCompile>
+    <ClCompile Include="cSceneEditMode.cpp">
+      <Filter>FrameWork\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="cMapLoader4Edit.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cAction.h">
@@ -596,11 +610,25 @@
     <ClInclude Include="cUIImageButtonMenu.h">
       <Filter>EachWorks\HD</Filter>
     </ClInclude>
-    <ClInclude Include="cEffect.h" />
-    <ClInclude Include="cEffectManager.h" />
-    <ClInclude Include="cEffectResourceManager.h" />
-    <ClInclude Include="cEffectFireBall.h" />
-    <ClInclude Include="iEffectManagerDeligate.h" />
+    <ClInclude Include="cEffect.h">
+      <Filter>FrameWork\Effects</Filter>
+    </ClInclude>
+    <ClInclude Include="cEffectFireBall.h">
+      <Filter>FrameWork\Effects</Filter>
+    </ClInclude>
+    <ClInclude Include="cEffectManager.h">
+      <Filter>FrameWork\Effects</Filter>
+    </ClInclude>
+    <ClInclude Include="cEffectResourceManager.h">
+      <Filter>FrameWork\Effects</Filter>
+    </ClInclude>
+    <ClInclude Include="iEffectManagerDeligate.h">
+      <Filter>FrameWork\Effects</Filter>
+    </ClInclude>
+    <ClInclude Include="cSceneEditMode.h">
+      <Filter>FrameWork\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="cMapLoader4Edit.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="DreamCoast3D.ico">
@@ -745,6 +773,30 @@
       <Filter>FrameWork\Resource</Filter>
     </Text>
     <Text Include="..\Resources\SCENE2_UIDATA - BackUP.txt">
+      <Filter>FrameWork\Resource</Filter>
+    </Text>
+    <Text Include="..\Resources\SCENE3_GAMEOBJDATA.txt">
+      <Filter>FrameWork\Resource</Filter>
+    </Text>
+    <Text Include="..\Resources\SCENE3_MAIN.txt">
+      <Filter>FrameWork\Resource</Filter>
+    </Text>
+    <Text Include="..\Resources\SCENE3_MAPDATA.txt">
+      <Filter>FrameWork\Resource</Filter>
+    </Text>
+    <Text Include="..\Resources\SCENE3_UIDATA.txt">
+      <Filter>FrameWork\Resource</Filter>
+    </Text>
+    <Text Include="..\Resources\SCENE4_UIDATA.txt">
+      <Filter>FrameWork\Resource</Filter>
+    </Text>
+    <Text Include="..\Resources\SCENE4_GAMEOBJDATA.txt">
+      <Filter>FrameWork\Resource</Filter>
+    </Text>
+    <Text Include="..\Resources\SCENE4_MAIN.txt">
+      <Filter>FrameWork\Resource</Filter>
+    </Text>
+    <Text Include="..\Resources\SCENE4_MAPDATA.txt">
       <Filter>FrameWork\Resource</Filter>
     </Text>
   </ItemGroup>

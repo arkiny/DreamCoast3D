@@ -6,6 +6,7 @@ cGameASEObject::cGameASEObject()
 	: m_pASEInstance(NULL)
 	, m_pDebugBoxMesh(NULL)
 {
+	m_eGameObjectType = E_STATIC;
 }
 
 

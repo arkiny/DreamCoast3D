@@ -6,6 +6,7 @@ cGameBillBoardingObject::cGameBillBoardingObject()
 	: cGameObject()
 	, m_vLocalPosition(0,0,0)
 {
+	m_eGameObjectType = E_EFFECT;
 }
 
 

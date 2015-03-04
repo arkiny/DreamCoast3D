@@ -19,14 +19,14 @@ LPD3DXFONT cFontManager::GetFont(eFontType ft)
 			//폰트 생성
 			D3DXFONT_DESC fd;
 			ZeroMemory(&fd, sizeof(D3DXFONT_DESC));
-			fd.Height = 50;
-			fd.Width = 25;
+			fd.Height = 20;
+			fd.Width = 12;
 			fd.Weight = FW_MEDIUM;
 			fd.Italic = false;
 			fd.CharSet = DEFAULT_CHARSET;
 			fd.OutputPrecision = OUT_DEFAULT_PRECIS;
 			fd.PitchAndFamily = FF_DONTCARE;
-			strcpy_s(fd.FaceName, "궁서체");//글꼴 스타일
+			strcpy_s(fd.FaceName, "Consolas");//글꼴 스타일
 			// ttf 사용하기
 			//AddFontResource("umberto.ttf");
 			//strcpy_s(fd.FaceName, "umberto");//글꼴 스타일

@@ -13,8 +13,11 @@ public:
 		E_PLAYABLE,
 		E_NPC,
 		E_MOP,
+		E_STATIC,
 		E_NONE,
 		E_EFFECT,
+		E_MAP,
+		E_SKY,
 		E_MAX
 	};
 

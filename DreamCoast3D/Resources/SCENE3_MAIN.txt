@@ -1,4 +1,4 @@
-*SCENE 0{
+*SCENE 0 {
 	*CAMERA_LIST {
 		*CAMERA_COUNT 1
 		*CAMERA 0 {
