@@ -1,5 +1,7 @@
 #pragma once
 #include "cGameMapObject.h"
+#include "cMousePicking.h"
+
 class cGameMapHeight : public cGameMapObject
 {
 protected:
@@ -11,6 +13,8 @@ protected:
 
 	LPD3DXMESH					m_pMesh;
 	D3DMATERIAL9				m_stMtl;
+
+	cMousePicking* m_pMousePicking;
 
 public:
 	cGameMapHeight();

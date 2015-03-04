@@ -323,6 +323,7 @@ std::vector<POINT*> cGridSystem::GetAdjCircle(int nX, int nZ, int nRange)
 
 	for (int i = 0; i < nRan; i++)
 	{
+
 		POINT* pos = new POINT;
 		pos->x = x;
 		pos->y = nRan - z;

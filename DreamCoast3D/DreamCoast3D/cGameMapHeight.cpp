@@ -16,6 +16,7 @@ cGameMapHeight::cGameMapHeight()
 cGameMapHeight::~cGameMapHeight()
 {
 	SAFE_RELEASE(m_pMesh);
+	SAFE_DELETE(m_pMousePicking);
 }
 
 void cGameMapHeight::LoadFromFiles(std::string sFilename, std::string sTextureFilename){
@@ -114,6 +115,9 @@ void cGameMapHeight::LoadFromFiles(std::string sFilename, std::string sTextureFi
 		D3DXMESHOPT_COMPACT |
 		D3DXMESHOPT_VERTEXCACHE,
 		&vecAdjBuffer[0], 0, 0, 0);
+
+	m_pMousePicking = new cMousePicking;
+	m_pMousePicking->SetVertex(m_vecVertex);
 }
 
 void cGameMapHeight::LoadFromFiles(char* szFilename, char* szTextureFilename){
@@ -121,6 +125,8 @@ void cGameMapHeight::LoadFromFiles(char* szFilename, char* szTextureFilename){
 }
 	
 void cGameMapHeight::Render(){
+	m_pMousePicking->Update();
+
 	if (GetAsyncKeyState(VK_TAB)){
 		g_pD3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
 		D3DXMATRIXA16 matWorld;
