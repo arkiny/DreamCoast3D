@@ -137,6 +137,7 @@
     <ClInclude Include="cLoader.h" />
     <ClInclude Include="cLoadingScene.h" />
     <ClInclude Include="cMapLoader.h" />
+    <ClInclude Include="cMousePicking.h" />
     <ClInclude Include="cMtlTex.h" />
     <ClInclude Include="cPlayerAttack.h" />
     <ClInclude Include="cPlayerMove.h" />
@@ -243,6 +244,7 @@
     <ClCompile Include="cLoader.cpp" />
     <ClCompile Include="cLoadingScene.cpp" />
     <ClCompile Include="cMapLoader.cpp" />
+    <ClCompile Include="cMousePicking.cpp" />
     <ClCompile Include="cMtlTex.cpp" />
     <ClCompile Include="cPlayerAttack.cpp" />
     <ClCompile Include="cPlayerMove.cpp" />

@@ -294,6 +294,9 @@
     <ClCompile Include="cEffectResourceManager.cpp" />
     <ClCompile Include="cEffectFireBall.cpp" />
     <ClCompile Include="iEffectManagerDeligate.cpp" />
+    <ClCompile Include="cMousePicking.cpp">
+      <Filter>EachWorks\MS</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cAction.h">
@@ -601,6 +604,9 @@
     <ClInclude Include="cEffectResourceManager.h" />
     <ClInclude Include="cEffectFireBall.h" />
     <ClInclude Include="iEffectManagerDeligate.h" />
+    <ClInclude Include="cMousePicking.h">
+      <Filter>EachWorks\MS</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="DreamCoast3D.ico">
