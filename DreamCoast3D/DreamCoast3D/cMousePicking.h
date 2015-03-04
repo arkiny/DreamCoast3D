@@ -13,6 +13,9 @@ struct ST_RAY
 
 class cMousePicking
 {
+protected:
+	SYNTHESIZE(iEffectManagerDelegate*, m_pEffectDelegate, EffectDelegate);
+
 public:
 	cMousePicking();
 	~cMousePicking();

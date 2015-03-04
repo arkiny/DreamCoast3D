@@ -16,11 +16,13 @@
 #include "cEffectManager.h"
 #include "cMapLoader4Edit.h"
 #include "cGameMapHeightGridSystem.h"
+#include "cMousePicking.h"
 #include <sstream>
 
 static CRITICAL_SECTION				gCriticalSectionEditMode;
 
 cSceneEditMode::cSceneEditMode()
+	:m_pMousPicking(NULL)
 {
 	InitializeCriticalSection(&gCriticalSectionEditMode);
 	m_rectFontArea = { 0, 0, 200, 200 };
@@ -41,6 +43,8 @@ cSceneEditMode::~cSceneEditMode()
 
 void cSceneEditMode::Setup(std::string sFilePath){
 	cScene::Setup(sFilePath);
+	m_pMousPicking = new cMousePicking;
+	m_pMousPicking->SetEffectDelegate(m_pEffectManager);
 }
 
 // Start에서 리소스를 로딩한다.
@@ -58,6 +62,13 @@ void cSceneEditMode::Start(){
 	// 역시 기존 씬의 광원을 이용한다.
 	for (auto p : m_vecLightSources){
 		p->Start();
+	}
+
+	if (m_pEffectManager){
+		if (m_pGameObjManager){
+			m_pGameObjManager->SetEffectDeligate(m_pEffectManager);
+		}
+		m_pEffectManager->Start();
 	}
 
 	assert(m_pCurrentMap == NULL && "m_pCurrentMap Should not has pointer in EditMode");
@@ -91,7 +102,11 @@ void cSceneEditMode::Update(float delta){
 	if (m_pUIObjManager){
 		m_pUIObjManager->Update(delta);
 	}
-
+	//
+	if (m_pMousPicking){
+		m_pMousPicking->Update();
+	}
+	
 	//
 	if (GetAsyncKeyState(VK_NEXT)){
 		if (m_pCurrentMap == NULL){
@@ -99,6 +114,7 @@ void cSceneEditMode::Update(float delta){
 			ret->LoadFromFiles(m_vecMapRawPath[0], m_vecMapTexturePath[0]);
 			m_mapLoadedMap[m_vecMapRawPath[0]] = ret;
 			m_pCurrentMap = ret;
+			m_pMousPicking->SetVertex(ret->GetVertexVectorByRef());
 			m_pCurrentMap->AddRef();
 		}
 		else {
@@ -112,6 +128,7 @@ void cSceneEditMode::Update(float delta){
 				cGameMapHeightGridSystem* ret = new cGameMapHeightGridSystem;
 				ret->LoadFromFiles(m_vecMapRawPath[m_nCurrentMapIndex], m_vecMapTexturePath[m_nCurrentMapIndex]);
 				m_mapLoadedMap[m_vecMapRawPath[m_nCurrentMapIndex]] = ret;
+				m_pMousPicking->SetVertex(ret->GetVertexVectorByRef());
 				m_pCurrentMap->Release();
 				m_pCurrentMap = ret;
 				m_pCurrentMap->AddRef();
@@ -119,6 +136,8 @@ void cSceneEditMode::Update(float delta){
 			else{
 				m_pCurrentMap->Release();
 				m_pCurrentMap = m_mapLoadedMap[m_vecMapRawPath[m_nCurrentMapIndex]];
+				cGameMapHeightGridSystem* ret = (cGameMapHeightGridSystem*)m_pCurrentMap;
+				m_pMousPicking->SetVertex(ret->GetVertexVectorByRef());
 				m_pCurrentMap->AddRef();
 			}
 		}

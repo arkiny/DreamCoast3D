@@ -1,6 +1,8 @@
 #pragma once
 #include "cScene.h"
 
+class cMousePicking;
+
 class cSceneEditMode : public cScene
 {
 protected:
@@ -14,6 +16,8 @@ protected:
 
 	int m_nCurrentMapIndex = 0;
 	RECT m_rectFontArea;
+
+	cMousePicking* m_pMousPicking;
 
 protected:
 	static void LoadNextMap(LPVOID pParam);
