@@ -2,7 +2,7 @@
 #include "cMousePicking.h"
 #include "cEffectFireBall.h"
 
-#define MAP_SIZE 257
+#define MAP_SIZE 256
 
 cMousePicking::cMousePicking()
 	: m_isRightButton(false)
@@ -31,12 +31,13 @@ void cMousePicking::MouseUpdate()
 	if (g_pControlManager->GetInputInfo(VK_RBUTTON))
 	{
 		m_isRightButton = true;
-		m_vMouse.x = g_pControlManager->GetRClickedCursorPositionF().x;
-		m_vMouse.y = g_pControlManager->GetRClickedCursorPositionF().y;
+		m_vMouse.x = g_pControlManager->GetRClickedCursorPosition().x;
+		m_vMouse.y = g_pControlManager->GetRClickedCursorPosition().y;
 	}
 	else
 	{
 		m_isRightButton = false;
+		ZeroMemory(&m_vMouse, sizeof(D3DXVECTOR2));
 	}
 }
 
@@ -52,10 +53,10 @@ ST_RAY cMousePicking::CalPickingRay(D3DXVECTOR2 vMouse)
 	g_pD3DDevice->GetTransform(D3DTS_PROJECTION, &proj);
 
 	fX = (((2.0f * vMouse.x) / vp.Width) - 1.0f) / proj(0, 0);
-	fY = (((-2.0f * vMouse.x) / vp.Height) + 1.0f) / proj(1, 1);
+	fY = (((-2.0f * vMouse.y) / vp.Height) + 1.0f) / proj(1, 1);
 
 	ST_RAY ray;
-	ray.vecOrigin = { 0.0f, 0.0f, 0.0f };
+	ray.vecOrigin = { 0.f, 0.f, 0.f };
 	ray.vecDirection = { fX, fY, 1.0f };
 
 	return ray;
@@ -83,7 +84,7 @@ void cMousePicking::IntersetionTriUpdate()
 
 	float fU = 0.f;
 	float fV = 0.f;
-	float fDist = 1000.f;
+	float fDist = 0.f;
 
 	if (m_isRightButton)
 	{
@@ -99,13 +100,13 @@ void cMousePicking::IntersetionTriUpdate()
 
 		for (int i = 0; i < m_vecVertex.size() - (MAP_SIZE + 2); i++)
 		{
-			if (/*(i % MAP_SIZE != MAP_SIZE - 2) &&*/ (i % MAP_SIZE != MAP_SIZE - 1))
+			if (i % MAP_SIZE != MAP_SIZE - 1)
 			{
 				bool isColliedTri = false;
 				isColliedTri = D3DXIntersectTri(
-					&m_vecVertex[i].p,
 					&m_vecVertex[i + 1].p,
-					&m_vecVertex[i + (MAP_SIZE +1 )].p,
+					&m_vecVertex[i].p,
+					&m_vecVertex[i + (MAP_SIZE)].p,
 					&ray.vecOrigin,
 					&ray.vecDirection,
 					&fU, &fV, &fDist);
@@ -122,9 +123,9 @@ void cMousePicking::IntersetionTriUpdate()
 					return;
 				}
 				isColliedTri = D3DXIntersectTri(
-					&m_vecVertex[i + (MAP_SIZE + 1)].p,
 					&m_vecVertex[i + (MAP_SIZE)].p,
-					&m_vecVertex[i].p,
+					&m_vecVertex[i + (MAP_SIZE + 1)].p,
+					&m_vecVertex[i + 1].p,
 					&ray.vecOrigin,
 					&ray.vecDirection,
 					&fU, &fV, &fDist);
