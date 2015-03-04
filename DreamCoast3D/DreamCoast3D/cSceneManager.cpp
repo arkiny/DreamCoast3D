@@ -35,6 +35,10 @@ void cSceneManager::Update(float delta){
 			ChangeScene(1);
 			return;
 		}
+		if (GetAsyncKeyState('3') /*UI½ÇÇè¿ë »õ ¾À:¹Î¿ì*/){
+			ChangeScene(2);
+			return;
+		}
 	}
 	//}
 }

@@ -13,4 +13,5 @@
 	*SCENE_COUNT 1
 	*SCENE 0 "../Resources/SCENE1_MAIN.txt"
 	*SCENE 1 "../Resources/SCENE2_MAIN.txt"
+	*SCENE 2 "../Resources/SCENE3_MAIN.txt"
 }

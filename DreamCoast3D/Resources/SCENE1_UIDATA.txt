@@ -3,6 +3,5 @@
 
 	*UI 0 {
 		*UI_TYPE "UIMAIN"
-
-	}
+	}	
 }

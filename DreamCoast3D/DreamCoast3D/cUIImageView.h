@@ -4,7 +4,7 @@ class cUIImageView : public cUIObject
 protected:
 	std::string m_sTextureFilename;
 	D3DXIMAGE_INFO	m_stImageInfo;
-	SYNTHESIZE(RECT, m_rectDrawArea, DrawArea);
+	
 
 public:
 	cUIImageView(LPD3DXSPRITE pSprite);
@@ -12,5 +12,6 @@ public:
 	virtual void SetTextureFilename(std::string& sTextureFilename);
 	virtual void Render() override;
 	virtual ST_SIZE GetSize() const override;
+	SYNTHESIZE(RECT, m_rectDrawArea, DrawArea);//pritected¿¡¼­ publicÀ¸·Î ¿Å±è : ¹Î¿ì
 };
 
