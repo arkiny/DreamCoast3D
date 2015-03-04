@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "cMousePicking.h"
 
-#define MAP_SIZE 256
+#define MAP_SIZE 257
 
 cMousePicking::cMousePicking()
 	: m_isRightButton(false)
@@ -98,7 +98,7 @@ void cMousePicking::IntersetionTriUpdate()
 
 		for (int i = 0; i < m_vecVertex.size() - (MAP_SIZE + 2); i++)
 		{
-			//if ((i % MAP_SIZE != MAP_SIZE - 2) && (i % MAP_SIZE != MAP_SIZE - 1))
+			if ((i % MAP_SIZE != MAP_SIZE - 2) && (i % MAP_SIZE != MAP_SIZE - 1))
 			{
 				bool isColliedTri = false;
 				isColliedTri = D3DXIntersectTri(

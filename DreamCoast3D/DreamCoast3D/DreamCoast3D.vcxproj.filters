@@ -308,6 +308,9 @@
       <Filter>FrameWork\Scene</Filter>
     </ClCompile>
     <ClCompile Include="cMapLoader4Edit.cpp" />
+    <ClCompile Include="cMousePicking.cpp">
+      <Filter>EachWorks\MS</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cAction.h">
@@ -629,6 +632,9 @@
       <Filter>FrameWork\Scene</Filter>
     </ClInclude>
     <ClInclude Include="cMapLoader4Edit.h" />
+    <ClInclude Include="cMousePicking.h">
+      <Filter>EachWorks\MS</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="DreamCoast3D.ico">
