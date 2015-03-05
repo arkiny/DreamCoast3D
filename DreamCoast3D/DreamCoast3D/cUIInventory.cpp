@@ -27,7 +27,7 @@ void cUIInventory::Setup()
 	//델리게이트 설정
 	SetUIPopupWindowDelegate(this);
 	//부모 cUIPopupWindow의 멤버. 팝업 되었는지 아닌지 판단하고 그리기를 결정한다.
-	SetisPopped(true);
+	SetisPopped(false);
 	
 	//화면의 클라이언트 영역을 구한다
 	RECT clientRect;

@@ -106,7 +106,7 @@ void cCamera::Update(float delta)
 	D3DXMatrixRotationY(&matY, -D3DX_PI / 2);
 	D3DXVec3TransformCoord(&m_vEye, &pvTarget, &matY);
 	m_vEye += *m_pvTarget;
-	m_vEye.y = m_pvTarget->y + m_fDist;
+	m_vEye.y = m_pvTarget->y + m_fDist - 7;
 
 
 	if (g_pControlManager->GetInputInfo(VK_MBUTTON) && m_isRButtonDown == false){
