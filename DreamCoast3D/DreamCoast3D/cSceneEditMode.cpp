@@ -10,13 +10,14 @@
 #include "cUIObjManager.h"
 #include "cCameraEditing.h"
 #include "cTransform.h"
-#include "cGameObjLoader.h"
 #include "cMapLoader.h"
 #include "cUILoader.h"
 #include "cEffectManager.h"
 #include "cMapLoader4Edit.h"
 #include "cGameMapHeightGridSystem.h"
 #include "cMousePicking.h"
+#include "cGameObjectLoader4Edit.h"
+#include "cGamePlayableObject.h"
 #include <sstream>
 
 static CRITICAL_SECTION				gCriticalSectionEditMode;
@@ -39,6 +40,22 @@ cSceneEditMode::~cSceneEditMode()
 	for (auto p : m_mapLoadedMap){
 		SAFE_RELEASE(p.second);
 	}
+	for (auto p : m_vecStaticGameObjectPreset){
+		SAFE_RELEASE(p);
+	}
+	for (auto p : m_vecStaticGameObjectAdded){
+		SAFE_RELEASE(p);
+	}
+	for (auto p : m_vecActionGameObjectPreset){
+		SAFE_RELEASE(p);
+	}
+	for (auto p : m_vecActionGameObjectAdded){
+		SAFE_RELEASE(p);
+	}
+	for (auto p : m_vecGamePlayableObjectPreset){
+		SAFE_RELEASE(p);
+	}
+	SAFE_RELEASE(m_pPlayableObjectSave);
 }
 
 void cSceneEditMode::Setup(std::string sFilePath){
@@ -55,6 +72,9 @@ void cSceneEditMode::Start(){
 
 	cMapLoader4Edit cML;
 	cML.LoadGameMapFromFile(this, m_sGameMapPath);
+
+	cGameObjectLoader4Edit cGL;
+	cGL.LoadGameObjectsFromFile(this, m_sGameObjPath);
 
 	g_pD3DDevice->SetRenderState(D3DRS_NORMALIZENORMALS, true);
 	g_pD3DDevice->SetRenderState(D3DRS_LIGHTING, true);
@@ -102,43 +122,49 @@ void cSceneEditMode::Update(float delta){
 	if (m_pUIObjManager){
 		m_pUIObjManager->Update(delta);
 	}
+
 	//
-	if (m_pMousPicking){
+	if (m_pMousPicking && m_pCurrentMap){
 		m_pMousPicking->Update();
-	}
-	
-	//
-	if (GetAsyncKeyState(VK_NEXT)){
-		if (m_pCurrentMap == NULL){
-			cGameMapHeightGridSystem* ret = new cGameMapHeightGridSystem;
-			ret->LoadFromFiles(m_vecMapRawPath[0], m_vecMapTexturePath[0]);
-			m_mapLoadedMap[m_vecMapRawPath[0]] = ret;
-			m_pCurrentMap = ret;
-			m_pMousPicking->SetVertex(ret->GetVertexVectorByRef());
-			m_pCurrentMap->AddRef();
+		if (m_pCurrentBindingObject){
+			m_pCurrentBindingObject->SetPosition(m_pMousPicking->GetPickingPoint());
 		}
-		else {
-			if (m_nCurrentMapIndex == m_vecMapRawPath.size() - 1){
-				m_nCurrentMapIndex = 0;
+	}
+
+	if (GetAsyncKeyState(VK_LBUTTON)){
+		m_bIsClickDown = true;
+	}
+
+	///
+	if (m_fKeyDelayCurrent > m_fKeyDelay){
+		m_fKeyDelayCurrent = m_fKeyDelay + 1.0f;
+	}
+	else {
+		m_fKeyDelayCurrent += delta;
+	}
+	///
+	if (m_fKeyDelayCurrent > m_fKeyDelay){
+		if (GetAsyncKeyState(VK_NEXT)){
+			BindingNextMap();
+			m_fKeyDelayCurrent = 0;
+		}
+		if (GetAsyncKeyState(VK_PRIOR)){
+			BindingPrevMap();
+			m_fKeyDelayCurrent = 0;
+		}
+		if (m_pCurrentMap){
+			if (GetAsyncKeyState(VK_RIGHT)){
+				BindingNextActionObject();
+				m_fKeyDelayCurrent = 0;
 			}
-			else {
-				m_nCurrentMapIndex++;
+			if (GetAsyncKeyState(VK_LEFT)){
+				BindingPrevActionObject();
+				m_fKeyDelayCurrent = 0;
 			}
-			if (m_mapLoadedMap.find(m_vecMapRawPath[m_nCurrentMapIndex]) == m_mapLoadedMap.end()){
-				cGameMapHeightGridSystem* ret = new cGameMapHeightGridSystem;
-				ret->LoadFromFiles(m_vecMapRawPath[m_nCurrentMapIndex], m_vecMapTexturePath[m_nCurrentMapIndex]);
-				m_mapLoadedMap[m_vecMapRawPath[m_nCurrentMapIndex]] = ret;
-				m_pMousPicking->SetVertex(ret->GetVertexVectorByRef());
-				m_pCurrentMap->Release();
-				m_pCurrentMap = ret;
-				m_pCurrentMap->AddRef();
-			}
-			else{
-				m_pCurrentMap->Release();
-				m_pCurrentMap = m_mapLoadedMap[m_vecMapRawPath[m_nCurrentMapIndex]];
-				cGameMapHeightGridSystem* ret = (cGameMapHeightGridSystem*)m_pCurrentMap;
-				m_pMousPicking->SetVertex(ret->GetVertexVectorByRef());
-				m_pCurrentMap->AddRef();
+
+			if (GetAsyncKeyState(VK_LBUTTON) == false && m_bIsClickDown == true && m_pCurrentBindingObject){
+				AddCurrentObjectToSaveStack(m_pCurrentBindingObject);
+				m_bIsClickDown = false;
 			}
 		}
 	}
@@ -147,11 +173,26 @@ void cSceneEditMode::Update(float delta){
 void cSceneEditMode::Render(){
 	cScene::Render();
 
+	if (m_pCurrentBindingObject){
+		m_pCurrentBindingObject->Render();
+	}
+
 	std::stringstream s;
 	s.precision(2);
 	if (m_pCurrentMap){
 		s << "Map Binded: " << m_vecMapRawPath[m_nCurrentMapIndex] << std::endl;
+		
+		for (auto p : m_vecActionGameObjectAdded){
+			p->Render();
+		}
+
 	}
+
+	if (m_pCurrentBindingObject){
+		s << "GameObject Binded : " << m_nCurrentBindingActionIndex << std::endl;
+	}
+
+
 	
 	g_pFontManager->GetFont(g_pFontManager->FONT_DEFAULT)->DrawText(NULL,				 //pSprite
 					s.str().c_str(),	 //pString
@@ -176,4 +217,138 @@ void cSceneEditMode::LoadNextMap(LPVOID pParam){
 }
 void cSceneEditMode::LoadNextObj(LPVOID pParam){
 	// todo
+}
+
+void cSceneEditMode::BindingNextMap(){
+	if (m_pCurrentMap == NULL){
+		cGameMapHeightGridSystem* ret = new cGameMapHeightGridSystem;
+		ret->LoadFromFiles(m_vecMapRawPath[0], m_vecMapTexturePath[0]);
+		m_mapLoadedMap[m_vecMapRawPath[0]] = ret;
+		m_pCurrentMap = ret;
+		m_pMousPicking->SetVertex(ret->GetVertexVectorByRef());
+		m_pCurrentMap->AddRef();
+	}
+	else {
+		if (m_nCurrentMapIndex == m_vecMapRawPath.size() - 1){
+			m_nCurrentMapIndex = 0;
+		}
+		else {
+			m_nCurrentMapIndex++;
+		}
+		if (m_mapLoadedMap.find(m_vecMapRawPath[m_nCurrentMapIndex]) == m_mapLoadedMap.end()){
+			cGameMapHeightGridSystem* ret = new cGameMapHeightGridSystem;
+			ret->LoadFromFiles(m_vecMapRawPath[m_nCurrentMapIndex], m_vecMapTexturePath[m_nCurrentMapIndex]);
+			m_mapLoadedMap[m_vecMapRawPath[m_nCurrentMapIndex]] = ret;
+			m_pMousPicking->SetVertex(ret->GetVertexVectorByRef());
+			m_pCurrentMap->Release();
+			m_pCurrentMap = ret;
+			m_pCurrentMap->AddRef();
+		}
+		else{
+			m_pCurrentMap->Release();
+			m_pCurrentMap = m_mapLoadedMap[m_vecMapRawPath[m_nCurrentMapIndex]];
+			cGameMapHeightGridSystem* ret = (cGameMapHeightGridSystem*)m_pCurrentMap;
+			m_pMousPicking->SetVertex(ret->GetVertexVectorByRef());
+			m_pCurrentMap->AddRef();
+		}
+	}
+	
+}
+
+void cSceneEditMode::BindingPrevMap(){
+	if (m_pCurrentMap == NULL){
+		cGameMapHeightGridSystem* ret = new cGameMapHeightGridSystem;
+		ret->LoadFromFiles(m_vecMapRawPath[0], m_vecMapTexturePath[0]);
+		m_mapLoadedMap[m_vecMapRawPath[0]] = ret;
+		m_pCurrentMap = ret;
+		m_pMousPicking->SetVertex(ret->GetVertexVectorByRef());
+		m_pCurrentMap->AddRef();
+	}
+	else {
+		if (m_nCurrentMapIndex == 0){
+			m_nCurrentMapIndex = m_vecMapRawPath.size() - 1;
+		}
+		else {
+			m_nCurrentMapIndex--;
+		}
+		if (m_mapLoadedMap.find(m_vecMapRawPath[m_nCurrentMapIndex]) == m_mapLoadedMap.end()){
+			cGameMapHeightGridSystem* ret = new cGameMapHeightGridSystem;
+			ret->LoadFromFiles(m_vecMapRawPath[m_nCurrentMapIndex], m_vecMapTexturePath[m_nCurrentMapIndex]);
+			m_mapLoadedMap[m_vecMapRawPath[m_nCurrentMapIndex]] = ret;
+			m_pMousPicking->SetVertex(ret->GetVertexVectorByRef());
+			m_pCurrentMap->Release();
+			m_pCurrentMap = ret;
+			m_pCurrentMap->AddRef();
+		}
+		else{
+			m_pCurrentMap->Release();
+			m_pCurrentMap = m_mapLoadedMap[m_vecMapRawPath[m_nCurrentMapIndex]];
+			cGameMapHeightGridSystem* ret = (cGameMapHeightGridSystem*)m_pCurrentMap;
+			m_pMousPicking->SetVertex(ret->GetVertexVectorByRef());
+			m_pCurrentMap->AddRef();
+		}
+	}
+}
+
+void cSceneEditMode::AddGameAIObjectToPreset(cGameObject* pGameObject){
+	m_vecActionGameObjectPreset.push_back(pGameObject);
+	pGameObject->AddRef();
+}
+
+void cSceneEditMode::AddGamePlayableObjectToPreset(cGamePlayableObject* pGameObject){
+	m_vecGamePlayableObjectPreset.push_back(pGameObject);
+	pGameObject->AddRef();
+}
+
+void cSceneEditMode::AddStaticGameObjectToPreset(cGameObject* pGameObject){
+	m_vecStaticGameObjectPreset.push_back(pGameObject);
+	pGameObject->AddRef();
+}
+
+void cSceneEditMode::BindingNextActionObject(){
+	if (m_pCurrentBindingObject == NULL){
+		m_pCurrentBindingObject = m_vecActionGameObjectPreset[m_nCurrentBindingActionIndex];
+	}
+	else{
+		if (m_nCurrentBindingActionIndex == m_vecActionGameObjectPreset.size()-1){
+			m_nCurrentBindingActionIndex = 0;
+		}
+		else {
+			m_nCurrentBindingActionIndex++;
+		}
+		m_pCurrentBindingObject = m_vecActionGameObjectPreset[m_nCurrentBindingActionIndex];
+	}
+}
+
+void cSceneEditMode::BindingPrevActionObject(){
+	if (m_pCurrentBindingObject == NULL){
+		m_pCurrentBindingObject = m_vecActionGameObjectPreset[m_nCurrentBindingActionIndex];
+	}
+	else{
+		if (m_nCurrentBindingActionIndex == 0){
+			m_nCurrentBindingActionIndex = m_vecActionGameObjectPreset.size() - 1;
+		}
+		else {
+			m_nCurrentBindingActionIndex--;
+		}
+		m_pCurrentBindingObject = m_vecActionGameObjectPreset[m_nCurrentBindingActionIndex];
+	}
+}
+
+void cSceneEditMode::AddCurrentObjectToSaveStack(cGameObject* pToBeAdded){
+	if (pToBeAdded->GetGameObjectType() == pToBeAdded->E_MOP){
+		cGameObject* p = NULL;
+		m_pCurrentBindingObject->Clone(&p);
+		m_vecActionGameObjectAdded.push_back(p);
+		//p = NULL;
+	}
+	else if (pToBeAdded->GetGameObjectType() == pToBeAdded->E_PLAYABLE){
+		
+		cGameObject* p = NULL;
+		m_pCurrentBindingObject->Clone(&p);
+		m_pPlayableObjectSave = p;
+	}
+	else if (pToBeAdded->GetGameObjectType() == pToBeAdded->E_STATIC){
+
+	}
 }

@@ -87,5 +87,12 @@ public:
 	virtual void OnHitTarget(cGameObject* pTarget, float fDamage, D3DXVECTOR3 vHitPosition) {}
 	virtual ST_STAT_INFO* GetStatInfo(){ return NULL; }
 	virtual void Start() {}
+
+	// have to be overrided by all savable object
+	virtual void SaveAsString() {}
+	// have to be overrdied by all Clonning able object
+	// And clone method have to deep copy to target
+	// pTarget point has to be NULL
+	virtual void Clone(OUT cGameObject** pTarget) {}
 };
 

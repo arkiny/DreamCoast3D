@@ -86,7 +86,7 @@ void cMousePicking::TransformRay(ST_RAY* pRay, D3DXMATRIXA16* mat)
 D3DXVECTOR3 cMousePicking::GetPickingPoint()
 {
 	MouseUpdate();
-
+	m_vClickedPosition = { 0, 0, 0 };
 	if (m_vecVertex.size() > 0)
 	{
 		float fU = 0.f;
@@ -108,6 +108,7 @@ D3DXVECTOR3 cMousePicking::GetPickingPoint()
 			if (i % MAP_SIZE != MAP_SIZE - 1)
 			{
 				bool isColliedTri = false;
+				
 				isColliedTri = D3DXIntersectTri(
 					&m_vecVertex[i + 1].p,
 					&m_vecVertex[i].p,
@@ -149,8 +150,7 @@ D3DXVECTOR3 cMousePicking::GetPickingPoint()
 			}
 		}
 	}
-
-
+	return m_vClickedPosition;
 }
 
 void cMousePicking::IntersetionTriUpdate()

@@ -15,6 +15,9 @@ class cSkinnedMesh : public cObject, public iAnimationSetDelegate
 	friend class cSkinnedMeshManager;
 
 protected:
+	// 저장용 정보
+	SYNTHESIZE(int, m_nMeshRefNumber, MeshRefNumber);
+
 	//하나만 생성
 	SYNTHESIZE(ST_BONE*, m_pRootFrame, RootFrame);
 	SYNTHESIZE(DWORD, m_dwWorkingPaletteSize, WorkingPaletteSize);

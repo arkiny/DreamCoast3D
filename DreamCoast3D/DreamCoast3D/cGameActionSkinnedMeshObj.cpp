@@ -18,6 +18,8 @@ cGameActionSkinnedMeshObj::~cGameActionSkinnedMeshObj()
 
 void cGameActionSkinnedMeshObj::Setup(std::string sFolder, std::string sFile){
 	m_pSkinnedMesh = new cSkinnedMesh(sFolder, sFile);
+	m_sFolder = sFolder;
+	m_sFile = sFile;
 }
 
 void cGameActionSkinnedMeshObj::Update(float fDelta){

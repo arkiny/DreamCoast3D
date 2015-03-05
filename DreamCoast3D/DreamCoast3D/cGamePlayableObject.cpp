@@ -98,3 +98,15 @@ void cGamePlayableObject::OnHitTarget(cGameObject* pTarget, float fDamage, D3DXV
 		}
 	}
 }
+
+void cGamePlayableObject::Clone(cGameObject** pTarget){
+	//assert(pTarget == NULL);
+	cGamePlayableObject* p = new cGamePlayableObject;
+	p->Setup(m_sFolder, m_sFile, m_sHeadFolder, m_sHeadFile, m_sHairFolder, m_sHairFile);
+	D3DXVECTOR3 pCopyPos = this->GetPosition();
+	p->SetPosition(pCopyPos);
+	D3DXVECTOR3 vCopyScale = this->GetScale();
+	p->SetScale(vCopyScale);
+	p->Start();
+	*pTarget = p;
+}

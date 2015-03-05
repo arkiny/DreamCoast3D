@@ -144,3 +144,15 @@ void cGameAIObject::CheckAggroMapAndSetTarget(){
 		}
 	}
 }
+
+void cGameAIObject::Clone(cGameObject** pTarget){
+	//assert(pTarget == NULL); // pTarget should be empty pointer
+	cGameAIObject* p = new cGameAIObject;
+	p->Setup(m_sFolder, m_sFile);
+	D3DXVECTOR3 pCopyPos = this->GetPosition();
+	p->SetPosition(pCopyPos);
+	D3DXVECTOR3 vCopyScale = this->GetScale();
+	p->SetScale(vCopyScale);
+	p->Start();
+	*pTarget = p;
+}

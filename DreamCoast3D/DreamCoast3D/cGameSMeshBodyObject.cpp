@@ -20,4 +20,11 @@ void cGameSMeshBodyObject::Setup(
 	m_pSkinnedMesh = new cSkinnedMeshBody(sFolder, sFile,
 		sFolderHead, sFileHead,
 		sFolderHair, sFileHair);
+
+	m_sFolder = sFolder;
+	m_sFile = sFile;
+	m_sHeadFolder = sFolderHead;
+	m_sHeadFile = sFileHead;
+	m_sHairFolder = sFolderHair;
+	m_sHairFile = sFileHair;
 }

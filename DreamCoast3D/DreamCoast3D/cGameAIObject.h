@@ -74,5 +74,7 @@ public:
 
 	// 현재 미사용
 	virtual void OnActionFinish(cAction* pSender);
+
+	virtual void Clone(cGameObject** pTarget) override;
 };
 

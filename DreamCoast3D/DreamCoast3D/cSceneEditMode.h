@@ -1,20 +1,61 @@
 #pragma once
 #include "cScene.h"
 
+// 아 망함
+// 대단히 헤비한 클래스가 될듯합니다. ㅡ_ㅡ
+
 class cMousePicking;
+class cGamePlayableObject;
 
 class cSceneEditMode : public cScene
 {
 protected:
-	std::map<std::string, cGameMapObject*> m_mapLoadedMap;
-	std::vector<std::string> m_vecMapRawPath;
-	std::vector<std::string> m_vecMapTexturePath;
+	// KeyControl
+	bool									m_bIsClickDown	= false;
+	bool									m_bIsClickUP	= false;
+	bool									m_bKeyDown		= false;
+	bool									m_bKeyUPTrigger = false;
+
+	float									m_fKeyDelayCurrent	= 2.0f;
+	const float								m_fKeyDelay			= 0.5f;
+
+	// Map Preset
+	std::map<std::string, cGameMapObject*>	m_mapLoadedMap;
+	std::vector<std::string>				m_vecMapRawPath;
+	std::vector<std::string>				m_vecMapTexturePath;
+	int m_nCurrentMapIndex = 0;
+	// m_pCurrentMap이 바인딩 되어있는 맵
+
+	// 마우스에 묶여있을 오브젝트
+	cGameObject*							m_pCurrentBindingObject = NULL;
+
+	// Static Object Preset
+	std::vector<cGameObject*>				m_vecStaticGameObjectPreset;
+	std::vector<cGameObject*>				m_vecStaticGameObjectAdded;
+
+	// Action Object Preset
+	// 처음 로딩시 올릴 오브젝트 리스트들
+	// 지금은 키를 통해서 이동할 거지만
+	// 차후에는 클릭해서 선택할 수 있도록
+	int m_nCurrentBindingActionIndex = 0;
+	std::vector<cGameObject*>				m_vecActionGameObjectPreset;
+
+	// AddedObjectInformation will be saved as a file
+	// 업데이트 하지 않고 렌더만 하게 처리
+	// 어떻게 클론시켜서 저장할건데? -> 각 게임 오브젝트에 클론오버라이딩
+	std::vector<cGameObject*>				m_vecActionGameObjectAdded;
+	
+	// 가장 마지막 단계 플레이어 시작 위치
+	// 무조건 하나만으로 조정해야 한다.
+	int m_nCurrentBindingPlayerIndex = 0;
+	std::vector<cGamePlayableObject*>		m_vecGamePlayableObjectPreset;
+	cGameObject*					m_pPlayableObjectSave = NULL;
+
 
 	// 차후 멀티쓰레딩용
 	volatile bool m_bMapLoaded = true;
 	volatile bool m_bObjectLoaded = true;
 
-	int m_nCurrentMapIndex = 0;
 	RECT m_rectFontArea;
 
 	cMousePicking* m_pMousPicking;
@@ -22,6 +63,14 @@ protected:
 protected:
 	static void LoadNextMap(LPVOID pParam);
 	static void LoadNextObj(LPVOID pParam);
+
+	virtual void BindingNextMap();
+	virtual void BindingPrevMap();
+
+	virtual void BindingNextActionObject();
+	virtual void BindingPrevActionObject();
+
+	virtual void AddCurrentObjectToSaveStack(cGameObject* pToBeAdded);
 
 public:
 	cSceneEditMode();
@@ -38,6 +87,10 @@ public:
 	virtual void Render();
 
 	virtual void AddMapPath(std::string sRawPath, std::string sTexturePath);
+	
+	virtual void AddGameAIObjectToPreset(cGameObject* pGameObject);
+	virtual void AddGamePlayableObjectToPreset(cGamePlayableObject* pGameObject);
+	virtual void AddStaticGameObjectToPreset(cGameObject* pGameObject);
 
 	// 모든 리소스를 해제한다.
 	virtual void Exit();

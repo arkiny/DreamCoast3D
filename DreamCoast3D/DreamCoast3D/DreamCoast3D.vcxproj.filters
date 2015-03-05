@@ -314,6 +314,7 @@
     <ClCompile Include="iUIPopupWindowDelegate.cpp">
       <Filter>EachWorks\MW\Todo</Filter>
     </ClCompile>
+    <ClCompile Include="cGameObjectLoader4Edit.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cAction.h">
@@ -641,6 +642,7 @@
     <ClInclude Include="iUIPopupWindowDelegate.h">
       <Filter>EachWorks\MW\Todo</Filter>
     </ClInclude>
+    <ClInclude Include="cGameObjectLoader4Edit.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="DreamCoast3D.ico">

@@ -6,6 +6,8 @@ class cGameActionSkinnedMeshObj : public cGameActionObject
 {
 protected:
 	SYNTHESIZE(cSkinnedMesh*, m_pSkinnedMesh, SkinnedMesh);
+	std::string				m_sFolder;
+	std::string				m_sFile;
 
 public:
 	cGameActionSkinnedMeshObj();
