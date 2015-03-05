@@ -116,8 +116,9 @@ void cGameMapHeight::LoadFromFiles(std::string sFilename, std::string sTextureFi
 		D3DXMESHOPT_VERTEXCACHE,
 		&vecAdjBuffer[0], 0, 0, 0);
 
-	//m_pMousePicking = new cMousePicking;
-	//m_pMousePicking->SetVertex(m_vecVertex);
+
+	m_sRawFile = sFilename;
+	m_sTexturePath = sTextureFilename;
 }
 
 void cGameMapHeight::LoadFromFiles(char* szFilename, char* szTextureFilename){
@@ -194,4 +195,17 @@ float cGameMapHeight::GetHeight(OUT bool& isLand, IN D3DXVECTOR3* pvPosition){
 	}
 
 	return 0.0f;
+}
+
+std::string cGameMapHeight::SaveAsStringInfo(){
+	std::stringstream ss;
+	ss << std::endl;
+	ss << "*GAME_MAP_INFO {" << std::endl;
+	ss << "*GAME_MAP_COUNT " << 1 << std::endl;
+	ss << "*HEIGHT_MAP " << 0 << " {" << std::endl;
+	ss << "*GAME_MAP_HEIGHT_RAW_FILE " << "\"" << m_sRawFile << "\"" << std::endl;
+	ss << "*GAME_MAP_HEIGHT_TEXTURE_PATH " << "\"" << m_sTexturePath << "\"" << std::endl;
+	ss << "}" << std::endl;
+	ss << "}" << std::endl;
+	return ss.str();
 }

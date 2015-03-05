@@ -461,20 +461,187 @@ void cSceneEditMode::BindingPrevStaticObject(){
 }
 
 void cSceneEditMode::SaveToFile(){
+	SaveMainDataToFile();
+	SaveMapDataToFile();
+	SaveGameObjectDataToFile(); 
+}
+
+
+
+//*SCENE 1 {
+//}
+
+// MainData
+void cSceneEditMode::SaveMainDataToFile(){
 	FILE* fp;
-	fopen_s(&fp, "test.txt", "w+");
+	fopen_s(&fp, "../Resources/SCENE5_MAIN.txt", "w+");
 	std::stringstream ss;
-
-	std::string skinnedinfo = g_pSkinnedMeshManager->GetSkinnedMeshListAsString();
-	std::string mapobjmateriallis = g_pAseManager->GetAseMaterialListAsString();
-	std::string actionobjectinfo = GetActionGameObjectAddedAsString();
-
-	ss << skinnedinfo << mapobjmateriallis << actionobjectinfo << std::endl;
-
+	ss << "*SCENE 1 {" << std::endl;
+	ss << GetCameraAsString() << std::endl;
+	ss << GetLightAsString() << std::endl;
+	ss << GetUIListAsString() << std::endl;
+	ss << GetGameMapListAsString() << std::endl;
+	ss << GetGameObjectListAsString() << std::endl;
+	ss << "}" << std::endl;
 	fprintf(fp, ss.str().c_str());
-	//fprintf(fp, mapobjmateriallis.c_str());
+	fclose(fp);
+}
+
+//	*CAMERA_LIST{
+//		*CAMERA_COUNT 1
+//		*CAMERA 0 {
+//			*CAMERA_TYPE		*EDIT
+//				*CAMERA_EYE 		0.0 	2.0 - 10.0
+//				*CAMERA_LOOKAT		0.0	0.0	2.0
+//				*CAMERA_UP		0.0	1.0	0.0
+//				*CAMERA_XANGLE		0.0
+//				*CAMERA_YANGLE		0.0
+//				*CAMERA_DIST		43.0
+//				*CAMERA_POS		128.0	2.0	128.0
+//				*CAMERA_MIN		2.0
+//				*CAMERA_MAX		1000.0
+//		}
+//	}
+std::string cSceneEditMode::GetCameraAsString(){
+	std::stringstream ss;
+	ss << std::endl;
+	ss.precision(2);
+	ss << "*CAMERA_LIST {" << std::endl;
+	ss << "*CAMERA " << 0 << " {" << std::endl;
+	ss << "*CAMERA_TYPE\t" << "*EDIT" << std::endl;
+	ss << std::fixed << "*CAMERA_EYE\t" << 0.0f << "\t" << 2.0f << "\t" << -10.0f << std::endl;
+	ss << std::fixed << "*CAMERA_LOOKAT\t" << 0.0f << "\t" << 0.0f << "\t" << 2.0f << std::endl;
+	ss << std::fixed << "*CAMERA_UP\t" << 0.0f << "\t" << 1.0f << "\t" << 0.0f << std::endl;
+	ss << std::fixed << "*CAMERA_XANGLE\t" << 0.0f << std::endl;
+	ss << std::fixed << "*CAMERA_YANGLE\t" << 0.0f << std::endl;
+	ss << std::fixed << "*CAMERA_DIST\t" << 43.0f << std::endl;
+	ss << std::fixed << "*CAMERA_POS\t" << 128.0f << "\t" << 2.0f << "\t" << 128.0f << std::endl;
+	ss << std::fixed << "*CAMERA_MIN\t" << 2.0f << std::endl;
+	ss << std::fixed << "*CAMERA_MAX\t" << 1000.0f << std::endl;
+	ss << "}" << std::endl;
+	ss << "}" << std::endl; 
+	return ss.str();
+}
+
+//		*LIGHTSOURCE_LIST{
+//		*LIGHTSOURCE_COUNT 1
+//		* LIGHTSOURCE 0 {
+//			*LIGHTSOURCE_TYPE	3
+//				*LIGHTSOURCE_DIRECTION	1.5 - 1.0	1.0
+//				*LIGHTSOURCE_AMBIENT	1.0	1.0	1.0
+//				*LIGHTSOURCE_DIFFUSE	1.0	1.0	1.0
+//				*LIGHTSOURCE_SPECULAR	1.0	1.0	1.0
+//		}
+//	}
+std::string cSceneEditMode::GetLightAsString(){
+	std::stringstream ss;
+	ss << std::endl;
+	ss.precision(2);
+	ss << "*LIGHTSOURCE_LIST {" << std::endl;
+	ss << "*LIGHTSOURCE_COUNT " << 1 << std::endl;
+	// TODO 차후 멀티 광원쓸때 수정
+	ss << "*LIGHTSOURCE 0 { " << std::endl;
+	ss << "*LIGHTSOURCE_TYPE\t" << 3 << std::endl;
+	ss << "*LIGHTSOURCE_DIRECTION\t" << 1.0f << "\t" << -1.0f << "\t" << 1.0f << std::endl;
+	ss << "*LIGHTSOURCE_AMBIENT\t" << 1.0f << "\t" << 1.0f << "\t" << 1.0f << std::endl;
+	ss << "*LIGHTSOURCE_DIFFUSE\t" << 1.0f << "\t" << 1.0f << "\t" << 1.0f << std::endl;
+	ss << "*LIGHTSOURCE_SPECULAR\t" << 1.0f << "\t" << 1.0f << "\t" << 1.0f << std::endl;
+	ss << "}" << std::endl;
+	ss << "}" << std::endl;
+	return ss.str();
+}
+
+//	*UI_LIST{
+//		*UI_LIST_PATH "../Resources/SCENE2_UIDATA.txt"
+//	}
+std::string cSceneEditMode::GetUIListAsString(){
+	std::stringstream ss;
+	ss << std::endl;
+	ss.precision(2);
+	ss << "*UI_LIST {" << std::endl;
+	ss << "*UI_LIST_PATH " << "\"" << "../Resources/SCENE5_UIDATA.txt" << "\"" << std::endl;
+	ss << "}" << std::endl;
+	return ss.str();
+}
+
+//	*GAMEMAP_LIST{
+//		*GAMEMAP_PATH "../Resources/SCENE2_MAPDATA.txt"
+//	}
+std::string cSceneEditMode::GetGameMapListAsString(){
+	std::stringstream ss;
+	ss << std::endl;
+	ss.precision(2);
+	ss << "*GAMEMAP_LIST {" << std::endl;
+	ss << "*GAMEMAP_PATH " << "\"" << "../Resources/SCENE5_MAPDATA.txt" << "\"" << std::endl;
+	ss << "}" << std::endl;
+	return ss.str();
+}
+
+//	*GAMEOBJECT_LIST{
+//		*GAMEOBJECT_PATH "../Resources/SCENE2_GAMEOBJDATA.txt"
+//	}
+std::string cSceneEditMode::GetGameObjectListAsString(){
+	std::stringstream ss;
+	ss << std::endl;
+	ss.precision(2);
+	ss << "*GAMEOBJECT_LIST {" << std::endl;
+	ss << "*GAMEOBJECT_PATH " << "\"" << "../Resources/SCENE5_GAMEOBJDATA.txt" << "\"" << std::endl;
+	ss << "}" << std::endl;
+	return ss.str();
+}
+
+// MapData;
+void cSceneEditMode::SaveMapDataToFile(){
+	std::stringstream ss;
+	FILE* fp;
+
+	fopen_s(&fp, "../Resources/SCENE5_MAPDATA.txt", "w+");
+	ss << GetMapInfoAsString() << std::endl;
+	ss << GetMapObjectMaterialList() << std::endl;
+	ss << GetStaticGameObjectAddedAsString() << std::endl;
+	fprintf(fp, ss.str().c_str());
 
 	fclose(fp);
+}
+
+std::string cSceneEditMode::GetMapInfoAsString(){
+	std::stringstream ss;
+	ss << m_pCurrentMap->SaveAsStringInfo();
+	return ss.str();
+}
+
+std::string cSceneEditMode::GetMapObjectMaterialList(){
+	std::string ret = g_pAseManager->GetAseMaterialListAsString();
+	return ret;
+}
+
+std::string cSceneEditMode::GetStaticGameObjectAddedAsString(){
+	std::stringstream ss;
+	for (auto p : m_vecStaticGameObjectAdded){
+		ss << p->SaveAsStringInfo();
+	}
+	return ss.str();
+}
+
+
+// GameObjectData
+void cSceneEditMode::SaveGameObjectDataToFile(){
+	std::stringstream ss;
+	FILE* fp;
+
+	fopen_s(&fp, "../Resources/SCENE5_GAMEOBJDATA.txt", "w+");
+	ss << "*GAMESKYOBJ" << std::endl;
+	ss << GetMeshListAsString() << std::endl;
+	ss << GetActionGameObjectAddedAsString() << std::endl;
+	ss << GetPlayableGameObjectAsString() << std::endl;
+	fprintf(fp, ss.str().c_str());
+
+	fclose(fp);
+}
+
+std::string cSceneEditMode::GetMeshListAsString(){
+	std::string skinnedinfo = g_pSkinnedMeshManager->GetSkinnedMeshListAsString();
+	return skinnedinfo;
 }
 
 std::string cSceneEditMode::GetActionGameObjectAddedAsString(){
@@ -485,71 +652,10 @@ std::string cSceneEditMode::GetActionGameObjectAddedAsString(){
 	return ss.str();
 }
 
-std::string cSceneEditMode::GetStaticGameObjectAddedAsString(){
-	std::stringstream ss;
-	return ss.str();
-}
-
 std::string cSceneEditMode::GetPlayableGameObjectAsString(){
 	std::stringstream ss;
+
+	ss << m_pPlayableObjectSave->SaveAsStringInfo();
+	
 	return ss.str();
 }
-
-// MainData
-void cSceneEditMode::SaveMainDataToFile(){
-
-}
-
-std::string cSceneEditMode::GetCameraAsString(){
-	return std::string("");
-}
-
-std::string cSceneEditMode::GetLightAsString(){
-	return std::string("");
-}
-
-std::string cSceneEditMode::GetUIListAsString(){
-	return std::string("");
-}
-
-std::string cSceneEditMode::GetGameMapListAsString(){
-	return std::string("");
-}
-
-std::string cSceneEditMode::GetGameObjectListAsString(){
-	return std::string("");
-}
-
-// MapData;
-void cSceneEditMode::SaveMapDataToFile(){
-
-}
-
-std::string cSceneEditMode::GetMapInfoAsString(){
-	return std::string("");
-}
-
-std::string cSceneEditMode::GetMapObjectMaterialList(){
-	return std::string("");
-}
-
-//std::string cSceneEditMode::GetStaticGameObjectAddedAsString(){
-//
-//}
-
-// GameObjectData
-void cSceneEditMode::SaveGameObjectDataToFile(){
-
-}
-
-std::string cSceneEditMode::GetMeshListAsString(){
-	return std::string("");
-}
-
-//std::string cSceneEditMode::GetActionGameObjectAddedAsString(){
-//
-//}
-
-//std::string cSceneEditMode::GetPlayableGameObjectAsString(){
-//
-//}

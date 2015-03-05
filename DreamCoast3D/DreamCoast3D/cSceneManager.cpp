@@ -43,6 +43,10 @@ void cSceneManager::Update(float delta){
 			ChangeScene(3);
 			return;
 		}
+		if (GetAsyncKeyState('5')){ // 저장실험용 씬
+			ChangeScene(4);
+			return;
+		}
 	}
 	//}
 }
