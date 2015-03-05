@@ -5,6 +5,7 @@
 #include "cPlayerAttack.h"
 #include "cPlayerOnHit.h"
 #include "cEffectFireBall.h"
+#include "cSkinnedMesh.h"
 
 cGamePlayableObject::cGamePlayableObject()
 	:m_vecFront(0, 0, -1),
@@ -22,7 +23,7 @@ cGamePlayableObject::cGamePlayableObject()
 cGamePlayableObject::~cGamePlayableObject()
 {
 	for (auto p : m_vecStates){
-		delete p;
+		SAFE_DELETE(p);
 	}
 	delete m_pPlayerStatInfo;
 }
@@ -109,4 +110,27 @@ void cGamePlayableObject::Clone(cGameObject** pTarget){
 	p->SetScale(vCopyScale);
 	p->Start();
 	*pTarget = p;
+}
+
+std::string cGamePlayableObject::SaveAsStringInfo(){
+	std::stringstream ss;
+	ss.precision(2);
+
+	ss << std::endl;
+	ss << "*PLAYABLEOBJ {" << std::endl;
+	ss << "*SKINNEDMESH_REF " << m_pSkinnedMesh->GetMeshRefNumber() << std::endl;
+	ss << "*SKINNEDMESHHEAD_REF " << m_pSkinnedMesh->GetHeadRefNum() << std::endl;
+	ss << "*SKINNEDMESHAIR_REF " << m_pSkinnedMesh->GetHairRefNum() << std::endl;
+	D3DXVECTOR3 pos = GetPosition();
+	ss << "*POISTION " << std::fixed << pos.x << "\t" << pos.y << "\t" << pos.z << std::endl;
+	D3DXVECTOR3 scale = GetScale();
+	ss << "*SCALE " << std::fixed << scale.x << "\t" << scale.y << "\t" << scale.z << std::endl;
+
+
+	//ss << "*GAMEAIOBJ_AI_PATTERN " << m_eAITYPE << std::endl;
+	ss << "*SETINITANIMATION " << EPLAYABLESTATE_IDLE << std::endl;
+	ss << "}" << std::endl;
+	//ss << "}" << std::endl;
+
+	return ss.str();
 }

@@ -89,7 +89,7 @@ public:
 	virtual void Start() {}
 
 	// have to be overrided by all savable object
-	virtual void SaveAsString() {}
+	virtual std::string SaveAsStringInfo() { return std::string(""); }
 	// have to be overrdied by all Clonning able object
 	// And clone method have to deep copy to target
 	// pTarget point has to be NULL

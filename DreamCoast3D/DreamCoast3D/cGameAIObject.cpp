@@ -5,6 +5,7 @@
 #include "cTransform.h"
 #include "cSkinnedMesh.h"
 #include "cEffectFireBall.h"
+#include <sstream>
 
 cGameAIObject::cGameAIObject()
 	:m_pCurrentState(NULL),
@@ -154,10 +155,29 @@ void cGameAIObject::Clone(cGameObject** pTarget){
 	//assert(pTarget == NULL); // pTarget should be empty pointer
 	cGameAIObject* p = new cGameAIObject;
 	p->Setup(m_sFolder, m_sFile);
+
 	D3DXVECTOR3 pCopyPos = this->GetPosition();
 	p->SetPosition(pCopyPos);
 	D3DXVECTOR3 vCopyScale = this->GetScale();
 	p->SetScale(vCopyScale);
 	p->Start();
 	*pTarget = p;
+}
+
+std::string cGameAIObject::SaveAsStringInfo(){
+	std::stringstream ss;
+	ss.precision(2);
+
+	ss << std::endl;
+	ss << "*GAMEAIOBJ {" << std::endl;
+	ss << "*SKINNEDMESH_REF " << m_pSkinnedMesh->GetMeshRefNumber() << std::endl;
+	D3DXVECTOR3 pos = GetPosition();
+	ss << "*POISTION " << std::fixed << pos.x << "\t" << pos.y << "\t" << pos.z << std::endl;
+	D3DXVECTOR3 scale = GetScale();
+	ss << "*SCALE " << std::fixed << scale.x << "\t" << scale.y << "\t" << scale.z << std::endl;
+	ss << "*GAMEAIOBJ_AI_PATTERN " << m_eAITYPE << std::endl;
+	ss << "*SETINITANIMATION " << eAISTATE_IDLE << std::endl;
+	ss << "}" << std::endl;
+
+	return ss.str();
 }

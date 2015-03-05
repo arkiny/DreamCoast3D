@@ -26,6 +26,7 @@
 #include <queue>
 #include <string>
 #include <assert.h>
+#include <sstream>
 
 // D3DX Include
 #include <d3dx9.h>

@@ -66,5 +66,6 @@ public:
 	//void cGamePlayableObject::RenderCollisionSphere(ST_BONE_MESH* pBoneMesh);
 
 	virtual void Clone(cGameObject** pTarget) override;
+	std::string SaveAsStringInfo() override;
 };
 

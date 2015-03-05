@@ -172,12 +172,15 @@ void cSceneEditMode::Update(float delta){
 				BindingPrevStaticObject();
 				m_fKeyDelayCurrent = 0;
 			}
+			if (GetAsyncKeyState(VK_F5)){
+				SaveToFile();
+				m_fKeyDelayCurrent = 0;
+			}
 
 			if (GetAsyncKeyState(VK_LBUTTON) == false && m_bIsClickDown == true && m_pCurrentBindingObject){
 				AddCurrentObjectToSaveStack(m_pCurrentBindingObject);
 				m_bIsClickDown = false;
 			}
-			
 		}
 	}
 }
@@ -324,18 +327,18 @@ void cSceneEditMode::BindingPrevMap(){
 }
 
 void cSceneEditMode::AddGameAIObjectToPreset(cGameObject* pGameObject){
+	SAFE_ADD_REF(pGameObject);
 	m_vecActionGameObjectPreset.push_back(pGameObject);
-	pGameObject->AddRef();
 }
 
 void cSceneEditMode::AddGamePlayableObjectToPreset(cGamePlayableObject* pGameObject){
+	SAFE_ADD_REF(pGameObject);
 	m_vecGamePlayableObjectPreset.push_back(pGameObject);
-	pGameObject->AddRef();
 }
 
 void cSceneEditMode::AddStaticGameObjectToPreset(cGameObject* pGameObject){
+	SAFE_ADD_REF(pGameObject);
 	m_vecStaticGameObjectPreset.push_back(pGameObject);
-	pGameObject->AddRef();
 }
 
 void cSceneEditMode::BindingNextActionObject(){
@@ -380,9 +383,11 @@ void cSceneEditMode::AddCurrentObjectToSaveStack(cGameObject* pToBeAdded){
 	else if (pToBeAdded->GetGameObjectType() == pToBeAdded->E_PLAYABLE){
 		cGameObject* p = NULL;
 		m_pCurrentBindingObject->Clone(&p);
+
 		if (m_pPlayableObjectSave){
 			m_pPlayableObjectSave->Release();
 		}
+
 		m_pPlayableObjectSave = p;
 	}
 	else if (pToBeAdded->GetGameObjectType() == pToBeAdded->E_STATIC){
@@ -454,3 +459,97 @@ void cSceneEditMode::BindingPrevStaticObject(){
 		m_pCurrentBindingObject = m_vecStaticGameObjectPreset[m_nCurrentBindingStaticIndex];
 	}
 }
+
+void cSceneEditMode::SaveToFile(){
+	FILE* fp;
+	fopen_s(&fp, "test.txt", "w+");
+	std::stringstream ss;
+
+	std::string skinnedinfo = g_pSkinnedMeshManager->GetSkinnedMeshListAsString();
+	std::string mapobjmateriallis = g_pAseManager->GetAseMaterialListAsString();
+	std::string actionobjectinfo = GetActionGameObjectAddedAsString();
+
+	ss << skinnedinfo << mapobjmateriallis << actionobjectinfo << std::endl;
+
+	fprintf(fp, ss.str().c_str());
+	//fprintf(fp, mapobjmateriallis.c_str());
+
+	fclose(fp);
+}
+
+std::string cSceneEditMode::GetActionGameObjectAddedAsString(){
+	std::stringstream ss;
+	for (auto p : m_vecActionGameObjectAdded){
+		ss << p->SaveAsStringInfo();
+	}
+	return ss.str();
+}
+
+std::string cSceneEditMode::GetStaticGameObjectAddedAsString(){
+	std::stringstream ss;
+	return ss.str();
+}
+
+std::string cSceneEditMode::GetPlayableGameObjectAsString(){
+	std::stringstream ss;
+	return ss.str();
+}
+
+// MainData
+void cSceneEditMode::SaveMainDataToFile(){
+
+}
+
+std::string cSceneEditMode::GetCameraAsString(){
+	return std::string("");
+}
+
+std::string cSceneEditMode::GetLightAsString(){
+	return std::string("");
+}
+
+std::string cSceneEditMode::GetUIListAsString(){
+	return std::string("");
+}
+
+std::string cSceneEditMode::GetGameMapListAsString(){
+	return std::string("");
+}
+
+std::string cSceneEditMode::GetGameObjectListAsString(){
+	return std::string("");
+}
+
+// MapData;
+void cSceneEditMode::SaveMapDataToFile(){
+
+}
+
+std::string cSceneEditMode::GetMapInfoAsString(){
+	return std::string("");
+}
+
+std::string cSceneEditMode::GetMapObjectMaterialList(){
+	return std::string("");
+}
+
+//std::string cSceneEditMode::GetStaticGameObjectAddedAsString(){
+//
+//}
+
+// GameObjectData
+void cSceneEditMode::SaveGameObjectDataToFile(){
+
+}
+
+std::string cSceneEditMode::GetMeshListAsString(){
+	return std::string("");
+}
+
+//std::string cSceneEditMode::GetActionGameObjectAddedAsString(){
+//
+//}
+
+//std::string cSceneEditMode::GetPlayableGameObjectAsString(){
+//
+//}

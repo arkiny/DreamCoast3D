@@ -33,12 +33,15 @@ cSkinnedMesh::cSkinnedMesh(std::string sFolder, std::string sFile)
 	, m_pDebugSphereBody(NULL)
 	, m_pDebugDetailSphereBody(nullptr)
 {
-	cSkinnedMesh* pSkinnedMesh = g_pSkinnedMeshManager->GetSkinnedMesh(sFolder, sFile, m_nRefCount);
+	cSkinnedMesh* pSkinnedMesh = g_pSkinnedMeshManager->GetSkinnedMesh(sFolder, sFile);
 	
 	m_pRootFrame = pSkinnedMesh->m_pRootFrame;
 	m_dwWorkingPaletteSize = pSkinnedMesh->m_dwWorkingPaletteSize;
 	m_pmWorkingPalette = pSkinnedMesh->m_pmWorkingPalette;
 	m_pEffect = pSkinnedMesh->m_pEffect;
+	m_nMeshRefNumber = pSkinnedMesh->GetMeshRefNumber();
+	m_sSkinnedFolder = pSkinnedMesh->GetSkinnedFolderPath();
+	m_sSkinnedFile = pSkinnedMesh->GetSkinnedFilePath();
 
 	pSkinnedMesh->m_pAnimController->CloneAnimationController(
 		pSkinnedMesh->m_pAnimController->GetMaxNumAnimationOutputs(),
@@ -110,6 +113,9 @@ cSkinnedMesh::~cSkinnedMesh(void)
 }
 
 void cSkinnedMesh::Load(std::string sFolder, std::string sFile){
+	m_sSkinnedFolder = sFolder;
+	m_sSkinnedFile = sFile;
+	
 	m_pEffect = LoadEffect("MultiAnimation.hpp");
 
 	int nPaletteSize = 0;

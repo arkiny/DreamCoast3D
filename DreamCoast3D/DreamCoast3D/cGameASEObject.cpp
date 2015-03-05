@@ -85,3 +85,17 @@ void cGameASEObject::Clone(cGameObject** pTarget){
 	p->Start();
 	*pTarget = p;
 }
+
+std::string cGameASEObject::SaveAsStringInfo(){
+	std::stringstream ss;
+	ss.precision(2);
+	ss << "*MAP_OBJECT_ASE {" << std::endl;
+	ss << "*MAP_OBJECT_ASE_REF " << m_pASEInstance->GetASERefNumber() << std::endl;
+	D3DXVECTOR3 vPos, vScale;
+	vPos = GetPosition();
+	vScale = GetScale();
+	ss << "*MAP_OBJECT_ASE_POS " << std::fixed << vPos.x << "\t" << vPos.y << "\t" << vPos.z << std::endl;
+	ss << "*MAP_OBJECT_ASE_SCALE " << std::fixed << vScale.x << "\t" << vScale.y << "\t" << vScale.z << std::endl;
+	ss << "}" << std::endl;
+	return ss.str();
+}

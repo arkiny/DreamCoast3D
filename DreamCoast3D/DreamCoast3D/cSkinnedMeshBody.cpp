@@ -304,6 +304,13 @@ void cSkinnedMeshBody::SetAnimationLoop(DWORD dwIndex, bool isLoop)
 	}
 }
 
+int cSkinnedMeshBody::GetHeadRefNum(){
+	return m_pHead->GetMeshRefNumber();
+}
+int cSkinnedMeshBody::GetHairRefNum(){
+	return m_pHair->GetMeshRefNumber();
+}
+
 //
 //void cSkinnedMeshBody::GetDebugOriginSphereBody(
 //	OUT std::map<std::string, ST_BOUNDING_SPHERE>& mapDebugOriginSphereBody,

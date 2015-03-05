@@ -185,7 +185,7 @@ void cGameObjLoader::ParseAndLoadSkinnedMeshtoManager(int nIndex){
 	m_vecsFolders[nIndex] = sFolder;
 	m_vecsFiles[nIndex] = sFile;
 	
-	g_pSkinnedMeshManager->GetSkinnedMesh(sFolder, sFile, nIndex);
+	g_pSkinnedMeshManager->GetSkinnedMesh(sFolder, sFile);
 }
 
 cGameObject* cGameObjLoader::ParseAndLoadSkinnedBodyMesh(){

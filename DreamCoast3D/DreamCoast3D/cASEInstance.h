@@ -17,6 +17,8 @@ private:
 	//LPD3DXMESH						m_pSphereMesh;
 	cMtlTex*						m_pMtlTex;
 
+	SYNTHESIZE(int, m_nAseRefNum, ASERefNumber);
+
 	virtual void Update(D3DXMATRIXA16* pmatParent);
 
 public:

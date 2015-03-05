@@ -50,7 +50,7 @@ protected:
 	// 가장 마지막 단계 플레이어 시작 위치
 	// 무조건 하나만으로 조정해야 한다.
 	int m_nCurrentBindingPlayerIndex = 0;
-	std::vector<cGamePlayableObject*>		m_vecGamePlayableObjectPreset;
+	std::vector<cGameObject*>				m_vecGamePlayableObjectPreset;
 	cGameObject*							m_pPlayableObjectSave = NULL;
 
 
@@ -79,6 +79,30 @@ protected:
 	virtual void BindingPrevStaticObject();
 
 	virtual void AddCurrentObjectToSaveStack(cGameObject* pToBeAdded);
+	
+	//
+	virtual void SaveToFile();
+
+
+	// MainData
+	virtual void SaveMainDataToFile();
+	virtual std::string GetCameraAsString();
+	virtual std::string GetLightAsString();
+	virtual std::string GetUIListAsString();
+	virtual std::string GetGameMapListAsString();
+	virtual std::string GetGameObjectListAsString();
+
+	// MapData;
+	virtual void SaveMapDataToFile();
+	virtual std::string GetMapInfoAsString();
+	virtual std::string GetMapObjectMaterialList();
+	virtual std::string GetStaticGameObjectAddedAsString();
+
+	// GameObjectData
+	virtual void SaveGameObjectDataToFile();
+	virtual std::string GetMeshListAsString();
+	virtual std::string GetActionGameObjectAddedAsString();
+	virtual std::string GetPlayableGameObjectAsString();
 
 public:
 	cSceneEditMode();

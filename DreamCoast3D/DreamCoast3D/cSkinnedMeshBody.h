@@ -40,7 +40,8 @@ public:
 	
 	//void GetDetailCollisionBoundingSpheres(OUT std::vector<ST_BOUNDING_SPHERE>& vecSphere);
 	//void RecursivePushBoundingSphereAllBones(D3DXFRAME* pFrame, std::vector<ST_BOUNDING_SPHERE>& vecSphere);
-
+	virtual int GetHeadRefNum();
+	virtual int GetHairRefNum();
 
 private:
 	////Setup에서 한 번만 동작한다

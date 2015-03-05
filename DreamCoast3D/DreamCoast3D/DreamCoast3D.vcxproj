@@ -97,6 +97,7 @@
     <Text Include="..\Resources\SCENE4_MAPDATA.txt" />
     <Text Include="..\Resources\SCENE4_UIDATA.txt" />
     <Text Include="ReadMe.txt" />
+    <Text Include="test.txt" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Asciitok.h" />

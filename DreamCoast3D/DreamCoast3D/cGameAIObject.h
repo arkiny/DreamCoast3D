@@ -79,5 +79,6 @@ public:
 	virtual void OnActionFinish(cAction* pSender);
 
 	virtual void Clone(cGameObject** pTarget) override;
+	std::string SaveAsStringInfo() override;
 };
 

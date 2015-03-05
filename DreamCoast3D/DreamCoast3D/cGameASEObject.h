@@ -22,5 +22,7 @@ public:
 
 	virtual ST_BOUNDING_BOX* GetBoundingBox() override;
 	virtual void Clone(cGameObject** pTarget) override;
+
+	std::string SaveAsStringInfo() override;
 };
 

@@ -819,5 +819,8 @@
     <Text Include="..\Resources\SCENE4_MAPDATA.txt">
       <Filter>FrameWork\Resource</Filter>
     </Text>
+    <Text Include="test.txt">
+      <Filter>FrameWork\Resource</Filter>
+    </Text>
   </ItemGroup>
 </Project>

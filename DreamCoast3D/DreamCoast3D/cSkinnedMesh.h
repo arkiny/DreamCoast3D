@@ -48,6 +48,8 @@ protected:
 	std::map<std::string, ST_BOUNDING_SPHERE> m_mapDebugOriginSphereBody;
 	std::map<std::string, ST_BOUNDING_SPHERE> m_mapDebugUpdateSphereBody;
 
+	SYNTHESIZE(std::string, m_sSkinnedFolder, SkinnedFolderPath);
+	SYNTHESIZE(std::string, m_sSkinnedFile, SkinnedFilePath);
 	//SYNTHESIZE(ST_BOUNDING_SPHERE, m_stUpdateBoundingSphere, UpdateBoundingSphere);
 	//std::vector<ST_BOUNDING_SPHERE> m_vecDetailBoundingSphere; //FIX: 포인터나 레퍼런스여야함
 public:
@@ -72,6 +74,9 @@ public:
 		return m_stUpdateBoundingSphere;
 	}
 	std::map<std::string, ST_BOUNDING_SPHERE>& GetUpdatedDetailedSphere(){ return m_mapDebugUpdateSphereBody; };
+
+	virtual int GetHeadRefNum(){ return -1; }
+	virtual int GetHairRefNum(){ return -1; }
 protected:
 	cSkinnedMesh();
 
