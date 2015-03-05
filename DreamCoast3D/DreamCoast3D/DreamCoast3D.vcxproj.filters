@@ -311,6 +311,9 @@
     <ClCompile Include="cMousePicking.cpp">
       <Filter>EachWorks\MS</Filter>
     </ClCompile>
+    <ClCompile Include="iUIPopupWindowDelegate.cpp">
+      <Filter>EachWorks\MW\Todo</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cAction.h">
@@ -634,6 +637,9 @@
     <ClInclude Include="cMapLoader4Edit.h" />
     <ClInclude Include="cMousePicking.h">
       <Filter>EachWorks\MS</Filter>
+    </ClInclude>
+    <ClInclude Include="iUIPopupWindowDelegate.h">
+      <Filter>EachWorks\MW\Todo</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
