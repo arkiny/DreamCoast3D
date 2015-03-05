@@ -38,14 +38,18 @@ void cGameObjManager::Update(float fDelta){
 		}
 	}
     // MS
-    if (m_queueDeadMonster.size() > 0)
+    if (m_setDeadMonster.size() > 0)
     {
-        if (m_setGameObjects.count(m_queueDeadMonster.front()) > 0)
+        for (auto p : m_setDeadMonster)
         {
-            m_setGameObjects.erase(m_queueDeadMonster.front());
+            if (m_setGameObjects.count(p) > 0)
+            {
+                m_setGameObjects.erase(p);
+            }
         }
     }
     DeadObjectUpdate();
+
 }
 
 void cGameObjManager::Render(){
@@ -470,7 +474,11 @@ D3DXVECTOR3 cGameObjManager::isCollidedStaticObject(cGameObject* pFrom)
 
 void cGameObjManager::EraseFromGameObjectSet(cGameObject* pFrom)
 {
-    m_queueDeadMonster.push(pFrom);
+    if (m_setDeadMonster.count(pFrom) == 0)
+    {
+        m_queueDeadMonster.push(pFrom);
+        m_setDeadMonster.insert(pFrom);
+    }
 }
 
 void cGameObjManager::DeadObjectUpdate()
@@ -480,13 +488,14 @@ void cGameObjManager::DeadObjectUpdate()
         m_fAccumTime += g_pTimer->DeltaTime();
     }
 
-    if (m_fAccumTime >= 2.f)
+    if (m_fAccumTime >= 5.f)
     {
-        D3DXVECTOR3 v(125.f, 0, 125.f);
-        m_queueDeadMonster.front()->SetHP(2.0f);
+        m_fAccumTime = 0.f;
+        m_queueDeadMonster.front()->Setup();
         m_queueDeadMonster.front()->Start();
         m_setGameObjects.insert(m_queueDeadMonster.front());
+
+        m_setDeadMonster.erase(m_queueDeadMonster.front());
         m_queueDeadMonster.pop();
-        m_fAccumTime = 0.f;
     }
 }

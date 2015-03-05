@@ -29,6 +29,7 @@ private:
 
     // MS
     float m_fAccumTime;
+    std::set<cGameObject*>          m_setDeadMonster;
 public:
 	cGameObjManager();
 	virtual ~cGameObjManager();

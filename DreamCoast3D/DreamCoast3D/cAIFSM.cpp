@@ -292,7 +292,7 @@ void cAIDead::Start(cGameAIObject* pAIObject){
 }
 
 void cAIDead::Execute(cGameAIObject* pAIObject, float fDelta){
-	pAIObject->GetGameObjDeligate()->EraseFromGameObjectSet(pAIObject);
+    pAIObject->GetGameObjDeligate()->EraseFromGameObjectSet(pAIObject);
 }
 
 void cAIDead::Exit(cGameAIObject* pAIObject){
