@@ -2,7 +2,7 @@
 #include "cMousePicking.h"
 #include "cEffectFireBall.h"
 
-#define MAP_SIZE 256
+#define MAP_SIZE 257
 
 cMousePicking::cMousePicking()
 	: m_isRightButton(false)
