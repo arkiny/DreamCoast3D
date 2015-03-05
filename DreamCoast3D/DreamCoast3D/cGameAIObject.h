@@ -13,6 +13,7 @@ public:
 		eAISTATE_ATTACK,
 		eAISTATE_ONHIT,
 		eAISTATE_THINK,
+		eAISTATE_DEAD,
 		eAISTATE_MAX
 	};
 
@@ -24,6 +25,8 @@ public:
 	};
 
 protected:
+	float m_fHP = 2.0f;
+
 	SYNTHESIZE(float, m_fPassedTime, PassedTime);
 	SYNTHESIZE(E_AI_TYPE, m_eAITYPE, AItype);
 

@@ -22,6 +22,11 @@ private:
 	std::set<cGameObject*>			m_setGameObjects;
 	std::set<cGameObject*>			m_setStaticGameObjects;
 
+	// 삭제해야할 오브젝트
+	std::queue<cGameObject*>		m_queueGameObjectTobeErase;
+	// 죽은 오브젝트
+	std::queue<cGameObject*>		m_queueDeadMonster;
+
 public:
 	cGameObjManager();
 	virtual ~cGameObjManager();
@@ -54,6 +59,7 @@ public:
 	std::vector<cGameObject*> GetInSightObject(ST_BOUNDING_SPHERE stSphere) override;
 	void AttackMobToPlayer(cGameAIObject* pFrom) override;
 	ST_STAT_INFO* GetPlayerStatInfo() override;
+	void EraseFromGameObjectSet(cGameObject* pFrom) override;
 
 	//MS
 	cGameObject* GetPlayerData() override;

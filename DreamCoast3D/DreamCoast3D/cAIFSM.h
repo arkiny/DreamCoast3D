@@ -49,3 +49,10 @@ class cAIThink : public iAIState{
 	virtual void Exit(cGameAIObject* pAIObject);
 	virtual int GetCurrentStateType();
 };
+
+class cAIDead : public iAIState{
+	virtual void Start(cGameAIObject* pAIObject);
+	virtual void Execute(cGameAIObject* pAIObject, float fDelta);
+	virtual void Exit(cGameAIObject* pAIObject);
+	virtual int GetCurrentStateType();
+};

@@ -41,6 +41,7 @@ void cGameAIObject::Setup(std::string sFolder, std::string sFile){
 	m_vecPatterns[eAISTATE_ONHIT] = new cAIOnHit;
 	m_vecPatterns[eAISTATE_THINK] = new cAIThink;
 	m_vecPatterns[eAISTATE_RANDOMMOVE] = new cAIRandomMove;
+	m_vecPatterns[eAISTATE_DEAD] = new cAIDead;
 	m_vecPatterns[eAISTATE_MOVETOTARGET] = new cAIMoveToTarget;
 }
 
@@ -126,9 +127,13 @@ void cGameAIObject::OnHitTarget(cGameObject* pTarget, float fDamage, D3DXVECTOR3
 	p->Release();
 
 	// TODO 데미지에 따라 체력 저하
-
-	this->ChangeState(eAISTATE_ONHIT);
-
+	m_fHP--;
+	if (m_fHP > 0){
+		this->ChangeState(eAISTATE_ONHIT);
+	}
+	else {
+		this->ChangeState(eAISTATE_DEAD);
+	}
 }
 
 void cGameAIObject::AddGameObjToAggroMap(cGameObject* pGameObj){

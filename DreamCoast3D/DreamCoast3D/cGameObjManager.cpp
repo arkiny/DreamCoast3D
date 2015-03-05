@@ -457,3 +457,7 @@ D3DXVECTOR3 cGameObjManager::isCollidedStaticObject(cGameObject* pFrom)
 	}
 	return vFinal;
 }
+
+void cGameObjManager::EraseFromGameObjectSet(cGameObject* pFrom){
+	//m_queueGameObjectTobeErase.push(pFrom);
+}

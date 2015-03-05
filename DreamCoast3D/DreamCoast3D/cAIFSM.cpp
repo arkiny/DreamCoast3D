@@ -286,3 +286,19 @@ void cAIThink::Exit(cGameAIObject* pAIObject){
 int  cAIThink::GetCurrentStateType(){
 	return cGameAIObject::EAIOBJECTSTATE::eAISTATE_THINK;
 }
+
+void cAIDead::Start(cGameAIObject* pAIObject){
+
+}
+
+void cAIDead::Execute(cGameAIObject* pAIObject, float fDelta){
+	pAIObject->GetGameObjDeligate()->EraseFromGameObjectSet(pAIObject);
+}
+
+void cAIDead::Exit(cGameAIObject* pAIObject){
+
+}
+
+int cAIDead::GetCurrentStateType(){
+	return cGameAIObject::EAIOBJECTSTATE::eAISTATE_DEAD;
+}
