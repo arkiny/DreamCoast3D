@@ -27,6 +27,8 @@ private:
 	// 죽은 오브젝트
 	std::queue<cGameObject*>		m_queueDeadMonster;
 
+    // MS
+    float m_fAccumTime;
 public:
 	cGameObjManager();
 	virtual ~cGameObjManager();
@@ -77,5 +79,7 @@ private:
 	// Calculated by Conan
 	D3DXVECTOR3 PushingForce(D3DXVECTOR3* vFrom, float fFromLength, D3DXVECTOR3* vTo, float fFromTo);
 	
+
+    void DeadObjectUpdate();
 };
 

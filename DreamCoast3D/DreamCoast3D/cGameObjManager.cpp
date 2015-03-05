@@ -9,6 +9,7 @@
 cGameObjManager::cGameObjManager()
 	:m_pFrustum(NULL)
 	, m_pPlayable(NULL)
+    , m_fAccumTime(0.f)
 {
 }
 
@@ -36,6 +37,15 @@ void cGameObjManager::Update(float fDelta){
 			//p->SetTargetObject(m_pPlayable);
 		}
 	}
+    // MS
+    if (m_queueDeadMonster.size() > 0)
+    {
+        if (m_setGameObjects.count(m_queueDeadMonster.front()) > 0)
+        {
+            m_setGameObjects.erase(m_queueDeadMonster.front());
+        }
+    }
+    DeadObjectUpdate();
 }
 
 void cGameObjManager::Render(){
@@ -458,6 +468,25 @@ D3DXVECTOR3 cGameObjManager::isCollidedStaticObject(cGameObject* pFrom)
 	return vFinal;
 }
 
-void cGameObjManager::EraseFromGameObjectSet(cGameObject* pFrom){
-	//m_queueGameObjectTobeErase.push(pFrom);
+void cGameObjManager::EraseFromGameObjectSet(cGameObject* pFrom)
+{
+    m_queueDeadMonster.push(pFrom);
+}
+
+void cGameObjManager::DeadObjectUpdate()
+{
+    if (m_queueDeadMonster.size() > 0)
+    {
+        m_fAccumTime += g_pTimer->DeltaTime();
+    }
+
+    if (m_fAccumTime >= 2.f)
+    {
+        D3DXVECTOR3 v(125.f, 0, 125.f);
+        m_queueDeadMonster.front()->SetHP(2.0f);
+        m_queueDeadMonster.front()->Start();
+        m_setGameObjects.insert(m_queueDeadMonster.front());
+        m_queueDeadMonster.pop();
+        m_fAccumTime = 0.f;
+    }
 }

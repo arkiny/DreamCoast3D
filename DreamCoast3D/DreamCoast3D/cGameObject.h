@@ -94,5 +94,8 @@ public:
 	// And clone method have to deep copy to target
 	// pTarget point has to be NULL
 	virtual void Clone(OUT cGameObject** pTarget) {}
+
+    // MS
+    virtual void SetHP(float fHP) {};
 };
 

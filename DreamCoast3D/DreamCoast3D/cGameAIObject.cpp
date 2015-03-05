@@ -22,6 +22,8 @@ cGameAIObject::cGameAIObject()
 	m_fMoveSpeed = 10.0f;
 	m_eGameObjectType = eGameObjectType::E_MOP;
 	//SetYangle(2);
+
+    m_fHP = 2.0f;
 }
 
 

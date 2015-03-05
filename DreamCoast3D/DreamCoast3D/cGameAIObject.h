@@ -25,8 +25,6 @@ public:
 	};
 
 protected:
-	float m_fHP = 2.0f;
-
 	SYNTHESIZE(float, m_fPassedTime, PassedTime);
 	SYNTHESIZE(E_AI_TYPE, m_eAITYPE, AItype);
 
@@ -49,6 +47,9 @@ protected:
 	std::map<cGameObject*, float> m_mapAggromap;
 
 	//SYNTHESIZE(cGameObject*, m_pTargetGameObject, TargetObject);
+
+    // MS
+    SYNTHESIZE(float, m_fHP, HP);
 
 public:
 	cGameAIObject();
