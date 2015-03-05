@@ -8,6 +8,7 @@ cMousePicking::cMousePicking()
 	: m_isRightButton(false)
 {
 	ZeroMemory(&m_vMouse, sizeof(D3DXVECTOR2));
+	ZeroMemory(&m_vMouseMove, sizeof(D3DXVECTOR2));
 	ZeroMemory(&m_vClickedPosition, sizeof(D3DXVECTOR3));
 }
 
@@ -24,6 +25,7 @@ void cMousePicking::SetVertex(std::vector<ST_PNT_VERTEX> Vertex)
 void cMousePicking::Update()
 {
 	IntersetionTriUpdate();
+	//GetPickingPoint();
 }
 
 void cMousePicking::MouseUpdate()
@@ -39,6 +41,9 @@ void cMousePicking::MouseUpdate()
 		m_isRightButton = false;
 		ZeroMemory(&m_vMouse, sizeof(D3DXVECTOR2));
 	}
+
+	m_vMouseMove.x = g_pControlManager->GetCurrentCursorPosition().x;
+	m_vMouseMove.y = g_pControlManager->GetCurrentCursorPosition().y;
 }
 
 ST_RAY cMousePicking::CalPickingRay(D3DXVECTOR2 vMouse)
@@ -76,6 +81,76 @@ void cMousePicking::TransformRay(ST_RAY* pRay, D3DXMATRIXA16* mat)
 		mat);
 
 	D3DXVec3Normalize(&pRay->vecDirection, &pRay->vecDirection);
+}
+
+D3DXVECTOR3 cMousePicking::GetPickingPoint()
+{
+	MouseUpdate();
+
+	if (m_vecVertex.size() > 0)
+	{
+		float fU = 0.f;
+		float fV = 0.f;
+		float fDist = 0.f;
+
+		ST_RAY ray;
+		ray = CalPickingRay(m_vMouseMove);
+
+		D3DXMATRIXA16 view;
+		g_pD3DDevice->GetTransform(D3DTS_VIEW, &view);
+
+		D3DXMATRIXA16 viewInverse;
+		D3DXMatrixInverse(&viewInverse, 0, &view);
+		TransformRay(&ray, &viewInverse);
+
+		for (int i = 0; i < m_vecVertex.size() - (MAP_SIZE + 2); i++)
+		{
+			if (i % MAP_SIZE != MAP_SIZE - 1)
+			{
+				bool isColliedTri = false;
+				isColliedTri = D3DXIntersectTri(
+					&m_vecVertex[i + 1].p,
+					&m_vecVertex[i].p,
+					&m_vecVertex[i + (MAP_SIZE)].p,
+					&ray.vecOrigin,
+					&ray.vecDirection,
+					&fU, &fV, &fDist);
+				if (isColliedTri == true)
+				{
+					m_vClickedPosition = ray.vecOrigin + (fDist*ray.vecDirection);
+					//cEffectFireBall* pcheck = new cEffectFireBall;
+					//pcheck->Setup();
+					//pcheck->SetPosition(m_vClickedPosition);
+					//if (m_pEffectDelegate){
+					//	m_pEffectDelegate->AddEffect(pcheck);
+					//	pcheck->Release();
+					//}
+					return m_vClickedPosition;
+				}
+				isColliedTri = D3DXIntersectTri(
+					&m_vecVertex[i + (MAP_SIZE)].p,
+					&m_vecVertex[i + (MAP_SIZE + 1)].p,
+					&m_vecVertex[i + 1].p,
+					&ray.vecOrigin,
+					&ray.vecDirection,
+					&fU, &fV, &fDist);
+				if (isColliedTri == true)
+				{
+					m_vClickedPosition = ray.vecOrigin + (fDist*ray.vecDirection);
+					//cEffectFireBall* pcheck = new cEffectFireBall;
+					//pcheck->Setup();
+					//pcheck->SetPosition(m_vClickedPosition);
+					//if (m_pEffectDelegate){
+					//	m_pEffectDelegate->AddEffect(pcheck);
+					//	pcheck->Release();
+					//}
+					return m_vClickedPosition;
+				}
+			}
+		}
+	}
+
+
 }
 
 void cMousePicking::IntersetionTriUpdate()

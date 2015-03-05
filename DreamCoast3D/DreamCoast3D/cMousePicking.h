@@ -23,6 +23,8 @@ public:
 	void SetVertex(std::vector<ST_PNT_VERTEX> Vertex);
 	void Update();
 
+	D3DXVECTOR3 GetPickingPoint();
+
 private:
 	void MouseUpdate();
 	ST_RAY CalPickingRay(D3DXVECTOR2 vMouse);
@@ -33,6 +35,7 @@ private:
 	std::vector<ST_PNT_VERTEX> m_vecVertex;
 	bool m_isRightButton;
 	D3DXVECTOR2 m_vMouse;
+	D3DXVECTOR2 m_vMouseMove;
 	D3DXVECTOR3 m_vClickedPosition;
 
 };
