@@ -4,6 +4,7 @@
 
 cCameraEditing::cCameraEditing()
 	:cCamera()
+	, cMapToolCamera()
 	, m_vPosition(0, 0, 0)
 	, m_vDir(0, 0, 1)
 	, m_fAngleDegree(0.0f)
@@ -24,6 +25,8 @@ void cCameraEditing::Setup(){
 	m_stMaterial.Ambient = D3DXCOLOR(.8f, .2f, .2f, 1.0f);
 	m_stMaterial.Diffuse = D3DXCOLOR(.8f, .2f, .2f, 1.0f);
 	m_stMaterial.Specular = D3DXCOLOR(.8f, .2f, .2f, 1.0f);
+
+	cMapToolCamera::Setup();
 }
 
 void cCameraEditing::Update(float fDelta){
@@ -62,8 +65,9 @@ void cCameraEditing::Update(float fDelta){
 	//else {
 	//	m_vPosition = prevPos;
 	//}
-	float a=0.f;
 	cCamera::Update(fDelta);
+
+	//cMapToolCamera::Update();
 }
 
 void cCameraEditing::Render(){

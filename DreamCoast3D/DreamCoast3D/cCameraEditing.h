@@ -1,7 +1,8 @@
 #pragma once
 #include "cCamera.h"
+#include "cMapToolCamera.h"
 
-class cCameraEditing : public cCamera
+class cCameraEditing : public cCamera , public cMapToolCamera
 {
 protected:
 	D3DXVECTOR3 m_vPosition;

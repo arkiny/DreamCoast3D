@@ -156,7 +156,8 @@ void cCamera::Update(float delta)
 	}
 
 	float wheelMove = g_pControlManager->GetWheelMoveDist();
-	if (wheelMove != 0.0f){
+	if (wheelMove != 0.0f)
+	{
 		m_fDist -= wheelMove / 100.f;
 		if (m_fDist < m_fMin)
 			m_fDist = m_fMin;
