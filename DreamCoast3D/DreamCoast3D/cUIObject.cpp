@@ -37,6 +37,12 @@ void cUIObject::AddChild(cUIObject* pChild){
 	m_vecChild.push_back(pChild);
 }
 
+// : ¹Î¿ì
+std::vector<cUIObject*>& cUIObject::GetChild()
+{
+	return m_vecChild;
+}
+
 void cUIObject::Update(float fDelta){
 	D3DXMATRIXA16 matS, matT;
 	D3DXMatrixScaling(&matS, m_vScale.x, m_vScale.y, m_vScale.z);

@@ -26,7 +26,7 @@ void cControlManager::WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lPa
 	{
 	case WM_KEYDOWN:
 	{
-		m_bKeyCodeArray[wParam] = true;
+		m_bKeyCodeArray[wParam] = true;	
 	}
 	break;
 	case WM_KEYUP:

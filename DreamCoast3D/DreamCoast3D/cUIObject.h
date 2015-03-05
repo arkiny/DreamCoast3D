@@ -14,7 +14,7 @@ protected:
 	SYNTHESIZE_PASS_BY_REF(ST_SIZE, m_stSize, Size);
 	SYNTHESIZE(int, m_nTag, Tag);
 	SYNTHESIZE(RECT, m_rectDrawArea, DrawArea);//pritected¿¡¼­ publicÀ¸·Î ¿Å±è : ¹Î¿ì
-
+	
 	iGameObjectDelegate* m_pGameObjDelgate;
 	iSceneDelegate* m_pSceneDeligate;
 	iUIManagerDeligate* m_pUIManagerDeligate;
@@ -38,6 +38,7 @@ public:
 	virtual ~cUIObject();
 
 	virtual void AddChild(cUIObject* pChild);
+	virtual std::vector<cUIObject*>& GetChild();
 
 	virtual void Setup(){}
 	virtual void Start(){}
