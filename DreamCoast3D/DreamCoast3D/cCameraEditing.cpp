@@ -3,9 +3,7 @@
 
 
 cCameraEditing::cCameraEditing()
-	:cCamera()
-	, cMapToolCamera()
-	, m_vPosition(0, 0, 0)
+	: m_vPosition(0, 0, 0)
 	, m_vDir(0, 0, 1)
 	, m_fAngleDegree(0.0f)
 	, m_pMesh(NULL)

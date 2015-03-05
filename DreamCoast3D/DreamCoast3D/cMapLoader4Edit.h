@@ -13,7 +13,9 @@ private:
 	void				ParseGameMapInfo(OUT cSceneEditMode* pScene);
 	std::string			ParseHeightMap(OUT cSceneEditMode* pScene);
 	
-
+	void				ParseMapObjectMaterialList();
+	void				ParseMapObjectMaterial();
+	cGameASEObject*		ParseMapObjectAse();
 
 public:
 	cMapLoader4Edit();

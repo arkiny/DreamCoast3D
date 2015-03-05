@@ -8,6 +8,10 @@ protected:
 	SYNTHESIZE(std::string, m_sMapFolderPath, MapFolderPath);
 	cASEInstance*				m_pASEInstance;
 	LPD3DXMESH					m_pDebugBoxMesh;
+
+	std::string					m_sASEFolder;
+	std::string					m_sASEFile;
+
 public:
 	cGameASEObject();
 	~cGameASEObject();
@@ -17,5 +21,6 @@ public:
 	virtual void Render();
 
 	virtual ST_BOUNDING_BOX* GetBoundingBox() override;
+	virtual void Clone(cGameObject** pTarget) override;
 };
 

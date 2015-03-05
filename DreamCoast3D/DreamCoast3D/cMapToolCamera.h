@@ -1,12 +1,14 @@
 #pragma once
-class cMapToolCamera
+#include "cCamera.h"
+
+class cMapToolCamera : public cCamera
 {
 public:
 	cMapToolCamera();
-	~cMapToolCamera();
+	virtual ~cMapToolCamera();
 
-	void Setup();
-	void Update();
+	virtual void Setup();
+	virtual void Update(float fDelta);
 
 private:
 	D3DXVECTOR3 m_vEye;

@@ -18,6 +18,9 @@ cGameASEObject::~cGameASEObject()
 void cGameASEObject::Setup(std::string sFolder, std::string sFile){
 	m_pASEInstance = g_pAseManager->GetAseObject(sFolder, sFile);
 	
+	m_sASEFolder = sFolder;
+	m_sASEFile = sFile;
+
 	D3DXCreateBox(g_pD3DDevice, 
 		m_pASEInstance->GetBoundingBox().vMax.x - m_pASEInstance->GetBoundingBox().vMin.x,
 		m_pASEInstance->GetBoundingBox().vMax.y - m_pASEInstance->GetBoundingBox().vMin.y,
@@ -70,4 +73,15 @@ ST_BOUNDING_BOX* cGameASEObject::GetBoundingBox(){
 		return &ret;
 	}
 	return &ST_BOUNDING_BOX();
+}
+
+void cGameASEObject::Clone(cGameObject** pTarget){
+	cGameASEObject* p = new cGameASEObject;
+	p->Setup(m_sASEFolder, m_sASEFile);
+	D3DXVECTOR3 pCopyPos = this->GetPosition();
+	p->SetPosition(pCopyPos);
+	D3DXVECTOR3 vCopyScale = this->GetScale();
+	p->SetScale(vCopyScale);
+	p->Start();
+	*pTarget = p;
 }

@@ -41,7 +41,7 @@ void cMapToolCamera::Setup()
 	g_pD3DDevice->SetTransform(D3DTS_PROJECTION, &matProj);
 }
 
-void cMapToolCamera::Update()
+void cMapToolCamera::Update(float delta)
 {
 	KeyBoradUpdate();
 

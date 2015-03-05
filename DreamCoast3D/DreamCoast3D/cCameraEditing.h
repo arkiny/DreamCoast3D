@@ -2,7 +2,7 @@
 #include "cCamera.h"
 #include "cMapToolCamera.h"
 
-class cCameraEditing : public cCamera , public cMapToolCamera
+class cCameraEditing : /*public cCamera ,*/ public cMapToolCamera
 {
 protected:
 	D3DXVECTOR3 m_vPosition;

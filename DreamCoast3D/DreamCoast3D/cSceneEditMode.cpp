@@ -1,12 +1,7 @@
 #include "stdafx.h"
 #include "cSceneEditMode.h"
-#include "cUILoader.h"
-#include "cLightSource.h"
-#include "cCamera.h"
 #include "cLightSource.h"
 #include "cGameObjManager.h"
-#include "cGameMapObject.h"
-#include "cSphere.h"
 #include "cUIObjManager.h"
 #include "cCameraEditing.h"
 #include "cTransform.h"
@@ -161,11 +156,28 @@ void cSceneEditMode::Update(float delta){
 				BindingPrevActionObject();
 				m_fKeyDelayCurrent = 0;
 			}
+			if (GetAsyncKeyState(VK_UP)){
+				BindingNextPlayableObject();
+				m_fKeyDelayCurrent = 0;
+			}
+			if (GetAsyncKeyState(VK_DOWN)){
+				BindingPrevPlayableObject();
+				m_fKeyDelayCurrent = 0;
+			}
+			if (GetAsyncKeyState(VK_END)){
+				BindingNextStaticObject();
+				m_fKeyDelayCurrent = 0;
+			}
+			if (GetAsyncKeyState(VK_HOME)){
+				BindingPrevStaticObject();
+				m_fKeyDelayCurrent = 0;
+			}
 
 			if (GetAsyncKeyState(VK_LBUTTON) == false && m_bIsClickDown == true && m_pCurrentBindingObject){
 				AddCurrentObjectToSaveStack(m_pCurrentBindingObject);
 				m_bIsClickDown = false;
 			}
+			
 		}
 	}
 }
@@ -180,20 +192,41 @@ void cSceneEditMode::Render(){
 	std::stringstream s;
 	s.precision(2);
 	if (m_pCurrentMap){
-		s << "Map Binded: " << m_vecMapRawPath[m_nCurrentMapIndex] << std::endl;
+		s << "Map Preset Binded: " << m_vecMapRawPath[m_nCurrentMapIndex] << std::endl;
 		
 		for (auto p : m_vecActionGameObjectAdded){
 			p->Render();
 		}
 
+		for (auto p : m_vecStaticGameObjectAdded){
+			p->Render();
+		}
+
+		if (m_pPlayableObjectSave){
+			m_pPlayableObjectSave->Render();
+		}
 	}
 
 	if (m_pCurrentBindingObject){
-		s << "GameObject Binded : " << m_nCurrentBindingActionIndex << std::endl;
+		s << "\t GameObject Binded" << std::endl;
+
+		switch (m_pCurrentBindingObject->GetGameObjectType())
+		{
+		case cGameObject::eGameObjectType::E_MOP :
+			s << "\t\t Mob Preset:" << m_nCurrentBindingActionIndex << std::endl;
+			break;
+		case cGameObject::eGameObjectType::E_PLAYABLE :
+			s << "\t\t Playable Preset:" << m_nCurrentBindingPlayerIndex << std::endl;
+			break;
+		case cGameObject::eGameObjectType::E_STATIC :
+			s << "\t\t Static Preset:" << m_nCurrentBindingStaticIndex << std::endl;
+			break;
+		default:
+			break;
+		}
+
 	}
 
-
-	
 	g_pFontManager->GetFont(g_pFontManager->FONT_DEFAULT)->DrawText(NULL,				 //pSprite
 					s.str().c_str(),	 //pString
 					-1,					//Count
@@ -306,7 +339,8 @@ void cSceneEditMode::AddStaticGameObjectToPreset(cGameObject* pGameObject){
 }
 
 void cSceneEditMode::BindingNextActionObject(){
-	if (m_pCurrentBindingObject == NULL){
+	if (m_pCurrentBindingObject == NULL 
+		|| m_pCurrentBindingObject->GetGameObjectType() != m_pCurrentBindingObject->E_MOP){
 		m_pCurrentBindingObject = m_vecActionGameObjectPreset[m_nCurrentBindingActionIndex];
 	}
 	else{
@@ -321,7 +355,8 @@ void cSceneEditMode::BindingNextActionObject(){
 }
 
 void cSceneEditMode::BindingPrevActionObject(){
-	if (m_pCurrentBindingObject == NULL){
+	if (m_pCurrentBindingObject == NULL 
+		|| m_pCurrentBindingObject->GetGameObjectType() != m_pCurrentBindingObject->E_MOP){
 		m_pCurrentBindingObject = m_vecActionGameObjectPreset[m_nCurrentBindingActionIndex];
 	}
 	else{
@@ -343,12 +378,79 @@ void cSceneEditMode::AddCurrentObjectToSaveStack(cGameObject* pToBeAdded){
 		//p = NULL;
 	}
 	else if (pToBeAdded->GetGameObjectType() == pToBeAdded->E_PLAYABLE){
-		
 		cGameObject* p = NULL;
 		m_pCurrentBindingObject->Clone(&p);
+		if (m_pPlayableObjectSave){
+			m_pPlayableObjectSave->Release();
+		}
 		m_pPlayableObjectSave = p;
 	}
 	else if (pToBeAdded->GetGameObjectType() == pToBeAdded->E_STATIC){
+		cGameObject* p = NULL;
+		m_pCurrentBindingObject->Clone(&p);
+		m_vecStaticGameObjectAdded.push_back(p);
+	}
+}
 
+void cSceneEditMode::BindingNextPlayableObject(){
+	if (m_pCurrentBindingObject == NULL 
+		|| m_pCurrentBindingObject->GetGameObjectType() != m_pCurrentBindingObject->E_PLAYABLE){
+		m_pCurrentBindingObject = m_vecGamePlayableObjectPreset[m_nCurrentBindingPlayerIndex];
+	}
+	else {
+		if (m_nCurrentBindingPlayerIndex == m_vecGamePlayableObjectPreset.size() - 1){
+			m_nCurrentBindingPlayerIndex = 0;
+		}
+		else {
+			m_nCurrentBindingActionIndex++;
+		}
+		m_pCurrentBindingObject = m_vecActionGameObjectPreset[m_nCurrentBindingActionIndex];
+	}
+}
+
+void cSceneEditMode::BindingPrevPlayableObject(){
+	if (m_pCurrentBindingObject == NULL || m_pCurrentBindingObject->GetGameObjectType() != m_pCurrentBindingObject->E_PLAYABLE){
+		m_pCurrentBindingObject = m_vecGamePlayableObjectPreset[m_nCurrentBindingPlayerIndex];
+	}
+	else {
+		if (m_nCurrentBindingPlayerIndex == 0){
+			m_nCurrentBindingPlayerIndex = m_vecGamePlayableObjectPreset.size() - 1;
+		}
+		else {
+			m_nCurrentBindingActionIndex--;
+		}
+		m_pCurrentBindingObject = m_vecActionGameObjectPreset[m_nCurrentBindingActionIndex];
+	}
+}
+
+void cSceneEditMode::BindingNextStaticObject(){
+	if (m_pCurrentBindingObject == NULL 
+		|| m_pCurrentBindingObject->GetGameObjectType() != m_pCurrentBindingObject->E_STATIC){
+		m_pCurrentBindingObject = m_vecStaticGameObjectPreset[m_nCurrentBindingStaticIndex];
+	}
+	else {
+		if (m_nCurrentBindingStaticIndex == m_vecStaticGameObjectPreset.size() - 1){
+			m_nCurrentBindingStaticIndex = 0;
+		}
+		else {
+			m_nCurrentBindingStaticIndex++;
+		}
+		m_pCurrentBindingObject = m_vecStaticGameObjectPreset[m_nCurrentBindingStaticIndex];
+	}
+}
+
+void cSceneEditMode::BindingPrevStaticObject(){
+	if (m_pCurrentBindingObject == NULL 
+		|| m_pCurrentBindingObject->GetGameObjectType() != m_pCurrentBindingObject->E_STATIC){
+		m_pCurrentBindingObject = m_vecStaticGameObjectPreset[m_nCurrentBindingStaticIndex];
+	}
+	else {
+		if (m_nCurrentBindingStaticIndex == 0){
+			m_nCurrentBindingStaticIndex = m_vecStaticGameObjectPreset.size() - 1;
+		}
+		else {
+			m_nCurrentBindingStaticIndex++;
+		}
+		m_pCurrentBindingObject = m_vecStaticGameObjectPreset[m_nCurrentBindingStaticIndex];
 	}
 }

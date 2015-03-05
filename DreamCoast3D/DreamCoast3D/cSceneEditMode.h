@@ -3,6 +3,7 @@
 
 // 아 망함
 // 대단히 헤비한 클래스가 될듯합니다. ㅡ_ㅡ
+// 퍼포먼스가 중요한 플레잉 단계가 아니므로 프러스텀 컬링 적용안함
 
 class cMousePicking;
 class cGamePlayableObject;
@@ -30,6 +31,7 @@ protected:
 	cGameObject*							m_pCurrentBindingObject = NULL;
 
 	// Static Object Preset
+	int m_nCurrentBindingStaticIndex = 0;
 	std::vector<cGameObject*>				m_vecStaticGameObjectPreset;
 	std::vector<cGameObject*>				m_vecStaticGameObjectAdded;
 
@@ -49,7 +51,7 @@ protected:
 	// 무조건 하나만으로 조정해야 한다.
 	int m_nCurrentBindingPlayerIndex = 0;
 	std::vector<cGamePlayableObject*>		m_vecGamePlayableObjectPreset;
-	cGameObject*					m_pPlayableObjectSave = NULL;
+	cGameObject*							m_pPlayableObjectSave = NULL;
 
 
 	// 차후 멀티쓰레딩용
@@ -69,6 +71,12 @@ protected:
 
 	virtual void BindingNextActionObject();
 	virtual void BindingPrevActionObject();
+
+	virtual void BindingNextPlayableObject();
+	virtual void BindingPrevPlayableObject();
+
+	virtual void BindingNextStaticObject();
+	virtual void BindingPrevStaticObject();
 
 	virtual void AddCurrentObjectToSaveStack(cGameObject* pToBeAdded);
 

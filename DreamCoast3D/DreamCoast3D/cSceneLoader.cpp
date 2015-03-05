@@ -5,6 +5,7 @@
 #include "cLightSource.h"
 #include "cCamera.h"
 #include "cCameraEditing.h"
+#include "cMapToolCamera.h"
 
 
 cSceneLoader::cSceneLoader()
@@ -184,6 +185,9 @@ cCamera* cSceneLoader::ParseCamera(){
 			if (isEqual(type, "*EDIT")){
 				ntype = 1;
 			}
+			else if (isEqual(type, "*MAPEDIT")){
+				ntype = 2;
+			}
 			else {
 				ntype = 0;
 			}
@@ -233,6 +237,10 @@ cCamera* cSceneLoader::ParseCamera(){
 		pCamera = new cCameraEditing;
 		pCamera->Setup(vEye, vLookAt, vUp, fAngleX, fAngleY, fDist, fMin, fMax);
 		((cCameraEditing*)pCamera)->SetPosition(vPos);
+	}
+	else if (ntype == 2){
+		pCamera = new cMapToolCamera;
+		pCamera->Setup();
 	}
 	else{
 		pCamera = new cCamera;
