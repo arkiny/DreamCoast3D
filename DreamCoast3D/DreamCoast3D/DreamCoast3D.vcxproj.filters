@@ -328,7 +328,11 @@
     <ClCompile Include="cGameObjectLoader4Edit.cpp">
       <Filter>FrameWork\Loader</Filter>
     </ClCompile>
-    <ClCompile Include="cGameObjectEraser.cpp" />
+    <ClCompile Include="cGameObjectEraser.cpp">
+      <Filter>FrameWork\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="cHeightMapTerrainEdit.cpp" />
+    <ClCompile Include="cSceneTerrainEdit.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cAction.h">
@@ -670,7 +674,11 @@
     <ClInclude Include="cGameObjectLoader4Edit.h">
       <Filter>FrameWork\Loader</Filter>
     </ClInclude>
-    <ClInclude Include="cGameObjectEraser.h" />
+    <ClInclude Include="cGameObjectEraser.h">
+      <Filter>FrameWork\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="cHeightMapTerrainEdit.h" />
+    <ClInclude Include="cSceneTerrainEdit.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="DreamCoast3D.ico">
@@ -776,6 +784,9 @@
     </Filter>
     <Filter Include="FrameWork\Effects">
       <UniqueIdentifier>{23350a21-4445-4722-87d7-2533f61ceb20}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="TerrainEditor">
+      <UniqueIdentifier>{9acb5022-85ab-4a2a-9d42-af0111416ffa}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

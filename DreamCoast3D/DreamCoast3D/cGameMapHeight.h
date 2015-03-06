@@ -6,6 +6,8 @@ class cGameMapHeight : public cGameMapObject
 {
 protected:
 	std::vector<ST_PNT_VERTEX>	m_vecVertex;
+	std::vector<DWORD>			m_vecIndex;
+
 	LPDIRECT3DTEXTURE9			m_pTexture;
 	
 	int							m_nTileN				= 256;

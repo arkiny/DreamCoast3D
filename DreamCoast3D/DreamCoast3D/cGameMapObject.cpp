@@ -18,7 +18,6 @@ cGameMapObject::~cGameMapObject()
 
 void cGameMapObject::Setup(){
 	cGameObject::Setup();
-
 }
 
 void cGameMapObject::Update(float fDelta){

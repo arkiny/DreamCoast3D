@@ -16,7 +16,7 @@ cSceneManager::~cSceneManager()
 }
 
 void cSceneManager::Setup(std::string sFolder, std::string sFile){	
-
+	
 }
 
 void cSceneManager::Update(float delta){
@@ -45,6 +45,10 @@ void cSceneManager::Update(float delta){
 		}
 		if (GetAsyncKeyState('5')){ // 저장실험용 씬
 			ChangeScene(4);
+			return;
+		}
+		if (GetAsyncKeyState('9')){ // 저장실험용 씬
+			ChangeScene(5);
 			return;
 		}
 	}
