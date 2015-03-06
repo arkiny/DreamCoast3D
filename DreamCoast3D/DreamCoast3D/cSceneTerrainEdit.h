@@ -16,6 +16,7 @@ protected:
 
 	bool					m_bIsClickDown = false;
 	bool					m_bIsClickUP = false;
+	bool					m_bOnKeyDown = false;
 
 	float					m_fDelayAcuum = 2.0f;
 	const float				m_fDelay = 0.5f;

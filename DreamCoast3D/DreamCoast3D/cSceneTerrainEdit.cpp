@@ -102,6 +102,7 @@ void cSceneTerrainEdit::Update(float delta){
 		tileto.x += m_pEditMap->GetHeight();
 		tileto.z += m_pEditMap->GetWidth();
 		m_pEditMap->SetTileTo(tileto);
+		m_bOnKeyDown = true;
 	}
 	if (g_pControlManager->GetInputInfo('O') && m_fDelayAcuum > m_fDelay){
 		m_fDelayAcuum = 0;
@@ -109,6 +110,13 @@ void cSceneTerrainEdit::Update(float delta){
 		tileto.x -= m_pEditMap->GetHeight();
 		tileto.z -= m_pEditMap->GetWidth();
 		m_pEditMap->SetTileTo(tileto);
+		m_bOnKeyDown = true;
+	}
+
+	if (m_bOnKeyDown
+		&& (g_pControlManager->GetInputInfo('O') == false && g_pControlManager->GetInputInfo('P') == false)){
+		m_bOnKeyDown = false;
+		m_fDelayAcuum = m_fDelay + 1.0f;
 	}
 }
 

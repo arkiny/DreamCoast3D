@@ -115,6 +115,40 @@ void cHeightMapTerrainEdit::Setup(){
 	m_pIndexBuffer->Lock(0, 0, (void**)&indices, 0);
 	memcpy(indices, &m_vecIndex[0], m_vecIndex.size() * sizeof(DWORD));
 	m_pIndexBuffer->Unlock();
+
+	HRESULT hr = D3DXCreateMeshFVF(m_vecIndex.size() / 3,
+		m_vecVertex.size(),
+		D3DXMESH_MANAGED | D3DXMESH_32BIT,
+		ST_PNT_VERTEX::FVF,
+		g_pD3DDevice,
+		&m_pMesh);
+
+	ST_PNT_VERTEX* pV = NULL;
+	m_pMesh->LockVertexBuffer(0, (LPVOID*)&pV);
+	memcpy(pV, &m_vecVertex[0], m_vecVertex.size() * sizeof(ST_PNT_VERTEX));
+	m_pMesh->UnlockVertexBuffer();
+
+	DWORD* pI = NULL;
+	m_pMesh->LockIndexBuffer(0, (LPVOID*)&pI);
+	memcpy(pI, &m_vecIndex[0], m_vecIndex.size() * sizeof(DWORD));
+	m_pMesh->UnlockIndexBuffer();
+
+	DWORD* pA = NULL;
+	m_pMesh->LockAttributeBuffer(0, &pA);
+	for (size_t i = 0; i < m_vecIndex.size() / 3; ++i)
+	{
+		pA[i] = 0;
+	}
+	m_pMesh->UnlockAttributeBuffer();
+
+	std::vector<DWORD> vecAdjBuffer(m_vecIndex.size());
+	m_pMesh->GenerateAdjacency(0.0f, &vecAdjBuffer[0]);
+
+	m_pMesh->OptimizeInplace(
+		D3DXMESHOPT_ATTRSORT |
+		D3DXMESHOPT_COMPACT |
+		D3DXMESHOPT_VERTEXCACHE,
+		&vecAdjBuffer[0], 0, 0, 0);
 }
 
 void cHeightMapTerrainEdit::Update(float fDelta){
@@ -160,6 +194,10 @@ void cHeightMapTerrainEdit::Render(){
 
 		g_pD3DDevice->DrawIndexedPrimitive(D3DPT_TRIANGLELIST,
 			0, 0, m_vecVertex.size(), 0, m_vecIndex.size());
+
+		if (m_pMesh){
+			m_pMesh->DrawSubset(0);
+		}
 
 		if (m_pBoxMesh){
 			D3DXMATRIXA16 mat, matS;
@@ -215,6 +253,34 @@ void cHeightMapTerrainEdit::ChangeMapYVertexCoord(D3DXVECTOR2 vMin, D3DXVECTOR2 
 	m_pVertexBuffer->Lock(0, 0, (void**)&v, 0);
 	memcpy(v, &m_vecVertex[0], m_vecVertex.size() * sizeof(ST_PNT_VERTEX));
 	m_pVertexBuffer->Unlock();
+
+	// 라데온 글카에선 프리미티브인덱스가 잘 안보임 ㅡㅡ
+	ST_PNT_VERTEX* pV = NULL;
+	m_pMesh->LockVertexBuffer(0, (LPVOID*)&pV);
+	memcpy(pV, &m_vecVertex[0], m_vecVertex.size() * sizeof(ST_PNT_VERTEX));
+	m_pMesh->UnlockVertexBuffer();
+
+	DWORD* pI = NULL;
+	m_pMesh->LockIndexBuffer(0, (LPVOID*)&pI);
+	memcpy(pI, &m_vecIndex[0], m_vecIndex.size() * sizeof(DWORD));
+	m_pMesh->UnlockIndexBuffer();
+
+	//DWORD* pA = NULL;
+	//m_pMesh->LockAttributeBuffer(0, &pA);
+	//for (size_t i = 0; i < m_vecIndex.size() / 3; ++i)
+	//{
+	//	pA[i] = 0;
+	//}
+	//m_pMesh->UnlockAttributeBuffer();
+
+	//std::vector<DWORD> vecAdjBuffer(m_vecIndex.size());
+	//m_pMesh->GenerateAdjacency(0.0f, &vecAdjBuffer[0]);
+
+	//m_pMesh->OptimizeInplace(
+	//	D3DXMESHOPT_ATTRSORT |
+	//	D3DXMESHOPT_COMPACT |
+	//	D3DXMESHOPT_VERTEXCACHE,
+	//	&vecAdjBuffer[0], 0, 0, 0);
 }
 
 void cHeightMapTerrainEdit::SaveToRawFile(){
