@@ -51,6 +51,8 @@ private:
 	void MouseUpdate();
 	void MouseRangeUpdate();	
 	void TileRangeUpdate();
+	void CalBazier(D3DXVECTOR2 vMin, D3DXVECTOR2 vMax);
+
 	// 잠시 대기
 	void SetClickRange(D3DXVECTOR3 vFrom, D3DXVECTOR3 vTo);
 
