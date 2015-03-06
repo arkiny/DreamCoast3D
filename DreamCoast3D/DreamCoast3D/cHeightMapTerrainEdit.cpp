@@ -336,8 +336,8 @@ void cHeightMapTerrainEdit::CalBazier(D3DXVECTOR2 vMin, D3DXVECTOR2 vMax)
 	rt.x2 = vMax.x;
 	rt.y2 = vMax.y;
 
-	float fWidth = (rt.x2 - rt.x1) / 2;
-	float fHeight = (rt.y2 - rt.y1) / 2;
+	float fWidth = ceil((rt.x2 - rt.x1) / 2);
+    float fHeight = ceil((rt.y2 - rt.y1) / 2);
 
 	D3DRECT rtLeft;
 	D3DRECT rtTop;
@@ -354,20 +354,22 @@ void cHeightMapTerrainEdit::CalBazier(D3DXVECTOR2 vMin, D3DXVECTOR2 vMax)
 	rtTop.x2 = rt.x2;
 	rtTop.y2 = rt.y1;
 
-	rtRight.x1 = rt.x2 - 1;
+	rtRight.x1 = rt.x2 - 1.f;
 	rtRight.y1 = rt.y1;
 	rtRight.x2 = rt.x2 + fWidth - 1;
 	rtRight.y2 = rt.y2;
 
 	rtBottom.x1 = rt.x1;
-	rtBottom.y1 = rt.y2 - 1;
+	rtBottom.y1 = rt.y2 - 1.f;
 	rtBottom.x2 = rt.x2;
-	rtBottom.y2 = rt.y2 + fHeight - 1;
+	rtBottom.y2 = rt.y2 + fHeight - 1.f;
 
 	D3DXVECTOR3 vFirst(0.f, 0.f, 0.f);
 	D3DXVECTOR3 vSecond(0.f, 0.f, 0.f);
 	D3DXVECTOR3 vThird(0.f, 0.f, 0.f);
 
+
+    std::vector<ST_PNT_VERTEX> vecVertex = m_vecVertex;
 
 	// LEFT
 	for (int z = rtLeft.y1; z < rtLeft.y2; z++)
@@ -382,39 +384,14 @@ void cHeightMapTerrainEdit::CalBazier(D3DXVECTOR2 vMin, D3DXVECTOR2 vMax)
 
 		vSecond.x = rtLeft.x2;
 		vSecond.z = z;
-		vSecond.y = 0.f;
+        vSecond.y = m_vecVertex[vSecond.x + vSecond.z * 257].p.y;
 
 		for (int x = rtLeft.x1; x < rtLeft.x2; x++)
 		{
 			float fX = (rtLeft.x2 - x);
 			float fY = (rtLeft.x2 - rtLeft.x1);
 			float fD = fX / fY;
-			D3DXVECTOR3 v = Bazier(vFirst, vSecond, vThird, 1 - fD);
-			m_vecVertex[x + z * 257].p.y = v.y;
-		}
-	}
-
-	// RIGHT
-	for (int z = rtRight.y1; z < rtRight.y2; z++)
-	{
-		vFirst.x = rtRight.x1;
-		vFirst.z = z;
-		vFirst.y = m_vecVertex[vFirst.x + vFirst.z * 257].p.y;
-
-		vThird.x = rtRight.x2;
-		vThird.z = z;
-		vThird.y = m_vecVertex[vThird.x + vThird.z * 257].p.y;
-
-		vSecond.x = rtRight.x1;
-		vSecond.z = z;
-		vSecond.y = 0.f;
-
-		for (int x = rtRight.x1; x < rtRight.x2; x++)
-		{
-			float fX = (rtRight.x2 - x);
-			float fY = (rtRight.x2 - rtRight.x1);
-			float fD = fX / fY;
-			D3DXVECTOR3 v = Bazier(vThird, vSecond, vFirst, fD);
+            D3DXVECTOR3 v = Bazier(vThird, vSecond, vFirst, fD);
 			m_vecVertex[x + z * 257].p.y = v.y;
 		}
 	}
@@ -433,17 +410,41 @@ void cHeightMapTerrainEdit::CalBazier(D3DXVECTOR2 vMin, D3DXVECTOR2 vMax)
 
 		vSecond.x = x;
 		vSecond.z = rtTop.y2;
-		vSecond.y = 0.f;
+        vSecond.y = m_vecVertex[vSecond.x + vSecond.z * 257].p.y;
 		for (int z = rtTop.y1; z < rtTop.y2; z++)
 		{
-
 			float fX = (rtTop.y2 - z);
 			float fY = (rtTop.y2 - rtTop.y1);
 			float fD = fX / fY;
-			D3DXVECTOR3 v = Bazier(vFirst, vSecond, vThird, 1 - fD);
+            D3DXVECTOR3 v = Bazier(vThird, vSecond, vFirst, fD);
 			m_vecVertex[x + z * 257].p.y = v.y;
 		}
 	}
+
+    // RIGHT
+    for (int z = rtRight.y1; z < rtRight.y2; z++)
+    {
+    	vFirst.x = rtRight.x1;
+    	vFirst.z = z;
+    	vFirst.y = m_vecVertex[vFirst.x + vFirst.z * 257].p.y;
+
+    	vThird.x = rtRight.x2;
+    	vThird.z = z;
+    	vThird.y = m_vecVertex[vThird.x + vThird.z * 257].p.y;
+
+    	vSecond.x = rtRight.x1;
+    	vSecond.z = z;
+        vSecond.y = m_vecVertex[vSecond.x + vSecond.z * 257].p.y;
+
+    	for (int x = rtRight.x1; x < rtRight.x2; x++)
+    	{
+    		float fX = (rtRight.x2 - x);
+    		float fY = (rtRight.x2 - rtRight.x1);
+    		float fD = fX / fY;
+            D3DXVECTOR3 v = Bazier(vFirst, vSecond, vThird, 1 - fD);
+    		m_vecVertex[x + z * 257].p.y = v.y;
+    	}
+    }
 
 	// BOTTOM
 	for (int x = rtBottom.x1; x < rtBottom.x2; x++)
@@ -458,13 +459,14 @@ void cHeightMapTerrainEdit::CalBazier(D3DXVECTOR2 vMin, D3DXVECTOR2 vMax)
 
 		vSecond.x = x;
 		vSecond.z = rtBottom.y1;
-		vSecond.y = 0.f;
+        vSecond.y = m_vecVertex[vSecond.x + vSecond.z * 257].p.y;
 		for (int z = rtBottom.y1; z < rtBottom.y2; z++)
 		{
+            //float fX = (z - rtBottom.y2);
 			float fX = (rtBottom.y2 - z);
 			float fY = (rtBottom.y2 - rtBottom.y1);
 			float fD = fX / fY;
-			D3DXVECTOR3 v = Bazier(vThird, vSecond, vFirst, fD);
+            D3DXVECTOR3 v = Bazier(vFirst, vSecond, vThird, 1 - fD);
 			m_vecVertex[x + z * 257].p.y = v.y;
 		}
 	}
