@@ -307,14 +307,12 @@
     <ClCompile Include="cSceneEditMode.cpp">
       <Filter>FrameWork\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="cMapLoader4Edit.cpp" />
     <ClCompile Include="cMousePicking.cpp">
       <Filter>EachWorks\MS</Filter>
     </ClCompile>
     <ClCompile Include="iUIPopupWindowDelegate.cpp">
       <Filter>EachWorks\MW\Todo</Filter>
     </ClCompile>
-    <ClCompile Include="cGameObjectLoader4Edit.cpp" />
     <ClCompile Include="cMapToolCamera.cpp">
       <Filter>EachWorks\MS</Filter>
     </ClCompile>
@@ -324,6 +322,13 @@
     <ClCompile Include="cDataItem.cpp">
       <Filter>EachWorks\MW\Todo</Filter>
     </ClCompile>
+    <ClCompile Include="cMapLoader4Edit.cpp">
+      <Filter>FrameWork\Loader</Filter>
+    </ClCompile>
+    <ClCompile Include="cGameObjectLoader4Edit.cpp">
+      <Filter>FrameWork\Loader</Filter>
+    </ClCompile>
+    <ClCompile Include="cGameObjectEraser.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cAction.h">
@@ -644,14 +649,12 @@
     <ClInclude Include="cSceneEditMode.h">
       <Filter>FrameWork\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="cMapLoader4Edit.h" />
     <ClInclude Include="cMousePicking.h">
       <Filter>EachWorks\MS</Filter>
     </ClInclude>
     <ClInclude Include="iUIPopupWindowDelegate.h">
       <Filter>EachWorks\MW\Todo</Filter>
     </ClInclude>
-    <ClInclude Include="cGameObjectLoader4Edit.h" />
     <ClInclude Include="cMapToolCamera.h">
       <Filter>EachWorks\MS</Filter>
     </ClInclude>
@@ -661,6 +664,13 @@
     <ClInclude Include="cDataItem.h">
       <Filter>EachWorks\MW\Todo</Filter>
     </ClInclude>
+    <ClInclude Include="cMapLoader4Edit.h">
+      <Filter>FrameWork\Loader</Filter>
+    </ClInclude>
+    <ClInclude Include="cGameObjectLoader4Edit.h">
+      <Filter>FrameWork\Loader</Filter>
+    </ClInclude>
+    <ClInclude Include="cGameObjectEraser.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="DreamCoast3D.ico">

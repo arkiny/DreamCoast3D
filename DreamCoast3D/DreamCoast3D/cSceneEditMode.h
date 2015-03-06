@@ -7,6 +7,7 @@
 
 class cMousePicking;
 class cGamePlayableObject;
+class cGameObjectEraser;
 
 class cSceneEditMode : public cScene
 {
@@ -19,6 +20,9 @@ protected:
 
 	float									m_fKeyDelayCurrent	= 2.0f;
 	const float								m_fKeyDelay			= 0.5f;
+
+	//
+	cGameObjectEraser*						m_pObjectEraser;
 
 	// Map Preset
 	std::map<std::string, cGameMapObject*>	m_mapLoadedMap;
@@ -33,7 +37,7 @@ protected:
 	// Static Object Preset
 	int m_nCurrentBindingStaticIndex = 0;
 	std::vector<cGameObject*>				m_vecStaticGameObjectPreset;
-	std::vector<cGameObject*>				m_vecStaticGameObjectAdded;
+	std::set<cGameObject*>					m_setStaticGameObjectAdded;
 
 	// Action Object Preset
 	// 처음 로딩시 올릴 오브젝트 리스트들
@@ -45,7 +49,7 @@ protected:
 	// AddedObjectInformation will be saved as a file
 	// 업데이트 하지 않고 렌더만 하게 처리
 	// 어떻게 클론시켜서 저장할건데? -> 각 게임 오브젝트에 클론오버라이딩
-	std::vector<cGameObject*>				m_vecActionGameObjectAdded;
+	std::set<cGameObject*>					m_setActionGameObjectAdded;
 	
 	// 가장 마지막 단계 플레이어 시작 위치
 	// 무조건 하나만으로 조정해야 한다.

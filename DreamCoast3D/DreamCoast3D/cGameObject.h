@@ -18,6 +18,7 @@ public:
 		E_EFFECT,
 		E_MAP,
 		E_SKY,
+		E_ERASER,
 		E_MAX
 	};
 

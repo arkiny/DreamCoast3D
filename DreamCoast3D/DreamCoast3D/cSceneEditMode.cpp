@@ -13,12 +13,14 @@
 #include "cMousePicking.h"
 #include "cGameObjectLoader4Edit.h"
 #include "cGamePlayableObject.h"
+#include "cGameObjectEraser.h"
 #include <sstream>
 
 static CRITICAL_SECTION				gCriticalSectionEditMode;
 
 cSceneEditMode::cSceneEditMode()
-	:m_pMousPicking(NULL)
+	:m_pMousPicking(NULL),
+	m_pObjectEraser(NULL)
 {
 	InitializeCriticalSection(&gCriticalSectionEditMode);
 	m_rectFontArea = { 0, 0, 200, 200 };
@@ -32,19 +34,21 @@ cSceneEditMode::~cSceneEditMode()
 	LeaveCriticalSection(&gCriticalSectionEditMode);
 	DeleteCriticalSection(&gCriticalSectionEditMode);
 
+	SAFE_RELEASE(m_pObjectEraser);
+
 	for (auto p : m_mapLoadedMap){
 		SAFE_RELEASE(p.second);
 	}
 	for (auto p : m_vecStaticGameObjectPreset){
 		SAFE_RELEASE(p);
 	}
-	for (auto p : m_vecStaticGameObjectAdded){
+	for (auto p : m_setStaticGameObjectAdded){
 		SAFE_RELEASE(p);
 	}
 	for (auto p : m_vecActionGameObjectPreset){
 		SAFE_RELEASE(p);
 	}
-	for (auto p : m_vecActionGameObjectAdded){
+	for (auto p : m_setActionGameObjectAdded){
 		SAFE_RELEASE(p);
 	}
 	for (auto p : m_vecGamePlayableObjectPreset){
@@ -57,6 +61,9 @@ void cSceneEditMode::Setup(std::string sFilePath){
 	cScene::Setup(sFilePath);
 	m_pMousPicking = new cMousePicking;
 	m_pMousPicking->SetEffectDelegate(m_pEffectManager);
+
+	m_pObjectEraser = new cGameObjectEraser;
+	m_pObjectEraser->Setup();
 }
 
 // Start에서 리소스를 로딩한다.
@@ -176,7 +183,10 @@ void cSceneEditMode::Update(float delta){
 				SaveToFile();
 				m_fKeyDelayCurrent = 0;
 			}
-
+			if (GetAsyncKeyState(VK_BACK)){
+				m_pCurrentBindingObject = m_pObjectEraser;
+				m_fKeyDelayCurrent = 0;
+			}
 			if (GetAsyncKeyState(VK_LBUTTON) == false && m_bIsClickDown == true && m_pCurrentBindingObject){
 				AddCurrentObjectToSaveStack(m_pCurrentBindingObject);
 				m_bIsClickDown = false;
@@ -197,11 +207,11 @@ void cSceneEditMode::Render(){
 	if (m_pCurrentMap){
 		s << "Map Preset Binded: " << m_vecMapRawPath[m_nCurrentMapIndex] << std::endl;
 		
-		for (auto p : m_vecActionGameObjectAdded){
+		for (auto p : m_setActionGameObjectAdded){
 			p->Render();
 		}
 
-		for (auto p : m_vecStaticGameObjectAdded){
+		for (auto p : m_setStaticGameObjectAdded){
 			p->Render();
 		}
 
@@ -377,7 +387,7 @@ void cSceneEditMode::AddCurrentObjectToSaveStack(cGameObject* pToBeAdded){
 	if (pToBeAdded->GetGameObjectType() == pToBeAdded->E_MOP){
 		cGameObject* p = NULL;
 		m_pCurrentBindingObject->Clone(&p);
-		m_vecActionGameObjectAdded.push_back(p);
+		m_setActionGameObjectAdded.insert(p);
 		//p = NULL;
 	}
 	else if (pToBeAdded->GetGameObjectType() == pToBeAdded->E_PLAYABLE){
@@ -393,7 +403,46 @@ void cSceneEditMode::AddCurrentObjectToSaveStack(cGameObject* pToBeAdded){
 	else if (pToBeAdded->GetGameObjectType() == pToBeAdded->E_STATIC){
 		cGameObject* p = NULL;
 		m_pCurrentBindingObject->Clone(&p);
-		m_vecStaticGameObjectAdded.push_back(p);
+		m_setStaticGameObjectAdded.insert(p);
+	}
+	else if (pToBeAdded->GetGameObjectType() == pToBeAdded->E_ERASER){
+		// Object 삭제 작업
+		ST_BOUNDING_SPHERE stSphere = *m_pObjectEraser->GetBoundingSphere();
+		//
+		std::queue<cGameObject*> willbeDelete;
+		for (auto p : m_setActionGameObjectAdded){
+			D3DXVECTOR3 vObjectPosition = p->GetPosition();
+			float fDist = D3DXVec3Length(&(stSphere.m_vCenter - vObjectPosition));
+			if (fDist < stSphere.m_fRadius){
+				willbeDelete.push(p);
+			}
+		}
+		while (!willbeDelete.empty()){
+			cGameObject* erase = willbeDelete.front();
+			m_setActionGameObjectAdded.erase(erase);
+			SAFE_RELEASE(erase);
+			willbeDelete.pop();
+		}
+		for (auto p : m_setStaticGameObjectAdded){
+			D3DXVECTOR3 vObjectPosition = p->GetPosition();
+			float fDist = D3DXVec3Length(&(stSphere.m_vCenter - vObjectPosition));
+			if (fDist < stSphere.m_fRadius){
+				willbeDelete.push(p);
+			}
+		}
+		while (!willbeDelete.empty()){
+			cGameObject* erase = willbeDelete.front();
+			m_setActionGameObjectAdded.erase(erase);
+			SAFE_RELEASE(erase);
+			willbeDelete.pop();
+		}
+		if (m_pPlayableObjectSave){
+			D3DXVECTOR3 vObjectPosition = m_pPlayableObjectSave->GetPosition();
+			float fDist = D3DXVec3Length(&(stSphere.m_vCenter - vObjectPosition));
+			if (fDist < stSphere.m_fRadius){
+				SAFE_RELEASE(m_pPlayableObjectSave);
+			}
+		}
 	}
 }
 
@@ -617,7 +666,7 @@ std::string cSceneEditMode::GetMapObjectMaterialList(){
 
 std::string cSceneEditMode::GetStaticGameObjectAddedAsString(){
 	std::stringstream ss;
-	for (auto p : m_vecStaticGameObjectAdded){
+	for (auto p : m_setStaticGameObjectAdded){
 		ss << p->SaveAsStringInfo();
 	}
 	return ss.str();
@@ -646,7 +695,7 @@ std::string cSceneEditMode::GetMeshListAsString(){
 
 std::string cSceneEditMode::GetActionGameObjectAddedAsString(){
 	std::stringstream ss;
-	for (auto p : m_vecActionGameObjectAdded){
+	for (auto p : m_setActionGameObjectAdded){
 		ss << p->SaveAsStringInfo();
 	}
 	return ss.str();
@@ -654,8 +703,8 @@ std::string cSceneEditMode::GetActionGameObjectAddedAsString(){
 
 std::string cSceneEditMode::GetPlayableGameObjectAsString(){
 	std::stringstream ss;
-
-	ss << m_pPlayableObjectSave->SaveAsStringInfo();
-	
+	if (m_pPlayableObjectSave){
+		ss << m_pPlayableObjectSave->SaveAsStringInfo();
+	}
 	return ss.str();
 }
