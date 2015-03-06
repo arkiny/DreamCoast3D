@@ -191,10 +191,10 @@ void cMousePicking::IntersetionTriUpdate()
 					cEffectFireBall* pcheck = new cEffectFireBall;
 					pcheck->Setup();
 					pcheck->SetPosition(m_vClickedPosition);
-					if (m_pEffectDelegate){
-						m_pEffectDelegate->AddEffect(pcheck);
-						pcheck->Release();
-					}
+					//if (m_pEffectDelegate){
+					//	m_pEffectDelegate->AddEffect(pcheck);
+					//	pcheck->Release();
+					//}
 					return;
 				}
 				isColliedTri = D3DXIntersectTri(
@@ -210,10 +210,10 @@ void cMousePicking::IntersetionTriUpdate()
 					cEffectFireBall* pcheck = new cEffectFireBall;
 					pcheck->Setup();
 					pcheck->SetPosition(m_vClickedPosition);
-					if (m_pEffectDelegate){
-						m_pEffectDelegate->AddEffect(pcheck);
-						pcheck->Release();
-					}
+					//if (m_pEffectDelegate){
+					//	m_pEffectDelegate->AddEffect(pcheck);
+					//	pcheck->Release();
+					//}
 					return;
 				}
 			}
