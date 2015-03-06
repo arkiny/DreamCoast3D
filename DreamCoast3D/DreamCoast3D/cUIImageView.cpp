@@ -3,7 +3,6 @@
 
 cUIImageView::cUIImageView(LPD3DXSPRITE pSprite)
 	: cUIObject(pSprite)
-	, fAlpha(1.f)
 {
 	m_rectDrawArea = { 0, 0, 0, 0 };
 }

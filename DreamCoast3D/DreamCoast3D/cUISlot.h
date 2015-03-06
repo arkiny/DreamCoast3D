@@ -8,6 +8,7 @@ protected:
 	SYNTHESIZE(cUIIcon*, m_pIcon, Icon);
 public:
 	cUISlot();
+	cUISlot(LPD3DXSPRITE pSprite);
 	~cUISlot();
 };
 

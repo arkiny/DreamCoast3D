@@ -12,9 +12,9 @@ protected:
 		EICONTYPE_SKILL,		//스킬 아이콘
 		EICONTYPE_MAX
 	};
+	SYNTHESIZE(EICONTYPE, m_eIconType, IconType);
 	bool m_isBinding;			//마우스에 붙어 있는 중인가(드래그 중인가)
 public:
 	cUIIcon();
 	~cUIIcon();
 };
-

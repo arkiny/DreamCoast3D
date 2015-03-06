@@ -53,8 +53,8 @@ void cUIInventory::Setup()
 
 	m_vecItem.resize(40);//8*5 사이즈
 
-#pragma region 인벤토리 바탕 초기화
-	//인벤토리 바탕
+#pragma region 인벤토리 바탕(UIRoot) 초기화
+	//인벤토리 바탕(UIRoot)
 	cUIImageView* pImageView = new cUIImageView(m_pSprite);
 	pImageView->SetTextureFilename(std::string("../Resources/UI/UI_INVENTORY/BG_Inventory.tga"));
 
@@ -83,49 +83,9 @@ void cUIInventory::Setup()
 	drawArea = { 0, 0, 56, 56 };
 	m_pImageViewMouseDown->SetPosition(D3DXVECTOR3(56, 0, 0));
 
-	//pImageView->SetScale(D3DXVECTOR3(1.f, 1.f, 1.0f));
-	//
-	////실제 그려질 크기. 이미지 파일의 크기와 실제 이미지인 부분이 다르기 때문에 직접 지정해준다.
-	//RECT drawArea = { 0, 0, 472, 436 };
-	//pImageView->SetDrawArea(drawArea);
-	////위치(x, y)
-	//pImageView->SetPosition(D3DXVECTOR3(50, 50, 0));
-	//m_pUIRoot = pImageView;
-
-
-	////찬칸
-	//pImageView = new cUIImageView(m_pSprite);
-	//pImageView->SetTextureFilename(std::string("../Resources/ICON/ICON_Item/HP_Potion_Level_33_Tex.tga"));
-	//drawArea = { 0, 0, 64, 64};
-	//pImageView->SetDrawArea(drawArea);
-	//pImageView->SetScale(D3DXVECTOR3(0.85f, 0.85f, 0.85f));
-	//pImageView->SetPosition(D3DXVECTOR3(16, 85, 0));
-
-	//m_pUIRoot->AddChild(pImageView);
-	//SAFE_RELEASE(pImageView);
-
-	//빈칸들
-	//IntersectRect();//사각충돌체크 함수
-	//PtInRect(&rc, ptMouse);//사각영역안 점 확인
-	for (int row = 0; row < 8; ++row)
-	{
-		for (int col = 0; col < 5; ++col)
-		{
-			pImageView = new cUIImageView(m_pSprite);
-			pImageView->SetTextureFilename(std::string("../Resources/UI/UI_INVENTORY/Component_I341.tga"));
-			//pImageView->SetTextureFilename(std::string("../Resources/UI/UI_INVENTORY/Component_I35B.tga"));
-			drawArea = { 0, 0, 56, 56 };
-			pImageView->SetDrawArea(drawArea);
-
-			pImageView->SetPosition(D3DXVECTOR3(
-				16 + ((float)row*pImageView->GetDrawArea().right)/*+(i*3)*/,
-				112 + ((float)col*pImageView->GetDrawArea().bottom),
-				0));
-			
-			m_pUIRoot->AddChild(pImageView);
-			SAFE_RELEASE(pImageView);
-		}
-	}	
+	//슬롯들 배치
+	SetSlot(5, 8);
+	
 }
 void cUIInventory::Update(float fDelta)
 {
@@ -193,6 +153,7 @@ void cUIInventory::Update(float fDelta)
 		//드래그 중이면 드래그 행동
 		if (m_isDragging == true) { Drag(); }
 
+		//cUIPopupWindow::Update(fDelta);
 		if (m_pUIRoot)
 		{
 			m_pUIRoot->Update(fDelta);
@@ -316,10 +277,10 @@ cUIObject* cUIInventory::FindFocusSlot(cUIObject* pUIRoot)
 	for (size_t i = 0; i < pUIRoot->GetChild().size(); ++i)
 	{
 		rtArea	= {
-		(LONG)pUIRoot->GetPosition().x +pUIRoot->GetChild()[i]->GetPosition().x,
-		(LONG)pUIRoot->GetPosition().y +pUIRoot->GetChild()[i]->GetPosition().y,
-		(LONG)pUIRoot->GetPosition().x +pUIRoot->GetChild()[i]->GetPosition().x + pUIRoot->GetChild()[i]->GetDrawArea().right,
-		(LONG)pUIRoot->GetPosition().y +pUIRoot->GetChild()[i]->GetPosition().y + pUIRoot->GetChild()[i]->GetDrawArea().bottom
+		(LONG)pUIRoot->GetPosition().x + pUIRoot->GetChild()[i]->GetPosition().x,
+		(LONG)pUIRoot->GetPosition().y + pUIRoot->GetChild()[i]->GetPosition().y,
+		(LONG)pUIRoot->GetPosition().x + pUIRoot->GetChild()[i]->GetPosition().x + pUIRoot->GetChild()[i]->GetDrawArea().right,
+		(LONG)pUIRoot->GetPosition().y + pUIRoot->GetChild()[i]->GetPosition().y + pUIRoot->GetChild()[i]->GetDrawArea().bottom
 		};
 		if (PtInRect(&rtArea, g_pControlManager->GetCurrentCursorPosition()))
 		{
@@ -327,4 +288,28 @@ cUIObject* cUIInventory::FindFocusSlot(cUIObject* pUIRoot)
 		}
 	}
 	return nullptr;
+}
+void cUIInventory::SetSlot(size_t nRowQnt, size_t nColQnt)
+{
+	//슬롯들
+	//IntersectRect();//사각충돌체크 함수
+	//PtInRect(&rc, ptMouse);//사각영역안 점 확인
+	for (int row = 0; row < nRowQnt; ++row)
+	{
+		for (int col = 0; col < nColQnt; ++col)
+		{
+			cUISlot* pUISlot;
+			pUISlot = new cUISlot(m_pSprite);
+			pUISlot->SetTextureFilename(std::string("../Resources/UI/UI_INVENTORY/Component_I341.tga"));
+			RECT rtDrawArea;
+			rtDrawArea = { 0, 0, 56, 56 };
+			pUISlot->SetDrawArea(rtDrawArea);
+			pUISlot->SetPosition(D3DXVECTOR3(
+				16 + ((float)col * pUISlot->GetDrawArea().right)/*+(i*3)*/,
+				112 + ((float)row * pUISlot->GetDrawArea().bottom),
+				0));
+			m_pUIRoot->AddChild(pUISlot);
+			SAFE_RELEASE(pUISlot);
+		}
+	}	
 }

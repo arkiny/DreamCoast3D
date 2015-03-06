@@ -10,6 +10,7 @@ cUIObject::cUIObject()
 	, m_pGameObjDelgate(NULL)
 	, m_pSceneDeligate(NULL)
 	, m_pUIManagerDeligate(NULL)
+	, m_fAlpha(1.f)
 {
 }
 
@@ -21,6 +22,7 @@ cUIObject::cUIObject(LPD3DXSPRITE pSprite)
 	, m_pGameObjDelgate(NULL)
 	, m_pSceneDeligate(NULL)
 	, m_pUIManagerDeligate(NULL)
+	, m_fAlpha(1.f)
 {
 	m_pSprite->AddRef();
 }
