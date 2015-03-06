@@ -1,11 +1,22 @@
 #include "stdafx.h"
 #include "cHeightMapTerrainEdit.h"
-
+#include "cMousePicking.h"
 
 cHeightMapTerrainEdit::cHeightMapTerrainEdit() :
 m_pVertexBuffer(NULL),
 m_pIndexBuffer(NULL)
 {
+	// MS
+	m_isRclick = false;
+	eClick = E_ClickEmpty;
+	ZeroMemory(m_vClickFrom, sizeof(D3DXVECTOR3));
+	ZeroMemory(m_vClickTo, sizeof(D3DXVECTOR3));
+	ZeroMemory(m_vTileFrom, sizeof(D3DXVECTOR3));
+	ZeroMemory(m_vTileTo, sizeof(D3DXVECTOR3));
+	m_fHeight = 1.f;
+	m_fWidth = 1.f;
+
+	m_pMousPicking = nullptr;
 }
 
 
@@ -13,6 +24,8 @@ cHeightMapTerrainEdit::~cHeightMapTerrainEdit()
 {
 	SAFE_RELEASE(m_pVertexBuffer);
 	SAFE_RELEASE(m_pIndexBuffer);
+
+	SAFE_DELETE(m_pMousPicking);
 }
 
 void cHeightMapTerrainEdit::Setup(){
@@ -96,15 +109,33 @@ void cHeightMapTerrainEdit::Setup(){
 	memcpy(indices, &m_vecIndex[0], m_vecIndex.size() * sizeof(DWORD));
 	m_pIndexBuffer->Unlock();
 
+	m_pMousPicking = new cMousePicking;
+	m_pMousPicking->SetVertex(m_vecVertex);
 }
 
 void cHeightMapTerrainEdit::Update(float fDelta){
-	if ( GetAsyncKeyState(VK_UP)){
-		ChangeMapYVertexCoord(D3DXVECTOR2(30, 30), D3DXVECTOR2(50, 50), 10.0f);
+
+	m_pMousPicking->Update();
+
+	MouseUpdate();
+	MouseRangeUpdate();
+	TileRangeUpdate();
+
+	D3DXVECTOR2 vFrom(0.f, 0.f);
+	D3DXVECTOR2 vTo(0.f, 0.f);
+
+	vFrom.x = (int)m_vTileFrom.x;
+	vFrom.y = (int)m_vTileFrom.z;
+
+	vTo.x = (int)m_vTileTo.x;
+	vTo.y = (int)m_vTileTo.z;
+
+	if (GetAsyncKeyState(VK_UP)){
+		ChangeMapYVertexCoord(vFrom, vTo, 1.0f);
 
 	}
 	if (GetAsyncKeyState(VK_DOWN)){
-		ChangeMapYVertexCoord(D3DXVECTOR2(30, 30), D3DXVECTOR2(50, 50), -10.0f);
+		ChangeMapYVertexCoord(vFrom, vTo, -1.0f);
 	}
 }
 
@@ -150,4 +181,86 @@ void cHeightMapTerrainEdit::ChangeMapYVertexCoord(D3DXVECTOR2 vMin, D3DXVECTOR2 
 	m_pVertexBuffer->Lock(0, 0, (void**)&v, 0);
 	memcpy(v, &m_vecVertex[0], m_vecVertex.size() * sizeof(ST_PNT_VERTEX));
 	m_pVertexBuffer->Unlock();
+}
+
+void cHeightMapTerrainEdit::MouseUpdate()
+{
+	if (g_pControlManager->GetInputInfo(VK_RBUTTON))
+	{
+		if (eClick == E_ClickOn)
+		{
+			eClick = E_Clicking;
+		}
+		if (eClick == E_ClickEmpty)
+		{
+			eClick = E_ClickOn;
+		}
+	}
+
+	if (!g_pControlManager->GetInputInfo(VK_RBUTTON))
+	{
+		if (eClick == E_ClickOff)
+		{
+			eClick = E_ClickEmpty;
+		}
+
+		if (eClick == E_Clicking)
+		{
+			eClick = E_ClickOff;
+		}
+	}
+}
+
+void cHeightMapTerrainEdit::MouseRangeUpdate()
+{
+	if (eClick == E_ClickOn)
+	{
+		m_vClickFrom = m_pMousPicking->GetPickingPoint();
+	}
+
+	if (eClick == E_ClickOff)
+	{
+		m_vClickTo = m_pMousPicking->GetPickingPoint();
+		m_vTileFrom = m_vClickFrom;
+		m_vTileTo = m_vTileFrom;
+	}
+}
+
+void cHeightMapTerrainEdit::TileRangeUpdate()
+{
+	if (g_pControlManager->GetInputInfo('P'))
+	{
+		m_vTileTo.x += m_fWidth;
+	}
+
+	if (g_pControlManager->GetInputInfo('O'))
+	{
+		m_vTileTo.z += m_fHeight;
+	}
+}
+
+void cHeightMapTerrainEdit::SetClickRange(D3DXVECTOR3 vFrom, D3DXVECTOR3 vTo)
+{
+	D3DXVECTOR3 vFromFilterd(0.f, 0.f, 0.f);
+	D3DXVECTOR3 vToFilterd(0.f, 0.f, 0.f);
+
+	vFromFilterd = vFrom;
+	vToFilterd = vTo;
+
+	vFromFilterd.y = 0.f;
+	vToFilterd.y = 0.f;
+}
+
+D3DXVECTOR3 cHeightMapTerrainEdit::Linear(D3DXVECTOR3 vFrom, D3DXVECTOR3 vTo, float fDelta)
+{
+	D3DXVECTOR3 vLinear(0.f, 0.f, 0.f);
+	vLinear = fDelta*(vFrom - vTo) + vFrom;
+	return vLinear;
+}
+
+D3DXVECTOR3 cHeightMapTerrainEdit::Bazier(D3DXVECTOR3 vFirst, D3DXVECTOR3 vSecond, D3DXVECTOR3 vThird, float fDelta)
+{
+	D3DXVECTOR3 vFrom = Linear(vFirst, vSecond, fDelta);
+	D3DXVECTOR3 vTo = Linear(vSecond, vThird, fDelta);
+	return Linear(vFrom, vTo, fDelta);
 }
