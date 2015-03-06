@@ -2,6 +2,7 @@
 #include "cSceneLoader.h"
 #include "cScene.h"
 #include "cSceneEditMode.h"
+#include "cSceneTerrainEdit.h"
 #include "cLightSource.h"
 #include "cCamera.h"
 #include "cCameraEditing.h"
@@ -33,6 +34,10 @@ cScene* cSceneLoader::ParseScene(std::string sFilePath){
 		}
 		else if (isEqual(szToken, "*SCENE_EDIT")){
 			ret = new cSceneEditMode;
+			ret->Setup(std::string(""));
+		}
+		else if (isEqual(szToken, "*SCENE_TERRAINEDIT")){
+			ret = new cSceneTerrainEdit;
 			ret->Setup(std::string(""));
 		}
 		else if (isEqual(szToken, "*CAMERA_LIST")){

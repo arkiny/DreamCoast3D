@@ -30,5 +30,7 @@ public:
 	virtual std::vector<cGameObject*> GetAdjObjectCustomer(int nX, int nZ, int nSize);
 	virtual std::vector<cGameObject*> GetAdjObjectCircle(int nX, int nZ, int nRange);
 	virtual void RemoveObejctOnTile(cGameObject* pGameObejct, int nX, int nZ);
+
+	virtual void ChangeMapYVertexCoord(D3DXVECTOR2 vMin, D3DXVECTOR2 vMax, float fDelta){}
 };
 

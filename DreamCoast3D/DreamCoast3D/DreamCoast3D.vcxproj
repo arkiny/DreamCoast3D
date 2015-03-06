@@ -146,6 +146,7 @@
     <ClInclude Include="cGameSMeshBodyObject.h" />
     <ClInclude Include="cGameTimer.h" />
     <ClInclude Include="cGridSystem.h" />
+    <ClInclude Include="cHeightMapTerrainEdit.h" />
     <ClInclude Include="cLoader.h" />
     <ClInclude Include="cLoadingScene.h" />
     <ClInclude Include="cMapLoader.h" />
@@ -159,6 +160,7 @@
     <ClInclude Include="cPlayerOnHit.h" />
     <ClInclude Include="cSceneEditMode.h" />
     <ClInclude Include="cSceneLoader.h" />
+    <ClInclude Include="cSceneTerrainEdit.h" />
     <ClInclude Include="cSkinnedMeshBody.h" />
     <ClInclude Include="cUIExpBar.h" />
     <ClInclude Include="cUIGameMainMenu.h" />
@@ -261,6 +263,7 @@
     <ClCompile Include="cGameSMeshBodyObject.cpp" />
     <ClCompile Include="cGameTimer.cpp" />
     <ClCompile Include="cGridSystem.cpp" />
+    <ClCompile Include="cHeightMapTerrainEdit.cpp" />
     <ClCompile Include="cLoader.cpp" />
     <ClCompile Include="cLoadingScene.cpp" />
     <ClCompile Include="cMapLoader.cpp" />
@@ -274,6 +277,7 @@
     <ClCompile Include="cPlayerOnHit.cpp" />
     <ClCompile Include="cSceneEditMode.cpp" />
     <ClCompile Include="cSceneLoader.cpp" />
+    <ClCompile Include="cSceneTerrainEdit.cpp" />
     <ClCompile Include="cSkinnedMeshBody.cpp" />
     <ClCompile Include="cUIExpBar.cpp" />
     <ClCompile Include="cUIGameMainMenu.cpp" />

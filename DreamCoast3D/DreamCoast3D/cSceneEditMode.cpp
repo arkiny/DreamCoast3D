@@ -55,6 +55,7 @@ cSceneEditMode::~cSceneEditMode()
 		SAFE_RELEASE(p);
 	}
 	SAFE_RELEASE(m_pPlayableObjectSave);
+	SAFE_DELETE(m_pMousPicking);
 }
 
 void cSceneEditMode::Setup(std::string sFilePath){
