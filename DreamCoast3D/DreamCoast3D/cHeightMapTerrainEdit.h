@@ -9,6 +9,11 @@ protected:
 	IDirect3DVertexBuffer9*		m_pVertexBuffer;
 	IDirect3DIndexBuffer9*		m_pIndexBuffer;
 
+	LPD3DXMESH					m_pBoxMesh = NULL;
+	D3DXVECTOR3					m_vBoxPos;
+	D3DXVECTOR3					m_vBoxScale;
+	D3DMATERIAL9				m_stBoxMtl;
+
 public:
 	cHeightMapTerrainEdit();
 	virtual ~cHeightMapTerrainEdit();
@@ -35,26 +40,22 @@ private:
 		E_Max,
 	};
 
+	SYNTHESIZE(D3DXVECTOR3, m_vClickFrom, ClickFrom);
+	SYNTHESIZE(D3DXVECTOR3, m_vClickTo, ClickTo);
+	SYNTHESIZE(D3DXVECTOR3, m_vTileFrom, TileFrom);
+	SYNTHESIZE(D3DXVECTOR3, m_vTileTo, TileTo);
+	SYNTHESIZE(float, m_fHeight, Height);
+	SYNTHESIZE(float, m_fWidth, Width);
 	eClickMessage eClick;
-	D3DXVECTOR3 m_vClickFrom;
-	D3DXVECTOR3 m_vClickTo;
+	
 
-	D3DXVECTOR3 m_vTileFrom;
-	D3DXVECTOR3 m_vTileTo;
 
-	float m_fHeight;
-	float m_fWidth;
-
-	cMousePicking*			m_pMousPicking;
+	//cMousePicking*			m_pMousPicking;
 
 private:
-	void MouseUpdate();
-	void MouseRangeUpdate();	
-	void TileRangeUpdate();
-	void CalBazier(D3DXVECTOR2 vMin, D3DXVECTOR2 vMax);
-
 	// 잠시 대기
 	void SetClickRange(D3DXVECTOR3 vFrom, D3DXVECTOR3 vTo);
+	void CalBazier(D3DXVECTOR2 vMin, D3DXVECTOR2 vMax);
 
 	D3DXVECTOR3 Linear(D3DXVECTOR3 vFrom, D3DXVECTOR3 vTo, float fDelta);
 	D3DXVECTOR3 Bazier(D3DXVECTOR3 vFirst, D3DXVECTOR3 vSecond, D3DXVECTOR3 vThird, float fDelta);

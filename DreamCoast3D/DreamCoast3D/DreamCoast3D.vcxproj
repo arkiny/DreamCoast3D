@@ -119,6 +119,7 @@
     <ClInclude Include="cControlManager.h" />
     <ClInclude Include="cDataItem.h" />
     <ClInclude Include="cDeviceManager.h" />
+    <ClInclude Include="cEditCursor.h" />
     <ClInclude Include="cEffect.h" />
     <ClInclude Include="cEffectFireBall.h" />
     <ClInclude Include="cEffectManager.h" />
@@ -236,6 +237,7 @@
     <ClCompile Include="cControlManager.cpp" />
     <ClCompile Include="cDataItem.cpp" />
     <ClCompile Include="cDeviceManager.cpp" />
+    <ClCompile Include="cEditCursor.cpp" />
     <ClCompile Include="cEffect.cpp" />
     <ClCompile Include="cEffectFireBall.cpp" />
     <ClCompile Include="cEffectManager.cpp" />
