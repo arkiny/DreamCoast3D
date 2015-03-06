@@ -162,6 +162,7 @@ void cGameAIObject::Clone(cGameObject** pTarget){
 	p->SetPosition(pCopyPos);
 	D3DXVECTOR3 vCopyScale = this->GetScale();
 	p->SetScale(vCopyScale);
+	p->SetAItype(m_eAITYPE);
 	p->Start();
 	*pTarget = p;
 }

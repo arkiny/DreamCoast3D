@@ -186,8 +186,9 @@ void cScene::Start(){
 	if (!m_vecGameMaps.empty()){
 		this->SetCurrentMap(0);
 		// 카메라에 타겟 설정
-		m_pCamera->SetTarget(m_pGameObjManager->GetPlayerableGameObject()->GetTransform()->getPosPointer());
-
+		if (m_pGameObjManager->GetPlayerableGameObject()){
+			m_pCamera->SetTarget(m_pGameObjManager->GetPlayerableGameObject()->GetTransform()->getPosPointer());
+		}
 		// 게임 오브젝트매니저에 카메라 설정
 		m_pGameObjManager->SetCameraDeligate(m_pCamera);
 
@@ -244,6 +245,35 @@ void cScene::Update(float delta){
 }
 
 void cScene::Render(){
+	// Create the shadow map
+	//D3DVIEWPORT9 vp;
+	//g_pD3DDevice->GetViewport(&vp);
+	//LPDIRECT3DTEXTURE9 pShadowMap;
+
+	//if (FAILED(g_pD3DDevice->CreateTexture(vp.Width, vp.Height, 1,
+	//	D3DUSAGE_RENDERTARGET, D3DFMT_R32F,
+	//	D3DPOOL_DEFAULT, &pShadowMap,
+	//	NULL)))
+	//{
+	//	MessageBox(g_hWnd, "Unable to create shadow map!",
+	//		"Error", MB_OK | MB_ICONERROR);
+	//	//return E_FAIL;
+	//}
+
+	//// Grab the texture's surface
+	//pShadowMap->GetSurfaceLevel(0, &g_pShadowSurf);
+
+	//D3DXMATRIXA16 matView, matProj, matWorld, matLightViewProj;
+	//D3DXVECTOR3 vLightPos(0, 0, 0);
+	//D3DXVECTOR3 vLightAim = m_vecLightSources[0]->GetDirection();
+	//D3DXVECTOR3 vUp(0, 1, 0);
+	//// Ordinary view matrix
+	//D3DXMatrixLookAtLH(&matView, &vLightPos, &vLightAim, &vUp);
+	//// Projection matrix for the light
+	//D3DXMatrixPerspectiveFovLH(&matProj, D3DXToRadian(30.0f), 1.0f, 1.0f, 1024.0f);
+	//// Concatenate the world matrix with the above two to get the required matrix
+	//matLightViewProj = matWorld * matView * matProj;
+
 	// 현재 맵만 렌더링함
 	SAFE_RENDER(m_pCurrentMap);
 

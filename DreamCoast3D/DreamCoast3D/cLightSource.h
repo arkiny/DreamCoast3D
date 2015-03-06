@@ -13,5 +13,6 @@ public:
 
 	void Setup(D3DLIGHT9& stLight, D3DXVECTOR3& vDirection, int nIndex);
 	void Start();
+	D3DXVECTOR3 GetDirection() { return m_vDir; }
 };
 
