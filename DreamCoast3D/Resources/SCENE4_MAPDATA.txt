@@ -50,6 +50,11 @@
 		*GAME_MAP_HEIGHT_TEXTURE_PATH "../Resources/Map/FieldMap_9.bmp"
 		*GAME_MAP_DATA_PATH "../Resources/Map/Map1.txt"
 	}
+	*HEIGHT_MAP 10 {
+		*GAME_MAP_HEIGHT_RAW_FILE "../Resources/Map/test.raw"
+		*GAME_MAP_HEIGHT_TEXTURE_PATH "../Resources/Map/FieldMap_9.bmp"
+		*GAME_MAP_DATA_PATH "../Resources/Map/Map1.txt"
+	}
 }
 
 *MAP_OBJECT_MATERIAL_LIST {

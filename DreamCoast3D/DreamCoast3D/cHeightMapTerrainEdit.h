@@ -16,6 +16,7 @@ public:
 	virtual void Render();
 
 	virtual void ChangeMapYVertexCoord(D3DXVECTOR2 vMin, D3DXVECTOR2 vMax, float fDelta);
+	virtual void SaveToRawFile();
 	//virtual void 
 };
 

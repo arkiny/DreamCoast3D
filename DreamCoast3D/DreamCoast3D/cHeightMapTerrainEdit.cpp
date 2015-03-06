@@ -106,6 +106,10 @@ void cHeightMapTerrainEdit::Update(float fDelta){
 	if (GetAsyncKeyState(VK_DOWN)){
 		ChangeMapYVertexCoord(D3DXVECTOR2(30, 30), D3DXVECTOR2(50, 50), -10.0f);
 	}
+
+	if (GetAsyncKeyState(VK_F5)){
+		SaveToRawFile();
+	}
 }
 
 void cHeightMapTerrainEdit::Render(){
@@ -150,4 +154,17 @@ void cHeightMapTerrainEdit::ChangeMapYVertexCoord(D3DXVECTOR2 vMin, D3DXVECTOR2 
 	m_pVertexBuffer->Lock(0, 0, (void**)&v, 0);
 	memcpy(v, &m_vecVertex[0], m_vecVertex.size() * sizeof(ST_PNT_VERTEX));
 	m_pVertexBuffer->Unlock();
+}
+
+void cHeightMapTerrainEdit::SaveToRawFile(){
+	FILE* fp = NULL;
+	fopen_s(&fp, "test.raw", "w+b");
+
+	for (auto p : m_vecVertex){
+		fputc(static_cast<char>(p.p.y * 10), fp);
+	}
+
+	//fputc()
+
+	fclose(fp);
 }

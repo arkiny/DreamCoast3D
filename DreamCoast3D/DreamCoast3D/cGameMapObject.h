@@ -32,5 +32,6 @@ public:
 	virtual void RemoveObejctOnTile(cGameObject* pGameObejct, int nX, int nZ);
 
 	virtual void ChangeMapYVertexCoord(D3DXVECTOR2 vMin, D3DXVECTOR2 vMax, float fDelta){}
+	virtual std::vector<ST_PNT_VERTEX>& GetVertexVectorByRef() { return std::vector<ST_PNT_VERTEX>(); }
 };
 
