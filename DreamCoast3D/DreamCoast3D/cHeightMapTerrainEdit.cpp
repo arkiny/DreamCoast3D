@@ -106,6 +106,9 @@ void cHeightMapTerrainEdit::Update(float fDelta){
 	if (GetAsyncKeyState(VK_DOWN)){
 		ChangeMapYVertexCoord(D3DXVECTOR2(30, 30), D3DXVECTOR2(50, 50), -10.0f);
 	}
+	if (GetAsyncKeyState(VK_F5)){
+		SaveToRawFile();
+	}
 }
 
 void cHeightMapTerrainEdit::Render(){
@@ -140,9 +143,17 @@ void cHeightMapTerrainEdit::Render(){
 }
 
 void cHeightMapTerrainEdit::ChangeMapYVertexCoord(D3DXVECTOR2 vMin, D3DXVECTOR2 vMax, float fDelta){
-	for (int z = vMin.y; z < vMax.y; z++){
-		for (int x = vMin.x; x < vMax.x; x++){
-			m_vecVertex[z*(m_nTileN + 1) + x].p.y += fDelta;
+	for (int z = (int)vMin.y; z < (int)vMax.y; z++){
+		for (int x = (int)vMin.x; x < (int)vMax.x; x++){
+			
+			float check = m_vecVertex[z*(m_nTileN + 1) + x].p.y + fDelta;
+			if (check > 25.6f){
+				check = 25.5f;
+			}
+			else if (check < 0){
+				check = 0;
+			}
+			m_vecVertex[z*(m_nTileN + 1) + x].p.y = check;
 		}
 	}
 
@@ -150,4 +161,22 @@ void cHeightMapTerrainEdit::ChangeMapYVertexCoord(D3DXVECTOR2 vMin, D3DXVECTOR2 
 	m_pVertexBuffer->Lock(0, 0, (void**)&v, 0);
 	memcpy(v, &m_vecVertex[0], m_vecVertex.size() * sizeof(ST_PNT_VERTEX));
 	m_pVertexBuffer->Unlock();
+}
+
+void cHeightMapTerrainEdit::SaveToRawFile(){
+	FILE* fp = NULL;
+	fopen_s(&fp, "../Resources/Map/test.raw", "w+b");
+
+	//unsigned char y = fgetc(fp);
+	//m_vecVertex[z * (m_nTileN + 1) + x].p = D3DXVECTOR3((float)x, y / 10.0f, (float)z);
+
+	unsigned int c;
+	for (auto p : m_vecVertex){
+		unsigned char uc = (unsigned char)(p.p.y * 10.0f);
+		fprintf(fp, "%c", uc);
+	}
+
+	//fputc()
+
+	fclose(fp);
 }

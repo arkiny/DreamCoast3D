@@ -1,0 +1,23 @@
+*GAMESKYOBJ
+*SKINNEDMESH_LIST {
+*SKINNEDMESH_LIST_COUNT 4
+*SKINNEDMESH 0 {
+*SKINNEDMESH_PATH "../Resources/Char/Tera/"
+*SKINNEDMESH_FILE "Popori_F_Body03.X"
+}
+*SKINNEDMESH 1 {
+*SKINNEDMESH_PATH "../Resources/Char/Tera/"
+*SKINNEDMESH_FILE "Popori_F_Face03.X"
+}
+*SKINNEDMESH 2 {
+*SKINNEDMESH_PATH "../Resources/Char/Tera/"
+*SKINNEDMESH_FILE "Popori_F_L0_Hair02.X"
+}
+*SKINNEDMESH 3 {
+*SKINNEDMESH_PATH "../Resources/Char/Tera/"
+*SKINNEDMESH_FILE "Monster_SnowmanRed.X"
+}
+}
+
+
+
