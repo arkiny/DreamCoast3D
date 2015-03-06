@@ -50,13 +50,20 @@ void cSceneTerrainEdit::Update(float delta){
 		m_pCurrentMap->Update(delta);
 	}	
 	if (m_pMousPicking && m_pCurrentMap){
+		m_pMousPicking->SetVertex(m_pCurrentMap->GetVertexVectorByRef());
 		m_pMousPicking->Update();
+	}
+	if (m_pEffectManager){
+		m_pEffectManager->Update(delta);
 	}
 }
 
 void cSceneTerrainEdit::Render(){
 	if (m_pCurrentMap){
 		m_pCurrentMap->Render();
+	}
+	if (m_pEffectManager){
+		m_pEffectManager->Render();
 	}
 }
 
