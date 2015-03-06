@@ -31,6 +31,8 @@ cSceneEditMode::cSceneEditMode()
 	ZeroMemory(m_vClickFrom, sizeof(D3DXVECTOR3));
 	ZeroMemory(m_vClickTo, sizeof(D3DXVECTOR3));
 
+	
+
 	ZeroMemory(m_vTileFrom, sizeof(D3DXVECTOR3));
 	ZeroMemory(m_vTileTo, sizeof(D3DXVECTOR3));
 	m_fHeight = 0.f;

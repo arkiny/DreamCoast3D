@@ -150,9 +150,9 @@ private:
 	D3DXVECTOR3 m_vClickTo;
 
 	D3DXVECTOR3 m_vTileFrom;
-	D3DXVECTOR3 vTileTo;
+	D3DXVECTOR3 m_vTileTo;
 
-	void ClickTileUpdate();
+	void TileRangeUpdate();
 	float m_fHeight;
 	float m_fWidth;
 
