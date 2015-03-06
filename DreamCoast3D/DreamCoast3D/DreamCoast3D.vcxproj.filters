@@ -333,6 +333,7 @@
     </ClCompile>
     <ClCompile Include="cHeightMapTerrainEdit.cpp" />
     <ClCompile Include="cSceneTerrainEdit.cpp" />
+    <ClCompile Include="cEditCursor.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cAction.h">
@@ -679,6 +680,7 @@
     </ClInclude>
     <ClInclude Include="cHeightMapTerrainEdit.h" />
     <ClInclude Include="cSceneTerrainEdit.h" />
+    <ClInclude Include="cEditCursor.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="DreamCoast3D.ico">

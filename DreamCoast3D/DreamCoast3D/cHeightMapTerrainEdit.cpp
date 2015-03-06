@@ -9,14 +9,15 @@ m_pIndexBuffer(NULL)
 	// MS
 	m_isRclick = false;
 	eClick = E_ClickEmpty;
-	ZeroMemory(m_vClickFrom, sizeof(D3DXVECTOR3));
-	ZeroMemory(m_vClickTo, sizeof(D3DXVECTOR3));
-	ZeroMemory(m_vTileFrom, sizeof(D3DXVECTOR3));
-	ZeroMemory(m_vTileTo, sizeof(D3DXVECTOR3));
+	ZeroMemory(&m_vClickFrom, sizeof(D3DXVECTOR3));
+	ZeroMemory(&m_vClickTo, sizeof(D3DXVECTOR3));
+	ZeroMemory(&m_vTileFrom, sizeof(D3DXVECTOR3));
+	ZeroMemory(&m_vTileTo, sizeof(D3DXVECTOR3));
+	ZeroMemory(&m_stBoxMtl, sizeof(D3DMATERIAL9));
+	
 	m_fHeight = 1.f;
 	m_fWidth = 1.f;
 
-	m_pMousPicking = nullptr;
 }
 
 
@@ -24,15 +25,21 @@ cHeightMapTerrainEdit::~cHeightMapTerrainEdit()
 {
 	SAFE_RELEASE(m_pVertexBuffer);
 	SAFE_RELEASE(m_pIndexBuffer);
+	SAFE_RELEASE(m_pBoxMesh);
 
-	SAFE_DELETE(m_pMousPicking);
 }
 
 void cHeightMapTerrainEdit::Setup(){
+
+	D3DXCreateBox(g_pD3DDevice, 1.0f, 1.0f, 1.0f, &m_pBoxMesh, 0);
 	
-	m_stMtl.Ambient = D3DXCOLOR(0.7f, 0.7f, 0.7f, 1.0f);
-	m_stMtl.Diffuse = D3DXCOLOR(0.7f, 0.7f, 0.7f, 1.0f);
-	m_stMtl.Specular = D3DXCOLOR(0.7f, 0.7f, 0.7f, 1.0f);
+	m_stMtl.Ambient = D3DXCOLOR(0.2f, 0.4f, 0.2f, 1.0f);
+	m_stMtl.Diffuse = D3DXCOLOR(0.2f, 0.4f, 0.2f, 1.0f);
+	m_stMtl.Specular = D3DXCOLOR(0.2f, 0.4f, 0.2f, 1.0f);
+
+	m_stBoxMtl.Ambient = D3DXCOLOR(0.2f, 0.2f, 0.7f, 1.0f);
+	m_stBoxMtl.Diffuse = D3DXCOLOR(0.2f, 0.2f, 0.7f, 1.0f);
+	m_stBoxMtl.Specular = D3DXCOLOR(0.2f, 0.2f, 0.7f, 1.0f);
 
 	m_vecVertex.resize((m_nTileN + 1) * (m_nTileN + 1));
 
@@ -108,19 +115,9 @@ void cHeightMapTerrainEdit::Setup(){
 	m_pIndexBuffer->Lock(0, 0, (void**)&indices, 0);
 	memcpy(indices, &m_vecIndex[0], m_vecIndex.size() * sizeof(DWORD));
 	m_pIndexBuffer->Unlock();
-
-	m_pMousPicking = new cMousePicking;
-	m_pMousPicking->SetVertex(m_vecVertex);
 }
 
 void cHeightMapTerrainEdit::Update(float fDelta){
-
-	m_pMousPicking->Update();
-
-	MouseUpdate();
-	MouseRangeUpdate();
-	TileRangeUpdate();
-
 	D3DXVECTOR2 vFrom(0.f, 0.f);
 	D3DXVECTOR2 vTo(0.f, 0.f);
 
@@ -130,12 +127,19 @@ void cHeightMapTerrainEdit::Update(float fDelta){
 	vTo.x = (int)m_vTileTo.x;
 	vTo.y = (int)m_vTileTo.z;
 
-	if (GetAsyncKeyState(VK_UP)){
-		ChangeMapYVertexCoord(vFrom, vTo, 1.0f);
+	m_vBoxPos.x = (m_vTileFrom.x + ((m_vTileTo.x - m_vTileFrom.x) / 2.0f)) - 0.5f;
+	m_vBoxPos.z = (m_vTileTo.z - ((m_vTileTo.z - m_vTileFrom.z) / 2.0f)) - 0.5f;
+	m_vBoxPos.y = 0.0f;
 
+	m_vBoxScale.x = m_vTileTo.x - m_vTileFrom.x;
+	m_vBoxScale.z = m_vTileTo.z - m_vTileFrom.z;
+	m_vBoxScale.y = 1.0f;
+
+	if (GetAsyncKeyState(VK_UP)){
+		ChangeMapYVertexCoord(vFrom, vTo, 0.1f);
 	}
 	if (GetAsyncKeyState(VK_DOWN)){
-		ChangeMapYVertexCoord(vFrom, vTo, -1.0f);
+		ChangeMapYVertexCoord(vFrom, vTo, -.1f);
 	}
 	if (GetAsyncKeyState(VK_F5)){
 		SaveToRawFile();
@@ -156,8 +160,25 @@ void cHeightMapTerrainEdit::Render(){
 
 		g_pD3DDevice->DrawIndexedPrimitive(D3DPT_TRIANGLELIST,
 			0, 0, m_vecVertex.size(), 0, m_vecIndex.size());
+
+		if (m_pBoxMesh){
+			D3DXMATRIXA16 mat, matS;
+			
+			D3DXMatrixScaling(&matS, m_vBoxScale.x, m_vBoxScale.y, m_vBoxScale.z);
+			D3DXMatrixTranslation(&mat, m_vBoxPos.x, m_vBoxPos.y, m_vBoxPos.z);
+			
+			mat = matS * mat;
+			
+			g_pD3DDevice->SetTransform(D3DTS_WORLD, &mat);
+			g_pD3DDevice->SetMaterial(&m_stBoxMtl);
+			g_pD3DDevice->SetTexture(0, NULL);
+			m_pBoxMesh->DrawSubset(0);
+		}
+
 		g_pD3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
 
+
+	
 	/*}
 	else{
 		D3DXMATRIXA16 matWorld;
@@ -263,62 +284,6 @@ void cHeightMapTerrainEdit::SaveToRawFile(){
 	//fputc()
 
 	fclose(fp);
-}
-
-void cHeightMapTerrainEdit::MouseUpdate()
-{
-	if (g_pControlManager->GetInputInfo(VK_RBUTTON))
-	{
-		if (eClick == E_ClickOn)
-		{
-			eClick = E_Clicking;
-		}
-		if (eClick == E_ClickEmpty)
-		{
-			eClick = E_ClickOn;
-		}
-	}
-
-	if (!g_pControlManager->GetInputInfo(VK_RBUTTON))
-	{
-		if (eClick == E_ClickOff)
-		{
-			eClick = E_ClickEmpty;
-		}
-
-		if (eClick == E_Clicking)
-		{
-			eClick = E_ClickOff;
-		}
-	}
-}
-
-void cHeightMapTerrainEdit::MouseRangeUpdate()
-{
-	if (eClick == E_ClickOn)
-	{
-		m_vClickFrom = m_pMousPicking->GetPickingPoint();
-	}
-
-	if (eClick == E_ClickOff)
-	{
-		m_vClickTo = m_pMousPicking->GetPickingPoint();
-		m_vTileFrom = m_vClickFrom;
-		m_vTileTo = m_vTileFrom;
-	}
-}
-
-void cHeightMapTerrainEdit::TileRangeUpdate()
-{
-	if (g_pControlManager->GetInputInfo('P'))
-	{
-		m_vTileTo.x += m_fWidth;
-	}
-
-	if (g_pControlManager->GetInputInfo('O'))
-	{
-		m_vTileTo.z += m_fHeight;
-	}
 }
 
 void cHeightMapTerrainEdit::SetClickRange(D3DXVECTOR3 vFrom, D3DXVECTOR3 vTo)

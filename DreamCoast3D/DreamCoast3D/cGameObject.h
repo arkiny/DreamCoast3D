@@ -49,8 +49,6 @@ public:
 	
 	virtual ST_BOUNDING_SPHERE*	GetBoundingSphere();
 
-
-
 	virtual ST_BOUNDING_BOX*	GetBoundingBox();
 	virtual void				SetBoundingBox(ST_BOUNDING_BOX* pBoundingBox) { 
 		//m_pBoundingBox->vMin = pBoundingBox->vMin; 
