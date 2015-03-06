@@ -25,18 +25,7 @@ cSceneEditMode::cSceneEditMode()
 	InitializeCriticalSection(&gCriticalSectionEditMode);
 	m_rectFontArea = { 0, 0, 200, 200 };
 
-	// MS
-	m_isRclick = false;
-	eClick = E_ClickEmpty;
-	ZeroMemory(m_vClickFrom, sizeof(D3DXVECTOR3));
-	ZeroMemory(m_vClickTo, sizeof(D3DXVECTOR3));
 
-	
-
-	ZeroMemory(m_vTileFrom, sizeof(D3DXVECTOR3));
-	ZeroMemory(m_vTileTo, sizeof(D3DXVECTOR3));
-	m_fHeight = 0.f;
-	m_fWidth = 0.f;
 }
 
 
@@ -207,9 +196,6 @@ void cSceneEditMode::Update(float delta){
 			}
 		}
 	}
-
-	MouseUpdate();
-	MouseRangeUpdate();
 }
 
 void cSceneEditMode::Render(){
@@ -726,86 +712,5 @@ std::string cSceneEditMode::GetPlayableGameObjectAsString(){
 	return ss.str();
 }
 
-void cSceneEditMode::MouseUpdate()
-{
-	if (g_pControlManager->GetInputInfo(VK_RBUTTON))
-	{
-		if (eClick == E_ClickOn)
-		{
-			eClick = E_Clicking;
-		}
-		if (eClick == E_ClickEmpty)
-		{
-			eClick = E_ClickOn;
-		}
-	}
 
-	if (!g_pControlManager->GetInputInfo(VK_RBUTTON))
-	{
-		if (eClick == E_ClickOff)
-		{
-			eClick = E_ClickEmpty;
-		}
-		
-		if (eClick == E_Clicking)
-		{
-			eClick = E_ClickOff;
-		}
-	}
-}
-
-void cSceneEditMode::MouseRangeUpdate()
-{
-	if (eClick == E_ClickOn)
-	{
-		m_vClickFrom = m_pMousPicking->GetPickingPoint();
-	}
-
-	if (eClick == E_ClickOff)
-	{
-		m_vClickTo = m_pMousPicking->GetPickingPoint();
-		m_vTileFrom = m_vClickFrom;
-		m_vTileTo = m_vTileFrom;
-	}
-}
-
-void cSceneEditMode::TileRangeUpdate()
-{
-	m_vTileTo.x += m_fWidth;
-	m_vTileTo.z += m_fHeight;
-	if (g_pControlManager->GetInputInfo('P'))
-	{
-		m_fWidth += 1;
-	}
-
-	if (g_pControlManager->GetInputInfo('O'))
-	{
-		m_fHeight += 1;
-	}
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-void cSceneEditMode::SetClickRange(D3DXVECTOR3 vFrom, D3DXVECTOR3 vTo)
-{
-	D3DXVECTOR3 vFromFilterd(0.f, 0.f, 0.f);
-	D3DXVECTOR3 vToFilterd(0.f, 0.f, 0.f);
-
-	vFromFilterd = vFrom;
-	vToFilterd = vTo;
-
-	vFromFilterd.y = 0.f;
-	vToFilterd.y = 0.f;
-}
 

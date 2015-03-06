@@ -131,32 +131,6 @@ public:
 	// 모든 리소스를 해제한다.
 	virtual void Exit();
 
-private:
-	// MS
-	bool m_isRclick;
 
-	enum eClickMessage
-	{
-		E_ClickOn,
-		E_Clicking,
-		E_ClickOff,
-		E_ClickEmpty,
-		E_Max,
-	};
-	void MouseUpdate();
-	void MouseRangeUpdate();
-	eClickMessage eClick;
-	D3DXVECTOR3 m_vClickFrom;
-	D3DXVECTOR3 m_vClickTo;
-
-	D3DXVECTOR3 m_vTileFrom;
-	D3DXVECTOR3 m_vTileTo;
-
-	void TileRangeUpdate();
-	float m_fHeight;
-	float m_fWidth;
-
-	// 잠시 대기
-	void SetClickRange(D3DXVECTOR3 vFrom, D3DXVECTOR3 vTo);
 };
 

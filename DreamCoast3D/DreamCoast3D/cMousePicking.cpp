@@ -188,13 +188,13 @@ void cMousePicking::IntersetionTriUpdate()
 				if (isColliedTri == true)
 				{
 					m_vClickedPosition = ray.vecOrigin + (fDist*ray.vecDirection);
-					cEffectFireBall* pcheck = new cEffectFireBall;
-					pcheck->Setup();
-					pcheck->SetPosition(m_vClickedPosition);
-					if (m_pEffectDelegate){
-						m_pEffectDelegate->AddEffect(pcheck);
-						pcheck->Release();
-					}
+					//cEffectFireBall* pcheck = new cEffectFireBall;
+					//pcheck->Setup();
+					//pcheck->SetPosition(m_vClickedPosition);
+					//if (m_pEffectDelegate){
+					//	m_pEffectDelegate->AddEffect(pcheck);
+					//	pcheck->Release();
+					//}
 					return;
 				}
 				isColliedTri = D3DXIntersectTri(
@@ -207,13 +207,13 @@ void cMousePicking::IntersetionTriUpdate()
 				if (isColliedTri == true)
 				{
 					m_vClickedPosition = ray.vecOrigin + (fDist*ray.vecDirection);
-					cEffectFireBall* pcheck = new cEffectFireBall;
-					pcheck->Setup();
-					pcheck->SetPosition(m_vClickedPosition);
-					if (m_pEffectDelegate){
-						m_pEffectDelegate->AddEffect(pcheck);
-						pcheck->Release();
-					}
+					//cEffectFireBall* pcheck = new cEffectFireBall;
+					//pcheck->Setup();
+					//pcheck->SetPosition(m_vClickedPosition);
+					//if (m_pEffectDelegate){
+					//	m_pEffectDelegate->AddEffect(pcheck);
+					//	pcheck->Release();
+					//}
 					return;
 				}
 			}
