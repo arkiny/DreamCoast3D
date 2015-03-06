@@ -208,9 +208,8 @@ void cSceneEditMode::Update(float delta){
 		}
 	}
 
-	//MouseUpdate();
-	//MouseRangeUpdate();
-	//TileRangeUpdate();
+	MouseUpdate();
+	MouseRangeUpdate();
 }
 
 void cSceneEditMode::Render(){

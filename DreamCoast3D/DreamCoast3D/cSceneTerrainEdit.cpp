@@ -49,9 +49,9 @@ void cSceneTerrainEdit::Update(float delta){
 	if (m_pCurrentMap){
 		m_pCurrentMap->Update(delta);
 	}	
-	//if (m_pMousPicking && m_pCurrentMap){
-	//	m_pMousPicking->Update();
-	//}
+	if (m_pMousPicking && m_pCurrentMap){
+		m_pMousPicking->Update();
+	}
 }
 
 void cSceneTerrainEdit::Render(){

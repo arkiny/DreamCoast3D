@@ -131,7 +131,7 @@ public:
 	// 모든 리소스를 해제한다.
 	virtual void Exit();
 
-protected:
+private:
 	// MS
 	bool m_isRclick;
 
