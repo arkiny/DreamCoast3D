@@ -187,6 +187,59 @@ void cHeightMapTerrainEdit::ChangeMapYVertexCoord(D3DXVECTOR2 vMin, D3DXVECTOR2 
 			m_vecVertex[z*(m_nTileN + 1) + x].p.y = check;
 		}
 	}
+	// MS ¹üÀ§
+	D3DRECT rt;
+	rt.x1 = vMin.x;
+	rt.y1 = vMin.y;
+	rt.x2 = vMax.x;
+	rt.y2 = vMax.y;
+
+	float fWidth = (rt.x2 - rt.x1) / 2;
+	float wHeight = (rt.y2 - rt.y1) / 2;
+
+	D3DRECT rtLeft;
+	D3DRECT rtTop;
+	D3DRECT rtRight;
+	D3DRECT rtBottom;
+
+	rtLeft.x1 = rt.x1 - fWidth;
+	rtLeft.y1 = rt.y1;
+	rtLeft.x2 = rt.x1;
+	rtLeft.y2 = rt.y2;
+
+	rtTop.x1 = rt.x1;
+	rtTop.y1 = rt.y1 - m_fHeight;
+	rtTop.x2 = rt.x2;
+	rtTop.y2 = rt.y1;
+
+	rtRight.x1 = rt.x2;
+	rtRight.y1 = rt.y1;
+	rtRight.x2 = rt.x2 + m_fWidth;
+	rtRight.y2 = rt.y2;
+
+	rtBottom.x1 = rt.x1;
+	rtBottom.y1 = rt.y2;
+	rtBottom.x2 = rt.x2;
+	rtBottom.y2 = rt.y2 + m_fHeight;
+
+	for (int z = rtLeft.y1; z < rtLeft.y2; z++)
+	{
+		D3DXVECTOR3 vFrom(0.f, 0.f, 0.f);
+		D3DXVECTOR3 vTo(0.f, 0.f, 0.f);
+		vTo.x = rtLeft.x2;
+		vTo.z = z;
+		vTo.y = m_vecVertex[vTo.x + vTo.z * 257].p.y;
+		for (int x = rtLeft.x1; x < rtLeft.x2; x++)
+		{
+			vFrom.x = x;
+			vFrom.z = z;
+			vFrom.y = m_vecVertex[vFrom.x + vFrom.z * 257].p.y;
+			float nX = (x - rtLeft.x1);
+			float nY = (rtLeft.x2 - rtLeft.x1);
+			float fDelta = nX / nY;
+			m_vecVertex[x + z * 257].p.y -= Linear(vFrom, vTo, fDelta).y;
+		}
+	}
 
 	ST_PNT_VERTEX* v;
 	m_pVertexBuffer->Lock(0, 0, (void**)&v, 0);
