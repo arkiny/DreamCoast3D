@@ -117,6 +117,7 @@
     <ClInclude Include="cCamera.h" />
     <ClInclude Include="cCameraEditing.h" />
     <ClInclude Include="cControlManager.h" />
+    <ClInclude Include="cDataItem.h" />
     <ClInclude Include="cDeviceManager.h" />
     <ClInclude Include="cEffect.h" />
     <ClInclude Include="cEffectFireBall.h" />
@@ -188,6 +189,7 @@
     <ClInclude Include="cSphere.h" />
     <ClInclude Include="cSphereAction.h" />
     <ClInclude Include="cTransform.h" />
+    <ClInclude Include="cUISlot.h" />
     <ClInclude Include="cUIStatWindow.h" />
     <ClInclude Include="cUISystemMenu.h" />
     <ClInclude Include="cUISystemTest.h" />
@@ -229,6 +231,7 @@
     <ClCompile Include="cCamera.cpp" />
     <ClCompile Include="cCameraEditing.cpp" />
     <ClCompile Include="cControlManager.cpp" />
+    <ClCompile Include="cDataItem.cpp" />
     <ClCompile Include="cDeviceManager.cpp" />
     <ClCompile Include="cEffect.cpp" />
     <ClCompile Include="cEffectFireBall.cpp" />
@@ -300,6 +303,7 @@
     <ClCompile Include="cSphere.cpp" />
     <ClCompile Include="cSphereAction.cpp" />
     <ClCompile Include="cTransform.cpp" />
+    <ClCompile Include="cUISlot.cpp" />
     <ClCompile Include="cUIStatWindow.cpp" />
     <ClCompile Include="cUISystemMenu.cpp" />
     <ClCompile Include="cUISystemTest.cpp" />

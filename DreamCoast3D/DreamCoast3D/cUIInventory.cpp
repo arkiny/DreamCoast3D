@@ -1,12 +1,16 @@
 #include "stdafx.h"
 #include "cUIInventory.h"
 #include "cUIImageView.h"
+#include "cDataItem.h"
 
 //TODO:
 //화면 밖으로 못벗어나게 하기
 //화면 가장자리 근처에서는 자석같은 느낌으로
 //열때 닫을때 애니메이션 + 애니메이션 끝나기 전에는 상호작용은 무시
 //HACK: 드래그로 화면 밖으로 이동을 시도 했을때 마우스가 원위치로 돌아오기 전에 가장자리에서 떨어져야 더 반응성이 좋을 것 같다.
+
+//아이콘에 스프라이트 이미지를 가지게 한다.
+//이제 짜놓은 구조를 엮어야된다.
 
 cUIInventory::cUIInventory()
 	: m_isDragging(false)
@@ -26,6 +30,10 @@ cUIInventory::~cUIInventory()
 	SAFE_RELEASE(m_pSprite);
 	SAFE_RELEASE(m_pImageViewMouseOver);
 	SAFE_RELEASE(m_pImageViewMouseDown);
+	for (size_t i = 0; i < m_vecItem.size(); ++i)
+	{
+		SAFE_RELEASE(m_vecItem[i]);
+	}
 }
 
 void cUIInventory::Setup()
@@ -42,21 +50,26 @@ void cUIInventory::Setup()
 	GetClientRect(g_hWnd, &clientRect);
 	//스프라이트 생성
 	D3DXCreateSprite(g_pD3DDevice, &m_pSprite);
-	
+
+	m_vecItem.resize(40);//8*5 사이즈
+
+#pragma region 인벤토리 바탕 초기화
 	//인벤토리 바탕
 	cUIImageView* pImageView = new cUIImageView(m_pSprite);
 	pImageView->SetTextureFilename(std::string("../Resources/UI/UI_INVENTORY/BG_Inventory.tga"));
-	pImageView->SetScale(D3DXVECTOR3(1.f, 1.f, 1.0f));
-	
+
 	//실제 그려질 크기. 이미지 파일의 크기와 실제 이미지인 부분이 다르기 때문에 직접 지정해준다.
 	RECT drawArea = { 0, 0, 472, 436 };
 	pImageView->SetDrawArea(drawArea);
 	//위치(x, y)
 	pImageView->SetPosition(D3DXVECTOR3(50, 50, 0));
+	pImageView->SetAlpha(0);
+	pImageView->SetScale(D3DXVECTOR3(1.f, pImageView->GetAlpha()+0.1f, 1.0f));
 	m_pUIRoot = pImageView;
 
 	//드래그되기 전 좌표를 현재 좌표로 초기화
 	SetBeforeDragPos(m_pUIRoot->GetPosition());
+#pragma endregion
 
 	//마우스 오버시 보일 테두리
 	m_pImageViewMouseOver = new cUIImageView(m_pSprite);
@@ -65,7 +78,6 @@ void cUIInventory::Setup()
 	m_pImageViewMouseOver->SetPosition(D3DXVECTOR3(0, 0, 0));
 
 	//마우스 클릭시 보일 테두리
-	
 	m_pImageViewMouseDown = new cUIImageView(m_pSprite);
 	m_pImageViewMouseDown->SetTextureFilename(std::string("../Resources/UI/UI_INVENTORY/Component_I355.tga"));
 	drawArea = { 0, 0, 56, 56 };
@@ -122,16 +134,18 @@ void cUIInventory::Update(float fDelta)
 	{
 		m_isKeyHold = false;
 	}
+	//아이템 추가
+	if (!g_pControlManager->GetInputInfo('+'))
+	{
+		cDataItem* pItem = new cDataItem;
+		
+		AddItem(pItem);
+	}
 	//창이 열려 있을 때
 	if (GetisPopped())
 	{
-		if (m_isKeyHold == false && g_pControlManager->GetInputInfo(GetHotKey()))
-		{
-			SetisPopped(false);
-			m_isKeyHold = true;
-		}
 		//마우스 오버 슬롯 테두리
-		m_pFocusSlot = (cUIImageView*)FindFocusSlot(m_pUIRoot);
+		m_pFocusSlot = (cUISlot*)FindFocusSlot(m_pUIRoot);
 		if (m_pFocusSlot)
 		{
 			m_isMouseOverVisible = true;
@@ -142,7 +156,30 @@ void cUIInventory::Update(float fDelta)
 			m_isMouseOverVisible = false;
 			m_isMouseDownVisible = false;
 		}
+		//임시 효과
+		cUIImageView* pImageView = (cUIImageView*)m_pUIRoot;
+		float fAlpha = pImageView->GetAlpha();
+		if (fAlpha < 1.f)
+		{
+			fAlpha += 0.05f;
+			pImageView->SetAlpha(fAlpha);
+			pImageView->SetScale(D3DXVECTOR3(1.f, 1.f, 1.f));
+						
+			m_pImageViewMouseOver->SetAlpha(fAlpha);
+			m_pImageViewMouseDown->SetAlpha(fAlpha);
+		}
 
+		if (m_isKeyHold == false && g_pControlManager->GetInputInfo(GetHotKey()))
+		{
+			SetisPopped(false);
+			m_isKeyHold = true;
+			fAlpha = 0.f;
+			pImageView->SetAlpha(fAlpha);
+			pImageView->SetScale(D3DXVECTOR3(fAlpha, fAlpha, 1.f));
+						
+			m_pImageViewMouseOver->SetAlpha(fAlpha);
+			m_pImageViewMouseDown->SetAlpha(fAlpha);
+		}
 		//왼클릭Down시
 		if (g_pControlManager->GetInputInfo(VK_LBUTTON))
 		{
@@ -186,10 +223,10 @@ void cUIInventory::Render()
 	}
 }
 
-void cUIInventory::AddItem(cUIIcon& UIIcon)
+void cUIInventory::AddItem(cDataItem* pDataItem)
 {
 	//TODO: 여기서 아이콘 타입을 검사하고 아이템이면 인벤토리에 추가한다.
-	m_vecUIIcon.push_back(UIIcon);
+	m_vecItem.push_back(pDataItem);
 }
 void cUIInventory::OnMouseLBDown()
 {

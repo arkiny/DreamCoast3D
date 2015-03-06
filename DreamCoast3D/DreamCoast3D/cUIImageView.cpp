@@ -3,6 +3,7 @@
 
 cUIImageView::cUIImageView(LPD3DXSPRITE pSprite)
 	: cUIObject(pSprite)
+	, fAlpha(1.f)
 {
 	m_rectDrawArea = { 0, 0, 0, 0 };
 }
@@ -33,7 +34,7 @@ void cUIImageView::Render()
 		&m_rectDrawArea,
 		&D3DXVECTOR3(0, 0, 0),
 		&D3DXVECTOR3(0, 0, 0),
-		D3DCOLOR_XRGB(255, 255, 255));
+		D3DXCOLOR(1.f, 1.f, 1.f,GetAlpha()));
 
 	m_pSprite->End();
 

@@ -3,7 +3,10 @@
 #include "cUIPopupWindow.h"
 #include "iUIPopupWindowDelegate.h"
 #include "cUIIcon.h"
+#include "cUISlot.h"
+
 class cUIImageView;
+class cDataItem;
 
 class cUIInventory : public cUIPopupWindow, public iUIPopupWindowDelegate
 {
@@ -12,13 +15,14 @@ protected:
 	bool			m_isMouseOverVisible;	//마우스 오버 테두리 출력 여부 결정
 	cUIImageView*	m_pImageViewMouseDown;	//마우스 다운 되었을때 씌워질 테두리
 	bool			m_isMouseDownVisible;	//마우스 다운 테두리 출력 여부 결정
-	cUIImageView*	m_pFocusSlot;			//현재 하이라이트 된 슬롯
+	cUISlot*		m_pFocusSlot;			//현재 하이라이트 된 슬롯
 	//bool m_isEnable;					//활성화 되었는가
 	//bool m_isVisible;					//보이는 중인가(cUIPopupWindow bShow가 대신한다)
 	bool m_isDragging;					//드래그 되는 중인가
 	bool m_isKeyHold;					//키가 눌러진 중인가
 
-	std::vector<cUIIcon> m_vecUIIcon;	//인벤토리 안에 들어 있는 아이콘 벡터 컨테이너
+	std::vector<cUIIcon> m_vecUIIcon;		//인벤토리 안에 들어 있는 아이콘 벡터 컨테이너
+	std::vector<cDataItem*> m_vecItem;	//인벤토리 안에 들어 있는 아이템 벡터 컨테이너
 	//SYNTHESIZE(iUIPopupWindowDelegate*, m_pUIPopupWindowDelegate, UIPopupWindowDelegate);
 	SYNTHESIZE(iUIPopupWindowDelegate*, m_pUIPopupWindowDelegate, UIPopupWindowDelegate);
 	SYNTHESIZE(D3DXVECTOR3, m_vBeforeDragPos, BeforeDragPos);
@@ -34,8 +38,8 @@ public:
 	virtual void cUIInventory::OnMouseLBUp() override;
 	virtual void cUIInventory::Drag() override;
 	
-	cUIObject* cUIInventory::FindFocusSlot(cUIObject* UIRoot);
+	virtual cUIObject* cUIInventory::FindFocusSlot(cUIObject* UIRoot);//override를 못붙인다?
 
-	void cUIInventory::AddItem(cUIIcon& UIIcon);
+	virtual void cUIInventory::AddItem(cDataItem* pDataItem);
 };
 

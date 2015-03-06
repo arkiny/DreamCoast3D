@@ -318,6 +318,12 @@
     <ClCompile Include="cMapToolCamera.cpp">
       <Filter>EachWorks\MS</Filter>
     </ClCompile>
+    <ClCompile Include="cUISlot.cpp">
+      <Filter>EachWorks\MW\Todo</Filter>
+    </ClCompile>
+    <ClCompile Include="cDataItem.cpp">
+      <Filter>EachWorks\MW\Todo</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cAction.h">
@@ -648,6 +654,12 @@
     <ClInclude Include="cGameObjectLoader4Edit.h" />
     <ClInclude Include="cMapToolCamera.h">
       <Filter>EachWorks\MS</Filter>
+    </ClInclude>
+    <ClInclude Include="cUISlot.h">
+      <Filter>EachWorks\MW\Todo</Filter>
+    </ClInclude>
+    <ClInclude Include="cDataItem.h">
+      <Filter>EachWorks\MW\Todo</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
