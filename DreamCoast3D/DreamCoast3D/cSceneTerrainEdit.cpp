@@ -83,6 +83,10 @@ void cSceneTerrainEdit::Update(float delta){
 	// ÇØ´ç Ä­ ¼±ÅÃ
 	if (GetAsyncKeyState(VK_LBUTTON)){
 		m_bIsClickDown = true;
+		m_pEditMap->SetClickFrom(D3DXVECTOR3(-1, -1, -1));
+		m_pEditMap->SetClickTo(D3DXVECTOR3(-1, -1, -1));
+		m_pEditMap->SetTileFrom(D3DXVECTOR3(-1, -1, -1));
+		m_pEditMap->SetTileTo(D3DXVECTOR3(-1, -1, -1));
 	}
 
 	if (GetAsyncKeyState(VK_LBUTTON) == false && m_bIsClickDown == true){

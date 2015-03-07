@@ -59,5 +59,14 @@ private:
 
 	D3DXVECTOR3 Linear(D3DXVECTOR3 vFrom, D3DXVECTOR3 vTo, float fDelta);
 	D3DXVECTOR3 Bazier(D3DXVECTOR3 vFirst, D3DXVECTOR3 vSecond, D3DXVECTOR3 vThird, float fDelta);
+
+	struct ST_Bazier
+	{
+		float fDis = 0.f;
+		D3DXVECTOR2 vPos;
+	};
+
+	std::vector<ST_Bazier> m_vecBazier;
+
 };
 

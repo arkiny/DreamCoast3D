@@ -345,6 +345,11 @@ void cHeightMapTerrainEdit::CalBazier(D3DXVECTOR2 vMin, D3DXVECTOR2 vMax)
 	D3DRECT rtRight;
 	D3DRECT rtBottom;
 
+	D3DRECT rtLeftTop;
+	D3DRECT rtRightTop;
+	D3DRECT rtLeftBottom;
+	D3DRECT rtRightBottom;
+
 	rtLeft.x1 = rt.x1 - fWidth;
 	rtLeft.y1 = rt.y1;
 	rtLeft.x2 = rt.x1;
@@ -364,6 +369,11 @@ void cHeightMapTerrainEdit::CalBazier(D3DXVECTOR2 vMin, D3DXVECTOR2 vMax)
 	rtBottom.y1 = rt.y2 - 1.f;
 	rtBottom.x2 = rt.x2;
 	rtBottom.y2 = rt.y2 + fHeight - 1.f;
+
+	rtLeftBottom.x1 = rtLeft.x1;
+	rtLeftBottom.y1 = rtLeft.y2;
+	rtLeftBottom.x2 = rtBottom.x1;
+	rtLeftBottom.y2 = rtBottom.y2;
 
 	D3DXVECTOR3 vFirst(0.f, 0.f, 0.f);
 	D3DXVECTOR3 vSecond(0.f, 0.f, 0.f);
@@ -385,14 +395,14 @@ void cHeightMapTerrainEdit::CalBazier(D3DXVECTOR2 vMin, D3DXVECTOR2 vMax)
 
 		vSecond.x = rtLeft.x2;
 		vSecond.z = z;
-        vSecond.y = m_vecVertex[vSecond.x + vSecond.z * 257].p.y;
+		vSecond.y = m_vecVertex[vSecond.x + vSecond.z * 257].p.y;
 
 		for (int x = rtLeft.x1; x < rtLeft.x2; x++)
 		{
 			float fX = (rtLeft.x2 - x);
 			float fY = (rtLeft.x2 - rtLeft.x1);
 			float fD = fX / fY;
-            D3DXVECTOR3 v = Bazier(vThird, vSecond, vFirst, fD);
+			D3DXVECTOR3 v = Bazier(vThird, vSecond, vFirst, fD);
 			m_vecVertex[x + z * 257].p.y = v.y;
 		}
 	}
@@ -411,41 +421,41 @@ void cHeightMapTerrainEdit::CalBazier(D3DXVECTOR2 vMin, D3DXVECTOR2 vMax)
 
 		vSecond.x = x;
 		vSecond.z = rtTop.y2;
-        vSecond.y = m_vecVertex[vSecond.x + vSecond.z * 257].p.y;
+		vSecond.y = m_vecVertex[vSecond.x + vSecond.z * 257].p.y;
 		for (int z = rtTop.y1; z < rtTop.y2; z++)
 		{
 			float fX = (rtTop.y2 - z);
 			float fY = (rtTop.y2 - rtTop.y1);
 			float fD = fX / fY;
-            D3DXVECTOR3 v = Bazier(vThird, vSecond, vFirst, fD);
+			D3DXVECTOR3 v = Bazier(vThird, vSecond, vFirst, fD);
 			m_vecVertex[x + z * 257].p.y = v.y;
 		}
 	}
 
-    // RIGHT
-    for (int z = rtRight.y1; z < rtRight.y2; z++)
-    {
-    	vFirst.x = rtRight.x1;
-    	vFirst.z = z;
-    	vFirst.y = m_vecVertex[vFirst.x + vFirst.z * 257].p.y;
+	// RIGHT
+	for (int z = rtRight.y1; z < rtRight.y2; z++)
+	{
+		vFirst.x = rtRight.x1;
+		vFirst.z = z;
+		vFirst.y = m_vecVertex[vFirst.x + vFirst.z * 257].p.y;
 
-    	vThird.x = rtRight.x2;
-    	vThird.z = z;
-    	vThird.y = m_vecVertex[vThird.x + vThird.z * 257].p.y;
+		vThird.x = rtRight.x2;
+		vThird.z = z;
+		vThird.y = m_vecVertex[vThird.x + vThird.z * 257].p.y;
 
-    	vSecond.x = rtRight.x1;
-    	vSecond.z = z;
-        vSecond.y = m_vecVertex[vSecond.x + vSecond.z * 257].p.y;
+		vSecond.x = rtRight.x1;
+		vSecond.z = z;
+		vSecond.y = m_vecVertex[vSecond.x + vSecond.z * 257].p.y;
 
-    	for (int x = rtRight.x1; x < rtRight.x2; x++)
-    	{
-    		float fX = (rtRight.x2 - x);
-    		float fY = (rtRight.x2 - rtRight.x1);
-    		float fD = fX / fY;
-            D3DXVECTOR3 v = Bazier(vFirst, vSecond, vThird, 1 - fD);
-    		m_vecVertex[x + z * 257].p.y = v.y;
-    	}
-    }
+		for (int x = rtRight.x1; x < rtRight.x2; x++)
+		{
+			float fX = (rtRight.x2 - x);
+			float fY = (rtRight.x2 - rtRight.x1);
+			float fD = fX / fY;
+			D3DXVECTOR3 v = Bazier(vFirst, vSecond, vThird, 1 - fD);
+			m_vecVertex[x + z * 257].p.y = v.y;
+		}
+	}
 
 	// BOTTOM
 	for (int x = rtBottom.x1; x < rtBottom.x2; x++)
@@ -460,15 +470,71 @@ void cHeightMapTerrainEdit::CalBazier(D3DXVECTOR2 vMin, D3DXVECTOR2 vMax)
 
 		vSecond.x = x;
 		vSecond.z = rtBottom.y1;
-        vSecond.y = m_vecVertex[vSecond.x + vSecond.z * 257].p.y;
+		vSecond.y = m_vecVertex[vSecond.x + vSecond.z * 257].p.y;
 		for (int z = rtBottom.y1; z < rtBottom.y2; z++)
 		{
-            //float fX = (z - rtBottom.y2);
+			//float fX = (z - rtBottom.y2);
 			float fX = (rtBottom.y2 - z);
 			float fY = (rtBottom.y2 - rtBottom.y1);
 			float fD = fX / fY;
-            D3DXVECTOR3 v = Bazier(vFirst, vSecond, vThird, 1 - fD);
+			D3DXVECTOR3 v = Bazier(vFirst, vSecond, vThird, 1 - fD);
 			m_vecVertex[x + z * 257].p.y = v.y;
+
+
 		}
 	}
+
+	// LEFTBOTTOM
+
+	float fLBWidth = (rtLeftBottom.x2 - rtLeftBottom.x1);
+	float fLBHeight = (rtLeftBottom.y2 - rtLeftBottom.y1);
+	for (int z = 0; z < fLBHeight; z++)
+	{
+		for (int x = 0; x < fLBWidth; x++)
+		{
+			ST_Bazier stBazier;
+			stBazier.vPos.x = x + rtLeftBottom.x1;
+			stBazier.vPos.y = z + rtLeftBottom.y1;
+			float fX = (stBazier.vPos.x - rt.x1)*(stBazier.vPos.x - rt.x1);
+			float fY = (stBazier.vPos.y - rt.y2)*(stBazier.vPos.y - rt.y2);
+			stBazier.fDis = int(sqrt(fX + fY));
+			m_vecBazier.push_back(stBazier);
+		}
+	}
+
+	for (int i = 0; i < m_vecBazier.size(); i++)
+	{
+		D3DXVECTOR3 vThird(0.f, 0.f, 0.f);
+		vThird.x = rtLeftBottom.x2;
+		vThird.z = rtLeftBottom.y1;
+		vThird.y = m_vecVertex[vThird.x + vThird.z * 257].p.y;
+
+		D3DXVECTOR3 vSecond(0.f, 0.f, 0.f);
+		vSecond.x = vThird.x;
+		vSecond.z = vThird.z;
+
+		float fTest = m_vecBazier[i].fDis;
+
+		if (fTest < fLBWidth)
+		{
+			D3DXVECTOR3 vFirst(-1.f, -1.f, -1.f);
+			vFirst.x = m_vecBazier[i].vPos.x;
+			vFirst.z = m_vecBazier[i].vPos.y;
+			vFirst.y = m_vecVertex[vFirst.x + vFirst.z * 257].p.y;
+
+			//D3DXVECTOR3 vSecond(0.f, 0.f, 0.f);
+			//vSecond.x = vFirst.x;
+			//vSecond.z = vFirst.z;
+			//vSecond.y = vFirst.y+10;
+
+			float fD = m_vecBazier[i].fDis / fLBWidth;
+
+			D3DXVECTOR3 v(-1.f, -1.f, -1.f);
+			v = Bazier(vThird, vSecond, vFirst, 1 - fD);
+			//D3DXVECTOR3 v = Linear(vFirst, vThird, 1-fD);
+			m_vecVertex[vFirst.x + vFirst.z * 257].p.y = v.y/4.5;
+		}
+	}
+	m_vecBazier.clear();
+
 }
