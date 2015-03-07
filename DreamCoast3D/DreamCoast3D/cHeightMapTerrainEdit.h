@@ -23,7 +23,7 @@ public:
 	virtual void Render();
 
 	virtual void ChangeMapYVertexCoord(D3DXVECTOR2 vMin, D3DXVECTOR2 vMax, float fDelta);
-	virtual std::vector<ST_PNT_VERTEX>& GetVertexVectorByRef() { return m_vecVertex; }
+	virtual std::vector<ST_PNT2_VERTEX>& GetVertexVectorByRef() { return m_vecVertex; }
 	virtual void SaveToRawFile();
 	//virtual void 
 

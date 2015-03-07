@@ -27,7 +27,7 @@ public:
 
 	virtual void AddChild(cASEInstance* pChild);
 	virtual void CalcLocalTM(D3DXMATRIXA16* pParent);
-	virtual void BuidlMesh(std::vector<ST_PNT_VERTEX>& vecVertex);
+	virtual void BuidlMesh(std::vector<ST_PNT2_VERTEX>& vecVertex);
 	
 	virtual void SetMtlTex(cMtlTex* pMtlTex);
 	virtual void Render(D3DXMATRIXA16* pParent);

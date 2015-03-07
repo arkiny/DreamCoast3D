@@ -31,7 +31,7 @@ public:
 	virtual std::vector<cGameObject*> GetAdjObjectCircle(int nX, int nZ, int nRange);
 	virtual void RemoveObejctOnTile(cGameObject* pGameObejct, int nX, int nZ);
 
-	virtual std::vector<ST_PNT_VERTEX>& GetVertexVectorByRef() { return std::vector<ST_PNT_VERTEX>(); }
+	virtual std::vector<ST_PNT2_VERTEX>& GetVertexVectorByRef() { return std::vector<ST_PNT2_VERTEX>(); }
 	virtual void ChangeMapYVertexCoord(D3DXVECTOR2 vMin, D3DXVECTOR2 vMax, float fDelta){}
 };
 

@@ -324,7 +324,7 @@ void cAseLoader::ProcessMesh( cASEInstance* pFrame )
 {
 	std::vector<D3DXVECTOR3>	vecV;
 	std::vector<D3DXVECTOR2>	vecVT;
-	std::vector<ST_PNT_VERTEX>	vecVertex;
+	std::vector<ST_PNT2_VERTEX>	vecVertex;
 
 	int nLevel = 0;
 	do 
@@ -399,7 +399,7 @@ void cAseLoader::ProcessMeshVertexList( std::vector<D3DXVECTOR3>& vecV )
 	} while (nLevel > 0);
 }
 
-void cAseLoader::ProcessMeshFaceList( OUT std::vector<ST_PNT_VERTEX>& vecVertex,
+void cAseLoader::ProcessMeshFaceList( OUT std::vector<ST_PNT2_VERTEX>& vecVertex,
 	IN std::vector<D3DXVECTOR3>& vecV )
 {
 	int nLevel = 0;
@@ -453,7 +453,7 @@ void cAseLoader::ProcessMeshTVertList( std::vector<D3DXVECTOR2>& vecVT )
 	} while (nLevel > 0);
 }
 
-void cAseLoader::ProcessMeshTFaceList( OUT std::vector<ST_PNT_VERTEX>& vecVertex, IN std::vector<D3DXVECTOR2>& vecVT )
+void cAseLoader::ProcessMeshTFaceList( OUT std::vector<ST_PNT2_VERTEX>& vecVertex, IN std::vector<D3DXVECTOR2>& vecVT )
 {
 	int nLevel = 0;
 	do 
@@ -473,14 +473,14 @@ void cAseLoader::ProcessMeshTFaceList( OUT std::vector<ST_PNT_VERTEX>& vecVertex
 			int nA = GetInteger();
 			int nB = GetInteger();
 			int nC = GetInteger();
-			vecVertex[nFaceIndex * 3 + 0].t = vecVT[nA];
-			vecVertex[nFaceIndex * 3 + 1].t = vecVT[nC];
-			vecVertex[nFaceIndex * 3 + 2].t = vecVT[nB];
+			vecVertex[nFaceIndex * 3 + 0].t1 = vecVT[nA];
+			vecVertex[nFaceIndex * 3 + 1].t1 = vecVT[nC];
+			vecVertex[nFaceIndex * 3 + 2].t1 = vecVT[nB];
 		}
 	} while (nLevel > 0);
 }
 
-void cAseLoader::ProcessMeshNormals( OUT std::vector<ST_PNT_VERTEX>& vecVertex )
+void cAseLoader::ProcessMeshNormals( OUT std::vector<ST_PNT2_VERTEX>& vecVertex )
 {
 	int nFaceIndex = 0;
 	int nIndexAtFace = 0;

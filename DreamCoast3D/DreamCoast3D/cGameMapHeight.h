@@ -5,10 +5,11 @@
 class cGameMapHeight : public cGameMapObject
 {
 protected:
-	std::vector<ST_PNT_VERTEX>	m_vecVertex;
+	std::vector<ST_PNT2_VERTEX>	m_vecVertex;
 	std::vector<DWORD>			m_vecIndex;
 
 	LPDIRECT3DTEXTURE9			m_pTexture;
+	LPDIRECT3DTEXTURE9			m_pTexture2;
 	
 	int							m_nTileN				= 256;
 	int							m_nBytePerColor			= 1;
@@ -17,8 +18,9 @@ protected:
 	D3DMATERIAL9				m_stMtl;
 
 	std::string					m_sRawFile;
-	std::string					m_sTexturePath;
 
+	std::string					m_sTexturePath;
+	std::string					m_sTexturePath2;
 	//cMousePicking* m_pMousePicking;
 
 public:
@@ -30,7 +32,7 @@ public:
 	//virtual void Update(float fDelta);
 	
 	virtual void Render();
-	virtual std::vector<ST_PNT_VERTEX>& GetVertexVectorByRef() { return m_vecVertex; }
+	virtual std::vector<ST_PNT2_VERTEX>& GetVertexVectorByRef() { return m_vecVertex; }
 	virtual void setTileN(int nTileN) { m_nTileN = nTileN; }
 	virtual void setBytePerColr(int nByte) { m_nBytePerColor = nByte; }
 

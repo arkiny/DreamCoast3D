@@ -48,7 +48,8 @@ void cHeightMapTerrainEdit::Setup(){
 		for (int x = 0; x <= m_nTileN; ++x)
 		{
 			m_vecVertex[z * (m_nTileN + 1) + x].p = D3DXVECTOR3((float)x, 0.0f, (float)z);
-			m_vecVertex[z * (m_nTileN + 1) + x].t = D3DXVECTOR2((float)x / (float)m_nTileN, z / (float)m_nTileN);
+			m_vecVertex[z * (m_nTileN + 1) + x].t1 = D3DXVECTOR2((float)x / (float)m_nTileN, z / (float)m_nTileN);
+			m_vecVertex[z * (m_nTileN + 1) + x].t2 = D3DXVECTOR2((float)x / (float)m_nTileN, z / (float)m_nTileN);
 			m_vecVertex[z * (m_nTileN + 1) + x].n = D3DXVECTOR3(0, 1, 0);
 		}
 	}
@@ -90,9 +91,9 @@ void cHeightMapTerrainEdit::Setup(){
 	}
 
 	g_pD3DDevice->CreateVertexBuffer(
-		m_vecVertex.size() * sizeof(ST_PNT_VERTEX),
+		m_vecVertex.size() * sizeof(ST_PNT2_VERTEX),
 		D3DUSAGE_WRITEONLY,
-		ST_PNT_VERTEX::FVF,
+		ST_PNT2_VERTEX::FVF,
 		D3DPOOL_MANAGED,
 		&m_pVertexBuffer,
 		0
@@ -106,9 +107,9 @@ void cHeightMapTerrainEdit::Setup(){
 		&m_pIndexBuffer,
 		0);
 
-	ST_PNT_VERTEX* v;
+	ST_PNT2_VERTEX* v;
 	m_pVertexBuffer->Lock(0, 0, (void**)&v, 0);
-	memcpy(v, &m_vecVertex[0], m_vecVertex.size() * sizeof(ST_PNT_VERTEX));
+	memcpy(v, &m_vecVertex[0], m_vecVertex.size() * sizeof(ST_PNT2_VERTEX));
 	m_pVertexBuffer->Unlock();
 	
 	DWORD* indices = 0;
@@ -119,13 +120,13 @@ void cHeightMapTerrainEdit::Setup(){
 	HRESULT hr = D3DXCreateMeshFVF(m_vecIndex.size() / 3,
 		m_vecVertex.size(),
 		D3DXMESH_MANAGED | D3DXMESH_32BIT,
-		ST_PNT_VERTEX::FVF,
+		ST_PNT2_VERTEX::FVF,
 		g_pD3DDevice,
 		&m_pMesh);
 
-	ST_PNT_VERTEX* pV = NULL;
+	ST_PNT2_VERTEX* pV = NULL;
 	m_pMesh->LockVertexBuffer(0, (LPVOID*)&pV);
-	memcpy(pV, &m_vecVertex[0], m_vecVertex.size() * sizeof(ST_PNT_VERTEX));
+	memcpy(pV, &m_vecVertex[0], m_vecVertex.size() * sizeof(ST_PNT2_VERTEX));
 	m_pMesh->UnlockVertexBuffer();
 
 	DWORD* pI = NULL;
@@ -189,7 +190,7 @@ void cHeightMapTerrainEdit::Render(){
 		g_pD3DDevice->SetMaterial(&m_stMtl);
 		g_pD3DDevice->SetTexture(0, NULL);
 	
-		g_pD3DDevice->SetStreamSource(0, m_pVertexBuffer, 0, sizeof(ST_PNT_VERTEX));
+		g_pD3DDevice->SetStreamSource(0, m_pVertexBuffer, 0, sizeof(ST_PNT2_VERTEX));
 		g_pD3DDevice->SetIndices(m_pIndexBuffer);
 
 		g_pD3DDevice->DrawIndexedPrimitive(D3DPT_TRIANGLELIST,
@@ -224,7 +225,7 @@ void cHeightMapTerrainEdit::Render(){
 		g_pD3DDevice->SetTransform(D3DTS_WORLD, &matWorld);
 		g_pD3DDevice->SetMaterial(&m_stMtl);
 		g_pD3DDevice->SetTexture(0, NULL);
-		g_pD3DDevice->SetStreamSource(0, m_pVertexBuffer, 0, sizeof(ST_PNT_VERTEX));
+		g_pD3DDevice->SetStreamSource(0, m_pVertexBuffer, 0, sizeof(ST_PNT2_VERTEX));
 		g_pD3DDevice->SetIndices(m_pIndexBuffer);
 
 		g_pD3DDevice->DrawIndexedPrimitive(D3DPT_TRIANGLELIST,
@@ -249,15 +250,15 @@ void cHeightMapTerrainEdit::ChangeMapYVertexCoord(D3DXVECTOR2 vMin, D3DXVECTOR2 
 
 	CalBazier(vMin, vMax);
 
-	ST_PNT_VERTEX* v;
+	ST_PNT2_VERTEX* v;
 	m_pVertexBuffer->Lock(0, 0, (void**)&v, 0);
-	memcpy(v, &m_vecVertex[0], m_vecVertex.size() * sizeof(ST_PNT_VERTEX));
+	memcpy(v, &m_vecVertex[0], m_vecVertex.size() * sizeof(ST_PNT2_VERTEX));
 	m_pVertexBuffer->Unlock();
 
 	// 라데온 글카에선 프리미티브인덱스가 잘 안보임 ㅡㅡ
-	ST_PNT_VERTEX* pV = NULL;
+	ST_PNT2_VERTEX* pV = NULL;
 	m_pMesh->LockVertexBuffer(0, (LPVOID*)&pV);
-	memcpy(pV, &m_vecVertex[0], m_vecVertex.size() * sizeof(ST_PNT_VERTEX));
+	memcpy(pV, &m_vecVertex[0], m_vecVertex.size() * sizeof(ST_PNT2_VERTEX));
 	m_pMesh->UnlockVertexBuffer();
 
 	DWORD* pI = NULL;
@@ -369,7 +370,7 @@ void cHeightMapTerrainEdit::CalBazier(D3DXVECTOR2 vMin, D3DXVECTOR2 vMax)
 	D3DXVECTOR3 vThird(0.f, 0.f, 0.f);
 
 
-    std::vector<ST_PNT_VERTEX> vecVertex = m_vecVertex;
+    std::vector<ST_PNT2_VERTEX> vecVertex = m_vecVertex;
 
 	// LEFT
 	for (int z = rtLeft.y1; z < rtLeft.y2; z++)

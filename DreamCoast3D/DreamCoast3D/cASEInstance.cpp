@@ -37,7 +37,7 @@ void cASEInstance::CalcLocalTM( D3DXMATRIXA16* pParent )
 	m_matLocalTM = m_matWorldTM * matInvParent;
 }
 
-void cASEInstance::BuidlMesh( std::vector<ST_PNT_VERTEX>& vecVertex )
+void cASEInstance::BuidlMesh( std::vector<ST_PNT2_VERTEX>& vecVertex )
 {
 	D3DXMATRIXA16 matInvWorld;
 	D3DXMatrixInverse(&matInvWorld, 0, &m_matWorldTM);
@@ -49,20 +49,20 @@ void cASEInstance::BuidlMesh( std::vector<ST_PNT_VERTEX>& vecVertex )
 
 	D3DXComputeBoundingBox(&vecVertex[0].p, 
 		vecVertex.size(), 
-		sizeof(ST_PNT_VERTEX), 
+		sizeof(ST_PNT2_VERTEX), 
 		&m_stBoundingBox.vMin, 
 		&m_stBoundingBox.vMax);
 
 	HRESULT hr = D3DXCreateMeshFVF(vecVertex.size() / 3,
 		vecVertex.size(),
 		D3DXMESH_MANAGED,
-		ST_PNT_VERTEX::FVF,
+		ST_PNT2_VERTEX::FVF,
 		g_pD3DDevice,
 		&m_pMesh);
 
-	ST_PNT_VERTEX* pV = NULL;
+	ST_PNT2_VERTEX* pV = NULL;
 	m_pMesh->LockVertexBuffer(0, (LPVOID*)&pV);
-	memcpy(pV, &vecVertex[0], vecVertex.size() * sizeof(ST_PNT_VERTEX));
+	memcpy(pV, &vecVertex[0], vecVertex.size() * sizeof(ST_PNT2_VERTEX));
 	m_pMesh->UnlockVertexBuffer();
 
 	WORD* pI = NULL;

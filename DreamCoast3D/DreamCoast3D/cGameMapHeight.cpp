@@ -8,6 +8,7 @@ cGameMapHeight::cGameMapHeight()
 	, m_nBytePerColor(1)
 	, m_pMesh(NULL)
 	, m_pTexture(NULL)
+	, m_pTexture2(NULL)
 {
 	ZeroMemory(&m_stMtl, sizeof(D3DMATERIAL9));
 }
@@ -16,6 +17,7 @@ cGameMapHeight::cGameMapHeight()
 cGameMapHeight::~cGameMapHeight()
 {
 	SAFE_RELEASE(m_pMesh);
+	SAFE_RELEASE(m_pTexture2);
 	//SAFE_DELETE(m_pMousePicking);
 }
 
@@ -23,7 +25,13 @@ void cGameMapHeight::LoadFromFiles(std::string sFilename, std::string sTextureFi
 	m_stMtl.Ambient = D3DXCOLOR(0.7f, 0.7f, 0.7f, 1.0f);
 	m_stMtl.Diffuse = D3DXCOLOR(0.7f, 0.7f, 0.7f, 1.0f);
 	m_stMtl.Specular = D3DXCOLOR(0.7f, 0.7f, 0.7f, 1.0f);
-	m_pTexture = g_pTextureManager->GetTexture(sTextureFilename);
+
+	// 높이에따른 텍스처
+	m_pTexture = g_pTextureManager->GetTexture(std::string("../Resources/Map/TerrainHeightGradient2.png"));
+	
+	// 재질 // 재질을 바르면 그림자 노말맵이 표현 안댐? 어떻게 해야함?
+	m_pTexture2 = g_pTextureManager->GetTexture(std::string("../Resources/Map/terrain_detail_texture.jpg"));
+
 
 	std::vector<DWORD>			vecIndex;
 
@@ -39,10 +47,15 @@ void cGameMapHeight::LoadFromFiles(std::string sFilename, std::string sTextureFi
 		{
 			unsigned char y = fgetc(fp);
 			m_vecVertex[z * (m_nTileN + 1) + x].p = D3DXVECTOR3((float)x, y / 10.0f, (float)z);
-			m_vecVertex[z * (m_nTileN + 1) + x].t = D3DXVECTOR2((float)x / (float)m_nTileN, z / (float)m_nTileN);
+			//m_vecVertex[z * (m_nTileN + 1) + x].t1 = D3DXVECTOR2((float)x / (float)m_nTileN, z / (float)m_nTileN);
+			m_vecVertex[z * (m_nTileN + 1) + x].t1 = D3DXVECTOR2((y / 10.0f) / 25.6f, (y / 10.0f) / 25.6f);
+			m_vecVertex[z * (m_nTileN + 1) + x].t2 = D3DXVECTOR2((float)x/5.0f, (float)z/5.0f);
 			m_vecVertex[z * (m_nTileN + 1) + x].n = D3DXVECTOR3(0, 1, 0);
 		}
 	}
+	
+	// tiling
+	//
 
 	for (int z = 1; z < m_nTileN; ++z)
 	{
@@ -85,13 +98,13 @@ void cGameMapHeight::LoadFromFiles(std::string sFilename, std::string sTextureFi
 	HRESULT hr = D3DXCreateMeshFVF(vecIndex.size() / 3,
 		m_vecVertex.size(),
 		D3DXMESH_MANAGED | D3DXMESH_32BIT,
-		ST_PNT_VERTEX::FVF,
+		ST_PNT2_VERTEX::FVF,
 		g_pD3DDevice,
 		&m_pMesh);
 
-	ST_PNT_VERTEX* pV = NULL;
+	ST_PNT2_VERTEX* pV = NULL;
 	m_pMesh->LockVertexBuffer(0, (LPVOID*)&pV);
-	memcpy(pV, &m_vecVertex[0], m_vecVertex.size() * sizeof(ST_PNT_VERTEX));
+	memcpy(pV, &m_vecVertex[0], m_vecVertex.size() * sizeof(ST_PNT2_VERTEX));
 	m_pMesh->UnlockVertexBuffer();
 
 	DWORD* pI = NULL;
@@ -129,15 +142,31 @@ void cGameMapHeight::Render(){
 	//m_pMousePicking->Update();
 
 	if (GetAsyncKeyState(VK_TAB)){
-		g_pD3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
+		//g_pD3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
 		D3DXMATRIXA16 matWorld;
 		D3DXMatrixIdentity(&matWorld);
 		g_pD3DDevice->SetTransform(D3DTS_WORLD, &matWorld);
 		g_pD3DDevice->SetMaterial(&m_stMtl);
 		g_pD3DDevice->SetTexture(0, m_pTexture);
-		m_pMesh->DrawSubset(0);
-		g_pD3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
+		//g_pD3DDevice->SetFVF(m_pMesh->GetFVF());
+		
+		if (m_pTexture2){
+			g_pD3DDevice->SetTexture(1, m_pTexture2);
+			/*g_pD3DDevice->SetTextureStageState(0, D3DTSS_COLORARG1, D3DTA_TEXTURE);
+			g_pD3DDevice->SetTextureStageState(0, D3DTSS_COLOROP, D3DTOP_SELECTARG1);
+*/
+			g_pD3DDevice->SetTextureStageState(1, D3DTSS_COLORARG1, D3DTA_CURRENT);
+			g_pD3DDevice->SetTextureStageState(1, D3DTSS_COLORARG2, D3DTA_TEXTURE);
+			g_pD3DDevice->SetTextureStageState(1, D3DTSS_COLOROP, D3DTOP_ADDSIGNED);
 
+		/*	g_pD3DDevice->SetTextureStageState(0, D3DTSS_COLOROP, D3DTOP_SELECTARG1);
+			g_pD3DDevice->SetTextureStageState(0, D3DTSS_COLORARG1,
+								D3DTA_TEXTURE | D3DTA_ALPHAREPLICATE);*/
+		}
+
+		m_pMesh->DrawSubset(0);
+		//g_pD3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
+		g_pD3DDevice->SetTexture(1, NULL);
 	}
 	else{
 		D3DXMATRIXA16 matWorld;
@@ -145,7 +174,16 @@ void cGameMapHeight::Render(){
 		g_pD3DDevice->SetTransform(D3DTS_WORLD, &matWorld);
 		g_pD3DDevice->SetMaterial(&m_stMtl);
 		g_pD3DDevice->SetTexture(0, m_pTexture);
+		if (m_pTexture2){
+			g_pD3DDevice->SetTexture(1, m_pTexture2);
+			//g_pD3DDevice->SetTextureStageState(0, D3DTSS_COLORARG1, D3DTA_TEXTURE);
+			//g_pD3DDevice->SetTextureStageState(0, D3DTSS_COLOROP, D3DTOP_SELECTARG1);
+			g_pD3DDevice->SetTextureStageState(1, D3DTSS_COLORARG1, D3DTA_CURRENT);
+			g_pD3DDevice->SetTextureStageState(1, D3DTSS_COLORARG2, D3DTA_TEXTURE);
+			g_pD3DDevice->SetTextureStageState(1, D3DTSS_COLOROP, D3DTOP_ADDSIGNED);
+		}
 		m_pMesh->DrawSubset(0);
+		g_pD3DDevice->SetTexture(1, NULL);
 	}
 }
 

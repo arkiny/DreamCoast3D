@@ -16,7 +16,7 @@ cMousePicking::~cMousePicking()
 {
 }
 
-void cMousePicking::SetVertex(std::vector<ST_PNT_VERTEX> Vertex)
+void cMousePicking::SetVertex(std::vector<ST_PNT2_VERTEX> Vertex)
 {
 	m_vecVertex.resize(Vertex.size());
 	m_vecVertex = Vertex;

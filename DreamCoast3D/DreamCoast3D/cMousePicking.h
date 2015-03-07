@@ -20,7 +20,7 @@ public:
 	cMousePicking();
 	~cMousePicking();
 
-	void SetVertex(std::vector<ST_PNT_VERTEX> Vertex);
+	void SetVertex(std::vector<ST_PNT2_VERTEX> Vertex);
 	void Update();
 
 	D3DXVECTOR3 GetPickingPoint();
@@ -32,7 +32,7 @@ private:
 	void IntersetionTriUpdate();
 
 private:
-	std::vector<ST_PNT_VERTEX> m_vecVertex;
+	std::vector<ST_PNT2_VERTEX> m_vecVertex;
 	bool m_isRightButton;
 	D3DXVECTOR2 m_vMouse;
 	D3DXVECTOR2 m_vMouseMove;

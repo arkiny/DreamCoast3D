@@ -153,7 +153,7 @@ void cEffectFireBall::Render(){
 	g_pD3DDevice->SetTransform(D3DTS_WORLD, GetTransformMatrix());
 	g_pD3DDevice->DrawPrimitiveUP(D3DPT_POINTLIST, m_vecVertex.size(), &m_vecVertex[0], sizeof(ST_PC_VERTEX));
 	
-	g_pD3DDevice->SetFVF(ST_PNT_VERTEX::FVF);
+	g_pD3DDevice->SetFVF(ST_PNT2_VERTEX::FVF);
 
 	g_pD3DDevice->SetRenderState(D3DRS_LIGHTING, true);
 	g_pD3DDevice->SetRenderState(D3DRS_ZWRITEENABLE, true);

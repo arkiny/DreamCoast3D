@@ -37,10 +37,10 @@ private:
 	void	ProcessNodeTM(cASEInstance* pFrame);
 	void	ProcessMesh(cASEInstance* pFrame);
 	void	ProcessMeshVertexList(std::vector<D3DXVECTOR3>& vecV);
-	void	ProcessMeshFaceList(OUT std::vector<ST_PNT_VERTEX>& vecVertex, IN std::vector<D3DXVECTOR3>& vecV);
+	void	ProcessMeshFaceList(OUT std::vector<ST_PNT2_VERTEX>& vecVertex, IN std::vector<D3DXVECTOR3>& vecV);
 	void	ProcessMeshTVertList(std::vector<D3DXVECTOR2>& vecVT);
-	void	ProcessMeshTFaceList(OUT std::vector<ST_PNT_VERTEX>& vecVertex, IN std::vector<D3DXVECTOR2>& vecVT);
-	void	ProcessMeshNormals(OUT std::vector<ST_PNT_VERTEX>& vecVertex);
+	void	ProcessMeshTFaceList(OUT std::vector<ST_PNT2_VERTEX>& vecVertex, IN std::vector<D3DXVECTOR2>& vecVT);
+	void	ProcessMeshNormals(OUT std::vector<ST_PNT2_VERTEX>& vecVertex);
 	
 };
 
