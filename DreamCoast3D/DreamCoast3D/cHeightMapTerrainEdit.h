@@ -66,7 +66,7 @@ private:
 		D3DXVECTOR2 vPos;
 	};
 
-	std::vector<ST_Bazier> m_vecBazier;
+
 
 };
 
