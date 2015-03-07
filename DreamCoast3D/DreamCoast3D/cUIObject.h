@@ -24,7 +24,7 @@ protected:
 public:
 	cUIObject();
 	cUIObject(LPD3DXSPRITE pSprite);
-
+	
 	void* operator new(size_t i)
 	{
 		return _mm_malloc(i, 16);
@@ -38,6 +38,7 @@ public:
 	virtual ~cUIObject();
 
 	virtual void AddChild(cUIObject* pChild);
+	virtual void DeleteChild(cUIObject* pChild);
 	virtual std::vector<cUIObject*>& GetChild();
 
 	virtual void Setup(){}

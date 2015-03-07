@@ -18,14 +18,17 @@ class cDataItem : public cObject
 	};
 	SYNTHESIZE(cUIIcon*, m_pUIIcon, UIIcon);//인벤토리 안에 들어 갔을때 표시될 아이콘
 
-	EITEMTYPE	eItemType;
-	int			nItemNum;		//아이템/스킬 번호(규칙 필요)
-	bool		isStackable;	//겹쳐지는 아이템인지
-	int			nMaxStack;		//최대 몇개 까지 겹쳐지는지
-	int			nCurrStack;		//지금 몇개 겹쳐졌는지
+	EITEMTYPE	m_eItemType;
+	int			m_nItemNum;		//아이템/스킬 번호(규칙 필요)
+	bool		m_isStackable;	//겹쳐지는 아이템인지
+	size_t		m_nMaxStack;		//최대 몇개 까지 겹쳐지는지(기본값 5)
+	size_t		m_nCurrStack;		//지금 몇개 겹쳐졌는지
 
 public:
 	cDataItem();
+	cDataItem(cUIIcon* pUIIcon);
 	~cDataItem();
+	virtual void cDataItem::SetupItemData(EITEMTYPE	eItemType, int nItemNum, bool isStackable, size_t nMaxStack = 5);
+	//virtual void cDataItem::SetupItemIcon(cUIIcon* pUIIcon);	//만일 교체된다면 이전걸 해제 해줘야 하나? : 민우
 };
 

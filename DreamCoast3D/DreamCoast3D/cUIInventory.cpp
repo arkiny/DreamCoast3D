@@ -12,6 +12,8 @@
 //아이콘에 스프라이트 이미지를 가지게 한다.
 //이제 짜놓은 구조를 엮어야된다.
 
+//삭제된 슬롯에 빈칸이 되게 해야한다
+
 cUIInventory::cUIInventory()
 	: m_isDragging(false)
 	, m_pUIPopupWindowDelegate(nullptr)
@@ -28,11 +30,14 @@ cUIInventory::cUIInventory()
 cUIInventory::~cUIInventory()
 {
 	SAFE_RELEASE(m_pSprite);
+	
 	SAFE_RELEASE(m_pImageViewMouseOver);
 	SAFE_RELEASE(m_pImageViewMouseDown);
-	for (size_t i = 0; i < m_vecItem.size(); ++i)
+
+	//아이템 모두 해제
+	for (size_t i = 0; i < m_vecOwnItem.size(); ++i)
 	{
-		SAFE_RELEASE(m_vecItem[i]);
+		SAFE_RELEASE(m_vecOwnItem[i]);
 	}
 }
 
@@ -51,7 +56,8 @@ void cUIInventory::Setup()
 	//스프라이트 생성
 	D3DXCreateSprite(g_pD3DDevice, &m_pSprite);
 
-	m_vecItem.resize(40);//8*5 사이즈
+	m_vecOwnItem.resize(10);//소지하고 있는 아이템 갯수(종류가 되어야함)
+
 
 #pragma region 인벤토리 바탕(UIRoot) 초기화
 	//인벤토리 바탕(UIRoot)
@@ -84,7 +90,10 @@ void cUIInventory::Setup()
 	m_pImageViewMouseDown->SetPosition(D3DXVECTOR3(56, 0, 0));
 
 	//슬롯들 배치
-	SetSlot(5, 8);
+	SetupSlot(5, 8);
+
+	//기능 테스트용 초기화
+	SetupTest();
 	
 }
 void cUIInventory::Update(float fDelta)
@@ -95,17 +104,30 @@ void cUIInventory::Update(float fDelta)
 		m_isKeyHold = false;
 	}
 	//아이템 추가
-	if (!g_pControlManager->GetInputInfo('+'))
+	if (g_pControlManager->GetInputInfo('C'))
 	{
-		cDataItem* pItem = new cDataItem;
-		
-		AddItem(pItem);
+		LPD3DXSPRITE pSprite = nullptr;
+		D3DXCreateSprite(g_pD3DDevice, &pSprite);
+
+		cUIIcon* pUIIcon = new cUIIcon(pSprite);
+		pUIIcon->SetTextureFilename(std::string("../Resources/ICON/ICON_Item/HP_Potion_Level_33_Tex.tga"));
+		RECT rtDrawArea = { 0, 0, 56, 56 };
+		pUIIcon->SetDrawArea(rtDrawArea);
+		pUIIcon->SetPosition(D3DXVECTOR3(4, 4, 0));//FIX: 일단 하드코딩. 비율로 수정해야 한다.
+		pUIIcon->SetScale(D3DXVECTOR3(0.8f, 0.8f, 0.8f));
+
+		cDataItem* pDataItem;
+		pDataItem = new cDataItem(pUIIcon);
+		SAFE_RELEASE(pSprite);
+		//SAFE_RELEASE(pUIIcon);
+		AddItem(pDataItem);
+		SAFE_RELEASE(pDataItem);
 	}
 	//창이 열려 있을 때
 	if (GetisPopped())
 	{
 		//마우스 오버 슬롯 테두리
-		m_pFocusSlot = (cUISlot*)FindFocusSlot(m_pUIRoot);
+		m_pFocusSlot = (cUISlot*)FindFocusSlot(GetvecUISlot());
 		if (m_pFocusSlot)
 		{
 			m_isMouseOverVisible = true;
@@ -124,7 +146,7 @@ void cUIInventory::Update(float fDelta)
 			fAlpha += 0.05f;
 			pImageView->SetAlpha(fAlpha);
 			pImageView->SetScale(D3DXVECTOR3(1.f, 1.f, 1.f));
-						
+
 			m_pImageViewMouseOver->SetAlpha(fAlpha);
 			m_pImageViewMouseDown->SetAlpha(fAlpha);
 		}
@@ -136,28 +158,27 @@ void cUIInventory::Update(float fDelta)
 			fAlpha = 0.f;
 			pImageView->SetAlpha(fAlpha);
 			pImageView->SetScale(D3DXVECTOR3(fAlpha, fAlpha, 1.f));
-						
+
 			m_pImageViewMouseOver->SetAlpha(fAlpha);
 			m_pImageViewMouseDown->SetAlpha(fAlpha);
 		}
-		//왼클릭Down시
-		if (g_pControlManager->GetInputInfo(VK_LBUTTON))
-		{
-			OnMouseLBDown();
-		}
-		//왼클릭Up시
-		else if (!g_pControlManager->GetInputInfo(VK_LBUTTON))
-		{
-			OnMouseLBUp();
-		}
+		//왼버튼Down시
+		if (g_pControlManager->GetInputInfo(VK_LBUTTON)){ OnMouseLBDown(); }
+		//왼버튼Up시
+		else if (!g_pControlManager->GetInputInfo(VK_LBUTTON)){ OnMouseLBUp(); }
+		//오른쪽버튼Down시
+		if (g_pControlManager->GetInputInfo(VK_RBUTTON)){ OnMouseRBDown(); }
+		//오른쪽버튼Up시
+		else if (!g_pControlManager->GetInputInfo(VK_RBUTTON)){ OnMouseRBUp(); }
+		
 		//드래그 중이면 드래그 행동
 		if (m_isDragging == true) { Drag(); }
 
-		//cUIPopupWindow::Update(fDelta);
 		if (m_pUIRoot)
 		{
 			m_pUIRoot->Update(fDelta);
 		}
+
 		m_pImageViewMouseOver->Update(fDelta);
 		m_pImageViewMouseDown->Update(fDelta);
 	}
@@ -179,6 +200,12 @@ void cUIInventory::Render()
 		{
 			m_pUIRoot->Render();
 		}
+		/*for (size_t i = 0; i < m_vecUISlot.size(); ++i)
+		{
+			if (m_vecUISlot[i]->GetIcon())
+			m_vecUISlot[i]->GetIcon()->Render();
+		}*/
+
 		if (m_isMouseOverVisible) { m_pImageViewMouseOver->Render(); }
 		if (m_isMouseDownVisible) { m_pImageViewMouseDown->Render(); }
 	}
@@ -186,8 +213,34 @@ void cUIInventory::Render()
 
 void cUIInventory::AddItem(cDataItem* pDataItem)
 {
-	//TODO: 여기서 아이콘 타입을 검사하고 아이템이면 인벤토리에 추가한다.
-	m_vecItem.push_back(pDataItem);
+	//m_vecUISlot[0]->SetItemNum(0);//0번 슬롯에 0번 아이템
+	//cDataItem* pItem = m_vecItem[m_vecUISlot[0]->GetItemNum()];
+	//m_vecUISlot[0]->SetItem(pItem);
+	//m_vecUISlot[0]->AddChild(pItem->GetUIIcon());
+	for (size_t i = 0; i < m_vecUISlot.size(); ++i)
+	{
+		if (!m_vecUISlot[i]->GetItem())
+		{
+			m_vecUISlot[i]->SetItem(pDataItem);
+			m_vecUISlot[i]->AddChild(pDataItem->GetUIIcon());
+			return;
+		}
+	}
+}
+//슬롯 번호로 삭제
+void cUIInventory::DeleteItemInSlot(size_t nSlotNum)
+{
+	DeleteItemInSlot(m_vecUISlot[nSlotNum]);
+}
+//슬롯 포인터로
+void cUIInventory::DeleteItemInSlot(cUISlot* pUISlot)
+{
+	pUISlot->SetIcon(nullptr);
+	pUISlot->SetItem(nullptr);
+	/*for (size_t i = 0; i < pUISlot->GetChild().size(); ++i)
+	{
+		pUISlot->DeleteChild(pUISlot->GetChild()[i]);
+	}*/
 }
 void cUIInventory::OnMouseLBDown()
 {
@@ -229,7 +282,25 @@ void cUIInventory::OnMouseLBUp()
 	m_isDragging = false;
 	SetBeforeDragPos(m_pUIRoot->GetPosition());
 }
-
+void cUIInventory::OnMouseRBDown()
+{
+	//슬롯에 포커스가 있을때
+	if (m_pFocusSlot)
+	{
+		m_isMouseOverVisible = false;
+		m_isMouseDownVisible = true;
+		m_pImageViewMouseDown->SetPosition(m_pUIRoot->GetPosition() + m_pFocusSlot->GetPosition());
+		UseItem(m_pFocusSlot);
+	}
+}
+void cUIInventory::OnMouseRBUp()
+{
+	if (m_pFocusSlot)
+	{
+		m_isMouseOverVisible = true;
+		m_isMouseDownVisible = false;
+	}
+}
 void cUIInventory::Drag()
 {
 	if (m_isDragging == false) { return; }
@@ -271,25 +342,26 @@ void cUIInventory::Drag()
 		0));
 }
 
-cUIObject* cUIInventory::FindFocusSlot(cUIObject* pUIRoot)
+cUIObject* cUIInventory::FindFocusSlot(std::vector<cUISlot*>& vecUISlot)
 {
 	RECT rtArea;
-	for (size_t i = 0; i < pUIRoot->GetChild().size(); ++i)
+	for (size_t i = 0; i < vecUISlot.size(); ++i)
 	{
-		rtArea	= {
-		(LONG)pUIRoot->GetPosition().x + pUIRoot->GetChild()[i]->GetPosition().x,
-		(LONG)pUIRoot->GetPosition().y + pUIRoot->GetChild()[i]->GetPosition().y,
-		(LONG)pUIRoot->GetPosition().x + pUIRoot->GetChild()[i]->GetPosition().x + pUIRoot->GetChild()[i]->GetDrawArea().right,
-		(LONG)pUIRoot->GetPosition().y + pUIRoot->GetChild()[i]->GetPosition().y + pUIRoot->GetChild()[i]->GetDrawArea().bottom
+		//HACK: 이거 꼭 Root의 좌표를 구해와야하나.. 더 좋은 방법이 있을 것 같다. : 민우
+		rtArea = {
+			(LONG)m_pUIRoot->GetPosition().x + vecUISlot[i]->GetPosition().x,
+			(LONG)m_pUIRoot->GetPosition().y + vecUISlot[i]->GetPosition().y,
+			(LONG)m_pUIRoot->GetPosition().x + vecUISlot[i]->GetPosition().x + vecUISlot[i]->GetDrawArea().right,
+			(LONG)m_pUIRoot->GetPosition().y + vecUISlot[i]->GetPosition().y + vecUISlot[i]->GetDrawArea().bottom
 		};
 		if (PtInRect(&rtArea, g_pControlManager->GetCurrentCursorPosition()))
 		{
-			return pUIRoot->GetChild()[i];
+			return vecUISlot[i];
 		}
 	}
 	return nullptr;
 }
-void cUIInventory::SetSlot(size_t nRowQnt, size_t nColQnt)
+void cUIInventory::SetupSlot(size_t nRowQnt, size_t nColQnt)
 {
 	//슬롯들
 	//IntersectRect();//사각충돌체크 함수
@@ -308,8 +380,70 @@ void cUIInventory::SetSlot(size_t nRowQnt, size_t nColQnt)
 				16 + ((float)col * pUISlot->GetDrawArea().right)/*+(i*3)*/,
 				112 + ((float)row * pUISlot->GetDrawArea().bottom),
 				0));
+			pUISlot->SetNum(nColQnt*row + col);
+
 			m_pUIRoot->AddChild(pUISlot);
+			m_vecUISlot.push_back(pUISlot);
 			SAFE_RELEASE(pUISlot);
 		}
-	}	
+	}
+}
+cDataItem* cUIInventory::UseItem(cUISlot* pUISlot)
+{
+	//일단 사용시도된 아이템을 가지고있고
+	cDataItem* pUsedItem = pUISlot->GetItem();
+
+	//TODO: 사용가능한 아이템인지 체크하고
+	//가능하면
+	if (true)
+	{
+		//슬롯을 비우고
+		DeleteItemInSlot(pUISlot);
+		//사용된 아이템을 반환한다
+		return pUsedItem;
+	}
+	//불가능하면 nullptr 리턴
+	return nullptr;
+}
+void cUIInventory::SetupTest()
+{
+#pragma region 아이템 테스트 세팅
+	LPD3DXSPRITE pSprite = nullptr;
+	D3DXCreateSprite(g_pD3DDevice, &pSprite);
+
+	cUIIcon* pUIIcon = new cUIIcon(pSprite);
+	pUIIcon->SetTextureFilename(std::string("../Resources/ICON/ICON_Item/HP_Potion_Level_33_Tex.tga"));
+	RECT rtDrawArea = { 0, 0, 56, 56 };
+	pUIIcon->SetDrawArea(rtDrawArea);
+	pUIIcon->SetPosition(D3DXVECTOR3(4, 4, 0));//FIX: 일단 하드코딩. 비율로 수정해야 한다.
+	pUIIcon->SetScale(D3DXVECTOR3(0.8f, 0.8f, 0.8f));
+
+	cDataItem* pDataItem;
+	pDataItem = new cDataItem(pUIIcon);
+	m_vecOwnItem[0] = pDataItem;
+
+	pUIIcon = new cUIIcon(pSprite);
+	pUIIcon->SetTextureFilename(std::string("../Resources/ICON/ICON_Item/MP_Potion_Level_33_Tex.tga"));
+	rtDrawArea = { 0, 0, 56, 56 };
+	pUIIcon->SetDrawArea(rtDrawArea);
+	pUIIcon->SetPosition(D3DXVECTOR3(4, 4, 0));//FIX: 일단 하드코딩. 비율로 수정해야 한다.
+	pUIIcon->SetScale(D3DXVECTOR3(0.8f, 0.8f, 0.8f));
+	
+	pDataItem = new cDataItem(pUIIcon);
+	m_vecOwnItem[1] = pDataItem;
+
+	SAFE_RELEASE(pSprite);
+
+#pragma endregion
+
+	//작동 테스트용 0번칸 할당
+	m_vecUISlot[0]->SetItemNum(0);//0번 슬롯에 0번 아이템
+	cDataItem* pItem = m_vecOwnItem[m_vecUISlot[0]->GetItemNum()];
+	m_vecUISlot[0]->SetItem(pItem);
+	m_vecUISlot[0]->AddChild(pItem->GetUIIcon());
+	//1번칸에 1번 아이템 할당
+	m_vecUISlot[1]->SetItemNum(1);//0번 슬롯에 0번 아이템
+	pItem = m_vecOwnItem[m_vecUISlot[1]->GetItemNum()];
+	m_vecUISlot[1]->SetItem(pItem);
+	m_vecUISlot[1]->AddChild(pItem->GetUIIcon());
 }

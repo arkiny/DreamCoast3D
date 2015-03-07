@@ -38,6 +38,10 @@ void cUIObject::AddChild(cUIObject* pChild){
 	pChild->m_pParent = this;
 	m_vecChild.push_back(pChild);
 }
+void cUIObject::DeleteChild(cUIObject* pChild){
+	SAFE_RELEASE(pChild);
+	pChild->m_pParent = nullptr;
+}
 
 // : ¹Î¿ì
 std::vector<cUIObject*>& cUIObject::GetChild()

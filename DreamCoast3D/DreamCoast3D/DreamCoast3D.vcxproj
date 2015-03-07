@@ -210,6 +210,7 @@
     <ClInclude Include="iGameStateObject.h" />
     <ClInclude Include="iMap.h" />
     <ClInclude Include="iPlayerState.h" />
+    <ClInclude Include="iUIInventoryDelegate.h" />
     <ClInclude Include="iUIPopupWindowDelegate.h" />
     <ClInclude Include="iSceneDelegate.h" />
     <ClInclude Include="iUIManagerDeligate.h" />
@@ -328,6 +329,7 @@
     <ClCompile Include="iGameStateObject.cpp" />
     <ClCompile Include="iMap.cpp" />
     <ClCompile Include="iPlayerState.cpp" />
+    <ClCompile Include="iUIInventoryDelegate.cpp" />
     <ClCompile Include="iUIPopupWindowDelegate.cpp" />
     <ClCompile Include="iSceneDelegate.cpp" />
     <ClCompile Include="iUIManagerDeligate.cpp" />
