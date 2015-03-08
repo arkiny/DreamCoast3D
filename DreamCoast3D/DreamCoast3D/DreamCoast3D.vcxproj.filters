@@ -701,6 +701,9 @@
     <None Include="MultiAnimation.vsh">
       <Filter>FrameWork\FX</Filter>
     </None>
+    <None Include="..\Resources\Shader\Soft Shadows.fx">
+      <Filter>FrameWork\FX</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="FrameWork">
@@ -863,5 +866,13 @@
     <Text Include="test.txt">
       <Filter>FrameWork\Resource</Filter>
     </Text>
+  </ItemGroup>
+  <ItemGroup>
+    <FxCompile Include="..\Resources\Shader\ApplyShadow.fx">
+      <Filter>FrameWork\FX</Filter>
+    </FxCompile>
+    <FxCompile Include="..\Resources\Shader\CreateShadow.fx">
+      <Filter>FrameWork\FX</Filter>
+    </FxCompile>
   </ItemGroup>
 </Project>

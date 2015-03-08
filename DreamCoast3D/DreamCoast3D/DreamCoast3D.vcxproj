@@ -349,6 +349,19 @@
     <None Include="cObjectClassDiagram.cd" />
     <None Include="MultiAnimation.vsh" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Resources\Shader\ApplyShadow.fx">
+      <FileType>Document</FileType>
+    </None>
+    <None Include="..\Resources\Shader\CreateShadow.fx">
+      <FileType>Document</FileType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Resources\Shader\Soft Shadows.fx">
+      <FileType>Document</FileType>
+    </None>
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
