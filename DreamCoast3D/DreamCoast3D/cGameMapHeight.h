@@ -10,6 +10,7 @@ protected:
 
 	LPDIRECT3DTEXTURE9			m_pTexture;
 	LPDIRECT3DTEXTURE9			m_pTexture2;
+	LPDIRECT3DTEXTURE9			m_pTextureNormal;
 	
 	int							m_nTileN				= 256;
 	int							m_nBytePerColor			= 1;

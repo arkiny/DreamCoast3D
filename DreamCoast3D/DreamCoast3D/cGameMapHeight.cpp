@@ -18,6 +18,7 @@ cGameMapHeight::~cGameMapHeight()
 {
 	SAFE_RELEASE(m_pMesh);
 	SAFE_RELEASE(m_pTexture2);
+	SAFE_RELEASE(m_pTextureNormal);
 	SAFE_RELEASE(m_pSpecularMapping);
 	//SAFE_DELETE(m_pMousePicking);
 }
@@ -32,7 +33,7 @@ void cGameMapHeight::LoadFromFiles(std::string sFilename, std::string sTextureFi
 	
 	// 재질 // 재질을 바르면 그림자 노말맵이 표현 안댐? 어떻게 해야함?
 	m_pTexture2 = g_pTextureManager->GetTexture(std::string("../Resources/Map/terrain_detail_texture.jpg"));
-
+	m_pTextureNormal = g_pTextureManager->GetTexture(std::string("../Resources/Map/Normal.tga"));
 
 	std::vector<DWORD>			vecIndex;
 
@@ -190,7 +191,7 @@ void cGameMapHeight::Render(){
 		m_pSpecularMapping->SetMatrix("gProjectionMatrix", &matProjection);
 		m_pSpecularMapping->SetVector("gLightColor", &gLightColor);
 		m_pSpecularMapping->SetTexture("DiffuseMap_Tex", m_pTexture);
-		m_pSpecularMapping->SetTexture("SpecularMap_Tex", m_pTexture);
+		m_pSpecularMapping->SetTexture("SpecularMap_Tex", m_pTextureNormal);
 		m_pSpecularMapping->SetTexture("DetailMap_Tex", m_pTexture2);
 
 		D3DLIGHT9 stLight;

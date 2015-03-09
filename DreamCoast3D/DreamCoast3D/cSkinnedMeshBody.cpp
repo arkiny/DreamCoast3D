@@ -240,16 +240,27 @@ void cSkinnedMeshBody::Render(ST_BONE* pBone /*= NULL*/)
 				m_pmWorkingPalette,
 				pBoneMesh->dwNumPaletteEntries);
 
-			m_pEffect->SetMatrix("g_mViewProj", &matViewProj);
-			m_pEffect->SetVector("vLightDiffuse", &D3DXVECTOR4(1.0f, 1.0f, 1.0f, 1.0f));
-			m_pEffect->SetVector("vWorldLightPos", &D3DXVECTOR4(500.0f, 500.0f, 500.0f, 1.0f));
-			m_pEffect->SetVector("vWorldCameraPos", &D3DXVECTOR4(vEye, 1.0f));
-			m_pEffect->SetVector("vMaterialAmbient", &D3DXVECTOR4(0.53f, 0.53f, 0.53f, 0.53f));
-			m_pEffect->SetVector("vMaterialDiffuse", &D3DXVECTOR4(1.0f, 1.0f, 1.0f, 1.0f));
+			//gWorldMatrix
+			m_pEffect->SetMatrix("gWorldMatrix", &pBone->CombinedTransformationMatrix);
 
-			// we're pretty much ignoring the materials we got from the x-file; just set
-			// the texture here
-			m_pEffect->SetTexture("g_txScene", pBoneMesh->vecTexture[pBoneCombos[dwAttrib].AttribId]);
+			//gWorldViewProjectionMatrix
+			m_pEffect->SetMatrix("gWorldViewProjectionMatrix", &matViewProj);
+			//gWorldLightPosition
+			D3DLIGHT9 stLight;
+			g_pD3DDevice->GetLight(0, &stLight);
+			D3DXVECTOR3 pos = -1000 * stLight.Direction;
+			m_pEffect->SetVector("gWorldLightPosition", &D3DXVECTOR4(pos, 0.0f));
+			//gWorldCameraPosition
+			m_pEffect->SetVector("gWorldCameraPosition", &D3DXVECTOR4(vEye, 1.0f));
+
+			//DiffuseMap_Tex
+			m_pEffect->SetTexture("DiffuseMap_Tex", pBoneMesh->vecTexture[pBoneCombos[dwAttrib].AttribId]);
+
+			//SpecularMap_Tex
+			m_pEffect->SetTexture("SpecularMap_Tex", pBoneMesh->vecSpecular[pBoneCombos[dwAttrib].AttribId]);
+
+			//NormalMap_Tex
+			m_pEffect->SetTexture("NormalMap_Tex", pBoneMesh->vecNormal[pBoneCombos[dwAttrib].AttribId]);
 
 			// set the current number of bones; this tells the effect which shader to use
 			m_pEffect->SetInt("CurNumBones", pBoneMesh->dwMaxNumFaceInfls - 1);

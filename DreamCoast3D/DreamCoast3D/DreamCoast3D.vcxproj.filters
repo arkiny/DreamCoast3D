@@ -582,9 +582,6 @@
     <ClInclude Include="cAIFSM.h">
       <Filter>EachWorks\HD\AI-FSM</Filter>
     </ClInclude>
-    <ClInclude Include="MultiAnimation.hpp">
-      <Filter>FrameWork\FX</Filter>
-    </ClInclude>
     <ClInclude Include="cGridSystem.h">
       <Filter>EachWorks\MS</Filter>
     </ClInclude>
@@ -714,6 +711,9 @@
     <ClInclude Include="cEditCursor.h">
       <Filter>EachWorks\MS</Filter>
     </ClInclude>
+    <ClInclude Include="MultiAnimation.fx">
+      <Filter>FrameWork\FX</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="DreamCoast3D.ico">
@@ -744,6 +744,9 @@
       <Filter>FrameWork\FX</Filter>
     </None>
     <None Include="..\Resources\Shader\DetailBlending.fx">
+      <Filter>FrameWork\FX</Filter>
+    </None>
+    <None Include="..\Resources\Shader\NormalMapping.fx">
       <Filter>FrameWork\FX</Filter>
     </None>
   </ItemGroup>

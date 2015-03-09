@@ -65,7 +65,35 @@ STDMETHODIMP cAllocateHierarchy::CreateMeshContainer(THIS_ LPCSTR Name,
 		std::string sFilename(pMaterials[i].pTextureFilename);
 		std::string sFullPath = m_sDirectory + sFilename;
 		LPDIRECT3DTEXTURE9 pTex = g_pTextureManager->GetTexture(sFullPath);
+		if (pTex == NULL){
+			int a = 0;
+		}
+		
 		pBoneMesh->vecTexture.push_back(pTex);
+		std::string sNormal = "_norm.tga";
+		std::string sSpec = "_spec.tga";
+
+		std::size_t a = sFilename.find("_diff.png");
+		sFilename.replace(sFilename.begin()+a, sFilename.end(), sNormal);
+		LPDIRECT3DTEXTURE9 pNormalTex = g_pTextureManager->GetTexture(m_sDirectory + sFilename);
+		if (pNormalTex == NULL){
+			int a = 0;
+			assert(false && "pNormalTex Not Loaded");
+		}
+		else{
+			pBoneMesh->vecNormal.push_back(pNormalTex);
+		}
+
+		sFilename = pMaterials[i].pTextureFilename;
+		sFilename.replace(sFilename.begin() + a, sFilename.end(), sSpec);
+		LPDIRECT3DTEXTURE9 pSpecTex = g_pTextureManager->GetTexture(m_sDirectory + sFilename);
+		if (pSpecTex == NULL){
+			int a = 0;
+			assert(false && "pSpecTex Not Loaded");
+		}
+		else {
+			pBoneMesh->vecSpecular.push_back(pSpecTex);
+		}
 	}
 
 	// 이펙트 무시
