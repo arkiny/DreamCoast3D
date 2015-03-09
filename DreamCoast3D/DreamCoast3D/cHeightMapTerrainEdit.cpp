@@ -753,15 +753,15 @@ void cHeightMapTerrainEdit::NormalizeTile()
 				nTileX = vecTile[i].x;
 				nTileZ = vecTile[i].z;
 
-				if (m_vecVertex[nTileX + nTileZ * 257].p.y > fNormalizeTile)
-				{
-					m_vecVertex[nTileX + nTileZ * 257].p.y -= fNormalizeTile / 10;
-				}
-				else if (m_vecVertex[nTileX + nTileZ * 257].p.y < fNormalizeTile)
-				{
-					m_vecVertex[nTileX + nTileZ * 257].p.y += fNormalizeTile / 10;
-				}
-				else
+				//if (m_vecVertex[nTileX + nTileZ * 257].p.y > fNormalizeTile)
+				//{
+				//	m_vecVertex[nTileX + nTileZ * 257].p.y -= fNormalizeTile / 10;
+				//}
+				//else if (m_vecVertex[nTileX + nTileZ * 257].p.y < fNormalizeTile)
+				//{
+				//	m_vecVertex[nTileX + nTileZ * 257].p.y += fNormalizeTile / 10;
+				//}
+				//else
 				{
 					m_vecVertex[nTileX + nTileZ * 257].p.y = fNormalizeTile;
 				}
