@@ -337,6 +337,12 @@
     <ClCompile Include="iUIInventoryDelegate.cpp">
       <Filter>EachWorks\MW\Todo</Filter>
     </ClCompile>
+    <ClCompile Include="cGameEvent.cpp">
+      <Filter>EachWorks\MS\Event</Filter>
+    </ClCompile>
+    <ClCompile Include="cGameEventManager.cpp">
+      <Filter>EachWorks\MS\Event</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cAction.h">
@@ -687,6 +693,15 @@
     <ClInclude Include="iUIInventoryDelegate.h">
       <Filter>EachWorks\MW\Todo</Filter>
     </ClInclude>
+    <ClInclude Include="iGameEventDelegate.h">
+      <Filter>EachWorks\MS\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="cGameEvent.h">
+      <Filter>EachWorks\MS\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="cGameEventManager.h">
+      <Filter>EachWorks\MS\Event</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="DreamCoast3D.ico">
@@ -807,6 +822,9 @@
     </Filter>
     <Filter Include="TerrainEditor">
       <UniqueIdentifier>{9acb5022-85ab-4a2a-9d42-af0111416ffa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="EachWorks\MS\Event">
+      <UniqueIdentifier>{2c89afca-7cd9-42b7-a78d-1d903d064b0e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
