@@ -331,14 +331,24 @@
     <ClCompile Include="cGameObjectEraser.cpp">
       <Filter>FrameWork\Object</Filter>
     </ClCompile>
-    <ClCompile Include="cHeightMapTerrainEdit.cpp" />
-    <ClCompile Include="cSceneTerrainEdit.cpp" />
-    <ClCompile Include="cEditCursor.cpp" />
     <ClCompile Include="iUIInventoryDelegate.cpp">
       <Filter>EachWorks\MW\Todo</Filter>
     </ClCompile>
-    <ClCompile Include="cGameEvent.cpp" />
-    <ClCompile Include="cGameEventManager.cpp" />
+    <ClCompile Include="cSceneTerrainEdit.cpp">
+      <Filter>EachWorks\MS</Filter>
+    </ClCompile>
+    <ClCompile Include="cGameEvent.cpp">
+      <Filter>EachWorks\MS</Filter>
+    </ClCompile>
+    <ClCompile Include="cGameEventManager.cpp">
+      <Filter>EachWorks\MS</Filter>
+    </ClCompile>
+    <ClCompile Include="cHeightMapTerrainEdit.cpp">
+      <Filter>EachWorks\MS</Filter>
+    </ClCompile>
+    <ClCompile Include="cEditCursor.cpp">
+      <Filter>EachWorks\MS</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cAction.h">
@@ -683,15 +693,27 @@
     <ClInclude Include="cGameObjectEraser.h">
       <Filter>FrameWork\Object</Filter>
     </ClInclude>
-    <ClInclude Include="cHeightMapTerrainEdit.h" />
-    <ClInclude Include="cSceneTerrainEdit.h" />
-    <ClInclude Include="cEditCursor.h" />
     <ClInclude Include="iUIInventoryDelegate.h">
       <Filter>EachWorks\MW\Todo</Filter>
     </ClInclude>
-    <ClInclude Include="cGameEvent.h" />
-    <ClInclude Include="cGameEventManager.h" />
-    <ClInclude Include="iGameEventDelegate.h" />
+    <ClInclude Include="iGameEventDelegate.h">
+      <Filter>EachWorks\MS</Filter>
+    </ClInclude>
+    <ClInclude Include="cSceneTerrainEdit.h">
+      <Filter>EachWorks\MS</Filter>
+    </ClInclude>
+    <ClInclude Include="cHeightMapTerrainEdit.h">
+      <Filter>EachWorks\MS</Filter>
+    </ClInclude>
+    <ClInclude Include="cGameEvent.h">
+      <Filter>EachWorks\MS</Filter>
+    </ClInclude>
+    <ClInclude Include="cGameEventManager.h">
+      <Filter>EachWorks\MS</Filter>
+    </ClInclude>
+    <ClInclude Include="cEditCursor.h">
+      <Filter>EachWorks\MS</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="DreamCoast3D.ico">
