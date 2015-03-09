@@ -135,7 +135,7 @@ void cGameMapHeight::LoadFromFiles(std::string sFilename, std::string sTextureFi
 	m_sTexturePath = sTextureFilename;
 
 	hr =
-		D3DXCreateEffectFromFile(g_pD3DDevice, "../Resources/Shader/SpecularMapping.fx",
+		D3DXCreateEffectFromFile(g_pD3DDevice, "../Resources/Shader/DetailBlending.fx",
 		NULL, NULL, NULL, NULL, &m_pSpecularMapping, NULL);
 	assert(hr == S_OK);
 }
@@ -190,7 +190,8 @@ void cGameMapHeight::Render(){
 		m_pSpecularMapping->SetMatrix("gProjectionMatrix", &matProjection);
 		m_pSpecularMapping->SetVector("gLightColor", &gLightColor);
 		m_pSpecularMapping->SetTexture("DiffuseMap_Tex", m_pTexture);
-		m_pSpecularMapping->SetTexture("SpecularMap_Tex", m_pTexture2);
+		m_pSpecularMapping->SetTexture("SpecularMap_Tex", m_pTexture);
+		m_pSpecularMapping->SetTexture("DetailMap_Tex", m_pTexture2);
 
 		D3DLIGHT9 stLight;
 		g_pD3DDevice->GetLight(0, &stLight);
@@ -206,7 +207,6 @@ void cGameMapHeight::Render(){
 			{
 				m_pSpecularMapping->BeginPass(i);
 				{
-					// 구체를 그린다.
 					m_pMesh->DrawSubset(0);
 				}
 				m_pSpecularMapping->EndPass();

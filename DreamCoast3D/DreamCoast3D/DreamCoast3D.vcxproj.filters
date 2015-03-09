@@ -743,6 +743,9 @@
     <None Include="..\Resources\Shader\SpecularMapping.fx">
       <Filter>FrameWork\FX</Filter>
     </None>
+    <None Include="..\Resources\Shader\DetailBlending.fx">
+      <Filter>FrameWork\FX</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="FrameWork">
