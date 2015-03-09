@@ -47,18 +47,18 @@ private:
 	SYNTHESIZE(float, m_fHeight, Height);
 	SYNTHESIZE(float, m_fWidth, Width);
 	eClickMessage eClick;
-	
 
-
-	//cMousePicking*			m_pMousPicking;
+	// 030915
+	SYNTHESIZE(D3DXVECTOR3, m_vSelectTile, SelectTile);
+	SYNTHESIZE(bool, m_isRButton, RButton);
 
 private:
-	// 잠시 대기
-	void SetClickRange(D3DXVECTOR3 vFrom, D3DXVECTOR3 vTo);
 	void CalBazier(D3DXVECTOR2 vMin, D3DXVECTOR2 vMax);
 
 	D3DXVECTOR3 Linear(D3DXVECTOR3 vFrom, D3DXVECTOR3 vTo, float fDelta);
 	D3DXVECTOR3 Bazier(D3DXVECTOR3 vFirst, D3DXVECTOR3 vSecond, D3DXVECTOR3 vThird, float fDelta);
+
+	void NormalizeTile();
 
 	struct ST_Bazier
 	{
@@ -66,7 +66,7 @@ private:
 		D3DXVECTOR2 vPos;
 	};
 
-
-
+	// 잠시 대기
+	void SetClickRange(D3DXVECTOR3 vFrom, D3DXVECTOR3 vTo);
 };
 

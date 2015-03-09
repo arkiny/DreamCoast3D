@@ -17,6 +17,7 @@ m_pIndexBuffer(NULL)
 	
 	m_fHeight = 1.f;
 	m_fWidth = 1.f;
+	m_isRButton = false;
 
 }
 
@@ -153,6 +154,8 @@ void cHeightMapTerrainEdit::Setup(){
 }
 
 void cHeightMapTerrainEdit::Update(float fDelta){
+
+
 	D3DXVECTOR2 vFrom(0.f, 0.f);
 	D3DXVECTOR2 vTo(0.f, 0.f);
 
@@ -179,6 +182,14 @@ void cHeightMapTerrainEdit::Update(float fDelta){
 	if (GetAsyncKeyState(VK_F5)){
 		SaveToRawFile();
 	}
+
+	if (GetAsyncKeyState(VK_RBUTTON))
+	{
+		ChangeMapYVertexCoord(vFrom, vTo, 0.0f);
+		NormalizeTile();
+	}
+
+
 }
 
 void cHeightMapTerrainEdit::Render(){
@@ -249,6 +260,7 @@ void cHeightMapTerrainEdit::ChangeMapYVertexCoord(D3DXVECTOR2 vMin, D3DXVECTOR2 
 	}
 
 	CalBazier(vMin, vMax);
+
 
 	ST_PNT2_VERTEX* v;
 	m_pVertexBuffer->Lock(0, 0, (void**)&v, 0);
@@ -644,7 +656,7 @@ void cHeightMapTerrainEdit::CalBazier(D3DXVECTOR2 vMin, D3DXVECTOR2 vMax)
 
 	rtRightBottom.x1 = rt.x2 - 1.f;
 	rtRightBottom.y1 = rt.y2;
-	rtRightBottom.x2 = rtRight.x2;
+	rtRightBottom.x2 = rtRight.x2 -1.f;
 	rtRightBottom.y2 = rtBottom.y2;
 
 	float fRBWidth = (rtRightBottom.x2 - rtRightBottom.x1);
@@ -691,4 +703,86 @@ void cHeightMapTerrainEdit::CalBazier(D3DXVECTOR2 vMin, D3DXVECTOR2 vMax)
 			m_vecVertex[vFirst.x + vFirst.z * 257].p.y = v.y / 4.5f;
 		}
 	}
+}
+
+void cHeightMapTerrainEdit::NormalizeTile()
+{
+	float fNormalizeTile = 0.f;
+
+	if (m_isRButton)
+	{
+		int nSelectSize = 2;
+
+		std::vector<D3DXVECTOR3> vecTile;
+
+		int nX = (int)m_vSelectTile.x;
+		int nZ = (int)m_vSelectTile.z;
+
+		for (int z = nZ - 1; z < nZ + nSelectSize; z++)
+		{
+			for (int x = nX - 1; x < nX + nSelectSize; x++)
+			{
+				D3DXVECTOR3 vTile(0.f, 0.f, 0.f);
+				vTile.x = x;
+				vTile.z = z;
+
+				vecTile.push_back(vTile);
+			}
+		}
+
+		for (int i = 0; i < vecTile.size(); i++)
+		{
+			int nTileX = 0;
+			int nTileZ = 0;
+
+			nTileX = vecTile[i].x;
+			nTileZ = vecTile[i].z;
+			float fHeight = m_vecVertex[nTileX + nTileZ * 257].p.y;
+
+			fNormalizeTile += fHeight;
+		}
+		fNormalizeTile = fNormalizeTile / vecTile.size();
+
+		if (GetAsyncKeyState(VK_SPACE))
+		{
+			for (int i = 0; i < vecTile.size(); i++)
+			{
+				int nTileX = 0;
+				int nTileZ = 0;
+
+				nTileX = vecTile[i].x;
+				nTileZ = vecTile[i].z;
+
+				//if (m_vecVertex[nTileX + nTileZ * 257].p.y > fNormalizeTile)
+				//{
+				//	m_vecVertex[nTileX + nTileZ * 257].p.y -= fNormalizeTile / 10;
+				//}
+				//else if (m_vecVertex[nTileX + nTileZ * 257].p.y < fNormalizeTile)
+				//{
+				//	m_vecVertex[nTileX + nTileZ * 257].p.y += fNormalizeTile / 10;
+				//}
+				//else
+				{
+					m_vecVertex[nTileX + nTileZ * 257].p.y = fNormalizeTile;
+				}
+
+			}
+		}
+		else
+		{
+			if (m_vecVertex[nX + nZ * 257].p.y > fNormalizeTile)
+			{
+				m_vecVertex[nX + nZ * 257].p.y -= fNormalizeTile / 10;
+			}
+			else if (m_vecVertex[nX + nZ * 257].p.y < fNormalizeTile)
+			{
+				m_vecVertex[nX + nZ * 257].p.y += fNormalizeTile / 10;
+			}
+			else
+			{
+				m_vecVertex[nX + nZ * 257].p.y = fNormalizeTile;
+			}
+		}
+	}
+
 }

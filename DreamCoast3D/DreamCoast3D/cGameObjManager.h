@@ -2,6 +2,9 @@
 #include "iGameObjectDelegate.h"
 #include "iCameraDeligate.h"
 
+// MS
+#include "iGameEventDelegate.h"
+
 class cFrustum;
 class cGameMapObject;
 class cGamePlayableObject;
@@ -30,6 +33,8 @@ private:
     // MS
     float m_fAccumTime;
     std::set<cGameObject*>          m_setDeadMonster;
+
+	iGameEventDelegate*				m_pEventDeligate;
 public:
 	cGameObjManager();
 	virtual ~cGameObjManager();
@@ -81,8 +86,8 @@ protected:
 private:
 	// Calculated by Conan
 	D3DXVECTOR3 PushingForce(D3DXVECTOR3* vFrom, float fFromLength, D3DXVECTOR3* vTo, float fFromTo);
-	
-
     void DeadObjectUpdate();
+
+	void SetEventDeligate(iGameEventDelegate* pEventDeligate);
 };
 

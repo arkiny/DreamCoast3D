@@ -12,6 +12,7 @@
 #include "cMapLoader.h"
 #include "cUILoader.h"
 #include "cEffectManager.h"
+#include "cGameEventManager.h"
 
 /// TODO
 // 차후 데이타 드리븐 완료후 삭제해야할것들
@@ -34,6 +35,7 @@ cScene::cScene()
 	, m_pPlayableObject(NULL)
 	, m_pDelegate(NULL)
 	, m_pEffectManager(NULL)
+	, m_pGameEventManager(NULL)
 {
 }
 
@@ -60,10 +62,17 @@ cScene::~cScene()
 	}
 	m_vecLightSources.clear();
 
+	// MS
+	if (m_pGameEventManager)
+	{
+		m_pGameEventManager->Destory();
+	}
+
 	//SAFE_RELEASE(gpShadowRenderTarget );
 	//SAFE_RELEASE(gpShadowDepthStencil );
 	//SAFE_RELEASE(gpApplyShadowShader  );
-	//SAFE_RELEASE(gpCreateShadowShader );
+	//SAFE_RELEASE(gpCreateShadowShader )
+
 }
 
 void cScene::Setup(std::string sFilePath){
@@ -79,6 +88,11 @@ void cScene::Setup(std::string sFilePath){
 	m_pEffectManager = new cEffectManager;
 	m_pEffectManager->Setup();
 	m_pEffectManager->SetDesc("EffectManager");
+
+
+	m_pGameEventManager = new cGameEventManager;
+	m_pGameEventManager->Setup();
+	m_pGameEventManager->SetDesc("EventManager");
 }
 
 void cScene::Start(){
@@ -137,38 +151,10 @@ void cScene::Start(){
 		}
 		m_pEffectManager->Start();
 	}
-
-	//if (m_pCurrentMap){
-	//	// 렌더타깃을 만든다.
-	//	const int shadowMapSize = 2048;
-	//	if (FAILED(g_pD3DDevice->CreateTexture(shadowMapSize, shadowMapSize,
-	//		1, D3DUSAGE_RENDERTARGET, D3DFMT_R32F,
-	//		D3DPOOL_DEFAULT, &gpShadowRenderTarget, NULL)))
-	//	{
-	//		MessageBox(g_hWnd, "에렁", "에렁", NULL);
-	//		PostQuitMessage(0);
-	//	}
-
-	//	// 그림자 맵과 동일한 크기의 깊이버퍼도 만들어줘야 한다.
-	//	if (FAILED(g_pD3DDevice->CreateDepthStencilSurface(shadowMapSize, shadowMapSize,
-	//		D3DFMT_D24X8, D3DMULTISAMPLE_NONE, 0, TRUE,
-	//		&gpShadowDepthStencil, NULL)))
-	//	{
-	//		MessageBox(g_hWnd, "에렁", "에렁", NULL);
-	//		PostQuitMessage(0);
-	//	}
-
-	//	LPD3DXBUFFER pError = NULL;
-	//	D3DXCreateEffectFromFile(g_pD3DDevice, "../Resources/Shader/CreateShadow.fx",
-	//		NULL, NULL, NULL, NULL, &gpCreateShadowShader, &pError);
-	//	SAFE_RELEASE(pError);
-
-
-	//	pError = NULL;
-	//	D3DXCreateEffectFromFile(g_pD3DDevice, "../Resources/Shader/ApplyShadow.fx",
-	//		NULL, NULL, NULL, NULL, &gpApplyShadowShader, &pError);
-	//	SAFE_RELEASE(pError);
-	//}
+	if (m_pGameEventManager)
+	{
+		m_pGameEventManager->Start();
+	}
 }
 
 void cScene::Update(float delta){
@@ -196,6 +182,11 @@ void cScene::Update(float delta){
 
 	if (m_pUIObjManager){
 		m_pUIObjManager->Update(delta);
+	}
+
+	if (m_pGameEventManager)
+	{
+		m_pGameEventManager->Update(delta);
 	}
 }
 
