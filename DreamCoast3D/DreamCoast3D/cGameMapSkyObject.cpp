@@ -11,7 +11,8 @@ cGameMapSkyObject::cGameMapSkyObject()
 
 cGameMapSkyObject::~cGameMapSkyObject()
 {
-	SAFE_RELEASE(m_pMesh)
+	SAFE_RELEASE(m_pMesh);
+	SAFE_RELEASE(m_pSpecularMapping);
 }
 
 void cGameMapSkyObject::Setup(){
@@ -21,6 +22,11 @@ void cGameMapSkyObject::Setup(){
 	m_stMaterial.Specular = D3DXCOLOR(0.5f, 0.6f, 0.8f, 1.0f);
 	SetPosition(D3DXVECTOR3(128, 0, 128));
 	m_stBoundingSphere.m_fRadius = 256.0f;
+
+	HRESULT hr =
+		D3DXCreateEffectFromFile(g_pD3DDevice, "../Resources/Shader/SpecularMapping.fx",
+		NULL, NULL, NULL, NULL, &m_pSpecularMapping, NULL);
+	assert(hr == S_OK);
 }
 
 void cGameMapSkyObject::Update(float fDelta){

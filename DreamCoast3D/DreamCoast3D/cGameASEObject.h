@@ -12,6 +12,7 @@ protected:
 	std::string					m_sASEFolder;
 	std::string					m_sASEFile;
 
+
 public:
 	cGameASEObject();
 	~cGameASEObject();

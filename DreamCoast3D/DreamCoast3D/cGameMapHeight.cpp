@@ -18,6 +18,7 @@ cGameMapHeight::~cGameMapHeight()
 {
 	SAFE_RELEASE(m_pMesh);
 	SAFE_RELEASE(m_pTexture2);
+	SAFE_RELEASE(m_pSpecularMapping);
 	//SAFE_DELETE(m_pMousePicking);
 }
 
@@ -132,6 +133,11 @@ void cGameMapHeight::LoadFromFiles(std::string sFilename, std::string sTextureFi
 
 	m_sRawFile = sFilename;
 	m_sTexturePath = sTextureFilename;
+
+	hr =
+		D3DXCreateEffectFromFile(g_pD3DDevice, "../Resources/Shader/SpecularMapping.fx",
+		NULL, NULL, NULL, NULL, &m_pSpecularMapping, NULL);
+	assert(hr == S_OK);
 }
 
 void cGameMapHeight::LoadFromFiles(char* szFilename, char* szTextureFilename){
@@ -169,21 +175,44 @@ void cGameMapHeight::Render(){
 		g_pD3DDevice->SetTexture(1, NULL);
 	}
 	else{
+		//	FAR_PLANE);
+
 		D3DXMATRIXA16 matWorld;
 		D3DXMatrixIdentity(&matWorld);
-		g_pD3DDevice->SetTransform(D3DTS_WORLD, &matWorld);
-		g_pD3DDevice->SetMaterial(&m_stMtl);
-		g_pD3DDevice->SetTexture(0, m_pTexture);
-		if (m_pTexture2){
-			g_pD3DDevice->SetTexture(1, m_pTexture2);
-			//g_pD3DDevice->SetTextureStageState(0, D3DTSS_COLORARG1, D3DTA_TEXTURE);
-			//g_pD3DDevice->SetTextureStageState(0, D3DTSS_COLOROP, D3DTOP_SELECTARG1);
-			g_pD3DDevice->SetTextureStageState(1, D3DTSS_COLORARG1, D3DTA_CURRENT);
-			g_pD3DDevice->SetTextureStageState(1, D3DTSS_COLORARG2, D3DTA_TEXTURE);
-			g_pD3DDevice->SetTextureStageState(1, D3DTSS_COLOROP, D3DTOP_ADDSIGNED);
+		D3DXMATRIXA16 matView;
+		D3DXMATRIXA16 matProjection;
+		g_pD3DDevice->GetTransform(D3DTS_VIEW, &matView);
+		g_pD3DDevice->GetTransform(D3DTS_PROJECTION, &matProjection);
+
+		// 쉐이더 전역변수들을 설정
+		m_pSpecularMapping->SetMatrix("gWorldMatrix", &matWorld);
+		m_pSpecularMapping->SetMatrix("gViewMatrix", &matView);
+		m_pSpecularMapping->SetMatrix("gProjectionMatrix", &matProjection);
+		m_pSpecularMapping->SetVector("gLightColor", &gLightColor);
+		m_pSpecularMapping->SetTexture("DiffuseMap_Tex", m_pTexture);
+		m_pSpecularMapping->SetTexture("SpecularMap_Tex", m_pTexture2);
+
+		D3DLIGHT9 stLight;
+		g_pD3DDevice->GetLight(0, &stLight);
+		D3DXVECTOR3 pos = -1000 * stLight.Direction;
+		m_pSpecularMapping->SetVector("gWorldLightPosition", &D3DXVECTOR4(pos, 0.0f));
+		
+		
+		// 쉐이더를 시작한다.
+		UINT numPasses = 0;
+		m_pSpecularMapping->Begin(&numPasses, NULL);
+		{
+			for (UINT i = 0; i < numPasses; ++i)
+			{
+				m_pSpecularMapping->BeginPass(i);
+				{
+					// 구체를 그린다.
+					m_pMesh->DrawSubset(0);
+				}
+				m_pSpecularMapping->EndPass();
+			}
 		}
-		m_pMesh->DrawSubset(0);
-		g_pD3DDevice->SetTexture(1, NULL);
+		m_pSpecularMapping->End();
 	}
 }
 

@@ -22,6 +22,7 @@ cASEInstance::~cASEInstance(void)
 	{
 		pChild->Release();
 	}
+	SAFE_RELEASE(m_pSpecularMapping);
 }
 
 void cASEInstance::AddChild( cASEInstance* pChild )
@@ -89,6 +90,11 @@ void cASEInstance::BuidlMesh( std::vector<ST_PNT2_VERTEX>& vecVertex )
 		D3DXMESHOPT_COMPACT | 
 		D3DXMESHOPT_VERTEXCACHE,
 		&vecAdjBuffer[0], 0, 0, 0);
+
+	hr = 
+	D3DXCreateEffectFromFile(g_pD3DDevice, "../Resources/Shader/SpecularMapping.fx",
+		NULL, NULL, NULL, NULL, &m_pSpecularMapping, NULL);
+	assert(hr == S_OK);
 }
 
 void cASEInstance::SetMtlTex( cMtlTex* pMtlTex )
@@ -113,15 +119,62 @@ void cASEInstance::Update( D3DXMATRIXA16* pmatParent )
 
 void cASEInstance::Render(D3DXMATRIXA16* pMatrix)
 {
-	if(m_pMtlTex)
+	//D3DXMATRIXA16 matView;
+	//D3DXVECTOR3 vEyePt(0.0f, 0.0f, -200.0f);
+	//D3DXVECTOR3 vLookatPt(0.0f, 0.0f, 0.0f);
+	//D3DXVECTOR3 vUpVec(0.0f, 1.0f, 0.0f);
+	//D3DXMatrixLookAtLH(&matView, &vEyePt, &vLookatPt, &vUpVec);
+
+	// 투영행렬을 만든다. // 원교 투시법
+	//D3DXMATRIXA16 matProjection;
+	//D3DXMatrixPerspectiveFovLH(&matProjection, FOV, ASPECT_RATIO, NEAR_PLANE,
+	//	FAR_PLANE);
+	D3DXMATRIXA16 matView;
+	D3DXMATRIXA16 matProjection;
+	g_pD3DDevice->GetTransform(D3DTS_VIEW, &matView);
+	g_pD3DDevice->GetTransform(D3DTS_PROJECTION, &matProjection);
+
+	// 쉐이더 전역변수들을 설정
+	m_pSpecularMapping->SetMatrix("gWorldMatrix", pMatrix);
+	m_pSpecularMapping->SetMatrix("gViewMatrix", &matView);
+	m_pSpecularMapping->SetMatrix("gProjectionMatrix", &matProjection);
+	m_pSpecularMapping->SetVector("gLightColor", &gLightColor);
+	m_pSpecularMapping->SetTexture("DiffuseMap_Tex", m_pMtlTex->pTex);
+	m_pSpecularMapping->SetTexture("SpecularMap_Tex", m_pMtlTex->pTex);
+	
+	D3DLIGHT9 stLight;
+	g_pD3DDevice->GetLight(0, &stLight);
+	D3DXVECTOR3 pos = -1000 * stLight.Direction;
+	m_pSpecularMapping->SetVector("gWorldLightPosition", &D3DXVECTOR4(pos, 0.0f));
+
+	if (m_pMtlTex)
 	{
-		g_pD3DDevice->SetRenderState(D3DRS_NORMALIZENORMALS, true);
-		g_pD3DDevice->SetTransform(D3DTS_WORLD, pMatrix);
-		g_pD3DDevice->SetTexture(0, m_pMtlTex->pTex);
-		g_pD3DDevice->SetMaterial(&m_pMtlTex->stMtl);
-		m_pMesh->DrawSubset(0);
-		//g_pD3DDevice->SetRenderState(D3DRS_NORMALIZENORMALS, false);
+		// 쉐이더를 시작한다.
+		UINT numPasses = 0;
+		m_pSpecularMapping->Begin(&numPasses, NULL);
+		{
+			for (UINT i = 0; i < numPasses; ++i)
+			{
+				m_pSpecularMapping->BeginPass(i);
+				{
+					// 구체를 그린다.
+					m_pMesh->DrawSubset(0);
+				}
+				m_pSpecularMapping->EndPass();
+			}
+		}
+		m_pSpecularMapping->End();
 	}
+
+	//if(m_pMtlTex)
+	//{
+	//	g_pD3DDevice->SetRenderState(D3DRS_NORMALIZENORMALS, true);
+	//	g_pD3DDevice->SetTransform(D3DTS_WORLD, pMatrix);
+	//	g_pD3DDevice->SetTexture(0, m_pMtlTex->pTex);
+	//	g_pD3DDevice->SetMaterial(&m_pMtlTex->stMtl);
+	//	m_pMesh->DrawSubset(0);
+	//	//g_pD3DDevice->SetRenderState(D3DRS_NORMALIZENORMALS, false);
+	//}
 
 	/*if (m_pSphereMesh){
 		g_pD3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
