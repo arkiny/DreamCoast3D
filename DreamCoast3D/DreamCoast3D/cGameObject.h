@@ -26,12 +26,12 @@ protected:
 	SYNTHESIZE(iGameObjectDelegate*, m_pGameObjDeligate, GameObjDeligate);
 	SYNTHESIZE(iEffectManagerDelegate*, m_pEffectDelegate, EffectDelegate);
 	SYNTHESIZE(eGameObjectType, m_eGameObjectType, GameObjectType);
+	SYNTHESIZE(iGameEventDelegate*, m_pEventDelegate, EventDelegate);
 
 	iGridTileSystem*	m_pGridCallback;
 	ST_TILE_GRIDPOS		m_stGridPos;
 
 	ST_BOUNDING_SPHERE	m_stBoundingSphere;
-	
 	
 	ST_BOUNDING_BOX*	m_pBoundingBox;
 	cTransform*			m_pTransform;

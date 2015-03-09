@@ -151,6 +151,14 @@ void cGameObjManager::SetEffectDeligate(iEffectManagerDelegate* pEffectDeligate)
 	}
 }
 
+void cGameObjManager::SetEventDeligate(iGameEventDelegate* pEventDeligate)
+{
+	for (auto p : m_setGameObjects)
+	{
+		
+	}
+}
+
 void cGameObjManager::SetPlayableGameObject(cGameObject* pPlayer){
 	if (pPlayer && pPlayer != m_pPlayable){
 		pPlayer->AddRef();

@@ -337,6 +337,12 @@
     <ClCompile Include="iUIInventoryDelegate.cpp">
       <Filter>EachWorks\MW\Todo</Filter>
     </ClCompile>
+    <ClCompile Include="cGameEventManager.cpp">
+      <Filter>EachWorks\MS</Filter>
+    </ClCompile>
+    <ClCompile Include="cGameEvent.cpp">
+      <Filter>EachWorks\MS</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cAction.h">
@@ -687,6 +693,15 @@
     <ClInclude Include="iUIInventoryDelegate.h">
       <Filter>EachWorks\MW\Todo</Filter>
     </ClInclude>
+    <ClInclude Include="cGameEventManager.h">
+      <Filter>EachWorks\MS</Filter>
+    </ClInclude>
+    <ClInclude Include="iGameEventDelegate.h">
+      <Filter>EachWorks\MS</Filter>
+    </ClInclude>
+    <ClInclude Include="cGameEvent.h">
+      <Filter>EachWorks\MS</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="DreamCoast3D.ico">
@@ -704,6 +719,8 @@
     <None Include="..\Resources\Shader\Soft Shadows.fx">
       <Filter>FrameWork\FX</Filter>
     </None>
+    <None Include="..\Resources\Shader\ApplyShadow.fx" />
+    <None Include="..\Resources\Shader\CreateShadow.fx" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="FrameWork">
@@ -866,13 +883,5 @@
     <Text Include="test.txt">
       <Filter>FrameWork\Resource</Filter>
     </Text>
-  </ItemGroup>
-  <ItemGroup>
-    <FxCompile Include="..\Resources\Shader\ApplyShadow.fx">
-      <Filter>FrameWork\FX</Filter>
-    </FxCompile>
-    <FxCompile Include="..\Resources\Shader\CreateShadow.fx">
-      <Filter>FrameWork\FX</Filter>
-    </FxCompile>
   </ItemGroup>
 </Project>

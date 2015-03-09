@@ -9,6 +9,7 @@ class cEffectManager;
 
 // MS
 class cGamePlayableObject;
+class cGameEventManager;
 
 // 앞으로의 모든 씬은 cScene을 상속받아서 만들어진다.
 class cScene : public cObject
@@ -54,6 +55,10 @@ protected:
 	cCamera*							m_pCamera;
 
 	cEffectManager*						m_pEffectManager;
+
+	// MS 이벤트 작업중
+
+	cGameEventManager*					m_pGameEventManager;
 	
 
 public:
@@ -110,6 +115,12 @@ public:
 
 	// MS
 	cGamePlayableObject* m_pPlayableObject;
+
+	virtual cGameEventManager* GetGameEvtMng()
+	{
+		_ASSERT(m_pGameEventManager);
+		return m_pGameEventManager;
+	}
 
 
 };

@@ -12,6 +12,7 @@
 #include "cMapLoader.h"
 #include "cUILoader.h"
 #include "cEffectManager.h"
+#include "cGameEventManager.h"
 
 /// TODO
 // 차후 데이타 드리븐 완료후 삭제해야할것들
@@ -34,6 +35,7 @@ cScene::cScene()
 	, m_pPlayableObject(NULL)
 	, m_pDelegate(NULL)
 	, m_pEffectManager(NULL)
+	, m_pGameEventManager(NULL)
 {
 }
 
@@ -59,6 +61,12 @@ cScene::~cScene()
 		SAFE_RELEASE(p);
 	}
 	m_vecLightSources.clear();
+
+	// MS
+	if (m_pGameEventManager)
+	{
+		m_pGameEventManager->Destory();
+	}
 }
 
 void cScene::Setup(std::string sFilePath){
@@ -104,6 +112,10 @@ void cScene::Setup(std::string sFilePath){
 
 	m_pEffectManager->AddEffect(p);
 	p->Release();*/
+
+	m_pGameEventManager = new cGameEventManager;
+	m_pGameEventManager->Setup();
+	m_pGameEventManager->SetDesc("EventManager");
 
 	/// TODO 차후 UI 및 하늘 역시 DataDriven으로 처리된후 삭제
 	
@@ -214,6 +226,11 @@ void cScene::Start(){
 		}
 		m_pEffectManager->Start();
 	}
+
+	if (m_pGameEventManager)
+	{
+		m_pGameEventManager->Start();
+	}
 }
 
 void cScene::Update(float delta){
@@ -241,6 +258,11 @@ void cScene::Update(float delta){
 
 	if (m_pUIObjManager){
 		m_pUIObjManager->Update(delta);
+	}
+
+	if (m_pGameEventManager)
+	{
+		m_pGameEventManager->Update(delta);
 	}
 }
 
