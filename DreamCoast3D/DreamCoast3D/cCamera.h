@@ -50,7 +50,7 @@ public:
 	
 	void SetTarget(D3DXVECTOR3* pvTarget);
 	D3DXMATRIXA16& GetTransformMatrix();
-
+	D3DXVECTOR3	GetLookAt(){ return m_vLookAt; }
 	//void AdjustYPositionByHeightMap(iMap* pMap);
 
 	// MS

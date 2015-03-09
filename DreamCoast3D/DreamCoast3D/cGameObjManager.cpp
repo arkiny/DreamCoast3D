@@ -66,6 +66,25 @@ void cGameObjManager::Render(){
 	}
 }
 
+void cGameObjManager::Render(LPD3DXEFFECT pEffect){
+	for (auto p : m_setStaticGameObjects){
+		if (m_pFrustum->IsIn(p->GetBoundingSphere())){
+			pEffect->SetMatrix("gWorldMatrix", p->GetTransformMatrix());
+			pEffect->CommitChanges();
+			SAFE_RENDER(p);
+		}
+	}
+
+	for (auto p : m_setGameObjects){
+		if (m_pFrustum->IsIn(p->GetBoundingSphere())){
+			pEffect->SetMatrix("gWorldMatrix", p->GetTransformMatrix());
+			pEffect->CommitChanges();
+			SAFE_RENDER(p);
+		}
+	}
+}
+
+
 void cGameObjManager::SetCurrentTileSystem(iGridTileSystem* pGridSystem){
 	m_pGridTileSystem = pGridSystem;
 

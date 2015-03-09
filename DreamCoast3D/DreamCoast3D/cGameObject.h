@@ -43,6 +43,7 @@ public:
 	virtual void Setup();
 	virtual void Update(float fDelta);
 	virtual void Render();
+	//virtual void Render(LPD3DXEFFECT pEffect);
 
 	virtual cTransform*			GetTransform();
 	virtual D3DXMATRIXA16*		GetTransformMatrix();

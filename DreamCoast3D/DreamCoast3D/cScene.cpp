@@ -59,33 +59,14 @@ cScene::~cScene()
 		SAFE_RELEASE(p);
 	}
 	m_vecLightSources.clear();
+
+	//SAFE_RELEASE(gpShadowRenderTarget );
+	//SAFE_RELEASE(gpShadowDepthStencil );
+	//SAFE_RELEASE(gpApplyShadowShader  );
+	//SAFE_RELEASE(gpCreateShadowShader );
 }
 
 void cScene::Setup(std::string sFilePath){
-	//1. 각 씬은 광원이 다를 수 있으므로 상속 받은 곳에서 설정한다.
-	// HACK : LightSource 매니저를 따로 뽑을 건지 고민
-	//D3DLIGHT9 stLight;
-	//D3DXVECTOR3 vDir = D3DXVECTOR3(1.5, -1, 1);
-
-	//ZeroMemory(&stLight, sizeof(D3DLIGHT9));
-	//stLight.Type = D3DLIGHT_DIRECTIONAL;
-	//D3DXVec3Normalize(&vDir, &vDir);
-	//stLight.Direction = vDir;
-	//stLight.Ambient = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
-	//stLight.Diffuse = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
-	//stLight.Specular = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
-
-	//cLightSource* pLightSource = new cLightSource;
-	//pLightSource->Setup(stLight, vDir, m_vecLightSources.size());
-	//pLightSource->SetDesc("Light Source Example1");
-	//m_vecLightSources.push_back(pLightSource);
-
-	// 카메라 설정법인데, 이제는 파일에서 로딩 가능
-	/*cCameraEditing* p = new cCameraEditing;
-	p->Setup();
-	p->SetDesc(std::string("Camera For Scene Example1"));
-	p->SetPosition(D3DXVECTOR3(128.0f, 0.0f, 128.0f));
-	m_pCamera = p;*/
 
 	m_pGameObjManager = new cGameObjManager;
 	m_pGameObjManager->Setup();
@@ -98,64 +79,6 @@ void cScene::Setup(std::string sFilePath){
 	m_pEffectManager = new cEffectManager;
 	m_pEffectManager->Setup();
 	m_pEffectManager->SetDesc("EffectManager");
-
-	/*cEffectFireBall* p = new cEffectFireBall;
-	p->Setup();
-
-	m_pEffectManager->AddEffect(p);
-	p->Release();*/
-
-	/// TODO 차후 UI 및 하늘 역시 DataDriven으로 처리된후 삭제
-	
-	//cUISystemTest* p = new cUISystemTest;
-	//p->Setup();
-	//m_pUIObjManager->AddUI(p);
-	//SAFE_RELEASE(p);
-
-	///
-	//cUIStatWindow* p = new cUIStatWindow;
-	//p->Setup();
-	//m_pUIObjManager->AddUI(p);
-	//SAFE_RELEASE(p);
-
-	//cUISkillShortCut* p2 = new cUISkillShortCut;
-	//p2->Setup();
-	//m_pUIObjManager->AddUI(p2);
-	//SAFE_RELEASE(p2);
-
-	//cUIExpBar* p3 = new cUIExpBar;
-	//p3->Setup();
-	//m_pUIObjManager->AddUI(p3);
-	//SAFE_RELEASE(p3);
-
-	//cUIMinimap* p4 = new cUIMinimap;
-	//p4->Setup();
-	//m_pUIObjManager->AddUI(p4);
-	//SAFE_RELEASE(p4);
-
-	// Sky
-	//cGameMapSkyObject* pGMSO = new cGameMapSkyObject;
-	//pGMSO->Setup();
-	//m_pGameObjManager->AddGameObj(pGMSO);
-	//SAFE_RELEASE(pGMSO);
-
-
-	//SAFE_RELEASE(pAseObject);
-
-	//cGameAIObject* pGameAIObject = new cGameAIObject;
-	//pGameAIObject->Setup(std::string("../Resources/Char/Tera/"), std::string("Monster_SnowmanRed.X"));
-	//pGameAIObject->SetPosition(D3DXVECTOR3(140.0f, 0.0f, 140.0f));
-	//pGameAIObject->SetScale(D3DXVECTOR3(0.03f, 0.03f, 0.03f));
-	//m_pGameObjManager->AddGameObj(pGameAIObject);
-	//SAFE_RELEASE(pGameAIObject);
-
-	//pGameAIObject = new cGameAIObject;
-	//pGameAIObject->Setup(std::string("../Resources/Char/Tera/"), std::string("Monster_SnowmanRed.X"));
-	//pGameAIObject->SetPosition(D3DXVECTOR3(110.0f, 0.0f, 110.0f));
-	//pGameAIObject->SetScale(D3DXVECTOR3(0.03f, 0.03f, 0.03f));
-	//m_pGameObjManager->AddGameObj(pGameAIObject);
-	////pGameAIObject->SetTargetObject(m_pGameObjManager->GetPlayerableGameObject());
-	//SAFE_RELEASE(pGameAIObject);
 }
 
 void cScene::Start(){
@@ -214,6 +137,38 @@ void cScene::Start(){
 		}
 		m_pEffectManager->Start();
 	}
+
+	//if (m_pCurrentMap){
+	//	// 렌더타깃을 만든다.
+	//	const int shadowMapSize = 2048;
+	//	if (FAILED(g_pD3DDevice->CreateTexture(shadowMapSize, shadowMapSize,
+	//		1, D3DUSAGE_RENDERTARGET, D3DFMT_R32F,
+	//		D3DPOOL_DEFAULT, &gpShadowRenderTarget, NULL)))
+	//	{
+	//		MessageBox(g_hWnd, "에렁", "에렁", NULL);
+	//		PostQuitMessage(0);
+	//	}
+
+	//	// 그림자 맵과 동일한 크기의 깊이버퍼도 만들어줘야 한다.
+	//	if (FAILED(g_pD3DDevice->CreateDepthStencilSurface(shadowMapSize, shadowMapSize,
+	//		D3DFMT_D24X8, D3DMULTISAMPLE_NONE, 0, TRUE,
+	//		&gpShadowDepthStencil, NULL)))
+	//	{
+	//		MessageBox(g_hWnd, "에렁", "에렁", NULL);
+	//		PostQuitMessage(0);
+	//	}
+
+	//	LPD3DXBUFFER pError = NULL;
+	//	D3DXCreateEffectFromFile(g_pD3DDevice, "../Resources/Shader/CreateShadow.fx",
+	//		NULL, NULL, NULL, NULL, &gpCreateShadowShader, &pError);
+	//	SAFE_RELEASE(pError);
+
+
+	//	pError = NULL;
+	//	D3DXCreateEffectFromFile(g_pD3DDevice, "../Resources/Shader/ApplyShadow.fx",
+	//		NULL, NULL, NULL, NULL, &gpApplyShadowShader, &pError);
+	//	SAFE_RELEASE(pError);
+	//}
 }
 
 void cScene::Update(float delta){
@@ -245,43 +200,151 @@ void cScene::Update(float delta){
 }
 
 void cScene::Render(){
-	// Create the shadow map
-	//D3DVIEWPORT9 vp;
-	//g_pD3DDevice->GetViewport(&vp);
-	//LPDIRECT3DTEXTURE9 pShadowMap;
+	// 씬을 렌더한다.
 
-	//if (FAILED(g_pD3DDevice->CreateTexture(vp.Width, vp.Height, 1,
-	//	D3DUSAGE_RENDERTARGET, D3DFMT_R32F,
-	//	D3DPOOL_DEFAULT, &pShadowMap,
-	//	NULL)))
-	//{
-	//	MessageBox(g_hWnd, "Unable to create shadow map!",
-	//		"Error", MB_OK | MB_ICONERROR);
-	//	//return E_FAIL;
+	//if (gpCreateShadowShader){
+	//	// 광원-뷰 행렬을 만든다.
+	//	D3DXMATRIXA16 matLightView;
+	//	{
+	//		/*D3DLIGHT9 stLight;
+	//		g_pD3DDevice->GetLight(0, &stLight);*/
+	//		D3DXVECTOR3 vEyePt(gWorldLightPosition/100);
+	//		D3DXVECTOR3 vLookatPt(D3DXVECTOR3(128,0,128));
+	//		D3DXVECTOR3 vUpVec(0.0f, 1.0f, 0.0f);
+	//		D3DXMatrixLookAtLH(&matLightView, &vEyePt, &vLookatPt, &vUpVec);
+	//	}
+
+	//	// 광원-투영 행렬을 만든다.
+	//	D3DXMATRIXA16 matLightProjection;
+	//	{
+	//		D3DXMatrixPerspectiveFovLH(&matLightProjection, D3DX_PI / 4.0f, 1, 1, 3000);
+	//	}
+
+	//	// 뷰/투영행렬을 만든다.
+	//	D3DXMATRIXA16 matViewProjection;
+	//	{
+	//		// 뷰 행렬을 만든다.
+	//		D3DXMATRIXA16 matView;
+	//		/*D3DXVECTOR3 vEyePt(gWorldCameraPosition.x, gWorldCameraPosition.y, gWorldCameraPosition.z);
+	//		D3DXVECTOR3 vLookatPt(0.0f, 0.0f, 0.0f);
+	//		D3DXVECTOR3 vUpVec(0.0f, 1.0f, 0.0f);
+	//		D3DXMatrixLookAtLH(&matView, &vEyePt, &vLookatPt, &vUpVec);*/
+	//		g_pD3DDevice->GetTransform(D3DTS_VIEW, &matView);
+
+	//		// 투영행렬을 만든다.
+	//		D3DXMATRIXA16			matProjection;
+	//		g_pD3DDevice->GetTransform(D3DTS_PROJECTION, &matProjection);
+	//		D3DXMatrixMultiply(&matViewProjection, &matView, &matProjection);
+	//	}
+
+	//	// 디스크의 월드행렬을 만든다.
+	//	D3DXMATRIXA16			matDiscWorld;
+	//	{
+	//		D3DXMatrixIdentity(&matDiscWorld);
+	//	}
+
+	//	// 현재 하드웨어 벡버퍼와 깊이버퍼
+	//	LPDIRECT3DSURFACE9 pHWBackBuffer			= NULL;
+	//	LPDIRECT3DSURFACE9 pHWDepthStencilBuffer	= NULL;
+	//	g_pD3DDevice->GetRenderTarget(0, &pHWBackBuffer);
+	//	g_pD3DDevice->GetDepthStencilSurface(&pHWDepthStencilBuffer);
+
+	//	//////////////////////////////
+	//	// 1. 그림자 만들기
+	//	//////////////////////////////
+
+	//	// 그림자 맵의 렌더타깃과 깊이버퍼를 사용한다.
+	//	LPDIRECT3DSURFACE9 pShadowSurface = NULL;
+	//	if (SUCCEEDED(gpShadowRenderTarget->GetSurfaceLevel(0, &pShadowSurface)))
+	//	{
+	//		//g_pD3DDevice->SetRenderTarget(0, pShadowSurface);
+	//		pShadowSurface->Release();
+	//		pShadowSurface = NULL;
+	//	}
+	//	//g_pD3DDevice->SetDepthStencilSurface(gpShadowDepthStencil);
+
+	//	//
+	//	// 저번 프레임에 그렸던 그림자 정보를 지움
+	//	//0xFFFFFFFF
+	//	g_pD3DDevice->Clear(0, NULL, (D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER), 0x00000000, 1.0f, 0);
+
+	//	//D3DXMATRIXA16 matTorusWorld;
+	//	//D3DXMatrixIdentity(&matTorusWorld);
+
+	//	// 그림자 만들기 쉐이더 전역변수들을 설정
+	//	gpCreateShadowShader->SetMatrix("gLightViewMatrix", &matLightView);
+	//	gpCreateShadowShader->SetMatrix("gLightProjectionMatrix", &matLightProjection);
+
+	//	// 그림자 만들기 쉐이더를 시작
+	//	{
+	//		UINT numPasses = 0;
+	//		gpCreateShadowShader->Begin(&numPasses, NULL);
+	//		{
+	//			for (UINT i = 0; i < numPasses; ++i)
+	//			{
+	//				gpCreateShadowShader->BeginPass(i);
+	//				{
+	//					m_pGameObjManager->Render(gpCreateShadowShader);
+	//				}
+	//				gpCreateShadowShader->EndPass();
+	//			}
+	//		}
+	//		gpCreateShadowShader->End();
+	//	}
+
+		//////////////////////////////////
+		////// 2. 그림자 입히기
+		//////////////////////////////////
+
+		////// 하드웨어 백버퍼/깊이버퍼를 사용한다.
+		//g_pD3DDevice->SetRenderTarget(0, pHWBackBuffer);
+		//g_pD3DDevice->SetDepthStencilSurface(pHWDepthStencilBuffer);
+
+		//
+		////// 그림자 입히기 쉐이더 전역변수들을 설정
+		//gpApplyShadowShader->SetMatrix("gViewProjectionMatrix", &matViewProjection);
+		//gpApplyShadowShader->SetMatrix("gLightViewMatrix", &matLightView);
+		//gpApplyShadowShader->SetMatrix("gLightProjectionMatrix", &matLightProjection);
+		//gpApplyShadowShader->SetVector("gWorldLightPosition", &gWorldLightPosition);
+		//gpApplyShadowShader->SetTexture("ShadowMap_Tex", gpShadowRenderTarget);
+
+
+		//// 쉐이더를 시작한다.
+		//UINT numPasses = 0;
+		//gpApplyShadowShader->Begin(&numPasses, NULL);
+		//{
+		//	for (UINT i = 0; i < numPasses; ++i)
+		//	{
+		//		gpApplyShadowShader->BeginPass(i);
+		//		{
+		//			// 원환체를 그린다.
+		//			//gpApplyShadowShader->SetMatrix("gWorldMatrix", &matTorusWorld);	//원환체
+		//			gpApplyShadowShader->SetVector("gObjectColor", &gTorusColor);
+		//			m_pGameObjManager->Render(gpApplyShadowShader);
+
+		//			// 디스크를 그린다.
+		//			//gpApplyShadowShader->SetMatrix("gWorldMatrix", &matDiscWorld);
+		//			//gpApplyShadowShader->SetVector("gObjectColor", &gDiscColor);
+		//			//gpApplyShadowShader->SetMatrix("gWorldMatrix", m_pCurrentMap->GetTransformMatrix());
+		//			//gpApplyShadowShader->CommitChanges();
+		//			//m_pCurrentMap->Render();
+		//			
+		//		}
+		//		gpApplyShadowShader->EndPass();
+		//	}
+		//}
+		//gpApplyShadowShader->End();
+		//SAFE_RELEASE(pHWBackBuffer);
+		//SAFE_RELEASE(pHWDepthStencilBuffer);
+	//}
+	//else {
 	//}
 
-	//// Grab the texture's surface
-	//pShadowMap->GetSurfaceLevel(0, &g_pShadowSurf);
-
-	//D3DXMATRIXA16 matView, matProj, matWorld, matLightViewProj;
-	//D3DXVECTOR3 vLightPos(0, 0, 0);
-	//D3DXVECTOR3 vLightAim = m_vecLightSources[0]->GetDirection();
-	//D3DXVECTOR3 vUp(0, 1, 0);
-	//// Ordinary view matrix
-	//D3DXMatrixLookAtLH(&matView, &vLightPos, &vLightAim, &vUp);
-	//// Projection matrix for the light
-	//D3DXMatrixPerspectiveFovLH(&matProj, D3DXToRadian(30.0f), 1.0f, 1.0f, 1024.0f);
-	//// Concatenate the world matrix with the above two to get the required matrix
-	//matLightViewProj = matWorld * matView * matProj;
-
 	// 현재 맵만 렌더링함
-	SAFE_RENDER(m_pCurrentMap);
-
 	SAFE_RENDER(m_pGameObjManager);
+	SAFE_RENDER(m_pCurrentMap);
 	SAFE_RENDER(m_pUIObjManager);
-
 	SAFE_RENDER(m_pCamera);
-
 	SAFE_RENDER(m_pEffectManager);
 }
 

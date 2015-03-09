@@ -37,6 +37,8 @@ public:
 	void Setup();
 	void Update(float fDelta);
 	void Render();
+	virtual void Render(LPD3DXEFFECT pEffect);
+
 
 	void SetCurrentTileSystem(iGridTileSystem* pGridSystem);
 	void SetEffectDeligate(iEffectManagerDelegate* pEffectDeligate);

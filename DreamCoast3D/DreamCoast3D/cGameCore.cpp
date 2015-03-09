@@ -35,10 +35,11 @@ void cGameCore::Update(float fDelta){
 }
 
 void cGameCore::Render(){
+	D3DCOLOR bgColour = 0xFF555555;	// 배경색상 - 파랑
 	g_pD3DDevice->Clear(
 		NULL, NULL,
 		D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER,
-		D3DCOLOR_XRGB(0, 0, 0),
+		bgColour,
 		1.0f, 0);
 	g_pD3DDevice->BeginScene();
 

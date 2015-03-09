@@ -55,6 +55,25 @@ protected:
 
 	cEffectManager*						m_pEffectManager;
 	
+	/////////////////// Shader //////////////////////////
+	//// 쉐이더
+	//LPD3DXEFFECT			gpApplyShadowShader = NULL;
+	//LPD3DXEFFECT			gpCreateShadowShader = NULL;
+
+	//// 빛의 위치
+	//D3DXVECTOR4				gWorldLightPosition = { 500.0f, 500.0f, -500.0f, 1.0f };
+
+	//// 카메라 위치
+	//D3DXVECTOR4				gWorldCameraPosition = { 0.0f, 0.0f, -200.0f, 1.0f };
+	//
+	//// 물체의 색상, 차후 텍스쳐 적용으로...
+	//D3DXVECTOR4				gTorusColor = { 1, 1, 0, 1 };
+	//D3DXVECTOR4				gDiscColor = { 0, 1, 1, 1 };
+
+	//// 그림자맵 렌더타깃
+	//LPDIRECT3DTEXTURE9		gpShadowRenderTarget = NULL;
+	//LPDIRECT3DSURFACE9		gpShadowDepthStencil = NULL;
+
 
 public:
 	cScene();
@@ -69,6 +88,7 @@ public:
 	virtual void Start();
 	virtual void Update(float delta);
 	virtual void Render();
+
 
 	// 모든 리소스를 해제한다.
 	virtual void Exit();
