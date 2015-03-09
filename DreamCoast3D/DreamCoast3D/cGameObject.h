@@ -5,6 +5,7 @@
 // TODO : 이동할때나 상황에 따라 바운딩 스피어가 움직이가 처리해야한다.
 //		  현재 함수는 바운딩 스피어의 Y축 이동이 불완전한 상태
 class cTransform;
+class cGameEvent;
 
 class cGameObject : public cObject
 {
@@ -22,11 +23,21 @@ public:
 		E_MAX
 	};
 
+	enum eEventType
+	{
+		E_QUEST,
+		E_TALK,
+		E_STORE,
+		E_EMPTY,
+		E_EVENTMAX
+	};
+
 protected:
 	SYNTHESIZE(iGameObjectDelegate*, m_pGameObjDeligate, GameObjDeligate);
 	SYNTHESIZE(iEffectManagerDelegate*, m_pEffectDelegate, EffectDelegate);
 	SYNTHESIZE(eGameObjectType, m_eGameObjectType, GameObjectType);
 	SYNTHESIZE(iGameEventDelegate*, m_pEventDelegate, EventDelegate);
+	SYNTHESIZE(eEventType, m_eEventType, EventType);
 
 	iGridTileSystem*	m_pGridCallback;
 	ST_TILE_GRIDPOS		m_stGridPos;
@@ -35,6 +46,7 @@ protected:
 	
 	ST_BOUNDING_BOX*	m_pBoundingBox;
 	cTransform*			m_pTransform;
+
 
 public:
 	cGameObject();

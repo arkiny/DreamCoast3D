@@ -21,6 +21,9 @@ protected:
 	/*SYNTHESIZE(iGameObjectDelegate*, m_pGameObjDelgate, GameObjDeligate);
 	SYNTHESIZE(iSceneDelegate*, m_pSceneDeligate, SceneDeligate);*/
 
+	// MS
+	iGameEventDelegate* m_pEventDeligate;
+
 public:
 	cUIObject();
 	cUIObject(LPD3DXSPRITE pSprite);
@@ -51,6 +54,7 @@ public:
 	virtual void SetGameObjDeligate(iGameObjectDelegate* pGameDeligate);
 	virtual void SetSceneDeligate(iSceneDelegate* pSceneDeligate);
 	virtual void SetUIManagerDeligate(iUIManagerDeligate* pUImanagerDeligate);
+	virtual void SetEventDeligate(iGameEventDelegate* pEventDeligate);
 
 	virtual void SetPosition(float x, float y)
 	{

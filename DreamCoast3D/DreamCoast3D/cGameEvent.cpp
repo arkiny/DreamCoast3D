@@ -6,7 +6,6 @@ cGameEvent::cGameEvent()
 {
 }
 
-
 cGameEvent::~cGameEvent()
 {
 }

@@ -11,6 +11,7 @@ cUIObject::cUIObject()
 	, m_pSceneDeligate(NULL)
 	, m_pUIManagerDeligate(NULL)
 	, m_fAlpha(1.f)
+	, m_pEventDeligate(NULL)
 {
 }
 
@@ -85,6 +86,15 @@ void cUIObject::SetGameObjDeligate(iGameObjectDelegate* pGameDeligate){
 		p->SetGameObjDeligate(pGameDeligate);
 	}
 	m_pGameObjDelgate = pGameDeligate;
+}
+
+void cUIObject::SetEventDeligate(iGameEventDelegate* pEventDeligate)
+{
+	for (auto p : m_vecChild)
+	{
+		p->SetEventDeligate(pEventDeligate);
+	}
+	m_pEventDeligate = pEventDeligate;
 }
 
 void cUIObject::SetSceneDeligate(iSceneDelegate* pSceneDeligate){

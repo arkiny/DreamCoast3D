@@ -2,6 +2,9 @@
 #include "cGameObject.h"
 #include "cTransform.h"
 
+// MS
+#include "cGameEvent.h"
+
 cGameObject::cGameObject()
 	:m_stBoundingSphere()
 	, m_pBoundingBox(NULL)
@@ -22,6 +25,7 @@ cGameObject::~cGameObject()
 {
 	SAFE_RELEASE(m_pTransform);
 	//SAFE_DELETE(m_pBoundingBox);
+
 }
 
 void cGameObject::Setup(){

@@ -9,6 +9,9 @@ protected:
 	std::set<cGameEvent*> m_setEvent;
 	std::vector<cGameEvent*> m_vecEvent;
 
+private:
+	iGridTileSystem* m_pGridTileSystem;
+
 public:
 	cGameEventManager();
 	virtual ~cGameEventManager();
@@ -23,5 +26,15 @@ public:
 	virtual void DeleteEvent(cGameEvent* pEvent);
 
 	virtual void Destory();
+
+	void SetCurrentTileSystem(iGridTileSystem* pGridSystem);
+
+
+	/////
+
+	void CheckEventFromRange(cGameObject* pFrom, int nRange);
+
+private:
+	
 };
 
