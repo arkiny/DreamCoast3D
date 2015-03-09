@@ -45,6 +45,8 @@ void cPlayerMove::Execute(cGamePlayableObject* pPlayer, float fDelta){
 			//	&&*/ pPlayer->GetGameObjDeligate()->isGameObjectCollided(pPlayer) == false){
 				pPlayer->SetPosition(newPos);
 			//}
+
+			pPlayer->GetEventDelegate()->CheckEventFromRange(pPlayer, 1);
 		}
 
 		if (g_pControlManager->GetInputInfo('S')){

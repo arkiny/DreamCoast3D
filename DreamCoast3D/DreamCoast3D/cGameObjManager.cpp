@@ -97,6 +97,15 @@ void cGameObjManager::SetCurrentTileSystem(iGridTileSystem* pGridSystem){
 	}
 }
 
+void cGameObjManager::SetTileSystemForEvent()
+{
+	// Event Manager에서 참조
+	for (auto p : m_setGameObjects){
+		p->SetEventDelegate(m_pEventDeligate);
+	}
+	m_pEventDeligate->SetCurrentTileSystem(m_pGridTileSystem);
+}
+
 void cGameObjManager::AddGameObj(cGameObject* pGameObj){
 	if (pGameObj){
 		if (m_setGameObjects.find(pGameObj) == m_setGameObjects.end()){
@@ -170,13 +179,6 @@ void cGameObjManager::SetEffectDeligate(iEffectManagerDelegate* pEffectDeligate)
 	}
 }
 
-void cGameObjManager::SetEventDeligate(iGameEventDelegate* pEventDeligate)
-{
-	for (auto p : m_setGameObjects)
-	{
-		
-	}
-}
 
 void cGameObjManager::SetPlayableGameObject(cGameObject* pPlayer){
 	if (pPlayer && pPlayer != m_pPlayable){

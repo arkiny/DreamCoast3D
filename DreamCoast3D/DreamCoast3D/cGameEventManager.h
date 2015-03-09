@@ -23,5 +23,15 @@ public:
 	virtual void DeleteEvent(cGameEvent* pEvent);
 
 	virtual void Destory();
+
+
+	void SetCurrentTileSystem(iGridTileSystem* pGridSystem);
+
+	/////
+
+	void CheckEventFromRange(cGameObject* pFrom, int nRange);
+
+private:
+	iGridTileSystem* m_pGridTileSystem;
 };
 

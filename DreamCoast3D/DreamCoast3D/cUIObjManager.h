@@ -28,6 +28,7 @@ public:
 
 	virtual void SetGameObjDeligate(iGameObjectDelegate* pGameManager);
 	virtual void SetSceneDeligate(iSceneDelegate* pSceneManager);
+	virtual void SetEventDeligate(iGameEventDelegate* pEventManager);
 
 	virtual void Destroy();
 

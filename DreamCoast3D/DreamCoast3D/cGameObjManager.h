@@ -50,6 +50,9 @@ public:
 
 	void SetCameraDeligate(iCameraDeligate* pCamera){ m_pCameraDeligate = pCamera; }
 
+	// MS
+	void SetEventDeligate(iGameEventDelegate* pEventDeligate){ m_pEventDeligate = pEventDeligate; }
+
 	void AddGameObj(cGameObject* pGameObj);
 	void RemoveGameObj(cGameObject* pGameObj);
 
@@ -75,6 +78,8 @@ public:
 	cGameObject* GetPlayerData() override;
 	std::set<cGameObject*> GetObjectData() override;
 	D3DXVECTOR3 isCollidedStaticObject(cGameObject* pFrom) override;
+	void SetTileSystemForEvent();
+
 
 protected:
 	bool isCollided(D3DXVECTOR3 vFromCenter,
@@ -82,12 +87,14 @@ protected:
 		D3DXVECTOR3 vToCenter,
 		float fCenterRad, float fToScale);
 
-	
+
 private:
 	// Calculated by Conan
 	D3DXVECTOR3 PushingForce(D3DXVECTOR3* vFrom, float fFromLength, D3DXVECTOR3* vTo, float fFromTo);
     void DeadObjectUpdate();
 
-	void SetEventDeligate(iGameEventDelegate* pEventDeligate);
+
+
+
 };
 

@@ -22,6 +22,7 @@ cGameObject::~cGameObject()
 {
 	SAFE_RELEASE(m_pTransform);
 	//SAFE_DELETE(m_pBoundingBox);
+
 }
 
 void cGameObject::Setup(){
