@@ -78,9 +78,9 @@ void cGameEventManager::CheckEventFromRange(cGameObject* pFrom, int nRange)
 		{
 			continue;
 		}
-		if (p->GetGameObjectType() == cGameObject::eGameObjectType::E_STATIC)
+		if (p->GetEventType() == cGameObject::eEventType::E_STORE)
 		{
-			int x = 0;
+
 		}
 	}
 }

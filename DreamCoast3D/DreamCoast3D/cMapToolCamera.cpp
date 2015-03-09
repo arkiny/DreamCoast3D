@@ -144,6 +144,12 @@ void cMapToolCamera::MouseUpdate()
 		m_fFocusAngleX += fDeltaX;
 		m_fFocusAngleY += fDeltaY;
 
+		if (m_fFocusAngleY >= D3DX_PI / 2.f - 0.0001f)
+			m_fFocusAngleY = D3DX_PI / 2.f - 0.0001f;
+
+		if (m_fFocusAngleY <= -D3DX_PI / 2.f + 0.0001f)
+			m_fFocusAngleY = -D3DX_PI / 2.f + 0.0001f;
+
 		m_ptPrevMouse = ptCurrMouse;
 	}
 

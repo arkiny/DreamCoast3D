@@ -7,6 +7,7 @@ cGameASEObject::cGameASEObject()
 	, m_pDebugBoxMesh(NULL)
 {
 	m_eGameObjectType = E_STATIC;
+	m_eEventType = E_STORE;
 }
 
 

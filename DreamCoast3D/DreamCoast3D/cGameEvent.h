@@ -13,5 +13,12 @@ public:
 	virtual void Update(float fDelta);
 	virtual void Render();
 	virtual void Exit();
+
+
+protected:
+
+
+private:
+
 };
 

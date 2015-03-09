@@ -169,9 +169,6 @@
     <ClCompile Include="cObject.cpp">
       <Filter>FrameWork\Object</Filter>
     </ClCompile>
-    <ClCompile Include="cGridSystem.cpp">
-      <Filter>EachWorks\MS</Filter>
-    </ClCompile>
     <ClCompile Include="cMapExample.cpp">
       <Filter>FrameWork\_EXAMPLE</Filter>
     </ClCompile>
@@ -195,9 +192,6 @@
     </ClCompile>
     <ClCompile Include="cUILoader.cpp">
       <Filter>FrameWork\Loader</Filter>
-    </ClCompile>
-    <ClCompile Include="cGameMapHeightGridSystem.cpp">
-      <Filter>EachWorks\MS</Filter>
     </ClCompile>
     <ClCompile Include="cGameSMeshBodyObject.cpp">
       <Filter>EachWorks\MW</Filter>
@@ -229,12 +223,6 @@
     <ClCompile Include="cAIFSM.cpp">
       <Filter>EachWorks\HD\AI-FSM</Filter>
     </ClCompile>
-    <ClCompile Include="cAstar.cpp">
-      <Filter>EachWorks\MS</Filter>
-    </ClCompile>
-    <ClCompile Include="cAstarNode.cpp">
-      <Filter>EachWorks\MS</Filter>
-    </ClCompile>
     <ClCompile Include="iCameraDeligate.cpp">
       <Filter>FrameWork\Interfaces</Filter>
     </ClCompile>
@@ -260,7 +248,7 @@
       <Filter>EachWorks\MW\Todo</Filter>
     </ClCompile>
     <ClCompile Include="cUIMinimap.cpp">
-      <Filter>EachWorks\MS\Todo</Filter>
+      <Filter>EachWorks\MS\MiniMap</Filter>
     </ClCompile>
     <ClCompile Include="cSceneLoader.cpp">
       <Filter>FrameWork\Loader</Filter>
@@ -307,14 +295,8 @@
     <ClCompile Include="cSceneEditMode.cpp">
       <Filter>FrameWork\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="cMousePicking.cpp">
-      <Filter>EachWorks\MS</Filter>
-    </ClCompile>
     <ClCompile Include="iUIPopupWindowDelegate.cpp">
       <Filter>EachWorks\MW\Todo</Filter>
-    </ClCompile>
-    <ClCompile Include="cMapToolCamera.cpp">
-      <Filter>EachWorks\MS</Filter>
     </ClCompile>
     <ClCompile Include="cUISlot.cpp">
       <Filter>EachWorks\MW\Todo</Filter>
@@ -342,6 +324,24 @@
     </ClCompile>
     <ClCompile Include="cGameEventManager.cpp">
       <Filter>EachWorks\MS\Event</Filter>
+    </ClCompile>
+    <ClCompile Include="cMapToolCamera.cpp">
+      <Filter>EachWorks\MS\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="cMousePicking.cpp">
+      <Filter>EachWorks\MS\Mouse</Filter>
+    </ClCompile>
+    <ClCompile Include="cGameMapHeightGridSystem.cpp">
+      <Filter>EachWorks\MS\Grid</Filter>
+    </ClCompile>
+    <ClCompile Include="cGridSystem.cpp">
+      <Filter>EachWorks\MS\Grid</Filter>
+    </ClCompile>
+    <ClCompile Include="cAstar.cpp">
+      <Filter>EachWorks\MS\Astar</Filter>
+    </ClCompile>
+    <ClCompile Include="cAstarNode.cpp">
+      <Filter>EachWorks\MS\Astar</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -546,9 +546,6 @@
     <ClInclude Include="cUILoader.h">
       <Filter>FrameWork\Loader</Filter>
     </ClInclude>
-    <ClInclude Include="cGameMapHeightGridSystem.h">
-      <Filter>EachWorks\MS</Filter>
-    </ClInclude>
     <ClInclude Include="cGameSMeshBodyObject.h">
       <Filter>EachWorks\MW</Filter>
     </ClInclude>
@@ -579,15 +576,6 @@
     <ClInclude Include="MultiAnimation.hpp">
       <Filter>FrameWork\FX</Filter>
     </ClInclude>
-    <ClInclude Include="cGridSystem.h">
-      <Filter>EachWorks\MS</Filter>
-    </ClInclude>
-    <ClInclude Include="cAstar.h">
-      <Filter>EachWorks\MS</Filter>
-    </ClInclude>
-    <ClInclude Include="cAstarNode.h">
-      <Filter>EachWorks\MS</Filter>
-    </ClInclude>
     <ClInclude Include="iCameraDeligate.h">
       <Filter>FrameWork\Interfaces</Filter>
     </ClInclude>
@@ -616,7 +604,7 @@
       <Filter>EachWorks\MW\Todo</Filter>
     </ClInclude>
     <ClInclude Include="cUIMinimap.h">
-      <Filter>EachWorks\MS\Todo</Filter>
+      <Filter>EachWorks\MS\MiniMap</Filter>
     </ClInclude>
     <ClInclude Include="cSceneLoader.h">
       <Filter>FrameWork\Loader</Filter>
@@ -663,14 +651,8 @@
     <ClInclude Include="cSceneEditMode.h">
       <Filter>FrameWork\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="cMousePicking.h">
-      <Filter>EachWorks\MS</Filter>
-    </ClInclude>
     <ClInclude Include="iUIPopupWindowDelegate.h">
       <Filter>EachWorks\MW\Todo</Filter>
-    </ClInclude>
-    <ClInclude Include="cMapToolCamera.h">
-      <Filter>EachWorks\MS</Filter>
     </ClInclude>
     <ClInclude Include="cUISlot.h">
       <Filter>EachWorks\MW\Todo</Filter>
@@ -701,6 +683,24 @@
     </ClInclude>
     <ClInclude Include="cGameEventManager.h">
       <Filter>EachWorks\MS\Event</Filter>
+    </ClInclude>
+    <ClInclude Include="cMapToolCamera.h">
+      <Filter>EachWorks\MS\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="cMousePicking.h">
+      <Filter>EachWorks\MS\Mouse</Filter>
+    </ClInclude>
+    <ClInclude Include="cGridSystem.h">
+      <Filter>EachWorks\MS\Grid</Filter>
+    </ClInclude>
+    <ClInclude Include="cGameMapHeightGridSystem.h">
+      <Filter>EachWorks\MS\Grid</Filter>
+    </ClInclude>
+    <ClInclude Include="cAstar.h">
+      <Filter>EachWorks\MS\Astar</Filter>
+    </ClInclude>
+    <ClInclude Include="cAstarNode.h">
+      <Filter>EachWorks\MS\Astar</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -811,9 +811,6 @@
     <Filter Include="FrameWork\FX">
       <UniqueIdentifier>{4e55bb74-4fe7-46d3-94b7-d8793094f829}</UniqueIdentifier>
     </Filter>
-    <Filter Include="EachWorks\MS\Todo">
-      <UniqueIdentifier>{90cc1dc4-9eb5-4efa-a09c-cd7086883edb}</UniqueIdentifier>
-    </Filter>
     <Filter Include="EachWorks\MW\Todo">
       <UniqueIdentifier>{70713648-0207-4f31-8d70-ff0ba213f875}</UniqueIdentifier>
     </Filter>
@@ -825,6 +822,21 @@
     </Filter>
     <Filter Include="EachWorks\MS\Event">
       <UniqueIdentifier>{2c89afca-7cd9-42b7-a78d-1d903d064b0e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="EachWorks\MS\Camera">
+      <UniqueIdentifier>{574d3f79-6b2c-4bcc-9233-3367091326aa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="EachWorks\MS\Mouse">
+      <UniqueIdentifier>{6655d04d-c6a1-4f4f-8bee-a68fa39a181b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="EachWorks\MS\Grid">
+      <UniqueIdentifier>{479a8b93-dc4b-4439-8ac5-6249f11b5516}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="EachWorks\MS\MiniMap">
+      <UniqueIdentifier>{90cc1dc4-9eb5-4efa-a09c-cd7086883edb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="EachWorks\MS\Astar">
+      <UniqueIdentifier>{25b1a3a2-7cf3-4e78-8633-1714bffeb4d0}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
