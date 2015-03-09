@@ -42,6 +42,7 @@ public:
 	void Setup();
 	void Update(float fDelta);
 	void Render();
+
 	virtual void Render(LPD3DXEFFECT pEffect);
 
 

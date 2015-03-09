@@ -17,6 +17,7 @@ public:
 	virtual void Setup();
 	virtual void Update(float fDelta);
 	virtual void Render();
+	virtual void RenderShadow(){}
 
 	// iMap Override
 	//각 맵은 높이 재는 법이 다르므로 따로 오버라이드 해줘야한다.

@@ -24,10 +24,10 @@ string CreateShadowShader_CreateShadow_Torus : ModelData = ".\\Torus.x";
 
 texture ShadowMap_Tex : RenderColorTarget
 <
-	float2 RenderTargetDimensions = { 2048, 2048 };
-	string Format = "D3DFMT_R32F";
-	float  ClearDepth = 1.000000;
-	int    ClearColor = -1;
+float2 RenderTargetDimensions = { 2048, 2048 };
+string Format = "D3DFMT_R32F";
+float  ClearDepth = 1.000000;
+int    ClearColor = -1;
 >;
 struct VS_INPUT
 {
@@ -43,9 +43,9 @@ struct VS_OUTPUT
 float4x4 gWorldMatrix : World;
 float4x4 gLightViewMatrix
 <
-	string UIName = "gLightViewMatrix";
-	string UIWidget = "Numeric";
-	bool UIVisible = false;
+string UIName = "gLightViewMatrix";
+string UIWidget = "Numeric";
+bool UIVisible = false;
 > = float4x4(1.00, 0.00, 0.00, 0.00, 0.00, 1.00, 0.00, 0.00, 0.00, 0.00, 1.00, 0.00, 0.00, 0.00, 0.00, 1.00);
 float4x4 gLightProjectionMatrix : Projection;
 
@@ -57,7 +57,7 @@ VS_OUTPUT CreateShadowShader_CreateShadow_Vertex_Shader_vs_main(VS_INPUT Input)
 
 	float4x4 lightViewMatrix = gLightViewMatrix;
 
-	Output.mPosition = mul(Input.mPosition, gWorldMatrix);
+		Output.mPosition = mul(Input.mPosition, gWorldMatrix);
 	Output.mPosition = mul(Output.mPosition, lightViewMatrix);
 	Output.mPosition = mul(Output.mPosition, gLightProjectionMatrix);
 
@@ -89,11 +89,11 @@ float4 CreateShadowShader_CreateShadow_Pixel_Shader_gWorldLightPosition;
 technique CreateShadowShader
 {
 	pass CreateShadow
-	<
+		<
 		string Script = "RenderColorTarget0 = ShadowMap_Tex;"
 		"ClearColor = (255, 255, 255, 255);"
 		"ClearDepth = 1.000000;";
-	>
+		>
 	{
 		VertexShader = compile vs_2_0 CreateShadowShader_CreateShadow_Vertex_Shader_vs_main();
 		PixelShader = compile ps_2_0 CreateShadowShader_CreateShadow_Pixel_Shader_ps_main();

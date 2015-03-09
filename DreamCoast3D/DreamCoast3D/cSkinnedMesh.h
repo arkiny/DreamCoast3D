@@ -22,7 +22,7 @@ protected:
 	SYNTHESIZE(ST_BONE*, m_pRootFrame, RootFrame);
 	SYNTHESIZE(DWORD, m_dwWorkingPaletteSize, WorkingPaletteSize);
 	SYNTHESIZE(D3DXMATRIX*, m_pmWorkingPalette, WorkingPalette);
-	SYNTHESIZE(LPD3DXEFFECT, m_pEffect, Effect);
+	//SYNTHESIZE(LPD3DXEFFECT, m_pEffect, Effect);
 	
 	// 객체마다 생성
 	SYNTHESIZE(LPD3DXANIMATIONCONTROLLER, m_pAnimController, AnimController);
@@ -85,7 +85,10 @@ protected:
 
 	virtual LPD3DXEFFECT LoadEffect(char* szFilename);
 	virtual void Update(ST_BONE* pCurrent, D3DXMATRIXA16* pmatParent);
+	
 	virtual void Render(ST_BONE* pBone = NULL);
+	virtual void RenderShadow(ST_BONE* pBone = NULL);
+
 	virtual void SetupBoneMatrixPtrs(ST_BONE* pBone);
 	virtual void Destroy();
 

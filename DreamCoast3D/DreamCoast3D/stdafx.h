@@ -220,6 +220,7 @@ typedef struct ST_STAT_INFO{
 #include "cTextureManager.h"
 #include "cSkinnedMeshManager.h"
 #include "cAseManager.h"
+#include "cShaderManager.h"
 
 #include "cGameTimer.h"
 

@@ -66,6 +66,10 @@ void cGameASEObject::Render(){
 	}
 }
 
+void cGameASEObject::RenderShadow(){
+	m_pASEInstance->RenderShadow(GetTransformMatrix());
+}
+
 ST_BOUNDING_BOX* cGameASEObject::GetBoundingBox(){
 	if (m_pASEInstance){
 		ST_BOUNDING_BOX ret = m_pASEInstance->GetBoundingBox();

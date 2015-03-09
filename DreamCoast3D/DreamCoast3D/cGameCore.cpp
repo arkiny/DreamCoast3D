@@ -16,7 +16,7 @@ cGameCore::~cGameCore()
 	g_pTextureManager->Destroy();
 	g_pSkinnedMeshManager->Destroy();
 	g_pAseManager->Destroy();
-
+	g_pShaderManager->Destroy();
 
 }
 

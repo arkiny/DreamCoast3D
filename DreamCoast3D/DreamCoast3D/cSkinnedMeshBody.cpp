@@ -27,6 +27,7 @@ cSkinnedMeshBody::cSkinnedMeshBody(std::string sFolder, std::string sFile,
 	m_pMesh(NULL),
 	cSkinnedMesh(sFolder, sFile)
 {
+	g_pShaderManager->GetShader("MultiAnimation.fx");
 	m_pHead = new cSkinnedMesh(sFolderHead, sFileHead);
 	m_pHair = new cSkinnedMesh(sFolderHair, sFileHair);
 
@@ -236,49 +237,49 @@ void cSkinnedMeshBody::Render(ST_BONE* pBone /*= NULL*/)
 			}
 
 			// set the matrix palette into the effect
-			m_pEffect->SetMatrixArray("amPalette",
+			g_pShaderManager->GetShader("MultiAnimation.fx")->SetMatrixArray("amPalette",
 				m_pmWorkingPalette,
 				pBoneMesh->dwNumPaletteEntries);
 
 			//gWorldMatrix
-			m_pEffect->SetMatrix("gWorldMatrix", &pBone->CombinedTransformationMatrix);
+			g_pShaderManager->GetShader("MultiAnimation.fx")->SetMatrix("gWorldMatrix", &pBone->CombinedTransformationMatrix);
 
 			//gWorldViewProjectionMatrix
-			m_pEffect->SetMatrix("gWorldViewProjectionMatrix", &matViewProj);
+			g_pShaderManager->GetShader("MultiAnimation.fx")->SetMatrix("gWorldViewProjectionMatrix", &matViewProj);
 			//gWorldLightPosition
 			D3DLIGHT9 stLight;
 			g_pD3DDevice->GetLight(0, &stLight);
 			D3DXVECTOR3 pos = -1000 * stLight.Direction;
-			m_pEffect->SetVector("gWorldLightPosition", &D3DXVECTOR4(pos, 0.0f));
+			g_pShaderManager->GetShader("MultiAnimation.fx")->SetVector("gWorldLightPosition", &D3DXVECTOR4(pos, 0.0f));
 			//gWorldCameraPosition
-			m_pEffect->SetVector("gWorldCameraPosition", &D3DXVECTOR4(vEye, 1.0f));
+			g_pShaderManager->GetShader("MultiAnimation.fx")->SetVector("gWorldCameraPosition", &D3DXVECTOR4(vEye, 1.0f));
 
 			//DiffuseMap_Tex
-			m_pEffect->SetTexture("DiffuseMap_Tex", pBoneMesh->vecTexture[pBoneCombos[dwAttrib].AttribId]);
+			g_pShaderManager->GetShader("MultiAnimation.fx")->SetTexture("DiffuseMap_Tex", pBoneMesh->vecTexture[pBoneCombos[dwAttrib].AttribId]);
 
 			//SpecularMap_Tex
-			m_pEffect->SetTexture("SpecularMap_Tex", pBoneMesh->vecSpecular[pBoneCombos[dwAttrib].AttribId]);
+			g_pShaderManager->GetShader("MultiAnimation.fx")->SetTexture("SpecularMap_Tex", pBoneMesh->vecSpecular[pBoneCombos[dwAttrib].AttribId]);
 
 			//NormalMap_Tex
-			m_pEffect->SetTexture("NormalMap_Tex", pBoneMesh->vecNormal[pBoneCombos[dwAttrib].AttribId]);
+			g_pShaderManager->GetShader("MultiAnimation.fx")->SetTexture("NormalMap_Tex", pBoneMesh->vecNormal[pBoneCombos[dwAttrib].AttribId]);
 
 			// set the current number of bones; this tells the effect which shader to use
-			m_pEffect->SetInt("CurNumBones", pBoneMesh->dwMaxNumFaceInfls - 1);
+			g_pShaderManager->GetShader("MultiAnimation.fx")->SetInt("CurNumBones", pBoneMesh->dwMaxNumFaceInfls - 1);
 
 			// set the technique we use to draw
-			m_pEffect->SetTechnique("Skinning20");
+			g_pShaderManager->GetShader("MultiAnimation.fx")->SetTechnique("Skinning20");
 
 			UINT uiPasses, uiPass;
 
 			// run through each pass and draw
-			m_pEffect->Begin(&uiPasses, 0);
+			g_pShaderManager->GetShader("MultiAnimation.fx")->Begin(&uiPasses, 0);
 			for (uiPass = 0; uiPass < uiPasses; ++uiPass)
 			{
-				m_pEffect->BeginPass(uiPass);
+				g_pShaderManager->GetShader("MultiAnimation.fx")->BeginPass(uiPass);
 				pBoneMesh->pWorkingMesh->DrawSubset(dwAttrib);
-				m_pEffect->EndPass();
+				g_pShaderManager->GetShader("MultiAnimation.fx")->EndPass();
 			}
-			m_pEffect->End();
+			g_pShaderManager->GetShader("MultiAnimation.fx")->End();
 		}
 	}
 	//재귀적으로 모든 프레임에 대해서 실행.

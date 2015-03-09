@@ -57,6 +57,10 @@ void cGameObject::Render(){
 	g_pD3DDevice->SetTransform(D3DTS_WORLD, GetTransformMatrix());
 }
 
+void cGameObject::RenderShadow(){
+
+}
+
 
 ST_BOUNDING_SPHERE*	cGameObject::GetBoundingSphere(){
 	return &m_stBoundingSphere;

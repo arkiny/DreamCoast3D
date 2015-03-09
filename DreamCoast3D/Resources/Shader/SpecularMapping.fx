@@ -25,6 +25,14 @@ string SpecularMapping_Pass_0_Model : ModelData = "..\\..\\..\\Program Files (x8
 float4x4 gWorldMatrix : World;
 float4x4 gViewMatrix : View;
 float4x4 gProjectionMatrix : Projection;
+float4x4 gViewProjectionMatrix : ViewProjection;
+float4x4 gLightViewMatrix
+<
+string UIName = "gLightViewMatrix";
+string UIWidget = "Numeric";
+bool UIVisible = false;
+> = float4x4(1.00, 0.00, 0.00, 0.00, 0.00, 1.00, 0.00, 0.00, 0.00, 0.00, 1.00, 0.00, 0.00, 0.00, 0.00, 1.00);
+float4x4 gLightProjectionMatrix : Projection;
 
 float4 gWorldLightPosition
 <
@@ -51,6 +59,7 @@ struct VS_OUTPUT
    float3 mDiffuse : TEXCOORD1;
    float3 mViewDir: TEXCOORD2;
    float3 mReflection: TEXCOORD3;
+   float4 mClipPosition: TEXCOORD4;
 };
 
 VS_OUTPUT SpecularMapping_Pass_0_Vertex_Shader_vs_main( VS_INPUT Input )
@@ -58,6 +67,9 @@ VS_OUTPUT SpecularMapping_Pass_0_Vertex_Shader_vs_main( VS_INPUT Input )
    VS_OUTPUT Output;
 
    Output.mPosition = mul( Input.mPosition, gWorldMatrix );
+
+   float4x4 lightViewMatrix = gLightViewMatrix;
+
 
    float3 lightDir = Output.mPosition.xyz - gWorldLightPosition.xyz;
    lightDir = normalize(lightDir);
@@ -68,6 +80,9 @@ VS_OUTPUT SpecularMapping_Pass_0_Vertex_Shader_vs_main( VS_INPUT Input )
    Output.mPosition = mul( Output.mPosition, gViewMatrix );
    Output.mPosition = mul( Output.mPosition, gProjectionMatrix );
   
+   Output.mClipPosition = mul(worldPosition, lightViewMatrix);
+   Output.mClipPosition = mul(Output.mClipPosition, gLightProjectionMatrix);
+
    float3 worldNormal = mul( Input.mNormal, (float3x3)gWorldMatrix );
    worldNormal = normalize(worldNormal);
 
@@ -104,7 +119,14 @@ sampler2D SpecularSampler = sampler_state
 {
    Texture = (SpecularMap_Tex);
 };
-
+texture ShadowMap_Tex
+<
+string ResourceName = ".\\";
+>;
+sampler2D ShadowSampler = sampler_state
+{
+	Texture = (ShadowMap_Tex);
+};
 
 float3 gLightColor
 <
@@ -113,7 +135,7 @@ float3 gLightColor
    bool UIVisible =  false;
    float UIMin = -1.00;
    float UIMax = 1.00;
-> = float3( 1.00, 1.00, 1.00 );
+> = float3( 0.70, 0.70, 1.00 );
 
 
 float4 SpecularMapping_Pass_0_Pixel_Shader_ps_main(PS_INPUT Input) : COLOR
@@ -132,11 +154,22 @@ float4 SpecularMapping_Pass_0_Pixel_Shader_ps_main(PS_INPUT Input) : COLOR
       float4 specularIntensity  = tex2D(SpecularSampler, Input.mUV);
       specular *= specularIntensity.rgb * gLightColor;
    }
+   float3 ambient = float3(0.1f, 0.1f, 0.1f) * albedo;
+   float3 ret = ambient + diffuse + specular;
+   
+   float currentDepth = Input.mClipPosition.z / Input.mClipPosition.w;
+   float2 uv = Input.mClipPosition.xy / Input.mClipPosition.w;
+	   uv.y = -uv.y;
+   uv = uv * 0.5 + 0.5;
+   float shadowDepth = tex2D(ShadowSampler, uv).r;
+
+   if (currentDepth > shadowDepth + 0.0000125f)
+   {
+	   ret *= 0.5f;
+   }
 
 
-   float3 ambient = float3(0.5f, 0.5f, 0.5f) * albedo;
-
-   return float4(ambient + diffuse + specular, 1);
+   return float4(ret, 1);
 }
 
 //--------------------------------------------------------------//
@@ -147,7 +180,7 @@ technique SpecularMapping
    pass Pass_0
    {
       VertexShader = compile vs_2_0 SpecularMapping_Pass_0_Vertex_Shader_vs_main();
-      PixelShader = compile ps_2_0 SpecularMapping_Pass_0_Pixel_Shader_ps_main();
+      PixelShader = compile ps_3_0 SpecularMapping_Pass_0_Pixel_Shader_ps_main();
    }
 
 }

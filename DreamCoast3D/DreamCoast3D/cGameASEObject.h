@@ -20,6 +20,7 @@ public:
 	virtual void Setup(std::string sFolder, std::string sFile);
 	void Update(float fDelta);
 	virtual void Render();
+	virtual void RenderShadow() override;
 
 	virtual ST_BOUNDING_BOX* GetBoundingBox() override;
 	virtual void Clone(cGameObject** pTarget) override;

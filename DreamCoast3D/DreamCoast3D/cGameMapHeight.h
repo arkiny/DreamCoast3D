@@ -25,7 +25,7 @@ protected:
 
 	// shader test¿ë
 	D3DXVECTOR4						gLightColor = { 1.0f, 1.0f, 1.0f, 1.0f };
-	LPD3DXEFFECT					m_pSpecularMapping = NULL;
+	//LPD3DXEFFECT					m_pSpecularMapping = NULL;
 
 	//cMousePicking* m_pMousePicking;
 

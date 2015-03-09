@@ -55,6 +55,7 @@ public:
 	virtual void Setup();
 	virtual void Update(float fDelta);
 	virtual void Render();
+	virtual void RenderShadow();
 	//virtual void Render(LPD3DXEFFECT pEffect);
 
 	virtual cTransform*			GetTransform();

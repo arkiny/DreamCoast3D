@@ -27,7 +27,7 @@ private:
 
 	// shader test¿ë
 	D3DXVECTOR4						gLightColor = { 1.0f, 1.0f, 1.0f, 1.0f };
-	LPD3DXEFFECT					m_pSpecularMapping = NULL;
+	//LPD3DXEFFECT					m_pSpecularMapping = NULL;
 
 	SYNTHESIZE(int, m_nAseRefNum, ASERefNumber);
 
@@ -43,7 +43,10 @@ public:
 	
 	virtual void SetMtlTex(cMtlTex* pMtlTex);
 	virtual cMtlTex* GetMtlTex() { return m_pMtlTex; }
+
 	virtual void Render(D3DXMATRIXA16* pParent);
+	virtual void RenderShadow(D3DXMATRIXA16* pParent);
+
 	virtual void Release();
 };
 

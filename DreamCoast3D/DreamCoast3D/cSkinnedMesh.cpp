@@ -8,7 +8,7 @@ cSkinnedMesh::cSkinnedMesh(char* szFolder, char* szFilename)
 	, m_pAnimController(NULL)
 	, m_dwWorkingPaletteSize(0)
 	, m_pmWorkingPalette(NULL)
-	, m_pEffect(NULL)
+	//, m_pEffect(NULL)
 	, m_fAnimationBlendTime(ANIM_BLEND_TIME)
 	, m_fPassedBlendTime(0.0f)
 	, m_isAnimationBlending(false)
@@ -25,7 +25,7 @@ cSkinnedMesh::cSkinnedMesh(std::string sFolder, std::string sFile)
 	, m_pAnimController(NULL)
 	, m_dwWorkingPaletteSize(0)
 	, m_pmWorkingPalette(NULL)
-	, m_pEffect(NULL)
+	//, m_pEffect(NULL)
 	, m_fAnimationBlendTime(ANIM_BLEND_TIME)
 	, m_fPassedBlendTime(0.0f)
 	, m_isAnimationBlending(false)
@@ -38,7 +38,7 @@ cSkinnedMesh::cSkinnedMesh(std::string sFolder, std::string sFile)
 	m_pRootFrame = pSkinnedMesh->m_pRootFrame;
 	m_dwWorkingPaletteSize = pSkinnedMesh->m_dwWorkingPaletteSize;
 	m_pmWorkingPalette = pSkinnedMesh->m_pmWorkingPalette;
-	m_pEffect = pSkinnedMesh->m_pEffect;
+	//m_pEffect = pSkinnedMesh->m_pEffect;
 	m_nMeshRefNumber = pSkinnedMesh->GetMeshRefNumber();
 	m_sSkinnedFolder = pSkinnedMesh->GetSkinnedFolderPath();
 	m_sSkinnedFile = pSkinnedMesh->GetSkinnedFilePath();
@@ -92,7 +92,7 @@ cSkinnedMesh::cSkinnedMesh()
 	, m_pAnimController(NULL)
 	, m_dwWorkingPaletteSize(0)
 	, m_pmWorkingPalette(NULL)
-	, m_pEffect(NULL)
+	//, m_pEffect(NULL)
 	, m_fAnimationBlendTime(ANIM_BLEND_TIME)
 	, m_fPassedBlendTime(0.0f)
 	, m_isAnimationBlending(false)
@@ -116,10 +116,11 @@ void cSkinnedMesh::Load(std::string sFolder, std::string sFile){
 	m_sSkinnedFolder = sFolder;
 	m_sSkinnedFile = sFile;
 	
-	m_pEffect = LoadEffect("MultiAnimation.fx");
+	g_pShaderManager->GetShader("MultiAnimation.fx");
+	//m_pEffect = LoadEffect("MultiAnimation.fx");
 
 	int nPaletteSize = 0;
-	m_pEffect->GetInt("MATRIX_PALETTE_SIZE", &nPaletteSize);
+	g_pShaderManager->GetShader("MultiAnimation.fx")->GetInt("MATRIX_PALETTE_SIZE", &nPaletteSize);
 
 	cAllocateHierarchy ah;
 	ah.SetDirectory(sFolder);
@@ -230,7 +231,8 @@ void cSkinnedMesh::Update(ST_BONE* pCurrent, D3DXMATRIXA16* pmatParent)
 {
 	pCurrent->CombinedTransformationMatrix = pCurrent->TransformationMatrix;
 	//gWorldMatrix
-	m_pEffect->SetMatrix("gWorldMatrix", &pCurrent->CombinedTransformationMatrix);
+	g_pShaderManager->GetShader("MultiAnimation.fx")
+		->SetMatrix("gWorldMatrix", &pCurrent->CombinedTransformationMatrix);
 
 	
 	if (pmatParent)
@@ -322,58 +324,53 @@ void cSkinnedMesh::Render(ST_BONE* pBone /*= NULL*/)
 			}
 
 			// set the matrix palette into the effect
-			m_pEffect->SetMatrixArray("amPalette",
+			g_pShaderManager->GetShader("MultiAnimation.fx")->SetMatrixArray("amPalette",
 				m_pmWorkingPalette,
 				pBoneMesh->dwNumPaletteEntries);
 
 
 			//gWorldViewProjectionMatrix
-			m_pEffect->SetMatrix("gWorldViewProjectionMatrix", &matViewProj);
+			g_pShaderManager->GetShader("MultiAnimation.fx")
+				->SetMatrix("gWorldViewProjectionMatrix", &matViewProj);
 			//gWorldLightPosition
 			D3DLIGHT9 stLight;
 			g_pD3DDevice->GetLight(0, &stLight);
 			D3DXVECTOR3 pos = -1000 * stLight.Direction;
-			m_pEffect->SetVector("gWorldLightPosition", &D3DXVECTOR4(pos, 0.0f));
+			g_pShaderManager->GetShader("MultiAnimation.fx")
+				->SetVector("gWorldLightPosition", &D3DXVECTOR4(pos, 0.0f));
 			//gWorldCameraPosition
-			m_pEffect->SetVector("gWorldCameraPosition", &D3DXVECTOR4(vEye, 1.0f));
+			g_pShaderManager->GetShader("MultiAnimation.fx")
+				->SetVector("gWorldCameraPosition", &D3DXVECTOR4(vEye, 1.0f));
 
 			//DiffuseMap_Tex
-			m_pEffect->SetTexture("DiffuseMap_Tex", pBoneMesh->vecTexture[pBoneCombos[dwAttrib].AttribId]);
+			g_pShaderManager->GetShader("MultiAnimation.fx")
+				->SetTexture("DiffuseMap_Tex", pBoneMesh->vecTexture[pBoneCombos[dwAttrib].AttribId]);
 
 			//SpecularMap_Tex
-			m_pEffect->SetTexture("SpecularMap_Tex", pBoneMesh->vecSpecular[pBoneCombos[dwAttrib].AttribId]);
+			g_pShaderManager->GetShader("MultiAnimation.fx")
+				->SetTexture("SpecularMap_Tex", pBoneMesh->vecSpecular[pBoneCombos[dwAttrib].AttribId]);
 
 			//NormalMap_Tex
-			m_pEffect->SetTexture("NormalMap_Tex", pBoneMesh->vecNormal[pBoneCombos[dwAttrib].AttribId]);
-
-/*			m_pEffect->SetMatrix("g_mViewProj", &matViewProj);
-			m_pEffect->SetVector("vLightDiffuse", &D3DXVECTOR4(1.0f, 1.0f, 1.0f, 1.0f));
-			m_pEffect->SetVector("vWorldLightPos", &D3DXVECTOR4(500.0f, 500.0f, 500.0f, 1.0f));
-			m_pEffect->SetVector("vWorldCameraPos", &D3DXVECTOR4(vEye, 1.0f));
-			m_pEffect->SetVector("vMaterialAmbient", &D3DXVECTOR4(0.53f, 0.53f, 0.53f, 0.53f));
-			m_pEffect->SetVector("vMaterialDiffuse", &D3DXVECTOR4(1.0f, 1.0f, 1.0f, 1.0f))*/;
-
-			// we're pretty much ignoring the materials we got from the x-file; just set
-			// the texture here
-			//m_pEffect->SetTexture("g_txScene", pBoneMesh->vecTexture[pBoneCombos[dwAttrib].AttribId]);
+			g_pShaderManager->GetShader("MultiAnimation.fx")
+				->SetTexture("NormalMap_Tex", pBoneMesh->vecNormal[pBoneCombos[dwAttrib].AttribId]);
 
 			// set the current number of bones; this tells the effect which shader to use
-			m_pEffect->SetInt("CurNumBones", pBoneMesh->dwMaxNumFaceInfls - 1);
+			g_pShaderManager->GetShader("MultiAnimation.fx")->SetInt("CurNumBones", pBoneMesh->dwMaxNumFaceInfls - 1);
 
 			// set the technique we use to draw
-			m_pEffect->SetTechnique("Skinning20");
+			g_pShaderManager->GetShader("MultiAnimation.fx")->SetTechnique("Skinning20");
 
 			UINT uiPasses, uiPass;
 
 			// run through each pass and draw
-			m_pEffect->Begin(&uiPasses, 0);
+			g_pShaderManager->GetShader("MultiAnimation.fx")->Begin(&uiPasses, 0);
 			for (uiPass = 0; uiPass < uiPasses; ++uiPass)
 			{
-				m_pEffect->BeginPass(uiPass);
+				g_pShaderManager->GetShader("MultiAnimation.fx")->BeginPass(uiPass);
 				pBoneMesh->pWorkingMesh->DrawSubset(dwAttrib);
-				m_pEffect->EndPass();
+				g_pShaderManager->GetShader("MultiAnimation.fx")->EndPass();
 			}
-			m_pEffect->End();
+			g_pShaderManager->GetShader("MultiAnimation.fx")->End();
 		}
 	}
 
@@ -387,6 +384,78 @@ void cSkinnedMesh::Render(ST_BONE* pBone /*= NULL*/)
 	{
 		Render((ST_BONE*)pBone->pFrameFirstChild);
 	}
+}
+
+void cSkinnedMesh::RenderShadow(ST_BONE* pBone /*= NULL*/){
+	// TODO 멀티애니메이션 스킨드 메쉬에 섞어서 그림자 생성
+
+
+	//assert(pBone);
+
+	//if (GetAsyncKeyState(VK_TAB)){
+	//	RenderDebugUpdateSphereBody(pBone, m_mapDebugUpdateSphereBody);
+
+	//	if (pBone->Name != nullptr && std::string(pBone->Name) == std::string("FxCenter"))
+	//	{
+	//		//if (m_pDebugSphereBody){
+	//		g_pD3DDevice->SetTransform(D3DTS_WORLD, &pBone->CombinedTransformationMatrix);
+	//		g_pD3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
+	//		g_pD3DDevice->SetTexture(0, NULL);
+	//		m_pDebugSphereBody->DrawSubset(0);
+	//		g_pD3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
+	//	}
+
+	//}
+	//// 각 프레임의 메시 컨테이너에 있는 pSkinInfo를 이용하여 영향받는 모든 
+	//// 프레임의 매트릭스를 ppBoneMatrixPtrs에 연결한다.
+	//if (pBone->pMeshContainer)
+	//{
+	//	ST_BONE_MESH* pBoneMesh = (ST_BONE_MESH*)pBone->pMeshContainer;
+
+	//	// get bone combinations
+	//	LPD3DXBONECOMBINATION pBoneCombos =
+	//		(LPD3DXBONECOMBINATION)(pBoneMesh->pBufBoneCombos->GetBufferPointer());
+
+	//	D3DXMATRIXA16 matViewProj, matView, matProj;
+	//	g_pD3DDevice->GetTransform(D3DTS_VIEW, &matView);
+	//	g_pD3DDevice->GetTransform(D3DTS_PROJECTION, &matProj);
+	//	matViewProj = matView * matProj;
+
+	//	D3DXMATRIXA16 mView, mInvView;
+	//	g_pD3DDevice->GetTransform(D3DTS_VIEW, &mView);
+	//	D3DXMatrixInverse(&mInvView, 0, &mView);
+	//	D3DXVECTOR3 vEye = D3DXVECTOR3(0, 0, 0);
+	//	D3DXVec3TransformCoord(&vEye, &vEye, &mInvView);
+
+	//	// for each palette
+	//	for (DWORD dwAttrib = 0; dwAttrib < pBoneMesh->dwNumAttrGroups; ++dwAttrib)
+	//	{
+	//		// set each transform into the palette
+	//		for (DWORD dwPalEntry = 0; dwPalEntry < pBoneMesh->dwNumPaletteEntries; ++dwPalEntry)
+	//		{
+	//			DWORD dwMatrixIndex = pBoneCombos[dwAttrib].BoneId[dwPalEntry];
+	//			if (dwMatrixIndex != UINT_MAX)
+	//			{
+	//				m_pmWorkingPalette[dwPalEntry] =
+	//					pBoneMesh->pBoneOffsetMatrices[dwMatrixIndex] *
+	//					(*pBoneMesh->ppBoneMatrixPtrs[dwMatrixIndex]);
+	//			}
+	//		}
+
+	//		
+	//	}
+	//}
+
+	////재귀적으로 모든 프레임에 대해서 실행.
+	//if (pBone->pFrameSibling)
+	//{
+	//	Render((ST_BONE*)pBone->pFrameSibling);
+	//}
+
+	//if (pBone->pFrameFirstChild)
+	//{
+	//	Render((ST_BONE*)pBone->pFrameFirstChild);
+	//}
 }
 
 LPD3DXEFFECT cSkinnedMesh::LoadEffect(char* szFilename)
@@ -623,7 +692,7 @@ void cSkinnedMesh::Destroy()
 	cAllocateHierarchy ah;
 	D3DXFrameDestroy((LPD3DXFRAME)m_pRootFrame, &ah);
 	SAFE_DELETE_ARRAY(m_pmWorkingPalette);
-	SAFE_RELEASE(m_pEffect);
+	//SAFE_RELEASE(m_pEffect);
 	this->Release();
 }
 

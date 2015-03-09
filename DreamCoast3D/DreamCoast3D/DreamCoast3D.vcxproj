@@ -164,6 +164,7 @@
     <ClInclude Include="cSceneEditMode.h" />
     <ClInclude Include="cSceneLoader.h" />
     <ClInclude Include="cSceneTerrainEdit.h" />
+    <ClInclude Include="cShaderManager.h" />
     <ClInclude Include="cSkinnedMeshBody.h" />
     <ClInclude Include="cUIExpBar.h" />
     <ClInclude Include="cUIGameMainMenu.h" />
@@ -286,6 +287,7 @@
     <ClCompile Include="cSceneEditMode.cpp" />
     <ClCompile Include="cSceneLoader.cpp" />
     <ClCompile Include="cSceneTerrainEdit.cpp" />
+    <ClCompile Include="cShaderManager.cpp" />
     <ClCompile Include="cSkinnedMeshBody.cpp" />
     <ClCompile Include="cUIExpBar.cpp" />
     <ClCompile Include="cUIGameMainMenu.cpp" />

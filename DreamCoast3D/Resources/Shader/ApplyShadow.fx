@@ -21,7 +21,6 @@
 // ApplyShadowTorus
 //--------------------------------------------------------------//
 string ApplyShadowShader_ApplyShadowTorus_Torus : ModelData = ".\\Torus.x";
-texture	tColorMap;
 
 struct VS_INPUT
 {
@@ -39,20 +38,20 @@ struct VS_OUTPUT
 float4x4 gWorldMatrix : World;
 float4x4 gLightViewMatrix
 <
-	string UIName = "gLightViewMatrix";
-	string UIWidget = "Numeric";
-	bool UIVisible = false;
+string UIName = "gLightViewMatrix";
+string UIWidget = "Numeric";
+bool UIVisible = false;
 > = float4x4(1.00, 0.00, 0.00, 0.00, 0.00, 1.00, 0.00, 0.00, 0.00, 0.00, 1.00, 0.00, 0.00, 0.00, 0.00, 1.00);
 float4x4 gLightProjectionMatrix : Projection;
 
 float4 gWorldLightPosition
 <
-	string UIName = "gWorldLightPosition";
-	string UIWidget = "Direction";
-	bool UIVisible = false;
-	float4 UIMin = float4(-10.00, -10.00, -10.00, -10.00);
-	float4 UIMax = float4(10.00, 10.00, 10.00, 10.00);
-	bool Normalize = false;
+string UIName = "gWorldLightPosition";
+string UIWidget = "Direction";
+bool UIVisible = false;
+float4 UIMin = float4(-10.00, -10.00, -10.00, -10.00);
+float4 UIMax = float4(10.00, 10.00, 10.00, 10.00);
+bool Normalize = false;
 > = float4(500.00, 500.00, -500.00, 1.00);
 
 float4x4 gViewProjectionMatrix : ViewProjection;
@@ -63,21 +62,21 @@ VS_OUTPUT ApplyShadowShader_ApplyShadowTorus_Vertex_Shader_vs_main(VS_INPUT Inpu
 
 	float4x4 lightViewMatrix = gLightViewMatrix;
 
-	float4 worldPosition = mul(Input.mPosition, gWorldMatrix);
-	Output.mPosition = mul(worldPosition, gViewProjectionMatrix);
+		float4 worldPosition = mul(Input.mPosition, gWorldMatrix);
+		Output.mPosition = mul(worldPosition, gViewProjectionMatrix);
 
 	Output.mClipPosition = mul(worldPosition, lightViewMatrix);
 	Output.mClipPosition = mul(Output.mClipPosition, gLightProjectionMatrix);
 
 	float3 lightDir = normalize(worldPosition.xyz - gWorldLightPosition.xyz);
-	float3 worldNormal = normalize(mul(Input.mNormal, (float3x3)gWorldMatrix));
-	Output.mDiffuse = dot(-lightDir, worldNormal);
+		float3 worldNormal = normalize(mul(Input.mNormal, (float3x3)gWorldMatrix));
+		Output.mDiffuse = dot(-lightDir, worldNormal);
 
 	return Output;
 }
 texture ShadowMap_Tex
 <
-	string ResourceName = ".\\";
+string ResourceName = ".\\";
 >;
 sampler2D ShadowSampler = sampler_state
 {
@@ -85,22 +84,10 @@ sampler2D ShadowSampler = sampler_state
 };
 float4 gObjectColor
 <
-	string UIName = "gObjectColor";
-	string UIWidget = "Color";
-	bool UIVisible = true;
+string UIName = "gObjectColor";
+string UIWidget = "Color";
+bool UIVisible = true;
 > = float4(1.00, 1.00, 0.00, 1.00);
-
-sampler ColorSampler = sampler_state
-{
-	texture = (tColorMap);
-
-	MipFilter = Linear;
-	MinFilter = Linear;
-	MagFilter = Linear;
-
-	AddressU = Wrap;
-	AddressV = Wrap;
-};
 
 struct PS_INPUT
 {
@@ -115,7 +102,7 @@ float4 ApplyShadowShader_ApplyShadowTorus_Pixel_Shader_ps_main(PS_INPUT Input) :
 	float currentDepth = Input.mClipPosition.z / Input.mClipPosition.w;
 
 	float2 uv = Input.mClipPosition.xy / Input.mClipPosition.w;
-	uv.y = -uv.y;
+		uv.y = -uv.y;
 	uv = uv * 0.5 + 0.5;
 
 	float shadowDepth = tex2D(ShadowSampler, uv).r;
@@ -139,4 +126,3 @@ technique ApplyShadowShader
 		PixelShader = compile ps_2_0 ApplyShadowShader_ApplyShadowTorus_Pixel_Shader_ps_main();
 	}
 }
-

@@ -349,6 +349,9 @@
     <ClCompile Include="cEditCursor.cpp">
       <Filter>EachWorks\MS</Filter>
     </ClCompile>
+    <ClCompile Include="cShaderManager.cpp">
+      <Filter>FrameWork\Singletons</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cAction.h">
@@ -713,6 +716,9 @@
     </ClInclude>
     <ClInclude Include="MultiAnimation.fx">
       <Filter>FrameWork\FX</Filter>
+    </ClInclude>
+    <ClInclude Include="cShaderManager.h">
+      <Filter>FrameWork\Singletons</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -93,11 +93,13 @@ void cSceneManager::ChangeScene(int nNextSceneIndex){
 		g_pSkinnedMeshManager->Destroy();
 		g_pAseManager->Destroy();
 		g_pTextureManager->Destroy();
+		g_pShaderManager->Destroy();
 	}
 	m_pCurrentScene = new cLoadingScene;
 	m_pCurrentScene->Setup(m_vecSceneInfoFilePath[nNextSceneIndex]);
 
 	// 리소스 로딩
+	g_pShaderManager->CreateShadowTargetAndDepthSurface();
 	m_pCurrentScene->SetDelegate(this);
 	m_pCurrentScene->Start();
 }

@@ -19,7 +19,7 @@ cGameMapHeight::~cGameMapHeight()
 	SAFE_RELEASE(m_pMesh);
 	SAFE_RELEASE(m_pTexture2);
 	SAFE_RELEASE(m_pTextureNormal);
-	SAFE_RELEASE(m_pSpecularMapping);
+	//SAFE_RELEASE(m_pSpecularMapping);
 	//SAFE_DELETE(m_pMousePicking);
 }
 
@@ -134,11 +134,8 @@ void cGameMapHeight::LoadFromFiles(std::string sFilename, std::string sTextureFi
 
 	m_sRawFile = sFilename;
 	m_sTexturePath = sTextureFilename;
-
-	hr =
-		D3DXCreateEffectFromFile(g_pD3DDevice, "../Resources/Shader/DetailBlending.fx",
-		NULL, NULL, NULL, NULL, &m_pSpecularMapping, NULL);
-	assert(hr == S_OK);
+	g_pShaderManager->GetShader("../Resources/Shader/DetailBlending.fx");
+	g_pShaderManager->GetShader("../Resources/Shader/ApplyShadow.fx");
 }
 
 void cGameMapHeight::LoadFromFiles(char* szFilename, char* szTextureFilename){
@@ -186,34 +183,91 @@ void cGameMapHeight::Render(){
 		g_pD3DDevice->GetTransform(D3DTS_PROJECTION, &matProjection);
 
 		// 쉐이더 전역변수들을 설정
-		m_pSpecularMapping->SetMatrix("gWorldMatrix", &matWorld);
-		m_pSpecularMapping->SetMatrix("gViewMatrix", &matView);
-		m_pSpecularMapping->SetMatrix("gProjectionMatrix", &matProjection);
-		m_pSpecularMapping->SetVector("gLightColor", &gLightColor);
-		m_pSpecularMapping->SetTexture("DiffuseMap_Tex", m_pTexture);
-		m_pSpecularMapping->SetTexture("SpecularMap_Tex", m_pTextureNormal);
-		m_pSpecularMapping->SetTexture("DetailMap_Tex", m_pTexture2);
+		g_pShaderManager->GetShader("../Resources/Shader/DetailBlending.fx")->SetMatrix("gWorldMatrix", &matWorld);
+		g_pShaderManager->GetShader("../Resources/Shader/DetailBlending.fx")->SetMatrix("gViewMatrix", &matView);
+		g_pShaderManager->GetShader("../Resources/Shader/DetailBlending.fx")->SetMatrix("gProjectionMatrix", &matProjection);
+		g_pShaderManager->GetShader("../Resources/Shader/DetailBlending.fx")->SetVector("gLightColor", &gLightColor);
+		g_pShaderManager->GetShader("../Resources/Shader/DetailBlending.fx")->SetTexture("DiffuseMap_Tex", m_pTexture);
+		g_pShaderManager->GetShader("../Resources/Shader/DetailBlending.fx")->SetTexture("SpecularMap_Tex", m_pTextureNormal);
+		g_pShaderManager->GetShader("../Resources/Shader/DetailBlending.fx")->SetTexture("DetailMap_Tex", m_pTexture2);
 
 		D3DLIGHT9 stLight;
 		g_pD3DDevice->GetLight(0, &stLight);
 		D3DXVECTOR3 pos = -1000 * stLight.Direction;
-		m_pSpecularMapping->SetVector("gWorldLightPosition", &D3DXVECTOR4(pos, 0.0f));
+		g_pShaderManager->GetShader("../Resources/Shader/DetailBlending.fx")->SetVector("gWorldLightPosition", &D3DXVECTOR4(pos, 0.0f));
 		
 		
 		// 쉐이더를 시작한다.
 		UINT numPasses = 0;
-		m_pSpecularMapping->Begin(&numPasses, NULL);
+		g_pShaderManager->GetShader("../Resources/Shader/DetailBlending.fx")->Begin(&numPasses, NULL);
 		{
 			for (UINT i = 0; i < numPasses; ++i)
 			{
-				m_pSpecularMapping->BeginPass(i);
+				g_pShaderManager->GetShader("../Resources/Shader/DetailBlending.fx")->BeginPass(i);
 				{
 					m_pMesh->DrawSubset(0);
 				}
-				m_pSpecularMapping->EndPass();
+				g_pShaderManager->GetShader("../Resources/Shader/DetailBlending.fx")->EndPass();
 			}
 		}
-		m_pSpecularMapping->End();
+		g_pShaderManager->GetShader("../Resources/Shader/DetailBlending.fx")->End();
+
+
+		//////////////////////////////////////////////////
+		
+
+		//D3DXMATRIXA16 matLightView;
+		//{
+		//	D3DXVECTOR3 vLookatPt(0.0f, 0.0f, 0.0f);
+		//	D3DXVECTOR3 vUpVec(0.0f, 1.0f, 0.0f);
+		//	D3DXMatrixLookAtLH(&matLightView, &pos, &vLookatPt, &vUpVec);
+		//}
+
+		//D3DXMATRIXA16 matLightProjection; {
+		//	D3DXMatrixPerspectiveFovLH(&matLightProjection, D3DX_PI / 4.0f, 1, 1, 3000);
+		//}
+
+		//g_pD3DDevice->GetTransform(D3DTS_VIEW, &matView);
+		//g_pD3DDevice->GetTransform(D3DTS_PROJECTION, &matProjection);
+		//D3DXMATRIXA16 matViewProject; {
+		//	D3DXMatrixMultiply(&matViewProject, &matView, &matProjection);
+		//}
+
+		//// 쉐이더 전역변수들을 설정
+		//g_pShaderManager->GetShader("../Resources/Shader/ApplyShadow.fx")
+		//	->SetMatrix("gWorldMatrix", &matWorld);
+		//
+		////gLightViewMatrix
+		////gLightProjectionMatrix
+		////gWorldLightPosition
+		////gViewProjectionMatrix
+		////gObjectColor
+		//g_pShaderManager->GetShader("../Resources/Shader/ApplyShadow.fx")
+		//	->SetMatrix("gLightViewMatrix", &matView);
+		//g_pShaderManager->GetShader("../Resources/Shader/ApplyShadow.fx")
+		//	->SetMatrix("gLightProjectionMatrix", &matProjection);
+		//g_pShaderManager->GetShader("../Resources/Shader/ApplyShadow.fx")
+		//	->SetVector("gWorldLightPosition", &D3DXVECTOR4(pos,1.0f));
+		//g_pShaderManager->GetShader("../Resources/Shader/ApplyShadow.fx")
+		//	->SetMatrix("gViewProjectionMatrix", &matViewProject);
+		//g_pShaderManager->GetShader("../Resources/Shader/ApplyShadow.fx")
+		//	->SetVector("gObjectColor", &D3DXVECTOR4(1.0f, 1.0f, 1.0f, 1.0f));
+		//g_pShaderManager->GetShader("../Resources/Shader/ApplyShadow.fx")
+		//	->SetTexture("ShadowMap_Tex", g_pShaderManager->GetShadowRenderTarget());
+		//// 쉐이더를 시작한다.
+		//UINT numPasses = 0;
+		//g_pShaderManager->GetShader("../Resources/Shader/ApplyShadow.fx")->Begin(&numPasses, NULL);
+		//{
+		//	for (UINT i = 0; i < numPasses; ++i)
+		//	{
+		//		g_pShaderManager->GetShader("../Resources/Shader/ApplyShadow.fx")->BeginPass(i);
+		//		{
+		//			m_pMesh->DrawSubset(0);
+		//		}
+		//		g_pShaderManager->GetShader("../Resources/Shader/ApplyShadow.fx")->EndPass();
+		//	}
+		//}
+		//g_pShaderManager->GetShader("../Resources/Shader/ApplyShadow.fx")->End();
 	}
 }
 
