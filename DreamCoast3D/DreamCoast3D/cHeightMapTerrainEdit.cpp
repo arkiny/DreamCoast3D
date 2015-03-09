@@ -656,7 +656,7 @@ void cHeightMapTerrainEdit::CalBazier(D3DXVECTOR2 vMin, D3DXVECTOR2 vMax)
 
 	rtRightBottom.x1 = rt.x2 - 1.f;
 	rtRightBottom.y1 = rt.y2;
-	rtRightBottom.x2 = rtRight.x2;
+	rtRightBottom.x2 = rtRight.x2 -1.f;
 	rtRightBottom.y2 = rtBottom.y2;
 
 	float fRBWidth = (rtRightBottom.x2 - rtRightBottom.x1);
