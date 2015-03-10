@@ -69,7 +69,7 @@ protected:
 	//D3DXVECTOR4				gWorldLightPosition = { 500.0f, 500.0f, -500.0f, 1.0f };
 
 	//// 카메라 위치
-	//D3DXVECTOR4				gWorldCameraPosition = { 0.0f, 0.0f, -200.0f, 1.0f };
+	//D3DXVECTOR4				gWorldCameraPosition = { 0.0f, 0.0f, -500.0f, 1.0f };
 	//
 	//// 물체의 색상, 차후 텍스쳐 적용으로...
 	//D3DXVECTOR4				gTorusColor = { 1, 1, 0, 1 };

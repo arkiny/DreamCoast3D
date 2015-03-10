@@ -47,7 +47,6 @@ bool UIVisible = false;
 float4x4 gLightProjectionMatrix : Projection;
 float4x4 gViewProjectionMatrix : ViewProjection;
 
-
 struct VS_INPUT
 {
 	float4 mPosition : POSITION;
@@ -177,7 +176,7 @@ float4 SpecularMapping_Pass_0_Pixel_Shader_ps_main(PS_INPUT Input) : COLOR
 			specular *= specularIntensity.rgb * gLightColor;
 	}
 
-	float3 ambient = float3(0.1f, 0.1f, 0.1f) * albedo;
+	float3 ambient = float3(0.2f, 0.2f, 0.2f) * albedo;
 
 	float3 ret = float3(ambient + diffuse + specular);
 

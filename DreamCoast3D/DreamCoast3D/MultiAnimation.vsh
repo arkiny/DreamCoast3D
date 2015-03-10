@@ -1,7 +1,7 @@
 //
 // HLSL function for skinning a mesh.  In your shader, you can #define 
 // MATRIX_PALETTE_SIZE if desired, and then #include this file.
-// Copyright (c) 2000-2003 Microsoft Corporation. All rights reserved.
+// Copyright (c) 2000-5003 Microsoft Corporation. All rights reserved.
 //
 
 

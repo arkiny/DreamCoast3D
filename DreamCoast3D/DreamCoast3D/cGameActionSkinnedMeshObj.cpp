@@ -31,9 +31,16 @@ void cGameActionSkinnedMeshObj::Update(float fDelta){
 
 void cGameActionSkinnedMeshObj::Render(){
 	if (m_pSkinnedMesh){
-		m_pSkinnedMesh->UpdateAndRender(GetTransformMatrix());
+		m_pSkinnedMesh->Render(GetTransformMatrix());
 	}
 }
+
+void cGameActionSkinnedMeshObj::RenderShadow() {
+	if (m_pSkinnedMesh){
+		m_pSkinnedMesh->UpdateAndRenderShadow(GetTransformMatrix());
+	}
+}
+
 
 ST_BOUNDING_SPHERE* cGameActionSkinnedMeshObj::GetCollisionSphere(){
 	ST_BOUNDING_SPHERE* ret = NULL;

@@ -75,6 +75,12 @@ void cGameObjManager::Render(){
 		}
 	}
 
+	for (auto p : m_setGameObjects){
+		if (m_pFrustum->IsIn(p->GetBoundingSphere())){
+			p->RenderShadow();
+		}
+	}
+
 	g_pD3DDevice->SetRenderTarget(0, pHWBackBuffer);
 	g_pD3DDevice->SetDepthStencilSurface(pHWDepthStencilBuffer);
 	SAFE_RELEASE(pHWBackBuffer);

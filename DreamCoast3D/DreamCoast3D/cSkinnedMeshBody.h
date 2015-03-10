@@ -30,9 +30,13 @@ public:
 	virtual void SetAnimationIndex(DWORD dwIndex) override;
 	virtual void SetAnimationLoop(DWORD dwIndex, bool isLoop) override;	
 
-	virtual void Update(ST_BONE* pCurrent, D3DXMATRIXA16* pmatParent) override;
-	virtual void Render(ST_BONE* pBone = NULL) override;
+	virtual void UpdateAndRenderShadow(D3DXMATRIXA16* pParentWorldTM = NULL) override;
+	virtual void Render(D3DXMATRIXA16* pParentWorldTM = NULL) override;
+	virtual void RenderShadow(ST_BONE* pBone = NULL) override;
 
+	//virtual void Update(ST_BONE* pCurrent, D3DXMATRIXA16* pmatParent) override;
+	virtual void Render(ST_BONE* pBone = NULL) override;
+	
 	//void RenderBoundingSphere(D3DXFRAME* pFrame, D3DXMATRIXA16* pParentWorldTM);
 	//void RenderDetailBoundingSphere(D3DXFRAME* pFrame, D3DXMATRIXA16* pParentWorldTM);
 

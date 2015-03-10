@@ -186,7 +186,7 @@ void cGameMapHeight::Render(){
 		}
 
 		D3DXMATRIXA16 matLightProjection; {
-			D3DXMatrixPerspectiveFovLH(&matLightProjection, D3DX_PI / 4.0f, 1, 1, 3000);
+			D3DXMatrixPerspectiveFovLH(&matLightProjection, D3DX_PI / 4.0f, 1, 0.0001f, 3000);
 		}
 
 		D3DXMATRIXA16 matView;
@@ -234,7 +234,7 @@ void cGameMapHeight::Render(){
 				g_pShaderManager->GetShader("../Resources/Shader/DetailBlending.fx")->BeginPass(i);
 				{
 					// 구체를 그린다.
-					//g_pShaderManager->GetShader("../Resources/Shader/DetailBlending.fx")->CommitChanges();
+					g_pShaderManager->GetShader("../Resources/Shader/DetailBlending.fx")->CommitChanges();
 					m_pMesh->DrawSubset(0);
 				}
 				g_pShaderManager->GetShader("../Resources/Shader/DetailBlending.fx")->EndPass();

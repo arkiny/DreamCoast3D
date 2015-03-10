@@ -57,8 +57,9 @@ public:
 	cSkinnedMesh(std::string sFolder, std::string sFile);
 	virtual ~cSkinnedMesh(void);
 
-	virtual void UpdateAndRender(D3DXMATRIXA16* pParentWorldTM = NULL);
-	
+	virtual void UpdateAndRenderShadow(D3DXMATRIXA16* pParentWorldTM = NULL);
+	virtual void Render(D3DXMATRIXA16* pParentWorldTM = NULL);
+
 	// todo
 	//virtual void SetAnimationIndex(int nIndex);
 	virtual void SetAnimationIndex(DWORD dwIndex);

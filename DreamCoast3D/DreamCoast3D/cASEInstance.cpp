@@ -216,6 +216,8 @@ void cASEInstance::Render(D3DXMATRIXA16* pMatrix)
 			->SetTexture("DiffuseMap_Tex", m_pMtlTex->pTex);
 		g_pShaderManager->GetShader("../Resources/Shader/DetailBlending.fx")
 			->SetTexture("SpecularMap_Tex", m_pMtlTex->pTex);
+
+
 		g_pShaderManager->GetShader("../Resources/Shader/DetailBlending.fx")
 			->SetVector("gWorldLightPosition", &D3DXVECTOR4(pos, 0.0f));
 		g_pShaderManager->GetShader("../Resources/Shader/DetailBlending.fx")

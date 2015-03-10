@@ -79,7 +79,7 @@ LPD3DXEFFECT cShaderManager::GetShader(char* szPath){
 void cShaderManager::Destroy(){
 	for (auto p : m_mapShader){
 		if (p.second){
-			SAFE_RELEASE(p.second);
+			p.second->Release();
 			//m_mapShader.erase(p.first);
 		}
 	}

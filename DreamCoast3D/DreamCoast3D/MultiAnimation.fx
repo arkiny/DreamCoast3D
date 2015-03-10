@@ -14,6 +14,14 @@ float4 UIMax = float4(10.00, 10.00, 10.00, 10.00);
 bool Normalize = false;
 > = float4(500.00, 500.00, -500.00, 1.00);
 float4 gWorldCameraPosition : ViewPosition;
+float4x4 gLightViewMatrix
+<
+string UIName = "gLightViewMatrix";
+string UIWidget = "Numeric";
+bool UIVisible = false;
+> = float4x4(1.00, 0.00, 0.00, 0.00, 0.00, 1.00, 0.00, 0.00, 0.00, 0.00, 1.00, 0.00, 0.00, 0.00, 0.00, 1.00);
+float4x4 gLightProjectionMatrix : Projection;
+float4x4 gViewProjectionMatrix : ViewProjection;
 
 //--------------------------------------------------------------------------------------
 struct VS_INPUT
@@ -30,18 +38,21 @@ struct VS_INPUT
 struct VS_OUTPUT
 {
 	float4 Pos			: POSITION;
-	float2 mUV: TEXCOORD0;
-	float3 mLightDir : TEXCOORD1;
-	float3 mViewDir: TEXCOORD2;
-	float3 T : TEXCOORD3;
-	float3 B : TEXCOORD4;
-	float3 N : TEXCOORD5;
+	float2 mUV: TEXCOORD1;
+	float3 mLightDir : TEXCOORD2;
+	float3 mViewDir: TEXCOORD3;
+	float3 T : TEXCOORD4;
+	float3 B : TEXCOORD5;
+	float3 N : TEXCOORD6;
+	float4 mClipPosition: TEXCOORD7;
 };
 
 VS_OUTPUT VertSkinning( VS_INPUT Input, uniform int nNumBones )
 {
 	VS_OUTPUT   Output;
 	
+	float4 oriPosition = Input.Pos;
+
 	// skin VB inputs
 	VS_SKIN_INPUT vsi = { Input.Pos, Input.BlendWeights, Input.BlendIndices, Input.Normal };
 	VS_SKIN_OUTPUT vso = VS_Skin( vsi, nNumBones );
@@ -65,8 +76,14 @@ VS_OUTPUT VertSkinning( VS_INPUT Input, uniform int nNumBones )
 	float3 worldBinormal = mul(Input.mBinormal, (float3x3)gWorldMatrix);
 	Output.B = normalize(worldBinormal);
 
+	float4x4 lightViewMatrix = gLightViewMatrix;
+	worldPosition = mul(oriPosition, gWorldMatrix);
+	Output.mClipPosition = mul(worldPosition, lightViewMatrix);
+	Output.mClipPosition = mul(Output.mClipPosition, gLightProjectionMatrix);
+
 	return Output;
 }
+
 
 
 int CurNumBones = 10;
@@ -77,14 +94,16 @@ VertexShader vsArray20[ 4 ] = {
 	compile vs_2_0 VertSkinning( 3 ),
 	compile vs_2_0 VertSkinning( 4 ) };
 
+
 struct PS_INPUT
 {
-	float2 mUV : TEXCOORD0;
-	float3 mLightDir : TEXCOORD1;
-	float3 mViewDir: TEXCOORD2;
-	float3 T : TEXCOORD3;
-	float3 B : TEXCOORD4;
-	float3 N : TEXCOORD5;
+	float2 mUV : TEXCOORD1;
+	float3 mLightDir : TEXCOORD2;
+	float3 mViewDir: TEXCOORD3;
+	float3 T : TEXCOORD4;
+	float3 B : TEXCOORD5;
+	float3 N : TEXCOORD6;
+	float4 mClipPosition: TEXCOORD7;
 };
 
 texture DiffuseMap_Tex
@@ -117,6 +136,15 @@ sampler2D NormalSampler = sampler_state
 	MAGFILTER = LINEAR;
 	MINFILTER = LINEAR;
 };
+texture ShadowMap_Tex
+<
+string ResourceName = ".\\";
+>;
+sampler2D ShadowSampler = sampler_state
+{
+	Texture = (ShadowMap_Tex);
+};
+
 
 float3 gLightColor
 <
@@ -156,8 +184,24 @@ float4 NormalMapping_Pass_0_Pixel_Shader_ps_main(PS_INPUT Input) : COLOR
 
 	float3 ambient = float3(0.5f, 0.5f, 0.5f) * albedo;
 
-	return float4(ambient + diffuse + specular, 1);
+	float3 ret = float3(ambient + diffuse + specular);
+
+	// shadow
+	float currentDepth = Input.mClipPosition.z / Input.mClipPosition.w;
+	float2 uv = Input.mClipPosition.xy / Input.mClipPosition.w;
+		uv.y = -uv.y;
+	uv = uv * 0.5 + 0.5;
+
+	float shadowDepth = tex2D(ShadowSampler, uv).r;
+
+	if (currentDepth > shadowDepth + 0.0000125f)
+	{
+		ret *= 0.5f;
+	}
+
+	return float4(ret, 1);
 }
+
 //--------------------------------------------------------------------------------------
 // Techniques
 //--------------------------------------------------------------------------------------

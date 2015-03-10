@@ -156,8 +156,14 @@ void cSkinnedMesh::Load(char* szDirectory, char* szFilename)
 	Load(std::string(szDirectory), std::string(szFilename));
 }
 
-void cSkinnedMesh::UpdateAndRender(D3DXMATRIXA16* pParentWorldTM)
+//void UpdateAndRenderShadow(D3DXMATRIXA16* pParentWorldTM = NULL);
+//void Render(ST_BONE* pBone = NULL);
+
+void cSkinnedMesh::UpdateAndRenderShadow(D3DXMATRIXA16* pParentWorldTM)
 {
+
+	g_pShaderManager->GetShader("MultiAnimation.fx")
+		->SetMatrix("gWorldMatrix", pParentWorldTM);
 	//if (m_pAnimController)
 	//{
 	//	m_pAnimController->AdvanceTime(g_pTimer->DeltaTime(), NULL);
@@ -223,6 +229,25 @@ void cSkinnedMesh::UpdateAndRender(D3DXMATRIXA16* pParentWorldTM)
 		else{
 			Update(m_pRootFrame, &mat);
 		}
+		RenderShadow(m_pRootFrame);
+	}
+}
+
+// update and render shadow
+
+// using the information, just render
+
+void cSkinnedMesh::Render(D3DXMATRIXA16* pParentWorldTM){
+	if (m_pRootFrame)
+	{
+		D3DXMATRIXA16 mat;
+		D3DXMatrixIdentity(&mat);
+		if (pParentWorldTM){
+			Update(m_pRootFrame, pParentWorldTM);
+		}
+		else{
+			Update(m_pRootFrame, &mat);
+		}
 		Render(m_pRootFrame);
 	}
 }
@@ -233,7 +258,6 @@ void cSkinnedMesh::Update(ST_BONE* pCurrent, D3DXMATRIXA16* pmatParent)
 	//gWorldMatrix
 	g_pShaderManager->GetShader("MultiAnimation.fx")
 		->SetMatrix("gWorldMatrix", &pCurrent->CombinedTransformationMatrix);
-
 	
 	if (pmatParent)
 	{
@@ -308,70 +332,107 @@ void cSkinnedMesh::Render(ST_BONE* pBone /*= NULL*/)
 		D3DXVECTOR3 vEye = D3DXVECTOR3(0, 0, 0);
 		D3DXVec3TransformCoord(&vEye, &vEye, &mInvView);
 
-		// for each palette
-		for (DWORD dwAttrib = 0; dwAttrib < pBoneMesh->dwNumAttrGroups; ++dwAttrib)
+		//gWorldViewProjectionMatrix
+		g_pShaderManager->GetShader("MultiAnimation.fx")
+			->SetMatrix("gWorldViewProjectionMatrix", &matViewProj);
+		//gWorldLightPosition
+		D3DLIGHT9 stLight;
+		g_pD3DDevice->GetLight(0, &stLight);
+		D3DXVECTOR3 pos = -500 * stLight.Direction;
+		g_pShaderManager->GetShader("MultiAnimation.fx")
+			->SetVector("gWorldLightPosition", &D3DXVECTOR4(pos, 0.0f));
+		//gWorldCameraPosition
+		g_pShaderManager->GetShader("MultiAnimation.fx")
+			->SetVector("gWorldCameraPosition", &D3DXVECTOR4(vEye, 1.0f));
+
+		// set the current number of bones; this tells the effect which shader to use
+		g_pShaderManager->GetShader("MultiAnimation.fx")->SetInt("CurNumBones", pBoneMesh->dwMaxNumFaceInfls - 1);
+
+		g_pD3DDevice->GetLight(0, &stLight);
+		D3DXVECTOR3 dir = stLight.Direction;
+		D3DXVec3Normalize(&pos, &dir);
+		pos = -500 * pos;
+
+		D3DXMATRIXA16 matLightView;
 		{
-			// set each transform into the palette
-			for (DWORD dwPalEntry = 0; dwPalEntry < pBoneMesh->dwNumPaletteEntries; ++dwPalEntry)
-			{
-				DWORD dwMatrixIndex = pBoneCombos[dwAttrib].BoneId[dwPalEntry];
-				if (dwMatrixIndex != UINT_MAX)
-				{
-					m_pmWorkingPalette[dwPalEntry] =
-						pBoneMesh->pBoneOffsetMatrices[dwMatrixIndex] *
-						(*pBoneMesh->ppBoneMatrixPtrs[dwMatrixIndex]);
-				}
-			}
-
-			// set the matrix palette into the effect
-			g_pShaderManager->GetShader("MultiAnimation.fx")->SetMatrixArray("amPalette",
-				m_pmWorkingPalette,
-				pBoneMesh->dwNumPaletteEntries);
-
-
-			//gWorldViewProjectionMatrix
-			g_pShaderManager->GetShader("MultiAnimation.fx")
-				->SetMatrix("gWorldViewProjectionMatrix", &matViewProj);
-			//gWorldLightPosition
-			D3DLIGHT9 stLight;
-			g_pD3DDevice->GetLight(0, &stLight);
-			D3DXVECTOR3 pos = -1000 * stLight.Direction;
-			g_pShaderManager->GetShader("MultiAnimation.fx")
-				->SetVector("gWorldLightPosition", &D3DXVECTOR4(pos, 0.0f));
-			//gWorldCameraPosition
-			g_pShaderManager->GetShader("MultiAnimation.fx")
-				->SetVector("gWorldCameraPosition", &D3DXVECTOR4(vEye, 1.0f));
-
-			//DiffuseMap_Tex
-			g_pShaderManager->GetShader("MultiAnimation.fx")
-				->SetTexture("DiffuseMap_Tex", pBoneMesh->vecTexture[pBoneCombos[dwAttrib].AttribId]);
-
-			//SpecularMap_Tex
-			g_pShaderManager->GetShader("MultiAnimation.fx")
-				->SetTexture("SpecularMap_Tex", pBoneMesh->vecSpecular[pBoneCombos[dwAttrib].AttribId]);
-
-			//NormalMap_Tex
-			g_pShaderManager->GetShader("MultiAnimation.fx")
-				->SetTexture("NormalMap_Tex", pBoneMesh->vecNormal[pBoneCombos[dwAttrib].AttribId]);
-
-			// set the current number of bones; this tells the effect which shader to use
-			g_pShaderManager->GetShader("MultiAnimation.fx")->SetInt("CurNumBones", pBoneMesh->dwMaxNumFaceInfls - 1);
-
-			// set the technique we use to draw
-			g_pShaderManager->GetShader("MultiAnimation.fx")->SetTechnique("Skinning20");
-
-			UINT uiPasses, uiPass;
-
-			// run through each pass and draw
-			g_pShaderManager->GetShader("MultiAnimation.fx")->Begin(&uiPasses, 0);
-			for (uiPass = 0; uiPass < uiPasses; ++uiPass)
-			{
-				g_pShaderManager->GetShader("MultiAnimation.fx")->BeginPass(uiPass);
-				pBoneMesh->pWorkingMesh->DrawSubset(dwAttrib);
-				g_pShaderManager->GetShader("MultiAnimation.fx")->EndPass();
-			}
-			g_pShaderManager->GetShader("MultiAnimation.fx")->End();
+			D3DXVECTOR3 vLookatPt(0.0f, 0.0f, 0.0f);
+			D3DXVECTOR3 vUpVec(0.0f, 1.0f, 0.0f);
+			D3DXMatrixLookAtLH(&matLightView, &pos, &vLookatPt, &vUpVec);
 		}
+
+		D3DXMATRIXA16 matLightProjection; {
+			D3DXMatrixPerspectiveFovLH(&matLightProjection, D3DX_PI / 4.0f, 1, 1, 3000);
+		}
+
+		//D3DXMATRIXA16 matView;
+		D3DXMATRIXA16 matProjection;
+		g_pD3DDevice->GetTransform(D3DTS_VIEW, &matView);
+		g_pD3DDevice->GetTransform(D3DTS_PROJECTION, &matProjection);
+		D3DXMATRIXA16 matViewProject; {
+			D3DXMatrixMultiply(&matViewProject, &matView, &matProjection);
+		}
+
+		g_pShaderManager->GetShader("MultiAnimation.fx")
+			->SetVector("gWorldLightPosition", &D3DXVECTOR4(pos, 0.0f));
+		g_pShaderManager->GetShader("MultiAnimation.fx")
+			->SetMatrix("gLightViewMatrix", &matLightView);
+		g_pShaderManager->GetShader("MultiAnimation.fx")
+			->SetMatrix("gLightProjectionMatrix", &matLightProjection);
+		g_pShaderManager->GetShader("MultiAnimation.fx")
+			->SetMatrix("gViewProjectionMatrix", &matViewProject);
+		g_pShaderManager->GetShader("MultiAnimation.fx")
+			->SetTexture("ShadowMap_Tex", g_pShaderManager->GetShadowRenderTarget());
+
+		// set the technique we use to draw
+		g_pShaderManager->GetShader("MultiAnimation.fx")->SetTechnique("Skinning20");
+
+		UINT uiPasses, uiPass;
+
+		// run through each pass and draw
+		g_pShaderManager->GetShader("MultiAnimation.fx")->Begin(&uiPasses, 0);
+		for (uiPass = 0; uiPass < uiPasses; ++uiPass)
+		{
+			g_pShaderManager->GetShader("MultiAnimation.fx")->BeginPass(uiPass);
+
+			// for each palette
+			for (DWORD dwAttrib = 0; dwAttrib < pBoneMesh->dwNumAttrGroups; ++dwAttrib)
+			{
+				// set each transform into the palette
+				for (DWORD dwPalEntry = 0; dwPalEntry < pBoneMesh->dwNumPaletteEntries; ++dwPalEntry)
+				{
+					DWORD dwMatrixIndex = pBoneCombos[dwAttrib].BoneId[dwPalEntry];
+					if (dwMatrixIndex != UINT_MAX)
+					{
+						m_pmWorkingPalette[dwPalEntry] =
+							pBoneMesh->pBoneOffsetMatrices[dwMatrixIndex] *
+							(*pBoneMesh->ppBoneMatrixPtrs[dwMatrixIndex]);
+					}
+				}
+
+				// set the matrix palette into the effect
+				g_pShaderManager->GetShader("MultiAnimation.fx")->SetMatrixArray("amPalette",
+					m_pmWorkingPalette,
+					pBoneMesh->dwNumPaletteEntries);
+
+				//DiffuseMap_Tex
+				g_pShaderManager->GetShader("MultiAnimation.fx")
+					->SetTexture("DiffuseMap_Tex", pBoneMesh->vecTexture[pBoneCombos[dwAttrib].AttribId]);
+
+				//SpecularMap_Tex
+				g_pShaderManager->GetShader("MultiAnimation.fx")
+					->SetTexture("SpecularMap_Tex", pBoneMesh->vecSpecular[pBoneCombos[dwAttrib].AttribId]);
+
+				//NormalMap_Tex
+				g_pShaderManager->GetShader("MultiAnimation.fx")
+					->SetTexture("NormalMap_Tex", pBoneMesh->vecNormal[pBoneCombos[dwAttrib].AttribId]);
+				
+				g_pShaderManager->GetShader("MultiAnimation.fx")->CommitChanges();
+
+				pBoneMesh->pWorkingMesh->DrawSubset(dwAttrib);
+			}
+			g_pShaderManager->GetShader("MultiAnimation.fx")->EndPass();
+		}
+		g_pShaderManager->GetShader("MultiAnimation.fx")->End();
 	}
 
 	//재귀적으로 모든 프레임에 대해서 실행.
@@ -387,75 +448,84 @@ void cSkinnedMesh::Render(ST_BONE* pBone /*= NULL*/)
 }
 
 void cSkinnedMesh::RenderShadow(ST_BONE* pBone /*= NULL*/){
-	// TODO 멀티애니메이션 스킨드 메쉬에 섞어서 그림자 생성
+	//// TODO 멀티애니메이션 스킨드 메쉬에 섞어서 그림자 생성
+	// 각 프레임의 메시 컨테이너에 있는 pSkinInfo를 이용하여 영향받는 모든 
+	// 프레임의 매트릭스를 ppBoneMatrixPtrs에 연결한다.
+	if (pBone->pMeshContainer)
+	{
+		ST_BONE_MESH* pBoneMesh = (ST_BONE_MESH*)pBone->pMeshContainer;
+		
+		D3DLIGHT9 stLight;
+		g_pD3DDevice->GetLight(0, &stLight);
+		D3DXVECTOR3 dir = stLight.Direction;
+		D3DXVECTOR3 pos;
+		D3DXVec3Normalize(&pos, &dir);
+		pos = -500 * pos;
+		//D3DXVECTOR3 tempPos(-93.3871002f, 234.746628f, -53.4625092);
+		// 빛을 움직이면서 디렉셔널로 움직이면 섀도우맵역시 움직인다.
+		//D3DXVECTOR3 vMove(pMatrix->_41, pMatrix->_42, pMatrix->_43);
+		//pos = pos + vMove;
 
+		D3DXMATRIXA16 matLightView;
+		{
+			D3DXVECTOR3 vLookatPt(0.0f, 0.0f, 0.0f);
+			D3DXVECTOR3 vUpVec(0.0f, 1.0f, 0.0f);
+			D3DXMatrixLookAtLH(&matLightView, &pos, &vLookatPt, &vUpVec);
+		}
 
-	//assert(pBone);
+		D3DXMATRIXA16 matLightProjection; {
+			D3DXMatrixPerspectiveFovLH(&matLightProjection, D3DX_PI / 4.0f, 1, 0.000001f, 3000);
+		}
 
-	//if (GetAsyncKeyState(VK_TAB)){
-	//	RenderDebugUpdateSphereBody(pBone, m_mapDebugUpdateSphereBody);
+		D3DXMATRIXA16 matView;
+		D3DXMATRIXA16 matProjection;
+		g_pD3DDevice->GetTransform(D3DTS_VIEW, &matView);
+		g_pD3DDevice->GetTransform(D3DTS_PROJECTION, &matProjection);
+		D3DXMATRIXA16 matViewProject; {
+			D3DXMatrixMultiply(&matViewProject, &matView, &matProjection);
+		}
 
-	//	if (pBone->Name != nullptr && std::string(pBone->Name) == std::string("FxCenter"))
-	//	{
-	//		//if (m_pDebugSphereBody){
-	//		g_pD3DDevice->SetTransform(D3DTS_WORLD, &pBone->CombinedTransformationMatrix);
-	//		g_pD3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
-	//		g_pD3DDevice->SetTexture(0, NULL);
-	//		m_pDebugSphereBody->DrawSubset(0);
-	//		g_pD3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
-	//	}
+		g_pShaderManager->GetShader("../Resources/Shader/CreateShadow.fx")
+			->SetMatrix("gWorldMatrix", &pBone->CombinedTransformationMatrix);
+		g_pShaderManager->GetShader("../Resources/Shader/CreateShadow.fx")
+			->SetMatrix("gLightViewMatrix", &matLightView);
+		g_pShaderManager->GetShader("../Resources/Shader/CreateShadow.fx")
+			->SetMatrix("gLightProjectionMatrix", &matLightProjection);
 
-	//}
-	//// 각 프레임의 메시 컨테이너에 있는 pSkinInfo를 이용하여 영향받는 모든 
-	//// 프레임의 매트릭스를 ppBoneMatrixPtrs에 연결한다.
-	//if (pBone->pMeshContainer)
-	//{
-	//	ST_BONE_MESH* pBoneMesh = (ST_BONE_MESH*)pBone->pMeshContainer;
+		// 쉐이더를 시작한다.
+		UINT numPasses = 0;
+		g_pShaderManager->GetShader("../Resources/Shader/CreateShadow.fx")
+			->Begin(&numPasses, NULL);
+		{
+			for (UINT i = 0; i < numPasses; ++i)
+			{
+				g_pShaderManager->GetShader("../Resources/Shader/CreateShadow.fx")
+					->BeginPass(i);
+				{
+					// for each palette
+					for (DWORD dwAttrib = 0; dwAttrib < pBoneMesh->dwNumAttrGroups; ++dwAttrib)
+					{
+						// 물체를 그린다.
+						pBoneMesh->pWorkingMesh->DrawSubset(dwAttrib); 
+					}
+				}
+				g_pShaderManager->GetShader("../Resources/Shader/CreateShadow.fx")
+					->EndPass();
+			}
+		}
+		g_pShaderManager->GetShader("../Resources/Shader/CreateShadow.fx")
+			->End();
+	}
+	//재귀적으로 모든 프레임에 대해서 실행.
+	if (pBone->pFrameSibling)
+	{
+		RenderShadow((ST_BONE*)pBone->pFrameSibling);
+	}
 
-	//	// get bone combinations
-	//	LPD3DXBONECOMBINATION pBoneCombos =
-	//		(LPD3DXBONECOMBINATION)(pBoneMesh->pBufBoneCombos->GetBufferPointer());
-
-	//	D3DXMATRIXA16 matViewProj, matView, matProj;
-	//	g_pD3DDevice->GetTransform(D3DTS_VIEW, &matView);
-	//	g_pD3DDevice->GetTransform(D3DTS_PROJECTION, &matProj);
-	//	matViewProj = matView * matProj;
-
-	//	D3DXMATRIXA16 mView, mInvView;
-	//	g_pD3DDevice->GetTransform(D3DTS_VIEW, &mView);
-	//	D3DXMatrixInverse(&mInvView, 0, &mView);
-	//	D3DXVECTOR3 vEye = D3DXVECTOR3(0, 0, 0);
-	//	D3DXVec3TransformCoord(&vEye, &vEye, &mInvView);
-
-	//	// for each palette
-	//	for (DWORD dwAttrib = 0; dwAttrib < pBoneMesh->dwNumAttrGroups; ++dwAttrib)
-	//	{
-	//		// set each transform into the palette
-	//		for (DWORD dwPalEntry = 0; dwPalEntry < pBoneMesh->dwNumPaletteEntries; ++dwPalEntry)
-	//		{
-	//			DWORD dwMatrixIndex = pBoneCombos[dwAttrib].BoneId[dwPalEntry];
-	//			if (dwMatrixIndex != UINT_MAX)
-	//			{
-	//				m_pmWorkingPalette[dwPalEntry] =
-	//					pBoneMesh->pBoneOffsetMatrices[dwMatrixIndex] *
-	//					(*pBoneMesh->ppBoneMatrixPtrs[dwMatrixIndex]);
-	//			}
-	//		}
-
-	//		
-	//	}
-	//}
-
-	////재귀적으로 모든 프레임에 대해서 실행.
-	//if (pBone->pFrameSibling)
-	//{
-	//	Render((ST_BONE*)pBone->pFrameSibling);
-	//}
-
-	//if (pBone->pFrameFirstChild)
-	//{
-	//	Render((ST_BONE*)pBone->pFrameFirstChild);
-	//}
+	if (pBone->pFrameFirstChild)
+	{
+		RenderShadow((ST_BONE*)pBone->pFrameFirstChild);
+	}
 }
 
 LPD3DXEFFECT cSkinnedMesh::LoadEffect(char* szFilename)
