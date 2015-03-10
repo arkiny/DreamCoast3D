@@ -200,11 +200,13 @@ void cUIInventory::Render()
 		{
 			m_pUIRoot->Render();
 		}
-		/*for (size_t i = 0; i < m_vecUISlot.size(); ++i)
+		for (size_t i = 0; i < m_vecUISlot.size(); ++i)
 		{
 			if (m_vecUISlot[i]->GetIcon())
-			m_vecUISlot[i]->GetIcon()->Render();
-		}*/
+			{
+				m_vecUISlot[i]->GetIcon()->Render();
+			}
+		}
 
 		if (m_isMouseOverVisible) { m_pImageViewMouseOver->Render(); }
 		if (m_isMouseDownVisible) { m_pImageViewMouseDown->Render(); }
@@ -221,8 +223,11 @@ void cUIInventory::AddItem(cDataItem* pDataItem)
 	{
 		if (!m_vecUISlot[i]->GetItem())
 		{
+			m_vecUISlot[i]->SetItem(nullptr);
+			m_vecUISlot[i]->SetIcon(nullptr);
 			m_vecUISlot[i]->SetItem(pDataItem);
-			m_vecUISlot[i]->AddChild(pDataItem->GetUIIcon());
+			m_vecUISlot[i]->SetIcon(pDataItem->GetUIIcon());
+			//m_vecUISlot[i]->AddChild(pDataItem->GetUIIcon());
 			return;
 		}
 	}
@@ -437,13 +442,17 @@ void cUIInventory::SetupTest()
 #pragma endregion
 
 	//작동 테스트용 0번칸 할당
-	m_vecUISlot[0]->SetItemNum(0);//0번 슬롯에 0번 아이템
-	cDataItem* pItem = m_vecOwnItem[m_vecUISlot[0]->GetItemNum()];
-	m_vecUISlot[0]->SetItem(pItem);
-	m_vecUISlot[0]->AddChild(pItem->GetUIIcon());
+	//m_vecUISlot[0]->SetItemNum(0);//0번 슬롯에 0번 아이템
+	//cDataItem* pItem = m_vecOwnItem[m_vecUISlot[0]->GetItemNum()];
+	cDataItem* pItem = m_vecOwnItem[0];
+	/*m_vecUISlot[0]->SetItem(pItem);
+	m_vecUISlot[0]->SetIcon(pItem->GetUIIcon());*/
+	AddItem(pItem);
+	//m_vecUISlot[0]->AddChild(pItem->GetUIIcon());
 	//1번칸에 1번 아이템 할당
-	m_vecUISlot[1]->SetItemNum(1);//0번 슬롯에 0번 아이템
-	pItem = m_vecOwnItem[m_vecUISlot[1]->GetItemNum()];
+	//m_vecUISlot[1]->SetItemNum(1);//0번 슬롯에 0번 아이템
+	/*pItem = m_vecOwnItem[m_vecUISlot[1]->GetItemNum()];
 	m_vecUISlot[1]->SetItem(pItem);
-	m_vecUISlot[1]->AddChild(pItem->GetUIIcon());
+	m_vecUISlot[1]->SetIcon(pItem->GetUIIcon());*/
+	//m_vecUISlot[1]->AddChild(pItem->GetUIIcon());
 }
