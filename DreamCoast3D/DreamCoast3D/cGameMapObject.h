@@ -34,5 +34,6 @@ public:
 
 	virtual std::vector<ST_PNT2_VERTEX>& GetVertexVectorByRef() { return std::vector<ST_PNT2_VERTEX>(); }
 	virtual void ChangeMapYVertexCoord(D3DXVECTOR2 vMin, D3DXVECTOR2 vMax, float fDelta){}
+
 };
 

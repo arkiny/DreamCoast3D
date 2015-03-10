@@ -25,27 +25,34 @@ void cPlayerMove::Execute(cGamePlayableObject* pPlayer, float fDelta){
 	MouseUpdate(pPlayer);
 
 	D3DXVECTOR3 newPos;
+	D3DXVECTOR3 curPos = pPlayer->GetPosition();
+	D3DXVECTOR3 addVec = (pPlayer->GetFront());
 	if (g_pControlManager->GetInputInfo('W') ||
 		g_pControlManager->GetInputInfo('A') ||
 		g_pControlManager->GetInputInfo('S') ||
 		g_pControlManager->GetInputInfo('D')){
 		if (g_pControlManager->GetInputInfo('W')){
-			D3DXVECTOR3 curPos = pPlayer->GetPosition();
-			D3DXVECTOR3 addVec = (pPlayer->GetFront());
 
 
 			D3DXVec3Normalize(&addVec, &addVec);
 
 			D3DXVECTOR3 vForce(0.f, 0.f, 0.f);
+
+
 			vForce = pPlayer->GetGameObjDeligate()->isCollidedStaticObject(pPlayer) + addVec;
 			D3DXVec3Normalize(&vForce, &vForce);
 
 			newPos = curPos + vForce*fDelta*pPlayer->GetMoveSpeed();
-			//if (/*pPlayer->GetGridTileSystem()->GetObjectOnGrid((int)curPos.x, (int)curPos.z).size() == 1
-			//	&&*/ pPlayer->GetGameObjDeligate()->isGameObjectCollided(pPlayer) == false){
-				pPlayer->SetPosition(newPos);
-			//}
 
+			pPlayer->GetGameObjDeligate()->SetNextPosition(newPos);
+			pPlayer->GetGameObjDeligate()->SetCurrentPosition(curPos);
+			
+			if (pPlayer->GetGameObjDeligate()->CalGradient(pPlayer))
+			{
+				newPos = curPos;
+			}
+
+			pPlayer->SetPosition(newPos);
 			pPlayer->GetEventDelegate()->CheckEventFromRange(pPlayer, 1);
 		}
 
@@ -57,12 +64,10 @@ void cPlayerMove::Execute(cGamePlayableObject* pPlayer, float fDelta){
 			D3DXVECTOR3 vForce(0.f, 0.f, 0.f);
 			vForce = pPlayer->GetGameObjDeligate()->isCollidedStaticObject(pPlayer) + addVec;
 			D3DXVec3Normalize(&vForce, &vForce);
-
 			newPos = curPos + vForce*fDelta*pPlayer->GetMoveSpeed();
-			//if (/*pPlayer->GetGridTileSystem()->GetObjectOnGrid((int)curPos.x, (int)curPos.z).size() == 1
-			//	&&*/ pPlayer->GetGameObjDeligate()->isGameObjectCollided(pPlayer) == false){
-				pPlayer->SetPosition(newPos);
-			//}
+
+			pPlayer->SetPosition(newPos);
+
 		}
 
 		if (g_pControlManager->GetInputInfo('A')){
@@ -88,6 +93,8 @@ void cPlayerMove::Execute(cGamePlayableObject* pPlayer, float fDelta){
 			pPlayer->SetFront(vDir);
 			pPlayer->SetYangle(angle);
 		}
+
+
 
 
 		if (g_pControlManager->GetInputInfo(VK_LBUTTON)){

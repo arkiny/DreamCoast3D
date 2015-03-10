@@ -10,7 +10,6 @@ cGridSystem::cGridSystem()
 {
 }
 
-
 cGridSystem::~cGridSystem()
 {
 	this->Destroy();

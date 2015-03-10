@@ -94,8 +94,11 @@ private:
 	D3DXVECTOR3 PushingForce(D3DXVECTOR3* vFrom, float fFromLength, D3DXVECTOR3* vTo, float fFromTo);
     void DeadObjectUpdate();
 
-
-
-
+	bool CalGradient(cGameObject* pFrom);
+	iMap* m_iMap;
+	void SetNextPosition(D3DXVECTOR3 vNextPos);
+	void SetCurrentPosition(D3DXVECTOR3 vCurrentPos);
+	D3DXVECTOR3 m_vNextPos;
+	D3DXVECTOR3 m_vCurrentPos;
 };
 

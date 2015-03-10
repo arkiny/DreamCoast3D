@@ -11,6 +11,9 @@ cGameObjManager::cGameObjManager()
 	, m_pPlayable(NULL)
     , m_fAccumTime(0.f)
 {
+	// MS
+	m_iMap = nullptr;
+
 }
 
 
@@ -195,6 +198,8 @@ void cGameObjManager::AdjustYPositionByHeightMap(iMap* pMap){
 			p->SetYPosition(yPos);
 		}
 	}
+
+	m_iMap = pMap;
 }
 
 void cGameObjManager::SetEffectDeligate(iEffectManagerDelegate* pEffectDeligate){
@@ -511,7 +516,6 @@ D3DXVECTOR3 cGameObjManager::isCollidedStaticObject(cGameObject* pFrom)
 
 				float fDot = D3DXVec3Dot(&vObjectForce, &vPlayerForce);
 				
-				//pFrom->ForcedMoving(vForce, pFrom->GetMoveSpeed());
 				vFinal = vForce;
 			}
 
@@ -551,4 +555,48 @@ void cGameObjManager::DeadObjectUpdate()
         m_setDeadMonster.erase(m_queueDeadMonster.front());
         m_queueDeadMonster.pop();
     }
+}
+
+bool cGameObjManager::CalGradient(cGameObject* pFrom)
+{
+	bool isTest = false;
+	D3DXVECTOR3 vFinal(0.f, 0.f, 0.f);
+
+	D3DXVECTOR3 vNext(0.f, 0.f, 0.f);
+	D3DXVECTOR3 vCurrent(0.f, 0.f, 0.f);
+
+	vCurrent = m_vCurrentPos;
+	vNext = m_vNextPos;
+
+	bool isGarbage = false;
+
+	float fNextHeight = m_iMap->GetHeight(isGarbage, &vNext);
+	float fCurrentHeight = m_iMap->GetHeight(isGarbage, &vCurrent);
+
+	float fDist = 0.f;
+
+	float fX = vCurrent.x - vNext.x;
+	float fZ = vCurrent.z - vNext.z;
+	
+	fDist = sqrt((fX*fX) + (fZ*fZ));
+
+	float fAngle = atan2(fNextHeight - fCurrentHeight, fDist);
+	fAngle = D3DXToDegree(fAngle);
+
+	if (fAngle > 25.f)
+	{
+		isTest = true;
+	}
+
+	return isTest;
+}
+
+void cGameObjManager::SetNextPosition(D3DXVECTOR3 vNextPos)
+{
+	m_vNextPos = vNextPos;
+}
+
+void cGameObjManager::SetCurrentPosition(D3DXVECTOR3 vCurrentPos)
+{
+	m_vCurrentPos = vCurrentPos;
 }

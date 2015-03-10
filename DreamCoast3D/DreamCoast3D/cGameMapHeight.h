@@ -48,5 +48,6 @@ public:
 
 
 	virtual std::string SaveAsStringInfo() override;
+	
 };
 
