@@ -186,7 +186,7 @@ void cGameMapHeight::Render(){
 		}
 
 		D3DXMATRIXA16 matLightProjection; {
-			D3DXMatrixPerspectiveFovLH(&matLightProjection, D3DX_PI / 4.0f, 1, 0.0001f, 3000);
+			D3DXMatrixPerspectiveFovLH(&matLightProjection, D3DX_PI / 4.0f, 1, 0.0001f, 30000);
 		}
 
 		D3DXMATRIXA16 matView;
