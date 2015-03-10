@@ -85,6 +85,7 @@ void cPlayerMove::Execute(cGamePlayableObject* pPlayer, float fDelta){
 
 		}
 
+
 		if (g_pControlManager->GetInputInfo('A')){
 			D3DXMATRIXA16 matR;
 			float angle = pPlayer->GetPlayerAngle();
@@ -109,18 +110,12 @@ void cPlayerMove::Execute(cGamePlayableObject* pPlayer, float fDelta){
 			pPlayer->SetYangle(angle);
 		}
 
-
-
-
 		if (g_pControlManager->GetInputInfo(VK_LBUTTON)){
 			pPlayer->ChangeState(pPlayer->EPLAYABLESTATE_ATTACK);
 		}
 
 		return;
 	}
-
-
-
 
 	pPlayer->ChangeState(pPlayer->EPLAYABLESTATE_IDLE);
 }

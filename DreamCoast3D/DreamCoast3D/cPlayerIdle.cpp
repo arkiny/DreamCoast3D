@@ -32,8 +32,38 @@ void cPlayerIdle::Execute(cGamePlayableObject* pPlayer, float fDelta){
 		pPlayer->ChangeState(pPlayer->EPLAYABLESTATE_ATTACK);
 		return;
 	}
-
 	// do nothing
+
+	D3DXVECTOR3 vFront(0.f, 0.f, 0.f);
+	D3DXVECTOR3 vGravity(0.f, 0.f, 0.f);
+	D3DXVECTOR3 vCurrentPos(0.f, 0.f, 0.f);
+
+	D3DXVECTOR3 curPos = pPlayer->GetPosition();
+	D3DXVECTOR3 addVec = (pPlayer->GetFront());
+
+	D3DXVECTOR3 newPos;
+	D3DXVec3Normalize(&addVec, &addVec);
+	newPos = curPos + addVec*fDelta*pPlayer->GetMoveSpeed();
+
+	pPlayer->GetGameObjDeligate()->SetCurrentPosition(curPos);
+	pPlayer->GetGameObjDeligate()->SetNextPosition(newPos);
+
+	if (pPlayer->GetGameObjDeligate()->CalGradient(pPlayer))
+	{
+		vGravity.y = -9.8;
+		vFront = -pPlayer->GetFront();
+		vGravity = (vGravity + vFront)*g_pTimer->DeltaTime();
+	}
+
+	if (pPlayer->GetGameObjDeligate()->CalGradientMinus(pPlayer))
+	{
+		vGravity.y = -9.8;
+		vFront = pPlayer->GetFront();
+		vGravity = (vGravity + vFront)*g_pTimer->DeltaTime();
+	}
+
+	vCurrentPos = pPlayer->GetPosition();
+	pPlayer->SetPosition(vCurrentPos + vGravity);
 }
 
 void cPlayerIdle::Exit(cGamePlayableObject* pPlayer){

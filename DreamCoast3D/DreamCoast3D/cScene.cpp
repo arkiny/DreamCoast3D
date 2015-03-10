@@ -172,13 +172,15 @@ void cScene::Update(float delta){
 			m_pCurrentMap->Update(delta);
 		}
 
+		if (m_pCurrentMap && m_pGameObjManager){
+			m_pGameObjManager->AdjustYPositionByHeightMap(m_pCurrentMap);
+		}
+
 		if (m_pGameObjManager){
 			m_pGameObjManager->Update(delta);
 		}
 
-		if (m_pCurrentMap && m_pGameObjManager){
-			m_pGameObjManager->AdjustYPositionByHeightMap(m_pCurrentMap);
-		}
+
 	}
 
 	if (m_pEffectManager){

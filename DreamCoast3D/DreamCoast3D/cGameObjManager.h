@@ -95,6 +95,7 @@ private:
     void DeadObjectUpdate();
 
 	bool CalGradient(cGameObject* pFrom);
+	bool CalGradientMinus(cGameObject* pFrom);
 	iMap* m_iMap;
 	void SetNextPosition(D3DXVECTOR3 vNextPos);
 	void SetCurrentPosition(D3DXVECTOR3 vCurrentPos);
