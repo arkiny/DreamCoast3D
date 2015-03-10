@@ -560,7 +560,6 @@ void cGameObjManager::DeadObjectUpdate()
 bool cGameObjManager::CalGradient(cGameObject* pFrom)
 {
 	bool isTest = false;
-	D3DXVECTOR3 vFinal(0.f, 0.f, 0.f);
 
 	D3DXVECTOR3 vNext(0.f, 0.f, 0.f);
 	D3DXVECTOR3 vCurrent(0.f, 0.f, 0.f);
@@ -583,12 +582,45 @@ bool cGameObjManager::CalGradient(cGameObject* pFrom)
 	float fAngle = atan2(fNextHeight - fCurrentHeight, fDist);
 	fAngle = D3DXToDegree(fAngle);
 
-	if (fAngle > 25.f)
+	if (fAngle > 35.f)
 	{
 		isTest = true;
 	}
 
 	return isTest;
+}
+
+D3DXVECTOR3 cGameObjManager::GravityForce()
+{
+	D3DXVECTOR3 vFinal(0.f, 0.f, 0.f);
+
+	D3DXVECTOR3 vNext(0.f, 0.f, 0.f);
+	D3DXVECTOR3 vCurrent(0.f, 0.f, 0.f);
+
+	vCurrent = m_vCurrentPos;
+	vNext = m_vNextPos;
+
+	bool isGarbage = false;
+
+	float fNextHeight = m_iMap->GetHeight(isGarbage, &vNext);
+	float fCurrentHeight = m_iMap->GetHeight(isGarbage, &vCurrent);
+
+	float fDist = 0.f;
+
+	float fX = vCurrent.x - vNext.x;
+	float fZ = vCurrent.z - vNext.z;
+
+	fDist = sqrt((fX*fX) + (fZ*fZ));
+
+	float fAngle = atan2(fNextHeight - fCurrentHeight, fDist);
+	fAngle = D3DXToDegree(fAngle);
+
+	if (fAngle > 35.f)
+	{
+		vFinal.y = 9.8f;
+	}
+
+	return vFinal;
 }
 
 void cGameObjManager::SetNextPosition(D3DXVECTOR3 vNextPos)

@@ -100,5 +100,7 @@ private:
 	void SetCurrentPosition(D3DXVECTOR3 vCurrentPos);
 	D3DXVECTOR3 m_vNextPos;
 	D3DXVECTOR3 m_vCurrentPos;
+
+	D3DXVECTOR3 GravityForce();
 };
 

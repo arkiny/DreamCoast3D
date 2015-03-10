@@ -20,4 +20,5 @@ __interface iGameObjectDelegate{
 	bool CalGradient(cGameObject* pFrom);
 	void SetNextPosition(D3DXVECTOR3 vNextPos);
 	void SetCurrentPosition(D3DXVECTOR3 vCurrentPos);
+	D3DXVECTOR3 GravityForce();
 };

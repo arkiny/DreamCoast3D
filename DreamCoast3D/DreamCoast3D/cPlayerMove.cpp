@@ -32,12 +32,9 @@ void cPlayerMove::Execute(cGamePlayableObject* pPlayer, float fDelta){
 		g_pControlManager->GetInputInfo('S') ||
 		g_pControlManager->GetInputInfo('D')){
 		if (g_pControlManager->GetInputInfo('W')){
-
-
 			D3DXVec3Normalize(&addVec, &addVec);
 
 			D3DXVECTOR3 vForce(0.f, 0.f, 0.f);
-
 
 			vForce = pPlayer->GetGameObjDeligate()->isCollidedStaticObject(pPlayer) + addVec;
 			D3DXVec3Normalize(&vForce, &vForce);
@@ -51,6 +48,11 @@ void cPlayerMove::Execute(cGamePlayableObject* pPlayer, float fDelta){
 			{
 				newPos = curPos;
 			}
+			
+			D3DXVECTOR3 vGravity(0.f, 0.f, 0.f);
+			vGravity = pPlayer->GetGameObjDeligate()->GravityForce() + addVec;
+
+			newPos += vGravity*fDelta;
 
 			pPlayer->SetPosition(newPos);
 			pPlayer->GetEventDelegate()->CheckEventFromRange(pPlayer, 1);
@@ -65,6 +67,19 @@ void cPlayerMove::Execute(cGamePlayableObject* pPlayer, float fDelta){
 			vForce = pPlayer->GetGameObjDeligate()->isCollidedStaticObject(pPlayer) + addVec;
 			D3DXVec3Normalize(&vForce, &vForce);
 			newPos = curPos + vForce*fDelta*pPlayer->GetMoveSpeed();
+
+			pPlayer->GetGameObjDeligate()->SetNextPosition(newPos);
+			pPlayer->GetGameObjDeligate()->SetCurrentPosition(curPos);
+
+			if (pPlayer->GetGameObjDeligate()->CalGradient(pPlayer))
+			{
+				newPos = curPos;
+			}
+
+			D3DXVECTOR3 vGravity(0.f, 0.f, 0.f);
+			vGravity = pPlayer->GetGameObjDeligate()->GravityForce() + addVec;
+
+			newPos += vGravity*fDelta;
 
 			pPlayer->SetPosition(newPos);
 
