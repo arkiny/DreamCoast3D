@@ -238,6 +238,7 @@ void cSkinnedMesh::UpdateAndRenderShadow(D3DXMATRIXA16* pParentWorldTM)
 // using the information, just render
 
 void cSkinnedMesh::Render(D3DXMATRIXA16* pParentWorldTM){
+	m_pAnimController->AdvanceTime(0, NULL);
 	if (m_pRootFrame)
 	{
 		D3DXMATRIXA16 mat;
