@@ -57,7 +57,7 @@ VS_OUTPUT CreateShadowShader_CreateShadow_Vertex_Shader_vs_main(VS_INPUT Input)
 
 	float4x4 lightViewMatrix = gLightViewMatrix;
 
-		Output.mPosition = mul(Input.mPosition, gWorldMatrix);
+	Output.mPosition = mul(Input.mPosition, gWorldMatrix);
 	Output.mPosition = mul(Output.mPosition, lightViewMatrix);
 	Output.mPosition = mul(Output.mPosition, gLightProjectionMatrix);
 

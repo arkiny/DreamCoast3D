@@ -175,28 +175,56 @@ void cGameMapHeight::Render(){
 	else{
 		//	FAR_PLANE);
 
-		D3DXMATRIXA16 matWorld;
-		D3DXMatrixIdentity(&matWorld);
+		D3DLIGHT9 stLight;
+		g_pD3DDevice->GetLight(0, &stLight);
+		D3DXVECTOR3 pos = -500 * stLight.Direction;
+		D3DXMATRIXA16 matLightView;
+		{
+			D3DXVECTOR3 vLookatPt(0.0f, 0.0f, 0.0f);
+			D3DXVECTOR3 vUpVec(0.0f, 1.0f, 0.0f);
+			D3DXMatrixLookAtLH(&matLightView, &pos, &vLookatPt, &vUpVec);
+		}
+
+		D3DXMATRIXA16 matLightProjection; {
+			D3DXMatrixPerspectiveFovLH(&matLightProjection, D3DX_PI / 4.0f, 1, 1, 3000);
+		}
+
 		D3DXMATRIXA16 matView;
 		D3DXMATRIXA16 matProjection;
 		g_pD3DDevice->GetTransform(D3DTS_VIEW, &matView);
 		g_pD3DDevice->GetTransform(D3DTS_PROJECTION, &matProjection);
-
+		D3DXMATRIXA16 matViewProject; {
+			D3DXMatrixMultiply(&matViewProject, &matView, &matProjection);
+		}
+		D3DXMATRIXA16 matWorld;
+		D3DXMatrixIdentity(&matWorld);
 		// 쉐이더 전역변수들을 설정
-		g_pShaderManager->GetShader("../Resources/Shader/DetailBlending.fx")->SetMatrix("gWorldMatrix", &matWorld);
-		g_pShaderManager->GetShader("../Resources/Shader/DetailBlending.fx")->SetMatrix("gViewMatrix", &matView);
-		g_pShaderManager->GetShader("../Resources/Shader/DetailBlending.fx")->SetMatrix("gProjectionMatrix", &matProjection);
-		g_pShaderManager->GetShader("../Resources/Shader/DetailBlending.fx")->SetVector("gLightColor", &gLightColor);
-		g_pShaderManager->GetShader("../Resources/Shader/DetailBlending.fx")->SetTexture("DiffuseMap_Tex", m_pTexture);
-		g_pShaderManager->GetShader("../Resources/Shader/DetailBlending.fx")->SetTexture("SpecularMap_Tex", m_pTextureNormal);
-		g_pShaderManager->GetShader("../Resources/Shader/DetailBlending.fx")->SetTexture("DetailMap_Tex", m_pTexture2);
+		g_pShaderManager->GetShader("../Resources/Shader/DetailBlending.fx")
+			->SetMatrix("gWorldMatrix", &matWorld);
+		g_pShaderManager->GetShader("../Resources/Shader/DetailBlending.fx")
+			->SetMatrix("gViewMatrix", &matView);
+		g_pShaderManager->GetShader("../Resources/Shader/DetailBlending.fx")
+			->SetMatrix("gProjectionMatrix", &matProjection);
+		g_pShaderManager->GetShader("../Resources/Shader/DetailBlending.fx")
+			->SetVector("gLightColor", &gLightColor);
+		g_pShaderManager->GetShader("../Resources/Shader/DetailBlending.fx")
+			->SetTexture("DiffuseMap_Tex", m_pTexture);
+		g_pShaderManager->GetShader("../Resources/Shader/DetailBlending.fx")
+			->SetTexture("SpecularMap_Tex", m_pTextureNormal);
+		g_pShaderManager->GetShader("../Resources/Shader/DetailBlending.fx")
+			->SetTexture("DetailMap_Tex", m_pTexture2);
+		g_pShaderManager->GetShader("../Resources/Shader/DetailBlending.fx")
+			->SetVector("gWorldLightPosition", &D3DXVECTOR4(pos, 0.0f));
+		g_pShaderManager->GetShader("../Resources/Shader/DetailBlending.fx")
+			->SetMatrix("gLightViewMatrix", &matLightView);
+		g_pShaderManager->GetShader("../Resources/Shader/DetailBlending.fx")
+			->SetMatrix("gLightProjectionMatrix", &matLightProjection);
+		g_pShaderManager->GetShader("../Resources/Shader/DetailBlending.fx")
+			->SetMatrix("gViewProjectionMatrix", &matViewProject);
+		g_pShaderManager->GetShader("../Resources/Shader/DetailBlending.fx")
+			->SetTexture("ShadowMap_Tex", g_pShaderManager->GetShadowRenderTarget());
 
-		D3DLIGHT9 stLight;
-		g_pD3DDevice->GetLight(0, &stLight);
-		D3DXVECTOR3 pos = -1000 * stLight.Direction;
-		g_pShaderManager->GetShader("../Resources/Shader/DetailBlending.fx")->SetVector("gWorldLightPosition", &D3DXVECTOR4(pos, 0.0f));
-		
-		
+
 		// 쉐이더를 시작한다.
 		UINT numPasses = 0;
 		g_pShaderManager->GetShader("../Resources/Shader/DetailBlending.fx")->Begin(&numPasses, NULL);
@@ -205,14 +233,14 @@ void cGameMapHeight::Render(){
 			{
 				g_pShaderManager->GetShader("../Resources/Shader/DetailBlending.fx")->BeginPass(i);
 				{
+					// 구체를 그린다.
+					//g_pShaderManager->GetShader("../Resources/Shader/DetailBlending.fx")->CommitChanges();
 					m_pMesh->DrawSubset(0);
 				}
 				g_pShaderManager->GetShader("../Resources/Shader/DetailBlending.fx")->EndPass();
 			}
 		}
 		g_pShaderManager->GetShader("../Resources/Shader/DetailBlending.fx")->End();
-
-
 		//////////////////////////////////////////////////
 		
 

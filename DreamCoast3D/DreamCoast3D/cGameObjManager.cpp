@@ -59,9 +59,12 @@ void cGameObjManager::Render(){
 	g_pD3DDevice->GetDepthStencilSurface(&pHWDepthStencilBuffer);
 	LPDIRECT3DSURFACE9 pShadowSurface = NULL;
 	g_pShaderManager->GetShadowRenderTarget()->GetSurfaceLevel(0, &pShadowSurface);
-	g_pD3DDevice->SetRenderTarget(0, pShadowSurface);
-	SAFE_RELEASE(pShadowSurface);
+	{
+		g_pD3DDevice->SetRenderTarget(0, pShadowSurface);
+		SAFE_RELEASE(pShadowSurface);
+	}
 	g_pD3DDevice->SetDepthStencilSurface(g_pShaderManager->GetShadowDepthStencil());
+	g_pD3DDevice->Clear(0, NULL, (D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER), 0xFFFFFFFF, 1.0f, 0);
 
 	for (auto p : m_setStaticGameObjects){
 		if (m_pFrustum->IsIn(p->GetBoundingSphere())){

@@ -37,6 +37,17 @@ bool Normalize = false;
 > = float4(500.00, 500.00, -500.00, 1.00);
 float4 gWorldCameraPosition : ViewPosition;
 
+
+float4x4 gLightViewMatrix
+<
+string UIName = "gLightViewMatrix";
+string UIWidget = "Numeric";
+bool UIVisible = false;
+> = float4x4(1.00, 0.00, 0.00, 0.00, 0.00, 1.00, 0.00, 0.00, 0.00, 0.00, 1.00, 0.00, 0.00, 0.00, 0.00, 1.00);
+float4x4 gLightProjectionMatrix : Projection;
+float4x4 gViewProjectionMatrix : ViewProjection;
+
+
 struct VS_INPUT
 {
 	float4 mPosition : POSITION;
@@ -53,11 +64,14 @@ struct VS_OUTPUT
 	float3 mDiffuse : TEXCOORD2;
 	float3 mViewDir: TEXCOORD3;
 	float3 mReflection: TEXCOORD4;
+	float4 mClipPosition: TEXCOORD5;
 };
 
 VS_OUTPUT SpecularMapping_Pass_0_Vertex_Shader_vs_main(VS_INPUT Input)
 {
 	VS_OUTPUT Output;
+
+	float4 oriPosition = Input.mPosition;
 
 	Output.mPosition = mul(Input.mPosition, gWorldMatrix);
 
@@ -79,6 +93,11 @@ VS_OUTPUT SpecularMapping_Pass_0_Vertex_Shader_vs_main(VS_INPUT Input)
 	Output.mUV = Input.mUV;
 	Output.mDUV = Input.mDUV;
 
+	float4x4 lightViewMatrix = gLightViewMatrix;
+	float4 worldPosition = mul(oriPosition, gWorldMatrix);
+	Output.mClipPosition = mul(worldPosition, lightViewMatrix);
+	Output.mClipPosition = mul(Output.mClipPosition, gLightProjectionMatrix);
+
 	return Output;
 }
 
@@ -89,6 +108,7 @@ struct PS_INPUT
 	float3 mDiffuse : TEXCOORD2;
 	float3 mViewDir: TEXCOORD3;
 	float3 mReflection: TEXCOORD4;
+	float4 mClipPosition: TEXCOORD5;
 };
 
 
@@ -115,6 +135,14 @@ string ResourceName = "..\\Documents\\GitHub\\DreamCoast3D\\DreamCoast3D\\Resour
 sampler2D DetailSampler = sampler_state
 {
 	Texture = (DetailMap_Tex);
+};
+texture ShadowMap_Tex
+<
+string ResourceName = ".\\";
+>;
+sampler2D ShadowSampler = sampler_state
+{
+	Texture = (ShadowMap_Tex);
 };
 
 float3 gLightColor
@@ -150,8 +178,23 @@ float4 SpecularMapping_Pass_0_Pixel_Shader_ps_main(PS_INPUT Input) : COLOR
 	}
 
 	float3 ambient = float3(0.1f, 0.1f, 0.1f) * albedo;
-	
-		return float4(ambient + diffuse + specular, 1);
+
+	float3 ret = float3(ambient + diffuse + specular);
+
+	// shadow
+	float currentDepth = Input.mClipPosition.z / Input.mClipPosition.w;
+	float2 uv = Input.mClipPosition.xy / Input.mClipPosition.w;
+		uv.y = -uv.y;
+	uv = uv * 0.5 + 0.5;
+
+	float shadowDepth = tex2D(ShadowSampler, uv).r;
+
+	if (currentDepth > shadowDepth + 0.0000125f)
+	{
+		ret *= 0.5f;
+	}
+
+	return float4(ret, 1);
 }
 
 //--------------------------------------------------------------//

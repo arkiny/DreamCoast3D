@@ -62,14 +62,14 @@ VS_OUTPUT ApplyShadowShader_ApplyShadowTorus_Vertex_Shader_vs_main(VS_INPUT Inpu
 
 	float4x4 lightViewMatrix = gLightViewMatrix;
 
-		float4 worldPosition = mul(Input.mPosition, gWorldMatrix);
-		Output.mPosition = mul(worldPosition, gViewProjectionMatrix);
+	float4 worldPosition = mul(Input.mPosition, gWorldMatrix);
+	Output.mPosition = mul(worldPosition, gViewProjectionMatrix);
 
 	Output.mClipPosition = mul(worldPosition, lightViewMatrix);
 	Output.mClipPosition = mul(Output.mClipPosition, gLightProjectionMatrix);
 
 	float3 lightDir = normalize(worldPosition.xyz - gWorldLightPosition.xyz);
-		float3 worldNormal = normalize(mul(Input.mNormal, (float3x3)gWorldMatrix));
+	float3 worldNormal = normalize(mul(Input.mNormal, (float3x3)gWorldMatrix));
 		Output.mDiffuse = dot(-lightDir, worldNormal);
 
 	return Output;
