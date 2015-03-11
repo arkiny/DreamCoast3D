@@ -250,7 +250,11 @@ void cHeightMapTerrainEdit::ChangeMapYVertexCoord(D3DXVECTOR2 vMin, D3DXVECTOR2 
 		}
 	}
 
-	CalBazier(vMin, vMax);
+	if (GetAsyncKeyState(VK_UP))
+	{
+		CalBazier(vMin, vMax);
+	}
+
 
 	ST_PNT2_VERTEX* v;
 	m_pVertexBuffer->Lock(0, 0, (void**)&v, 0);
