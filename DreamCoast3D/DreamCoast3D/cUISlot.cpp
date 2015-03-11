@@ -26,7 +26,11 @@ cUISlot::~cUISlot()
 //{
 //
 //}
-//void cUISlot::Render()
-//{
-//
-//}
+void cUISlot::Render()
+{
+	cUIImageView::Render();
+	if (m_pIcon)
+	{
+		m_pIcon->Render();
+	}
+}
