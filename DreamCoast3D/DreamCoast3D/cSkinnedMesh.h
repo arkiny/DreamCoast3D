@@ -48,8 +48,9 @@ protected:
 	std::map<std::string, ST_BOUNDING_SPHERE> m_mapDebugOriginSphereBody;
 	std::map<std::string, ST_BOUNDING_SPHERE> m_mapDebugUpdateSphereBody;
 
-	SYNTHESIZE(std::string, m_sSkinnedFolder, SkinnedFolderPath);
-	SYNTHESIZE(std::string, m_sSkinnedFile, SkinnedFilePath);
+	
+	SYNTHESIZE_PASS_BY_REF(std::string, m_sSkinnedFolder, SkinnedFolderPath);
+	SYNTHESIZE_PASS_BY_REF(std::string, m_sSkinnedFile, SkinnedFilePath);
 	//SYNTHESIZE(ST_BOUNDING_SPHERE, m_stUpdateBoundingSphere, UpdateBoundingSphere);
 	//std::vector<ST_BOUNDING_SPHERE> m_vecDetailBoundingSphere; //FIX: 포인터나 레퍼런스여야함
 public:
