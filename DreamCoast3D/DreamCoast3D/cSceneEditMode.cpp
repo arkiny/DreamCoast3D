@@ -37,7 +37,7 @@ cSceneEditMode::~cSceneEditMode()
 	DeleteCriticalSection(&gCriticalSectionEditMode);
 
 	SAFE_RELEASE(m_pObjectEraser);
-
+	
 	for (auto p : m_mapLoadedMap){
 		SAFE_RELEASE(p.second);
 	}

@@ -87,17 +87,18 @@ void cSceneManager::SceneFinished(cScene* pSender){
 void cSceneManager::ChangeScene(int nNextSceneIndex){
 	assert(nNextSceneIndex < m_vecSceneInfoFilePath.size());
 	m_bIsLoading = true;
+	
 	if (m_pCurrentScene){
 		m_pCurrentScene->Exit();
 		SAFE_RELEASE(m_pCurrentScene);
-		g_pSkinnedMeshManager->Destroy();
-		g_pAseManager->Destroy();
-		g_pTextureManager->Destroy();
-		//g_pShaderManager->Destroy();
 	}
 	m_pCurrentScene = new cLoadingScene;
 	m_pCurrentScene->Setup(m_vecSceneInfoFilePath[nNextSceneIndex]);
 
+	//g_pSkinnedMeshManager->Destroy();
+	//g_pAseManager->Destroy();
+	//g_pTextureManager->Destroy();
+	//g_pShaderManager->Destroy();
 
 	// 리소스 로딩
 	g_pShaderManager->CreateShadowTargetAndDepthSurface();
