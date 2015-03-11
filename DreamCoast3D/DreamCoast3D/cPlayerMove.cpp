@@ -155,6 +155,31 @@ void cPlayerMove::MouseUpdate(cGamePlayableObject* pPlayer)
 		pPlayer->SetFront(vDir);
 		pPlayer->SetYangle(m_fAngleX);
 
+
+		//RECT rectClient, rectMouseTrap;
+		//GetClientRect(g_hWnd, &rectClient);
+		//rectMouseTrap.right = (rectClient.right - rectClient.left) / 2 + 10;
+		//rectMouseTrap.left = (rectClient.right - rectClient.left) / 2 - 10;
+		//rectMouseTrap.top = (rectClient.bottom - rectClient.top) / 2 - 10;
+		//rectMouseTrap.bottom = (rectClient.bottom - rectClient.top) / 2 + 10;
+
+
+		//POINT p;
+		//GetCursorPos(&p);
+		//ScreenToClient(g_hWnd, &p);
+		//POINT lefttop = { rectMouseTrap.left, rectMouseTrap.top };
+		//POINT rightbottom = { rectMouseTrap.right, rectMouseTrap.bottom };
+		//ClientToScreen(g_hWnd, &lefttop);
+		//ClientToScreen(g_hWnd, &rightbottom);
+		//if (p.x > rightbottom.x || p.x < lefttop.x){
+		//	POINT target = { 640, 360 };
+		//	ClientToScreen(g_hWnd, &target);
+		//	SetCursorPos(target.x, target.y);
+		//}
+		//POINT target = { 640, 360 };
+		//ClientToScreen(g_hWnd, &target);
+		//SetCursorPos(target.x, target.y);
+
 		m_ptPrevMouse = ptCurrMouse;
 	}
 }

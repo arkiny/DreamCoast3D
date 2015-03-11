@@ -21,6 +21,15 @@ cGameObjManager::~cGameObjManager()
 {
 	SAFE_RELEASE(m_pFrustum);
 	SAFE_RELEASE(m_pPlayable);
+
+	while (!m_queueDeadMonster.empty()){
+		SAFE_RELEASE(m_queueDeadMonster.front());
+		m_queueDeadMonster.pop();
+	}
+	while (!m_queueGameObjectTobeErase.empty()){
+		SAFE_RELEASE(m_queueGameObjectTobeErase.front());
+		m_queueGameObjectTobeErase.pop();
+	}
 }
 
 void cGameObjManager::Setup(){
@@ -37,22 +46,15 @@ void cGameObjManager::Update(float fDelta){
 	if (m_setGameObjects.size() > 0){
 		for (auto p : m_setGameObjects){
 			p->Update(fDelta);
-			//p->SetTargetObject(m_pPlayable);
 		}
 	}
     // MS
-    if (m_setDeadMonster.size() > 0)
-    {
-        for (auto p : m_setDeadMonster)
-        {
-            if (m_setGameObjects.count(p) > 0)
-            {
-                m_setGameObjects.erase(p);
-            }
-        }
-    }
+	while (!m_queueGameObjectTobeErase.empty()){
+		m_setGameObjects.erase(m_queueGameObjectTobeErase.front());
+		m_queueDeadMonster.push(m_queueGameObjectTobeErase.front());
+		m_queueGameObjectTobeErase.pop();
+	}
     DeadObjectUpdate();
-
 }
 
 void cGameObjManager::Render(){
@@ -288,7 +290,7 @@ bool cGameObjManager::isGameAttackSphereCollided(
 	D3DXVECTOR3 vFrom;
 	vFrom = pFrom->GetPosition();
 	std::vector<cGameObject*> vecGameObject;
-	vecGameObject = m_pGridTileSystem->GetAdjObjectCustomer(vFrom.x, vFrom.z, nAttackRange);
+	vecGameObject = m_pGridTileSystem->GetAdjObjectCustomer((int)vFrom.x, (int)vFrom.z, nAttackRange);
 
 	for (auto p : vecGameObject){
 		if (p == pFrom){
@@ -411,7 +413,7 @@ void cGameObjManager::AttackMobToPlayer(cGameAIObject* pFrom){
 	D3DXVECTOR3 vFrom;
 	vFrom = pFrom->GetPosition();
 	std::vector<cGameObject*> vecGameObject;
-	vecGameObject = m_pGridTileSystem->GetAdjObjectCustomer(vFrom.x, vFrom.z, nAttackRange);
+	vecGameObject = m_pGridTileSystem->GetAdjObjectCustomer((int)vFrom.x, (int)vFrom.z, nAttackRange);
 
 	for (auto p : vecGameObject){
 		if (p == pFrom){
@@ -487,7 +489,7 @@ D3DXVECTOR3 cGameObjManager::isCollidedStaticObject(cGameObject* pFrom)
 	D3DXVECTOR3 vFrom;
 	vFrom = pFrom->GetPosition();
 	std::vector<cGameObject*> vecGameObject;
-	vecGameObject = m_pGridTileSystem->GetAdjObjectCustomer(vFrom.x, vFrom.z, nSearchRange);
+	vecGameObject = m_pGridTileSystem->GetAdjObjectCustomer((int)vFrom.x, (int)vFrom.z, nSearchRange);
 
 	for (auto p : vecGameObject)
 	{
@@ -530,10 +532,9 @@ D3DXVECTOR3 cGameObjManager::isCollidedStaticObject(cGameObject* pFrom)
 
 void cGameObjManager::EraseFromGameObjectSet(cGameObject* pFrom)
 {
-    if (m_setDeadMonster.count(pFrom) == 0)
+    if (pFrom)
     {
-        m_queueDeadMonster.push(pFrom);
-        m_setDeadMonster.insert(pFrom);
+		m_queueGameObjectTobeErase.push(pFrom);
     }
 }
 
@@ -547,11 +548,8 @@ void cGameObjManager::DeadObjectUpdate()
     if (m_fAccumTime >= 5.f)
     {
         m_fAccumTime = 0.f;
-        m_queueDeadMonster.front()->Setup();
         m_queueDeadMonster.front()->Start();
         m_setGameObjects.insert(m_queueDeadMonster.front());
-
-        m_setDeadMonster.erase(m_queueDeadMonster.front());
         m_queueDeadMonster.pop();
     }
 }

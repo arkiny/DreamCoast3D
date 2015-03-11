@@ -15,7 +15,7 @@ private:
 	LPDIRECT3DTEXTURE9	m_pShadowRenderTarget = NULL;
 	// 그림자맵 버퍼
 	LPDIRECT3DSURFACE9	m_pShadowDepthStencil = NULL;
-	const int m_nShadowMapSize = 2048;
+	const int m_nShadowMapSize = 2000;
 
 public:
  	LPD3DXEFFECT GetShader(std::string sPath);

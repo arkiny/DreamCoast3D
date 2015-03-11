@@ -16,6 +16,9 @@ private:
 	POINT		m_ptRClickPos;
 	float		m_fWheelMove;
 
+	bool		m_bIsMouseTrapped = true;
+	RECT		m_rectMouseTrap;
+
 public:
 	bool GetInputInfo(WPARAM wParam) { return m_bKeyCodeArray[wParam]; }
 	POINTFLOAT& GetCurrentCursorPositionF() { return m_ptfMousePos; }

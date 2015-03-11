@@ -47,7 +47,7 @@ void cSceneManager::Update(float delta){
 			ChangeScene(4);
 			return;
 		}
-		if (GetAsyncKeyState('9')){ // ÀúÀå½ÇÇè¿ë ¾À
+		if (GetAsyncKeyState('9')){ // ÇÏÀÌÆ®¸Ê ¿¡µðÅÍ ¾À
 			ChangeScene(5);
 			return;
 		}
@@ -93,7 +93,7 @@ void cSceneManager::ChangeScene(int nNextSceneIndex){
 		g_pSkinnedMeshManager->Destroy();
 		g_pAseManager->Destroy();
 		g_pTextureManager->Destroy();
-		g_pShaderManager->Destroy();
+		//g_pShaderManager->Destroy();
 	}
 	m_pCurrentScene = new cLoadingScene;
 	m_pCurrentScene->Setup(m_vecSceneInfoFilePath[nNextSceneIndex]);

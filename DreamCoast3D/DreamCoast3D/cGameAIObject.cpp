@@ -49,6 +49,7 @@ void cGameAIObject::Setup(std::string sFolder, std::string sFile){
 }
 
 void cGameAIObject::Start(){
+	m_pTargetGameObject = NULL;
 	m_pCurrentState = m_vecPatterns[eAISTATE_IDLE];
 	m_pCurrentState->Start(this);
 }
@@ -60,6 +61,14 @@ void cGameAIObject::Update(float fDelta){
 	m_fAttackCoolTime += fDelta;
 	if (m_fAttackCoolTime > 3.0f){
 		m_fAttackCoolTime = 3.0f;
+	}
+
+	m_fAiInvincibleCool += fDelta;
+
+	if (m_fAiInvincibleCool > 2.0f) {
+		// 혹시 모를 오버플로우 대비
+		// TODO: 차후 맥스 경직값을 정해야함
+		m_fAiInvincibleCool = 2.0f;
 	}
 
 	m_pCurrentState->Execute(this, fDelta);
@@ -116,26 +125,29 @@ void cGameAIObject::ChangeToPrevState(){
 }
 
 void cGameAIObject::OnHitTarget(cGameObject* pTarget, float fDamage, D3DXVECTOR3 vHitPosition){
-	if (pTarget != m_pTargetGameObject){
-		m_pTargetGameObject = pTarget;
-	}
-	m_pPrevState = NULL;
+	if (m_fAiInvincibleCool > 1.0f){
+		m_fAiInvincibleCool = 0.0f;
+		if (pTarget != m_pTargetGameObject){
+			m_pTargetGameObject = pTarget;
+		}
+		m_pPrevState = NULL;
 
-	cEffectFireBall* p = new cEffectFireBall;
-	p->Setup();
-	//D3DXVECTOR3 playerPos = this->GetPosition();
-	//playerPos.y = playerPos.y + 1.0f;
-	p->SetPosition(vHitPosition);
-	this->GetEffectDelegate()->AddEffect(p);
-	p->Release();
+		cEffectFireBall* p = new cEffectFireBall;
+		p->Setup();
+		//D3DXVECTOR3 playerPos = this->GetPosition();
+		//playerPos.y = playerPos.y + 1.0f;
+		p->SetPosition(vHitPosition);
+		this->GetEffectDelegate()->AddEffect(p);
+		p->Release();
 
-	// TODO 데미지에 따라 체력 저하
-	m_fHP--;
-	if (m_fHP > 0){
-		this->ChangeState(eAISTATE_ONHIT);
-	}
-	else {
-		this->ChangeState(eAISTATE_DEAD);
+		// TODO 데미지에 따라 체력 저하
+		m_fHP--;
+		if (m_fHP > 0){
+			this->ChangeState(eAISTATE_ONHIT);
+		}
+		else {
+			this->ChangeState(eAISTATE_DEAD);
+		}
 	}
 }
 
