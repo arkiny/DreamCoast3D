@@ -5,6 +5,7 @@
 
 cEffect::cEffect()
 {
+	m_eEffectType = E_EFFECT_NONE;
 	m_pTransform = new cTransform;
 }
 

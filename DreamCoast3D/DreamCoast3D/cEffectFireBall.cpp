@@ -4,6 +4,7 @@
 
 cEffectFireBall::cEffectFireBall()
 {
+	m_eEffectType = E_EFFECT_ONHIT;
 }
 
 
@@ -12,6 +13,8 @@ cEffectFireBall::~cEffectFireBall()
 }
 
 void cEffectFireBall::Setup(){
+	m_vecVertex.clear();
+	m_vecMoveInfo.clear();
 	for (int i = 0; i < 100; ++i)
 	{
 		ST_PC_VERTEX v;
