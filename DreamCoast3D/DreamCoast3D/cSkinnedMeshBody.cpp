@@ -238,7 +238,7 @@ void cSkinnedMeshBody::RenderShadow(ST_BONE* pBone/* = NULL*/){
 
 		D3DXMATRIXA16 matLightProjection; {
 			//D3DXMatrixPerspectiveFovLH(&matLightProjection, D3DX_PI / 4.0f, 1, 1, 3000);
-			D3DXMatrixOrthoLH(&matLightProjection, 400, 400, 1, 3000);
+			D3DXMatrixOrthoLH(&matLightProjection, 350, 350, 1, 3000);
 		}
 
 		D3DXMATRIXA16 matView;
@@ -386,13 +386,14 @@ void cSkinnedMeshBody::Render(ST_BONE* pBone /*= NULL*/)
 
 		D3DXMATRIXA16 matLightView;
 		{
-			D3DXVECTOR3 vLookatPt(0.0f, 0.0f, 0.0f);
+			D3DXVECTOR3 vLookatPt(128.0f, 0.0f, 128.0f);
 			D3DXVECTOR3 vUpVec(0.0f, 1.0f, 0.0f);
 			D3DXMatrixLookAtLH(&matLightView, &pos, &vLookatPt, &vUpVec);
 		}
 
 		D3DXMATRIXA16 matLightProjection; {
-			D3DXMatrixPerspectiveFovLH(&matLightProjection, D3DX_PI / 4.0f, 1, 1, 3000);
+			//D3DXMatrixPerspectiveFovLH(&matLightProjection, D3DX_PI / 4.0f, 1, 1, 3000);
+			D3DXMatrixOrthoLH(&matLightProjection, 350, 350, 1, 3000);
 		}
 
 		//D3DXMATRIXA16 matView;

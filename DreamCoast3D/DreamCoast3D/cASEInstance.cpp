@@ -135,7 +135,7 @@ void cASEInstance::RenderShadow(D3DXMATRIXA16* pMatrix){
 
 	D3DXMATRIXA16 matLightProjection; {
 		//D3DXMatrixPerspectiveFovLH(&matLightProjection, D3DX_PI / 4.0f, 1, 1, 3000);
-		D3DXMatrixOrthoLH(&matLightProjection, 400, 400, 1, 3000);
+		D3DXMatrixOrthoLH(&matLightProjection, 350, 350, 1, 3000);
 	}
 
 	D3DXMATRIXA16 matView;
@@ -184,7 +184,7 @@ void cASEInstance::Render(D3DXMATRIXA16* pMatrix)
 	{
 		D3DLIGHT9 stLight;
 		g_pD3DDevice->GetLight(0, &stLight);
-		D3DXVECTOR3 pos = -100 * stLight.Direction;
+		D3DXVECTOR3 pos = -500 * stLight.Direction;
 		D3DXMATRIXA16 matLightView;
 		{
 			D3DXVECTOR3 vLookatPt(0.0f, 0.0f, 0.0f);
