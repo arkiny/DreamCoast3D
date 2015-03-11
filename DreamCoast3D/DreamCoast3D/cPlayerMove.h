@@ -18,7 +18,5 @@ private:
 	POINT	m_ptPrevMouse;
 	float	m_fAngleX;
 	float	m_fAngleY;
-
-	void MouseUpdate(cGamePlayableObject* pPlayer);
 };
 

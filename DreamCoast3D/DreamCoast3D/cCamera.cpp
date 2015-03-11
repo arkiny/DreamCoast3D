@@ -25,6 +25,10 @@ cCamera::cCamera(void)
 	m_isMove = false;
     m_isAttack = false;
     m_fPassTime = 0.2f;
+
+	m_ptPrevMouse = { -0.f, 0.f };
+
+	m_nCustomAngle = 8;
 }
 
 
@@ -60,7 +64,7 @@ void cCamera::Setup(
 	m_vUp = vUp;
 	m_fAngleX = fAngleX;
 	m_fAngleY = fAngleY;
-	m_fDist = fDist;
+	m_fDist = 13.f;
 	m_fMin = fMin;
 	m_fMax = fMax;
 
@@ -69,18 +73,24 @@ void cCamera::Setup(
 
 void cCamera::Update(float delta)
 {
-	if (g_pControlManager->GetInputInfo(VK_SPACE))
-	{
-		m_isMove = true;
-	}
-	else
+	if (m_pPlayer->m_pCurrentState->GetCurrentStateType() == 0)
 	{
 		m_isMove = false;
 	}
-    if (g_pControlManager->GetInputInfo(VK_CONTROL))
-    {
-        m_isAttack = true;
-    }
+	else
+	{
+		m_isMove = true;
+	}
+
+
+	if (g_pControlManager->GetInputInfo('P'))
+	{
+		m_nCustomAngle++;
+	}
+	if (g_pControlManager->GetInputInfo('O'))
+	{
+		m_nCustomAngle--;
+	}
 
 	m_vLookAt = *m_pvTarget;
 
@@ -106,7 +116,7 @@ void cCamera::Update(float delta)
 	D3DXMatrixRotationY(&matY, -D3DX_PI / 2);
 	D3DXVec3TransformCoord(&m_vEye, &pvTarget, &matY);
 	m_vEye += *m_pvTarget;
-	m_vEye.y = m_pvTarget->y + m_fDist - 7;
+	m_vEye.y = m_pvTarget->y + m_fDist - m_nCustomAngle;
 
 
 	if (g_pControlManager->GetInputInfo(VK_MBUTTON) && m_isRButtonDown == false){
@@ -194,10 +204,9 @@ void cCamera::Update(float delta)
 	}
 	D3DXVECTOR3 dist = m_vEye - m_vLookAt;
 	float fAfterDist = D3DXVec3Length(&dist);
-    if (m_isAttack)
-    {
-        AttackCameraMoving();
-    }
+
+
+	PlayerFrontUpdateOnMove();
 
     D3DXMATRIXA16 matView;
 	D3DXMatrixLookAtLH(&matView, &m_vEye, &m_vLookAt, &m_vUp);
@@ -217,40 +226,6 @@ void cCamera::UpdateAngle(float fAngle)
 
 void cCamera::AttackCameraMoving()
 {
-    //{
-    //    float fAttackTime = 0.2f;
-    //    float nCameraMove = 0.05f;
-    //    float fDist = 0.2f;
-    //    float fShake = 0;
-    //    float fPower = 0;
-    //    float fTimeInterval = 0.1f;
-
-    //    m_fPassTime -= g_pTimer->DeltaTime();
-    //    
-    //    if (m_fPassTime < 0.0f)
-    //    {
-    //        m_isAttack = false;
-    //        m_fPassTime = fAttackTime;
-    //    }
-    //    fShake = m_fPassTime / fTimeInterval;
-
-    //    if (fShake > 1)
-    //    {
-    //        m_vEye.x += nCameraMove;
-    //        m_vLookAt.x += nCameraMove;
-    //        m_vEye.z -= nCameraMove;
-    //        m_vLookAt.z -= nCameraMove;
-
-
-    //    }
-    //    else
-    //    {
-    //        m_vEye.x -= nCameraMove;
-    //        m_vLookAt.x -= nCameraMove;
-    //        m_vEye.z += nCameraMove;
-    //        m_vLookAt.z += nCameraMove;
-    //    }
-    //}
 
 	float nCameraMove = 0.05f;
 	while (m_nRunout < 2)
@@ -272,5 +247,43 @@ void cCamera::AttackCameraMoving()
 			m_vEye.z += 3;
 			m_vLookAt.z += 3;
 		}
+	}
+}
+
+void cCamera::SetPlayerForCamera(cGameObject* pPlayer)
+{
+	m_pPlayer = (cGamePlayableObject*)pPlayer;
+}
+
+void cCamera::PlayerFrontUpdateOnMove()
+{
+	if (m_isMove)
+	{
+		D3DXMATRIXA16 matRotation;
+		D3DXMatrixIdentity(&matRotation);
+
+		POINT ptCurrMouse = { 0, 0 };
+		POINT ptPrevMouse = { 0, 0 };
+
+		ptPrevMouse = m_ptPrevMouse;
+
+		GetCursorPos(&ptCurrMouse);
+		ScreenToClient(g_hWnd, &ptCurrMouse);
+
+		float fDeltaX = (ptCurrMouse.x - ptPrevMouse.x) / 100.f;
+
+		float m_fAngleX = m_pPlayer->GetPlayerAngle();
+		m_fAngleX += fDeltaX;
+		m_pPlayer->SetPlayerAngle(m_fAngleX);
+
+		D3DXMatrixRotationY(&matRotation, m_fAngleX);
+		D3DXVECTOR3 vDir = D3DXVECTOR3(0, 0, -1.f);
+		D3DXVec3TransformNormal(&vDir, &vDir, &matRotation);
+		m_pPlayer->SetFront(vDir);
+		m_pPlayer->SetYangle(m_fAngleX);
+
+		ptPrevMouse = ptCurrMouse;
+
+		m_ptPrevMouse = ptPrevMouse;
 	}
 }

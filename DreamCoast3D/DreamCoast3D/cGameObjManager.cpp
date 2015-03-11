@@ -210,6 +210,13 @@ void cGameObjManager::AdjustYPositionByHeightMap(iMap* pMap){
 	m_iMap = pMap;
 }
 
+void cGameObjManager::SetCameraDeligate(iCameraDeligate* pCamera)
+{
+	m_pCameraDeligate = pCamera;
+	m_pCameraDeligate->SetPlayerForCamera(m_pPlayable);
+}
+
+
 void cGameObjManager::SetEffectDeligate(iEffectManagerDelegate* pEffectDeligate){
 	for (auto p : m_setGameObjects){
 		p->SetEffectDelegate(pEffectDeligate);

@@ -67,5 +67,6 @@ public:
 
 	virtual void Clone(cGameObject** pTarget) override;
 	std::string SaveAsStringInfo() override;
+
 };
 

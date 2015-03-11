@@ -22,8 +22,6 @@ void cPlayerMove::Start(cGamePlayableObject* pPlayer){
 
 void cPlayerMove::Execute(cGamePlayableObject* pPlayer, float fDelta){
 
-	MouseUpdate(pPlayer);
-
 	D3DXVECTOR3 newPos;
 	D3DXVECTOR3 curPos = pPlayer->GetPosition();
 	D3DXVECTOR3 addVec = (pPlayer->GetFront());
@@ -85,29 +83,32 @@ void cPlayerMove::Execute(cGamePlayableObject* pPlayer, float fDelta){
 
 		}
 
-
 		if (g_pControlManager->GetInputInfo('A')){
 			D3DXMATRIXA16 matR;
 			float angle = pPlayer->GetPlayerAngle();
-			angle -= fDelta* 4.0f;
-			pPlayer->SetPlayerAngle(angle);
+			angle -= D3DX_PI / 2;
 			D3DXMatrixRotationY(&matR, angle);
 			D3DXVECTOR3 vDir = D3DXVECTOR3(0, 0, -1.f);
 			D3DXVec3TransformNormal(&vDir, &vDir, &matR);
-			pPlayer->SetFront(vDir);
-			pPlayer->SetYangle(angle);
+
+			D3DXVECTOR3 curPos = pPlayer->GetPosition();
+			D3DXVECTOR3 newPos = curPos + vDir*fDelta*pPlayer->GetMoveSpeed();
+			pPlayer->SetYangle(angle + D3DX_PI / 4);
+			pPlayer->SetPosition(newPos);
 		}
 
 		if (g_pControlManager->GetInputInfo('D')){
 			D3DXMATRIXA16 matR;
 			float angle = pPlayer->GetPlayerAngle();
-			angle += fDelta* 4.0f;
-			pPlayer->SetPlayerAngle(angle);
+			angle += D3DX_PI / 2;
 			D3DXMatrixRotationY(&matR, angle);
 			D3DXVECTOR3 vDir = D3DXVECTOR3(0, 0, -1.f);
 			D3DXVec3TransformNormal(&vDir, &vDir, &matR);
-			pPlayer->SetFront(vDir);
-			pPlayer->SetYangle(angle);
+
+			D3DXVECTOR3 curPos = pPlayer->GetPosition();
+			D3DXVECTOR3 newPos = curPos + vDir*fDelta*pPlayer->GetMoveSpeed();
+			pPlayer->SetPosition(newPos);
+			pPlayer->SetYangle(angle - D3DX_PI / 4);
 		}
 
 		if (g_pControlManager->GetInputInfo(VK_LBUTTON)){
@@ -122,64 +123,4 @@ void cPlayerMove::Execute(cGamePlayableObject* pPlayer, float fDelta){
 
 void cPlayerMove::Exit(cGamePlayableObject* pPlayer){
 
-}
-
-void cPlayerMove::MouseUpdate(cGamePlayableObject* pPlayer)
-{
-	if (g_pControlManager->GetInputInfo(VK_RBUTTON))
-	{
-		m_isMouseMove = true;
-	}
-	else
-	{
-		m_isMouseMove = false;
-	}
-	if (g_pControlManager->GetInputInfo(VK_SPACE))
-	{
-		D3DXMATRIXA16 matRotation;
-		D3DXMatrixIdentity(&matRotation);
-
-		POINT ptCurrMouse;
-		GetCursorPos(&ptCurrMouse);
-		ScreenToClient(g_hWnd, &ptCurrMouse);
-
-		float fDeltaX = (ptCurrMouse.x - m_ptPrevMouse.x) / 100.f;
-
-		m_fAngleX = pPlayer->GetPlayerAngle();
-		m_fAngleX += fDeltaX;
-		pPlayer->SetPlayerAngle(m_fAngleX);
-
-		D3DXMatrixRotationY(&matRotation, m_fAngleX);
-		D3DXVECTOR3 vDir = D3DXVECTOR3(0, 0, -1.f);
-		D3DXVec3TransformNormal(&vDir, &vDir, &matRotation);
-		pPlayer->SetFront(vDir);
-		pPlayer->SetYangle(m_fAngleX);
-
-
-		//RECT rectClient, rectMouseTrap;
-		//GetClientRect(g_hWnd, &rectClient);
-		//rectMouseTrap.right = (rectClient.right - rectClient.left) / 2 + 10;
-		//rectMouseTrap.left = (rectClient.right - rectClient.left) / 2 - 10;
-		//rectMouseTrap.top = (rectClient.bottom - rectClient.top) / 2 - 10;
-		//rectMouseTrap.bottom = (rectClient.bottom - rectClient.top) / 2 + 10;
-
-
-		//POINT p;
-		//GetCursorPos(&p);
-		//ScreenToClient(g_hWnd, &p);
-		//POINT lefttop = { rectMouseTrap.left, rectMouseTrap.top };
-		//POINT rightbottom = { rectMouseTrap.right, rectMouseTrap.bottom };
-		//ClientToScreen(g_hWnd, &lefttop);
-		//ClientToScreen(g_hWnd, &rightbottom);
-		//if (p.x > rightbottom.x || p.x < lefttop.x){
-		//	POINT target = { 640, 360 };
-		//	ClientToScreen(g_hWnd, &target);
-		//	SetCursorPos(target.x, target.y);
-		//}
-		//POINT target = { 640, 360 };
-		//ClientToScreen(g_hWnd, &target);
-		//SetCursorPos(target.x, target.y);
-
-		m_ptPrevMouse = ptCurrMouse;
-	}
 }

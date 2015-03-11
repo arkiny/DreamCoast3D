@@ -50,7 +50,8 @@ public:
 	void SetCurrentTileSystem(iGridTileSystem* pGridSystem);
 	void SetEffectDeligate(iEffectManagerDelegate* pEffectDeligate);
 
-	void SetCameraDeligate(iCameraDeligate* pCamera){ m_pCameraDeligate = pCamera; }
+	void SetCameraDeligate(iCameraDeligate* pCamera);
+
 
 	// MS
 	void SetEventDeligate(iGameEventDelegate* pEventDeligate){ m_pEventDeligate = pEventDeligate; }
