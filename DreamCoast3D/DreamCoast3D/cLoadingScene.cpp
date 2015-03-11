@@ -34,7 +34,7 @@ D3DXVECTOR4				gWorldCameraPosition(0.0f, 0.0f, -200.0f, 1.0f);
 
 // 물체의 색상
 D3DXVECTOR4				gTorusColor(1, 1, 0, 1);
-D3DXVECTOR4				gDiscColor(0, 1, 1, 1);
+D3DXVECTOR4				gDiscColor(0.8, 0.8, 0.8, 1);
 
 // 그림자맵 렌더타깃
 LPDIRECT3DTEXTURE9		gpShadowRenderTarget = NULL;
@@ -120,7 +120,7 @@ void cLoadingScene::Setup(std::string sNextScene){
 	gpApplyShadowShader = LoadShader("../Resources/Shader/ApplyShadow.fx");
 	gpCreateShadowShader = LoadShader("../Resources/Shader/CreateShadow.fx");
 	// 모델 로딩
-	gpTorus = LoadModel("../Resources/Shader/torus.x");
+	gpTorus = LoadModel("../Resources/Char/Dwarf/Dwarf.x");
 	gpDisc = LoadModel("../Resources/Shader/disc.x");
 
 	D3DXCreateFont(g_pD3DDevice,		//D3D Device
@@ -196,8 +196,11 @@ void cLoadingScene::Render(){
 		{
 			gRotationY -= 2 * PI;
 		}
-
-		D3DXMatrixRotationY(&matTorusWorld, gRotationY);
+		D3DXMATRIXA16 matScale, matRot, matTrans;
+		D3DXMatrixScaling(&matScale, 50, 50, 50);
+		D3DXMatrixRotationY(&matRot, gRotationY);
+		D3DXMatrixTranslation(&matTrans, 0, -70, 0);
+		matTorusWorld = matScale*matRot*matTrans;
 	}
 
 	// 디스크의 월드행렬을 만든다.
@@ -266,6 +269,7 @@ void cLoadingScene::Render(){
 	// 하드웨어 백버퍼/깊이버퍼를 사용한다.
 	g_pD3DDevice->SetRenderTarget(0, pHWBackBuffer);
 	g_pD3DDevice->SetDepthStencilSurface(pHWDepthStencilBuffer);
+	//g_pD3DDevice->Clear(0, NULL, (D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER), D3DCOLOR_XRGB(80, 80, 80), 1.0f, 0);
 
 	pHWBackBuffer->Release();
 	pHWBackBuffer = NULL;
@@ -310,7 +314,8 @@ void cLoadingScene::Render(){
 
 	std::stringstream s;
 	s.precision(2);
-	s << std::fixed << m_fLoadingTime << "sec" << std::endl;
+	s << "Loading..." << std::endl 
+		<< "Loading Time: " << std::fixed << m_fLoadingTime << "sec" << std::endl;
 	m_pFont->DrawText(NULL,				 //pSprite
 		s.str().c_str(),	 //pString
 		-1,					//Count

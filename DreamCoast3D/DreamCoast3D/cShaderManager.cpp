@@ -80,19 +80,15 @@ void cShaderManager::Destroy(){
 
 	// 셰이더 메모리 처리는 나중에....
 	// 먼가 알수 없는 이슈가 있는거 같다.
+	// 디버그 모드일시 무조건 에러남
 	for (auto p : m_mapShader){
 		if (p.second){
 			p.second->EndPass();
 			p.second->End();
 			SAFE_RELEASE(p.second);
-			//m_mapShader.erase(p.first);
 		}
 	}
 
-	//for each (auto p in m_mapShader)
-	//{
-	//	SAFE_RELEASE(p.second);
-	//}
 	m_mapShader.clear();
 
 	SAFE_RELEASE(m_pShadowCreateShader);

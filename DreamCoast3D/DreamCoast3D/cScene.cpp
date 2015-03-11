@@ -66,6 +66,7 @@ cScene::~cScene()
 	if (m_pGameEventManager)
 	{
 		m_pGameEventManager->Destory();
+		m_pGameEventManager = NULL;
 	}
 
 	//SAFE_RELEASE(gpShadowRenderTarget );
