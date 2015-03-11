@@ -34,6 +34,8 @@ void cPlayerIdle::Execute(cGamePlayableObject* pPlayer, float fDelta){
 	}
 	// do nothing
 
+	// Gravity Force
+
 	D3DXVECTOR3 vFront(0.f, 0.f, 0.f);
 	D3DXVECTOR3 vGravity(0.f, 0.f, 0.f);
 	D3DXVECTOR3 vCurrentPos(0.f, 0.f, 0.f);
@@ -50,14 +52,14 @@ void cPlayerIdle::Execute(cGamePlayableObject* pPlayer, float fDelta){
 
 	if (pPlayer->GetGameObjDeligate()->CalGradient(pPlayer))
 	{
-		vGravity.y = -9.8;
+		vGravity.y = -9.8f;
 		vFront = -pPlayer->GetFront();
 		vGravity = (vGravity + vFront)*g_pTimer->DeltaTime();
 	}
 
 	if (pPlayer->GetGameObjDeligate()->CalGradientMinus(pPlayer))
 	{
-		vGravity.y = -9.8;
+		vGravity.y = -9.8f;
 		vFront = pPlayer->GetFront();
 		vGravity = (vGravity + vFront)*g_pTimer->DeltaTime();
 	}
