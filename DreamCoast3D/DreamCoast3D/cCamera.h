@@ -70,5 +70,7 @@ public:
 	void MouseTrap();
 
 	int m_nCustomAngle;
+
+	POINT ptSave;
 };
 

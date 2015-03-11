@@ -98,6 +98,7 @@ void cSceneManager::ChangeScene(int nNextSceneIndex){
 	m_pCurrentScene = new cLoadingScene;
 	m_pCurrentScene->Setup(m_vecSceneInfoFilePath[nNextSceneIndex]);
 
+
 	// 리소스 로딩
 	g_pShaderManager->CreateShadowTargetAndDepthSurface();
 	m_pCurrentScene->SetDelegate(this);
