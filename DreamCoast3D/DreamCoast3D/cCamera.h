@@ -66,7 +66,9 @@ public:
 
 	void SetPlayerForCamera(cGameObject* pPlayer);
 
-	void PlayerFrontUpdateOnMove();
+	void PlayerFrontUpdateOnMove(float fSensitive);
+	void MouseMove(float fSensitive);
+
 	void MouseTrap();
 
 	int m_nCustomAngle;

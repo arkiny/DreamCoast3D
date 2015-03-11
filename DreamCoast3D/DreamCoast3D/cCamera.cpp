@@ -131,39 +131,19 @@ void cCamera::Update(float delta)
 		m_isRButtonDown = false;
 	}
 
-
-	if (g_pControlManager->GetInputInfo(VK_MBUTTON) && m_isRButtonDown == true)
+	if (m_isMove == false)
 	{
-		POINT ptCurrMouse = { 0, 0 };
-		GetCursorPos(&ptCurrMouse);
-		ScreenToClient(g_hWnd, &ptCurrMouse);
-
-		ptSave.x = 640 - ptCurrMouse.x;
-		ptSave.y = 360 - ptCurrMouse.y;
-
-		m_ptPrevMouse.x = 640 + ptSave.x;
-		m_ptPrevMouse.y = 360 + ptSave.y;
-
-		float fDeltaX = (ptCurrMouse.x - m_ptPrevMouse.x) / 500.f;
-		float fDeltaY = (ptCurrMouse.y - m_ptPrevMouse.y) / 500.f;
-
-		m_fAngleX += fDeltaY;
-		m_fAngleY += fDeltaX;
-
-
-		if (m_fAngleX >= D3DX_PI / 2.f - 0.0001f)
-			m_fAngleX = D3DX_PI / 2.f - 0.0001f;
-
-		if (m_fAngleX <= -D3DX_PI / 2.f + 0.0001f)
-			m_fAngleX = -D3DX_PI / 2.f + 0.0001f;
-
-		//m_ptPrevMouse = ptCurrMouse;
-
+		MouseMove(2000.f);
+		MouseTrap();
+	}
+	else if (g_pControlManager->GetInputInfo(VK_MBUTTON) && m_isRButtonDown == true)
+	{
+		MouseMove(1000.f);
 		MouseTrap();
 	}
 	else
 	{
-		PlayerFrontUpdateOnMove();
+		PlayerFrontUpdateOnMove(1000.f);
 		MouseTrap();
 	}
 
@@ -278,7 +258,7 @@ void cCamera::SetPlayerForCamera(cGameObject* pPlayer)
 	m_pPlayer = (cGamePlayableObject*)pPlayer;
 }
 
-void cCamera::PlayerFrontUpdateOnMove()
+void cCamera::PlayerFrontUpdateOnMove(float fSensitive)
 {
 
 	if (m_isMove)
@@ -292,7 +272,7 @@ void cCamera::PlayerFrontUpdateOnMove()
 		GetCursorPos(&ptCurrMouse);
 		ScreenToClient(g_hWnd, &ptCurrMouse);
 
-		float fDeltaX = (ptCurrMouse.x - ptPrevMouse.x) / 500.f;
+		float fDeltaX = (ptCurrMouse.x - ptPrevMouse.x) / fSensitive;
 
 		float m_fAngleX = m_pPlayer->GetPlayerAngle();
 		m_fAngleX += fDeltaX;
@@ -338,4 +318,32 @@ void cCamera::MouseTrap()
 	POINT target = { 640, 360 };
 	ClientToScreen(g_hWnd, &target);
 	SetCursorPos(target.x, target.y);
+}
+
+void cCamera::MouseMove(float fSensitive)
+{
+	POINT ptCurrMouse = { 0, 0 };
+	GetCursorPos(&ptCurrMouse);
+	ScreenToClient(g_hWnd, &ptCurrMouse);
+
+	ptSave.x = 640 - ptCurrMouse.x;
+	ptSave.y = 360 - ptCurrMouse.y;
+
+	m_ptPrevMouse.x = 640 + ptSave.x;
+	m_ptPrevMouse.y = 360 + ptSave.y;
+
+	float fDeltaX = (ptCurrMouse.x - m_ptPrevMouse.x) / fSensitive;
+	float fDeltaY = (ptCurrMouse.y - m_ptPrevMouse.y) / fSensitive;
+
+	m_fAngleX += fDeltaY;
+	m_fAngleY += fDeltaX;
+
+
+	if (m_fAngleX >= D3DX_PI / 2.f - 0.0001f)
+		m_fAngleX = D3DX_PI / 2.f - 0.0001f;
+
+	if (m_fAngleX <= -D3DX_PI / 2.f + 0.0001f)
+		m_fAngleX = -D3DX_PI / 2.f + 0.0001f;
+
+	//m_ptPrevMouse = ptCurrMouse;
 }
