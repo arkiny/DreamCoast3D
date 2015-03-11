@@ -13,10 +13,10 @@ public:
 	int GetCurrentStateType() { return 1; }
 
 	// MS
-private:
-	bool	m_isMouseMove;
-	POINT	m_ptPrevMouse;
-	float	m_fAngleX;
-	float	m_fAngleY;
+	void MoveFront(cGamePlayableObject* pPlayer, float fDelta);
+	void MoveBack(cGamePlayableObject* pPlayer, float fDelta);
+	void MoveRight(cGamePlayableObject* pPlayer, float fDelta);
+	void MoveLeft(cGamePlayableObject* pPlayer, float fDelta);
+
 };
 

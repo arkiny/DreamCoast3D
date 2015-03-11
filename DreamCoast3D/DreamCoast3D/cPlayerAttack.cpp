@@ -24,25 +24,37 @@ void cPlayerAttack::Execute(cGamePlayableObject* pPlayer, float fDelta){
 	if (g_pControlManager->GetInputInfo('A')){
 		D3DXMATRIXA16 matR;
 		float angle = pPlayer->GetPlayerAngle();
-		angle -= fDelta* 4.0f;
-		pPlayer->SetPlayerAngle(angle);
+		angle -= D3DX_PI / 2;
 		D3DXMatrixRotationY(&matR, angle);
 		D3DXVECTOR3 vDir = D3DXVECTOR3(0, 0, -1.f);
 		D3DXVec3TransformNormal(&vDir, &vDir, &matR);
-		pPlayer->SetFront(vDir);
-		pPlayer->SetYangle(angle);
+
+		D3DXVECTOR3 curPos = pPlayer->GetPosition();
+		D3DXVECTOR3 newPos(0.f, 0.f, 0.f);
+
+
+		newPos = curPos + vDir*fDelta*pPlayer->GetMoveSpeed() / 2.f;
+
+
+		pPlayer->SetPosition(newPos);
 	}
 
 	if (g_pControlManager->GetInputInfo('D')){
 		D3DXMATRIXA16 matR;
 		float angle = pPlayer->GetPlayerAngle();
-		angle += fDelta* 4.0f;
-		pPlayer->SetPlayerAngle(angle);
+		angle += D3DX_PI / 2;
 		D3DXMatrixRotationY(&matR, angle);
 		D3DXVECTOR3 vDir = D3DXVECTOR3(0, 0, -1.f);
 		D3DXVec3TransformNormal(&vDir, &vDir, &matR);
-		pPlayer->SetFront(vDir);
-		pPlayer->SetYangle(angle);
+
+		D3DXVECTOR3 curPos = pPlayer->GetPosition();
+		D3DXVECTOR3 newPos(0.f, 0.f, 0.f);
+
+
+		newPos = curPos + vDir*fDelta*pPlayer->GetMoveSpeed() / 2.f;
+
+
+		pPlayer->SetPosition(newPos);
 	}
 
 	D3DXVECTOR3 newPos;
@@ -58,7 +70,7 @@ void cPlayerAttack::Execute(cGamePlayableObject* pPlayer, float fDelta){
 
 	if (g_pControlManager->GetInputInfo('S')){
 		D3DXVECTOR3 curPos = pPlayer->GetPosition();
-		D3DXVECTOR3 addVec = (pPlayer->GetFront()*fDelta*pPlayer->GetMoveSpeed());
+		D3DXVECTOR3 addVec = (pPlayer->GetFront()*fDelta*pPlayer->GetMoveSpeed()/2.f);
 		newPos = curPos - addVec;
 		//if (/*pPlayer->GetGridTileSystem()->GetObjectOnGrid((int)curPos.x, (int)curPos.z).size() == 1
 		//	&&*/ pPlayer->GetGameObjDeligate()->isGameObjectCollided(pPlayer) == false){

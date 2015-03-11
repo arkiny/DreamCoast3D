@@ -92,6 +92,8 @@ void cCamera::Update(float delta)
 		m_nCustomAngle--;
 	}
 
+
+
 	m_vLookAt = *m_pvTarget;
 
 	D3DXVECTOR3 vec(0.f, 0.f, 0.f);
@@ -145,8 +147,13 @@ void cCamera::Update(float delta)
 		if (m_fAngleX <= -D3DX_PI / 2.f + 0.0001f)
 			m_fAngleX = -D3DX_PI / 2.f + 0.0001f;
 
-		m_ptPrevMouse = ptCurrMouse;
+		//m_ptPrevMouse = ptCurrMouse;
+
 	}
+
+	PlayerFrontUpdateOnMove();
+
+	MouseTrap();
 
 	if (m_isRButtonDown == false && m_isMove == true)
 	{
@@ -165,6 +172,8 @@ void cCamera::Update(float delta)
 		m_fAngleY = m_fFixedAngleX + D3DX_PI / 2;
 	}
 
+
+
 	float wheelMove = g_pControlManager->GetWheelMoveDist();
 	if (wheelMove != 0.0f)
 	{
@@ -175,6 +184,8 @@ void cCamera::Update(float delta)
 
 			m_fDist = m_fMax;
 	}
+
+
 	
 	m_vEye = D3DXVECTOR3(0, 0.0f, -m_fDist);
 
@@ -186,6 +197,8 @@ void cCamera::Update(float delta)
 
 	D3DXVec3TransformCoord(&m_vEye, &m_vEye, &matRotX);
 	D3DXVec3TransformCoord(&m_vEye, &m_vEye, &matRotY);
+
+
 
 	if (m_pvTarget)
 	{
@@ -206,7 +219,8 @@ void cCamera::Update(float delta)
 	float fAfterDist = D3DXVec3Length(&dist);
 
 
-	PlayerFrontUpdateOnMove();
+
+
 
     D3DXMATRIXA16 matView;
 	D3DXMatrixLookAtLH(&matView, &m_vEye, &m_vLookAt, &m_vUp);
@@ -282,8 +296,40 @@ void cCamera::PlayerFrontUpdateOnMove()
 		m_pPlayer->SetFront(vDir);
 		m_pPlayer->SetYangle(m_fAngleX);
 
-		ptPrevMouse = ptCurrMouse;
+		//ptPrevMouse = ptCurrMouse;
 
 		m_ptPrevMouse = ptPrevMouse;
 	}
+}
+
+void cCamera::MouseTrap()
+{
+	RECT rectClient, rectMouseTrap;
+
+	rectClient = { 0, 0, 0, 0 };
+	rectMouseTrap = { 0, 0, 0, 0 };
+
+	GetClientRect(g_hWnd, &rectClient);
+	rectMouseTrap.right = (rectClient.right - rectClient.left) / 2 + 10;
+	rectMouseTrap.left = (rectClient.right - rectClient.left) / 2 - 10;
+	rectMouseTrap.top = (rectClient.bottom - rectClient.top) / 2 - 10;
+	rectMouseTrap.bottom = (rectClient.bottom - rectClient.top) / 2 + 10;
+
+	POINT p;
+	p = { 0, 0 };
+
+	GetCursorPos(&p);
+	ScreenToClient(g_hWnd, &p);
+	POINT lefttop = { rectMouseTrap.left, rectMouseTrap.top };
+	POINT rightbottom = { rectMouseTrap.right, rectMouseTrap.bottom };
+	ClientToScreen(g_hWnd, &lefttop);
+	ClientToScreen(g_hWnd, &rightbottom);
+	if (p.x > rightbottom.x || p.x < lefttop.x){
+		POINT target = { 640, 360 };
+		ClientToScreen(g_hWnd, &target);
+		SetCursorPos(target.x, target.y);
+	}
+	POINT target = { 640, 360 };
+	ClientToScreen(g_hWnd, &target);
+	SetCursorPos(target.x, target.y);
 }
