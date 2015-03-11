@@ -89,10 +89,10 @@ void cShaderManager::Destroy(){
 		}
 	}
 
-	for each (auto p in m_mapShader)
-	{
-		SAFE_RELEASE(p.second);
-	}
+	//for each (auto p in m_mapShader)
+	//{
+	//	SAFE_RELEASE(p.second);
+	//}
 	m_mapShader.clear();
 
 	SAFE_RELEASE(m_pShadowCreateShader);
