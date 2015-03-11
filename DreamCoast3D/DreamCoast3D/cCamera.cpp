@@ -78,11 +78,13 @@ void cCamera::Update(float delta)
 {
 	if (g_pControlManager->GetInputInfo('T'))
 	{
+		//ShowCursor(true);
 		m_isTrap = false;
 	}
 	else
 	{
 		m_isTrap = true;
+		//ShowCursor(false);
 	}
 
 	if (m_pPlayer->m_pCurrentState->GetCurrentStateType() == 0)
