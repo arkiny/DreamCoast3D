@@ -74,5 +74,7 @@ public:
 	int m_nCustomAngle;
 
 	POINT ptSave;
+
+	bool m_isTrap;
 };
 

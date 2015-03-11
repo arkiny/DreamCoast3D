@@ -30,6 +30,8 @@ cCamera::cCamera(void)
 
 	m_nCustomAngle = 8;
 	ptSave = { 0, 0 };
+
+	m_isTrap = false;
 }
 
 
@@ -74,6 +76,15 @@ void cCamera::Setup(
 
 void cCamera::Update(float delta)
 {
+	if (g_pControlManager->GetInputInfo('T'))
+	{
+		m_isTrap = false;
+	}
+	else
+	{
+		m_isTrap = true;
+	}
+
 	if (m_pPlayer->m_pCurrentState->GetCurrentStateType() == 0)
 	{
 		m_isMove = false;
@@ -92,8 +103,6 @@ void cCamera::Update(float delta)
 	{
 		m_nCustomAngle--;
 	}
-
-
 
 	m_vLookAt = *m_pvTarget;
 
@@ -120,31 +129,34 @@ void cCamera::Update(float delta)
 	D3DXVec3TransformCoord(&m_vEye, &pvTarget, &matY);
 	m_vEye += *m_pvTarget;
 	m_vEye.y = m_pvTarget->y + m_fDist - m_nCustomAngle;
+	
 
-
-	if (g_pControlManager->GetInputInfo(VK_MBUTTON) && m_isRButtonDown == false){
-		m_ptPrevMouse = g_pControlManager->GetCurrentCursorPosition();
-		m_isRButtonDown = true;
-	}
-
-	if (g_pControlManager->GetInputInfo(VK_MBUTTON) == false && m_isRButtonDown == true){
-		m_isRButtonDown = false;
-	}
-
-	if (m_isMove == false)
+	if (m_isTrap == true)
 	{
-		MouseMove(2000.f);
-		MouseTrap();
-	}
-	else if (g_pControlManager->GetInputInfo(VK_MBUTTON) && m_isRButtonDown == true)
-	{
-		MouseMove(1000.f);
-		MouseTrap();
-	}
-	else
-	{
-		PlayerFrontUpdateOnMove(1000.f);
-		MouseTrap();
+		if (g_pControlManager->GetInputInfo(VK_MBUTTON) && m_isRButtonDown == false){
+			m_ptPrevMouse = g_pControlManager->GetCurrentCursorPosition();
+			m_isRButtonDown = true;
+		}
+
+		if (g_pControlManager->GetInputInfo(VK_MBUTTON) == false && m_isRButtonDown == true){
+			m_isRButtonDown = false;
+		}
+
+		if (m_isMove == false)
+		{
+			MouseMove(2000.f);
+			MouseTrap();
+		}
+		else if (g_pControlManager->GetInputInfo(VK_MBUTTON) && m_isRButtonDown == true)
+		{
+			MouseMove(1000.f);
+			MouseTrap();
+		}
+		else
+		{
+			PlayerFrontUpdateOnMove(1000.f);
+			MouseTrap();
+		}
 	}
 
 
@@ -179,7 +191,7 @@ void cCamera::Update(float delta)
 	}
 
 
-	
+
 	m_vEye = D3DXVECTOR3(0, 0.0f, -m_fDist);
 
 	D3DXMATRIXA16 matTrans, transZ, matRotX, matRotY;
@@ -211,10 +223,9 @@ void cCamera::Update(float delta)
 	D3DXVECTOR3 dist = m_vEye - m_vLookAt;
 	float fAfterDist = D3DXVec3Length(&dist);
 
-    D3DXMATRIXA16 matView;
+	D3DXMATRIXA16 matView;
 	D3DXMatrixLookAtLH(&matView, &m_vEye, &m_vLookAt, &m_vUp);
 	g_pD3DDevice->SetTransform(D3DTS_VIEW, &matView);
-
 }
 
 void cCamera::SetTarget(D3DXVECTOR3* pvTarget)
