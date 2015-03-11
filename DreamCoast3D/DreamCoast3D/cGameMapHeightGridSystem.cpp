@@ -14,7 +14,7 @@ cGameMapHeightGridSystem::~cGameMapHeightGridSystem()
 
 void cGameMapHeightGridSystem::Setup(){
 	cGameObject::Setup();
-
+	
 	m_pGridSystem = new cGridSystem;
 	m_pGridSystem->Setup(m_nTileN);
 }

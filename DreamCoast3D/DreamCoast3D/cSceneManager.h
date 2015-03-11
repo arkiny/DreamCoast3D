@@ -11,6 +11,9 @@ private:
 	cScene*						m_pCurrentScene;
 	bool						m_bIsLoading = false;
 
+	int							m_nNextSceneIndex = -1;
+	bool						m_bIsChangeSceneCall = false;
+
 public:
 	cSceneManager();
 	virtual ~cSceneManager();
