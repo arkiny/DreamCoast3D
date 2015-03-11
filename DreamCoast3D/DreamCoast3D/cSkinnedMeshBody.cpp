@@ -55,7 +55,7 @@ cSkinnedMeshBody::cSkinnedMeshBody(std::string sFolder, std::string sFile,
 	// 차라리 새로 만들려면 기존에 것을 놔둔채 새로 상속받아서 작업하고 치환해 주는 작업을 거치던가 해야함.
 
 	m_stUpdateBoundingSphere.m_vCenter = m_mapDebugOriginSphereBody[std::string("FxCenter")].m_vCenter;
-	m_stUpdateBoundingSphere.m_fRadius = m_mapDebugOriginSphereBody[std::string("FxCenter")].m_fRadius;
+	m_stUpdateBoundingSphere.m_fRadius = m_mapDebugOriginSphereBody[std::string("FxCenter")].m_fRadius / 2;
 
 	SAFE_RELEASE(m_pDebugSphereBody);
 	//반지름을 1로 해두고 확장해서 렌더 : 민우

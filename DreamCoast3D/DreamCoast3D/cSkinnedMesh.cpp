@@ -100,6 +100,8 @@ cSkinnedMesh::cSkinnedMesh()
 	, m_pDebugSphereBody(NULL)
 	, m_pDebugDetailSphereBody(nullptr)
 {
+	m_sSkinnedFile = "";
+	m_sSkinnedFolder = "";
 }
 
 cSkinnedMesh::~cSkinnedMesh(void)

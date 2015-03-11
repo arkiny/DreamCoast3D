@@ -43,7 +43,8 @@ protected:
 	iAIState*				m_pCurrentState;
 	iAIState*				m_pPrevState;
 	cGameObject*			m_pTargetGameObject;
-
+	float					m_fAiInvincibleCool = 0.0f;
+	
 	std::map<cGameObject*, float> m_mapAggromap;
 
 	//SYNTHESIZE(cGameObject*, m_pTargetGameObject, TargetObject);

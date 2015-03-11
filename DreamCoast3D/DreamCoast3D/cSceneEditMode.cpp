@@ -355,34 +355,39 @@ void cSceneEditMode::AddStaticGameObjectToPreset(cGameObject* pGameObject){
 }
 
 void cSceneEditMode::BindingNextActionObject(){
-	if (m_pCurrentBindingObject == NULL 
-		|| m_pCurrentBindingObject->GetGameObjectType() != m_pCurrentBindingObject->E_MOP){
-		m_pCurrentBindingObject = m_vecActionGameObjectPreset[m_nCurrentBindingActionIndex];
-	}
-	else{
-		if (m_nCurrentBindingActionIndex == m_vecActionGameObjectPreset.size()-1){
-			m_nCurrentBindingActionIndex = 0;
+	if (!m_vecActionGameObjectPreset.empty()){
+
+		if (m_pCurrentBindingObject == NULL
+			|| m_pCurrentBindingObject->GetGameObjectType() != m_pCurrentBindingObject->E_MOP){
+			m_pCurrentBindingObject = m_vecActionGameObjectPreset[m_nCurrentBindingActionIndex];
 		}
-		else {
-			m_nCurrentBindingActionIndex++;
+		else{
+			if (m_nCurrentBindingActionIndex == m_vecActionGameObjectPreset.size() - 1){
+				m_nCurrentBindingActionIndex = 0;
+			}
+			else {
+				m_nCurrentBindingActionIndex++;
+			}
+			m_pCurrentBindingObject = m_vecActionGameObjectPreset[m_nCurrentBindingActionIndex];
 		}
-		m_pCurrentBindingObject = m_vecActionGameObjectPreset[m_nCurrentBindingActionIndex];
 	}
 }
 
 void cSceneEditMode::BindingPrevActionObject(){
-	if (m_pCurrentBindingObject == NULL 
-		|| m_pCurrentBindingObject->GetGameObjectType() != m_pCurrentBindingObject->E_MOP){
-		m_pCurrentBindingObject = m_vecActionGameObjectPreset[m_nCurrentBindingActionIndex];
-	}
-	else{
-		if (m_nCurrentBindingActionIndex == 0){
-			m_nCurrentBindingActionIndex = m_vecActionGameObjectPreset.size() - 1;
+	if (!m_vecActionGameObjectPreset.empty()){
+		if (m_pCurrentBindingObject == NULL
+			|| m_pCurrentBindingObject->GetGameObjectType() != m_pCurrentBindingObject->E_MOP){
+			m_pCurrentBindingObject = m_vecActionGameObjectPreset[m_nCurrentBindingActionIndex];
 		}
-		else {
-			m_nCurrentBindingActionIndex--;
+		else{
+			if (m_nCurrentBindingActionIndex == 0){
+				m_nCurrentBindingActionIndex = m_vecActionGameObjectPreset.size() - 1;
+			}
+			else {
+				m_nCurrentBindingActionIndex--;
+			}
+			m_pCurrentBindingObject = m_vecActionGameObjectPreset[m_nCurrentBindingActionIndex];
 		}
-		m_pCurrentBindingObject = m_vecActionGameObjectPreset[m_nCurrentBindingActionIndex];
 	}
 }
 
@@ -450,65 +455,75 @@ void cSceneEditMode::AddCurrentObjectToSaveStack(cGameObject* pToBeAdded){
 }
 
 void cSceneEditMode::BindingNextPlayableObject(){
-	if (m_pCurrentBindingObject == NULL 
-		|| m_pCurrentBindingObject->GetGameObjectType() != m_pCurrentBindingObject->E_PLAYABLE){
-		m_pCurrentBindingObject = m_vecGamePlayableObjectPreset[m_nCurrentBindingPlayerIndex];
-	}
-	else {
-		if (m_nCurrentBindingPlayerIndex == m_vecGamePlayableObjectPreset.size() - 1){
-			m_nCurrentBindingPlayerIndex = 0;
+	if (!m_vecGamePlayableObjectPreset.empty()){
+		if (m_pCurrentBindingObject == NULL
+			|| m_pCurrentBindingObject->GetGameObjectType() != m_pCurrentBindingObject->E_PLAYABLE){
+			m_pCurrentBindingObject = m_vecGamePlayableObjectPreset[m_nCurrentBindingPlayerIndex];
 		}
 		else {
-			m_nCurrentBindingActionIndex++;
+			if (m_nCurrentBindingPlayerIndex == m_vecGamePlayableObjectPreset.size() - 1){
+				m_nCurrentBindingPlayerIndex = 0;
+			}
+			else {
+				m_nCurrentBindingActionIndex++;
+			}
+			m_pCurrentBindingObject = m_vecActionGameObjectPreset[m_nCurrentBindingActionIndex];
 		}
-		m_pCurrentBindingObject = m_vecActionGameObjectPreset[m_nCurrentBindingActionIndex];
 	}
 }
 
 void cSceneEditMode::BindingPrevPlayableObject(){
-	if (m_pCurrentBindingObject == NULL || m_pCurrentBindingObject->GetGameObjectType() != m_pCurrentBindingObject->E_PLAYABLE){
-		m_pCurrentBindingObject = m_vecGamePlayableObjectPreset[m_nCurrentBindingPlayerIndex];
-	}
-	else {
-		if (m_nCurrentBindingPlayerIndex == 0){
-			m_nCurrentBindingPlayerIndex = m_vecGamePlayableObjectPreset.size() - 1;
+	if (!m_vecGamePlayableObjectPreset.empty()){
+
+		if (m_pCurrentBindingObject == NULL || m_pCurrentBindingObject->GetGameObjectType() != m_pCurrentBindingObject->E_PLAYABLE){
+			m_pCurrentBindingObject = m_vecGamePlayableObjectPreset[m_nCurrentBindingPlayerIndex];
 		}
 		else {
-			m_nCurrentBindingActionIndex--;
+			if (m_nCurrentBindingPlayerIndex == 0){
+				m_nCurrentBindingPlayerIndex = m_vecGamePlayableObjectPreset.size() - 1;
+			}
+			else {
+				m_nCurrentBindingActionIndex--;
+			}
+			m_pCurrentBindingObject = m_vecActionGameObjectPreset[m_nCurrentBindingActionIndex];
 		}
-		m_pCurrentBindingObject = m_vecActionGameObjectPreset[m_nCurrentBindingActionIndex];
 	}
 }
 
 void cSceneEditMode::BindingNextStaticObject(){
-	if (m_pCurrentBindingObject == NULL 
-		|| m_pCurrentBindingObject->GetGameObjectType() != m_pCurrentBindingObject->E_STATIC){
-		m_pCurrentBindingObject = m_vecStaticGameObjectPreset[m_nCurrentBindingStaticIndex];
-	}
-	else {
-		if (m_nCurrentBindingStaticIndex == m_vecStaticGameObjectPreset.size() - 1){
-			m_nCurrentBindingStaticIndex = 0;
+	if (!m_vecStaticGameObjectPreset.empty()){
+
+		if (m_pCurrentBindingObject == NULL
+			|| m_pCurrentBindingObject->GetGameObjectType() != m_pCurrentBindingObject->E_STATIC){
+			m_pCurrentBindingObject = m_vecStaticGameObjectPreset[m_nCurrentBindingStaticIndex];
 		}
 		else {
-			m_nCurrentBindingStaticIndex++;
+			if (m_nCurrentBindingStaticIndex == m_vecStaticGameObjectPreset.size() - 1){
+				m_nCurrentBindingStaticIndex = 0;
+			}
+			else {
+				m_nCurrentBindingStaticIndex++;
+			}
+			m_pCurrentBindingObject = m_vecStaticGameObjectPreset[m_nCurrentBindingStaticIndex];
 		}
-		m_pCurrentBindingObject = m_vecStaticGameObjectPreset[m_nCurrentBindingStaticIndex];
 	}
 }
 
 void cSceneEditMode::BindingPrevStaticObject(){
-	if (m_pCurrentBindingObject == NULL 
-		|| m_pCurrentBindingObject->GetGameObjectType() != m_pCurrentBindingObject->E_STATIC){
-		m_pCurrentBindingObject = m_vecStaticGameObjectPreset[m_nCurrentBindingStaticIndex];
-	}
-	else {
-		if (m_nCurrentBindingStaticIndex == 0){
-			m_nCurrentBindingStaticIndex = m_vecStaticGameObjectPreset.size() - 1;
+	if (!m_vecStaticGameObjectPreset.empty()){
+		if (m_pCurrentBindingObject == NULL
+			|| m_pCurrentBindingObject->GetGameObjectType() != m_pCurrentBindingObject->E_STATIC){
+			m_pCurrentBindingObject = m_vecStaticGameObjectPreset[m_nCurrentBindingStaticIndex];
 		}
 		else {
-			m_nCurrentBindingStaticIndex++;
+			if (m_nCurrentBindingStaticIndex == 0){
+				m_nCurrentBindingStaticIndex = m_vecStaticGameObjectPreset.size() - 1;
+			}
+			else {
+				m_nCurrentBindingStaticIndex++;
+			}
+			m_pCurrentBindingObject = m_vecStaticGameObjectPreset[m_nCurrentBindingStaticIndex];
 		}
-		m_pCurrentBindingObject = m_vecStaticGameObjectPreset[m_nCurrentBindingStaticIndex];
 	}
 }
 

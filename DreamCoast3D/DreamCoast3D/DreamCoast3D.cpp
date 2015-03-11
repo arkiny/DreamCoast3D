@@ -94,6 +94,7 @@ int APIENTRY _tWinMain(_In_ HINSTANCE hInstance,
 	SAFE_RELEASE(g_pGameCore);
 
 	g_pTimer->Destroy();
+	g_pShaderManager->Destroy();
 	g_pObjectManager->Destroy();
 	g_pControlManager->Destroy();
 	cDeviceManager* pDevice = cDeviceManager::GetInstance();

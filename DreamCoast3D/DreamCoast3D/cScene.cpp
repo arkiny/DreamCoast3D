@@ -195,6 +195,8 @@ void cScene::Update(float delta){
 	{
 		m_pGameEventManager->Update(delta);
 	}
+
+
 }
 
 void cScene::Render(){

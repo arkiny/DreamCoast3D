@@ -13,6 +13,9 @@ cControlManager::cControlManager()
 	ZeroMemory(&m_ptMousePos, sizeof(POINT));
 	ZeroMemory(&m_ptLClickPos, sizeof(POINT));
 	ZeroMemory(&m_ptRClickPos, sizeof(POINT));
+
+
+
 }
 
 
@@ -32,6 +35,14 @@ void cControlManager::WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lPa
 	case WM_KEYUP:
 	{
 		m_bKeyCodeArray[wParam] = false;
+		if (wParam == VK_LSHIFT){
+			if (m_bIsMouseTrapped == true){
+				m_bIsMouseTrapped = false;
+			}
+			else {
+				m_bIsMouseTrapped = true;
+			}
+		}
 	}
 	break;
 	case WM_RBUTTONDOWN:

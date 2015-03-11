@@ -32,7 +32,8 @@ private:
 
     // MS
     float m_fAccumTime;
-    std::set<cGameObject*>          m_setDeadMonster;
+	
+    //std::set<cGameObject*>          m_setDeadMonster;
 
 	iGameEventDelegate*				m_pEventDeligate;
 public:

@@ -77,11 +77,21 @@ LPD3DXEFFECT cShaderManager::GetShader(char* szPath){
 }
 
 void cShaderManager::Destroy(){
+
+	// 셰이더 메모리 처리는 나중에....
+	// 먼가 알수 없는 이슈가 있는거 같다.
 	for (auto p : m_mapShader){
 		if (p.second){
-			p.second->Release();
+			p.second->EndPass();
+			p.second->End();
+			SAFE_RELEASE(p.second);
 			//m_mapShader.erase(p.first);
 		}
+	}
+
+	for each (auto p in m_mapShader)
+	{
+		SAFE_RELEASE(p.second);
 	}
 	m_mapShader.clear();
 
@@ -94,10 +104,12 @@ void cShaderManager::Destroy(){
 void cShaderManager::CreateShadowTargetAndDepthSurface(){
 	
 	if (m_pShadowRenderTarget){
-		assert(false && "shadow render target should be empty");
+		//assert(false && "shadow render target should be empty");
+		SAFE_RELEASE(m_pShadowRenderTarget);
 	}
 	if (m_pShadowDepthStencil){
-		assert(false && "shadow depth stencil should be empty");
+		SAFE_RELEASE(m_pShadowDepthStencil);
+		//assert(false && "shadow depth stencil should be empty");
 	}
 
 	HRESULT hr =

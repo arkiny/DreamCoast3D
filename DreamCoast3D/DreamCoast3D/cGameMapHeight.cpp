@@ -9,6 +9,7 @@ cGameMapHeight::cGameMapHeight()
 	, m_pMesh(NULL)
 	, m_pTexture(NULL)
 	, m_pTexture2(NULL)
+	, m_pTextureNormal(NULL)
 {
 	ZeroMemory(&m_stMtl, sizeof(D3DMATERIAL9));
 }
