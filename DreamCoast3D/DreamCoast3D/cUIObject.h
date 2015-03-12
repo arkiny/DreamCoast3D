@@ -15,9 +15,10 @@ protected:
 	SYNTHESIZE(int, m_nTag, Tag);
 	SYNTHESIZE(RECT, m_rectDrawArea, DrawArea);
 	SYNTHESIZE(float, m_fAlpha, Alpha);					//Åõ¸íµµ : ¹Î¿ì
-	iGameObjectDelegate* m_pGameObjDelgate;
-	iSceneDelegate* m_pSceneDeligate;
-	iUIManagerDeligate* m_pUIManagerDeligate;
+
+	iGameObjectDelegate*		m_pGameObjDelgate;
+	iSceneDelegate*				m_pSceneDeligate;
+	iUIManagerDeligate*			m_pUIManagerDeligate;
 	/*SYNTHESIZE(iGameObjectDelegate*, m_pGameObjDelgate, GameObjDeligate);
 	SYNTHESIZE(iSceneDelegate*, m_pSceneDeligate, SceneDeligate);*/
 

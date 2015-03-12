@@ -21,8 +21,8 @@ class cDataItem : public cObject
 	EITEMTYPE	m_eItemType;
 	int			m_nItemNum;		//아이템/스킬 번호(규칙 필요)
 	bool		m_isStackable;	//겹쳐지는 아이템인지
-	size_t		m_nMaxStack;		//최대 몇개 까지 겹쳐지는지(기본값 5)
-	size_t		m_nCurrStack;		//지금 몇개 겹쳐졌는지
+	size_t		m_nMaxStack;	//최대 몇개 까지 겹쳐지는지(기본값 5)
+	size_t		m_nCurrStack;	//지금 몇개 겹쳐졌는지
 
 public:
 	cDataItem();

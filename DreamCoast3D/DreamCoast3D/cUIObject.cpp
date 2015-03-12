@@ -24,6 +24,7 @@ cUIObject::cUIObject(LPD3DXSPRITE pSprite)
 	, m_pSceneDeligate(NULL)
 	, m_pUIManagerDeligate(NULL)
 	, m_fAlpha(1.f)
+	, m_pEventDeligate(nullptr)
 {
 	m_pSprite->AddRef();
 }

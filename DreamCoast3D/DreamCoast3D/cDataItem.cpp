@@ -5,10 +5,21 @@
 
 cDataItem::cDataItem()
 	: m_pUIIcon(nullptr)
+	, m_eItemType(EITEMTYPE_MAX)
+	, m_nItemNum(-1)
+	, m_isStackable(false)
+	, m_nMaxStack(0)
+	, m_nCurrStack(0)
 {
+	
 }
 cDataItem::cDataItem(cUIIcon* pUIIcon)
 	: m_pUIIcon(pUIIcon)
+	, m_eItemType(EITEMTYPE_MAX)
+	, m_nItemNum(-1)
+	, m_isStackable(false)
+	, m_nMaxStack(0)
+	, m_nCurrStack(0)
 {
 
 }

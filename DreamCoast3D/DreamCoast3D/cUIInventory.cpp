@@ -13,6 +13,8 @@
 //이제 짜놓은 구조를 엮어야된다.
 
 //삭제된 슬롯에 빈칸이 되게 해야한다
+//AddItem Get/Set계열 내가 커스텀 해야되겠다
+//SAFE_RELEASE 확실히 제어해야한다.
 
 cUIInventory::cUIInventory()
 	: m_isDragging(false)
@@ -77,6 +79,7 @@ void cUIInventory::Setup()
 	SetBeforeDragPos(m_pUIRoot->GetPosition());
 #pragma endregion
 
+	//HACK: 얘네를 인벤토리의 Child로 바꿔야함
 	//마우스 오버시 보일 테두리
 	m_pImageViewMouseOver = new cUIImageView(m_pSprite);
 	m_pImageViewMouseOver->SetTextureFilename(std::string("../Resources/UI/UI_INVENTORY/Component_I352.tga"));
@@ -178,7 +181,14 @@ void cUIInventory::Update(float fDelta)
 		{
 			m_pUIRoot->Update(fDelta);
 		}
-
+		for (size_t i = 0; i < m_vecUISlot.size(); ++i)
+		{
+			cUIIcon* pIcon = m_vecUISlot[i]->GetIcon();
+			if (pIcon)
+			{
+				pIcon->Update(fDelta);
+			}
+		}
 		m_pImageViewMouseOver->Update(fDelta);
 		m_pImageViewMouseDown->Update(fDelta);
 	}
@@ -200,13 +210,23 @@ void cUIInventory::Render()
 		{
 			m_pUIRoot->Render();
 		}
-		for (size_t i = 0; i < m_vecUISlot.size(); ++i)
-		{
-			if (m_vecUISlot[i]->GetIcon())
-			{
-				m_vecUISlot[i]->GetIcon()->Render();
-			}
-		}
+		/*LPD3DXSPRITE pSprite;
+		D3DXCreateSprite(g_pD3DDevice, &pSprite);
+		cUIImageView* pView = new cUIImageView(m_pSprite);
+		pView->SetTextureFilename(std::string("../Resources/UI/UI_INVENTORY/Component_I352.tga"));
+		RECT rtDrawArea = { 0, 0, 56, 56 };
+		pView->SetDrawArea(rtDrawArea);
+		pView->SetPosition(D3DXVECTOR3(0, 0, 0));
+		pView->Render();*/
+		//for (size_t i = 0; i < m_vecUISlot.size(); ++i)
+		//{
+
+		//	/*
+		//	if (pView)
+		//	{
+		//	pView->Render();
+		//	}*/
+		//}
 
 		if (m_isMouseOverVisible) { m_pImageViewMouseOver->Render(); }
 		if (m_isMouseDownVisible) { m_pImageViewMouseDown->Render(); }
@@ -413,8 +433,10 @@ cDataItem* cUIInventory::UseItem(cUISlot* pUISlot)
 void cUIInventory::SetupTest()
 {
 #pragma region 아이템 테스트 세팅
+	
 	LPD3DXSPRITE pSprite = nullptr;
 	D3DXCreateSprite(g_pD3DDevice, &pSprite);
+	//D3DXCreateSprite(g_pD3DDevice, &m_pSprite);
 
 	cUIIcon* pUIIcon = new cUIIcon(pSprite);
 	pUIIcon->SetTextureFilename(std::string("../Resources/ICON/ICON_Item/HP_Potion_Level_33_Tex.tga"));
@@ -422,32 +444,30 @@ void cUIInventory::SetupTest()
 	pUIIcon->SetDrawArea(rtDrawArea);
 	pUIIcon->SetPosition(D3DXVECTOR3(4, 4, 0));//FIX: 일단 하드코딩. 비율로 수정해야 한다.
 	pUIIcon->SetScale(D3DXVECTOR3(0.8f, 0.8f, 0.8f));
-
-	cDataItem* pDataItem;
+	//pUIIcon->Render();
+	cDataItem* pDataItem = nullptr;
 	pDataItem = new cDataItem(pUIIcon);
 	m_vecOwnItem[0] = pDataItem;
-
-	pUIIcon = new cUIIcon(pSprite);
-	pUIIcon->SetTextureFilename(std::string("../Resources/ICON/ICON_Item/MP_Potion_Level_33_Tex.tga"));
-	rtDrawArea = { 0, 0, 56, 56 };
-	pUIIcon->SetDrawArea(rtDrawArea);
-	pUIIcon->SetPosition(D3DXVECTOR3(4, 4, 0));//FIX: 일단 하드코딩. 비율로 수정해야 한다.
-	pUIIcon->SetScale(D3DXVECTOR3(0.8f, 0.8f, 0.8f));
 	
-	pDataItem = new cDataItem(pUIIcon);
-	m_vecOwnItem[1] = pDataItem;
+	m_vecUISlot[0]->SetItem(m_vecOwnItem[0]);
+	m_vecUISlot[0]->SetIcon(m_vecOwnItem[0]->GetUIIcon());
 
 	SAFE_RELEASE(pSprite);
-
+	
 #pragma endregion
 
 	//작동 테스트용 0번칸 할당
 	//m_vecUISlot[0]->SetItemNum(0);//0번 슬롯에 0번 아이템
 	//cDataItem* pItem = m_vecOwnItem[m_vecUISlot[0]->GetItemNum()];
-	cDataItem* pItem = m_vecOwnItem[0];
+	//cDataItem* pItem = m_vecOwnItem[0];
 	/*m_vecUISlot[0]->SetItem(pItem);
 	m_vecUISlot[0]->SetIcon(pItem->GetUIIcon());*/
-	AddItem(pItem);
+	//AddItem(m_vecOwnItem[0]);
+	
+	
+	
+	
+	
 	//m_vecUISlot[0]->AddChild(pItem->GetUIIcon());
 	//1번칸에 1번 아이템 할당
 	//m_vecUISlot[1]->SetItemNum(1);//0번 슬롯에 0번 아이템

@@ -18,8 +18,9 @@ LPDIRECT3DTEXTURE9 cTextureManager::GetTexture(std::string sPath)
 	{
 		if (m_mapTexture[sPath] != NULL)
 			SAFE_RELEASE(m_mapTexture[sPath]);
-
-		D3DXCreateTextureFromFileEx(
+		
+		HRESULT hr;
+		hr = D3DXCreateTextureFromFileEx(
 			g_pD3DDevice,
 			sPath.c_str(),
 			D3DX_DEFAULT_NONPOW2,
@@ -34,6 +35,8 @@ LPDIRECT3DTEXTURE9 cTextureManager::GetTexture(std::string sPath)
 			&m_mapImageInfo[sPath],
 			NULL,
 			&m_mapTexture[sPath]);
+
+		assert(hr == S_OK && "이미지 로드 실패");
 	}
 	return m_mapTexture[sPath];
 }
@@ -51,7 +54,8 @@ LPDIRECT3DTEXTURE9 cTextureManager::GetTexture(std::string sPath, D3DXIMAGE_INFO
 		if (m_mapTexture[sPath] != NULL)
 			SAFE_RELEASE(m_mapTexture[sPath]);
 
-		D3DXCreateTextureFromFileEx(
+		HRESULT hr;
+		hr = D3DXCreateTextureFromFileEx(
 			g_pD3DDevice,
 			sPath.c_str(),
 			D3DX_DEFAULT_NONPOW2,
@@ -66,6 +70,7 @@ LPDIRECT3DTEXTURE9 cTextureManager::GetTexture(std::string sPath, D3DXIMAGE_INFO
 			&m_mapImageInfo[sPath],
 			NULL,
 			&m_mapTexture[sPath]);
+		assert(hr == S_OK && "이미지 로드 실패");
 	}
 	*pImageInfo = m_mapImageInfo[sPath];
 	return m_mapTexture[sPath];
