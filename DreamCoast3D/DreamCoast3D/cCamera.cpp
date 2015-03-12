@@ -76,15 +76,17 @@ void cCamera::Setup(
 
 void cCamera::Update(float delta)
 {
+
+
 	if (g_pControlManager->GetInputInfo('T'))
 	{
-		//ShowCursor(true);
+
 		m_isTrap = false;
 	}
 	else
 	{
 		m_isTrap = true;
-		//ShowCursor(false);
+
 	}
 
 	if (m_pPlayer->m_pCurrentState->GetCurrentStateType() == 0)
@@ -131,10 +133,12 @@ void cCamera::Update(float delta)
 	D3DXVec3TransformCoord(&m_vEye, &pvTarget, &matY);
 	m_vEye += *m_pvTarget;
 	m_vEye.y = m_pvTarget->y + m_fDist - m_nCustomAngle;
-	
+
 
 	if (m_isTrap == true)
 	{
+		//ShowCursor(false);
+
 		if (g_pControlManager->GetInputInfo(VK_MBUTTON) && m_isRButtonDown == false){
 			m_ptPrevMouse = g_pControlManager->GetCurrentCursorPosition();
 			m_isRButtonDown = true;
@@ -159,6 +163,10 @@ void cCamera::Update(float delta)
 			PlayerFrontUpdateOnMove(1000.f);
 			MouseTrap();
 		}
+	}
+	else
+	{
+		//ShowCursor(true);
 	}
 
 
