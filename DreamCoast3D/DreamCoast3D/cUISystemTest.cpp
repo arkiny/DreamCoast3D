@@ -27,7 +27,7 @@ void cUISystemTest::Setup(){
 	pUIImageView = new cUIImageView(m_pSprite);
 	pUIImageView->SetTextureFilename(std::string("../Resources/UI/UI_Lobby/Login_I3C.tga"));
 	pUIImageView->SetScale(D3DXVECTOR3(1.0f, 1.0f, 1.0f));
-	pUIImageView->SetPosition(D3DXVECTOR3(750.0f, 300.0f, 0.0f));
+	pUIImageView->SetPosition(D3DXVECTOR3(800.0f, 300.0f, 0.0f));
 	m_pUIRoot->AddChild(pUIImageView);
 	pUIImageView->Release();
 
@@ -118,10 +118,23 @@ void cUISystemTest::Update(float fDelta){
 }
 
 void cUISystemTest::Render(){
+	
+
 	if (m_pSprite)
 	{
 		m_pUIRoot->Render();
 	}
+	std::string sCopyRight = "All Right Reserved DreamCoast3D¢â ¨Ï Copyright 2015";
+	std::string sVersion = "Version Alpha";
+	RECT rectCopyRight = { 10, 670, 10, 701 };
+	g_pFontManager->GetFont(g_pFontManager->FONT_DEFAULT)
+		->DrawText(NULL, sCopyRight.c_str(), -1, &rectCopyRight, DT_LEFT | DT_NOCLIP, 0xFFFFFFFF);
+
+	rectCopyRight = { 10, 5, 16, 6 };
+	g_pFontManager->GetFont(g_pFontManager->FONT_DEFAULT)
+		->DrawText(NULL, sVersion.c_str(), -1, &rectCopyRight, DT_LEFT | DT_NOCLIP, 0xFF000000);
+
+
 }
 
 void cUISystemTest::OnClick(cUIImageButton* pSender){
