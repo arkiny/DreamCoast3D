@@ -70,10 +70,10 @@ private:
 	void SetClickRange(D3DXVECTOR3 vFrom, D3DXVECTOR3 vTo);
 
 	float GetGaussian(float fX, float fZ, float fRho);
-
-	//void CalGauss(int nX, int nZ);
 	void CalGauss(int nX, int nZ, float fDelta);
 
 	float m_fDelta;
+
+	void AdviceRender();
 };
 

@@ -249,6 +249,8 @@ void cSceneEditMode::Render(){
 					&m_rectFontArea,	//pRect
 					DT_LEFT | DT_NOCLIP,//Format,
 					0xFFFFFFFF);		//Color
+
+	HelperRender();
 }
 
 // 모든 리소스를 해제한다.
@@ -735,5 +737,62 @@ std::string cSceneEditMode::GetPlayableGameObjectAsString(){
 	return ss.str();
 }
 
+void cSceneEditMode::HelperRender()
+{
+	D3DXVECTOR3 vecSelectedTile(0.f, 0.f, 0.f);
 
+	vecSelectedTile.x = (int)m_pMousPicking->GetPickingPoint().x;
+	vecSelectedTile.z = (int)m_pMousPicking->GetPickingPoint().z;
 
+	RECT rt;
+	rt.left = 50;
+	rt.top = 100;
+	rt.right = 51;
+	rt.bottom = 101;
+
+	std::stringstream ss;
+	ss << "SelectedTile : " << vecSelectedTile.x << "." << vecSelectedTile.z << std::endl <<std::endl;
+
+	ss << "9 : Go to MapEditor" << std::endl;
+	ss << "F1 : HELP" << std::endl;
+	ss << "F5 : SaveMap" << std::endl;
+	ss << "PageUp : Select Previous Map" << std::endl;
+	ss << "PageDown : Select Next Map" << std::endl << std::endl;
+	ss << "Camera Manual" << std::endl;
+	ss << "W : Front Move " << std::endl;
+	ss << "S : Back Move " << std::endl;
+	ss << "Q : Left Move " << std::endl;
+	ss << "E : Right Move " << std::endl;
+	ss << "A : Rotate Left " << std::endl;
+	ss << "D : Rotate Right " << std::endl;
+
+	g_pFontManager->GetFont(g_pFontManager->FONT_DEFAULT)->DrawText(NULL,
+		ss.str().c_str(),	 //pString
+		-1,					//Count
+		&rt,	//pRect
+		DT_LEFT | DT_NOCLIP,//Format,
+		0xFFFFFFFF);		//Color
+
+	if (GetAsyncKeyState(VK_F1))
+	{
+		rt.left = 800;
+		rt.top = 100;
+		rt.right = 801;
+		rt.bottom = 101;
+
+		std::stringstream ssAdvice;
+		ssAdvice << "Left Click(Set Mode) : Place Object" << std::endl;
+		ssAdvice << "Left Click(Erase Mode) : Erase Object" << std::endl;
+		ssAdvice << "BackSpace : EraseMode " << std::endl;
+		ssAdvice << "Left / Right : Select Monster Preset " << std::endl;
+		ssAdvice << "Up / Down : Select Player Character " << std::endl;
+		ssAdvice << "Home / End : Select Static Object " << std::endl;
+
+		g_pFontManager->GetFont(g_pFontManager->FONT_DEFAULT)->DrawText(NULL,
+			ssAdvice.str().c_str(),	 //pString
+			-1,					//Count
+			&rt,	//pRect
+			DT_LEFT | DT_NOCLIP,//Format,
+			0xFFFFFFFF);		//Color
+	}
+}

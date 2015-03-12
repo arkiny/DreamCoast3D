@@ -132,5 +132,8 @@ public:
 	virtual void Exit();
 
 
+private:
+	
+	void HelperRender();
 };
 

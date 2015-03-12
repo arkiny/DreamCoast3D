@@ -194,6 +194,10 @@ void cHeightMapTerrainEdit::Update(float fDelta){
 		m_fDelta += 1;
 		CalGauss(m_vClickFrom.x, m_vClickFrom.z, m_fDelta);
 	}
+
+	if (GetAsyncKeyState('M')){
+		ChangeMapYVertexCoord(vFrom, vTo, -.1f);
+	}
 }
 
 void cHeightMapTerrainEdit::Render(){
@@ -230,6 +234,8 @@ void cHeightMapTerrainEdit::Render(){
 		}
 
 		g_pD3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
+
+		AdviceRender();
 }
 
 void cHeightMapTerrainEdit::ChangeMapYVertexCoord(D3DXVECTOR2 vMin, D3DXVECTOR2 vMax, float fDelta)
@@ -250,7 +256,7 @@ void cHeightMapTerrainEdit::ChangeMapYVertexCoord(D3DXVECTOR2 vMin, D3DXVECTOR2 
 		}
 	}
 
-	if (GetAsyncKeyState(VK_UP))
+	if (GetAsyncKeyState(VK_UP) || GetAsyncKeyState(VK_DOWN))
 	{
 		CalBazier(vMin, vMax);
 	}
@@ -778,15 +784,15 @@ void cHeightMapTerrainEdit::NormalizeTile()
 				nTileX = vecTile[i].x;
 				nTileZ = vecTile[i].z;
 
-				//if (m_vecVertex[nTileX + nTileZ * 257].p.y > fNormalizeTile)
-				//{
-				//	m_vecVertex[nTileX + nTileZ * 257].p.y -= fNormalizeTile / 10;
-				//}
-				//else if (m_vecVertex[nTileX + nTileZ * 257].p.y < fNormalizeTile)
-				//{
-				//	m_vecVertex[nTileX + nTileZ * 257].p.y += fNormalizeTile / 10;
-				//}
-				//else
+				if (m_vecVertex[nTileX + nTileZ * 257].p.y > fNormalizeTile)
+				{
+					m_vecVertex[nTileX + nTileZ * 257].p.y -= fNormalizeTile / 10;
+				}
+				else if (m_vecVertex[nTileX + nTileZ * 257].p.y < fNormalizeTile)
+				{
+					m_vecVertex[nTileX + nTileZ * 257].p.y += fNormalizeTile / 10;
+				}
+				else
 				{
 					m_vecVertex[nTileX + nTileZ * 257].p.y = fNormalizeTile;
 				}
@@ -819,62 +825,79 @@ float cHeightMapTerrainEdit::GetGaussian(float fX, float fZ, float fRho)
 	return g * exp(-(fX * fX + fZ * fZ) / (2 * fRho * fRho));
 }
 
-//
-//void cHeightMapTerrainEdit::CalGauss(int nX, int nZ, float fDelta)
-//{
-//	if (GetAsyncKeyState('N'))
-//	{
-//		fDelta += 1;
-//	}
-//
-//	if (GetAsyncKeyState('M'))
-//	{
-//		fDelta -= 1;
-//	}
-//
-//	float fSizeCheck = 1.f;
-//	int nRange = 0.f;
-//	while (fSizeCheck > 0.0001f)
-//	{
-//		nRange++;
-//		fSizeCheck = GetGaussian(nRange, 0.f, 1.f + sqrt(sqrt(fDelta)));
-//	}
-//
-//	int nGaussX = -nRange;
-//	int nGaussZ = -nRange;
-//
-//	if (fDelta < 0.f)
-//	{
-//		fDelta = 0.f;
-//		return;
-//	}
-//
-//	for (int z = nZ - nRange; z <= nZ + nRange; z++)
-//	{
-//		nGaussZ++;
-//		for (int x = nX - nRange; x < nX + nRange; x++)
-//		{
-//			nGaussX++;
-//			fSizeCheck = GetGaussian(nGaussX, nGaussZ, 1.f + sqrt(sqrt(fDelta)));
-//			m_vecVertex[x + z*(m_nTileN + 1)].p.y = fSizeCheck * fDelta;
-//		}
-//		nGaussX = -nRange;
-//	}
-//
-//
-//	ST_PNT2_VERTEX* v;
-//	m_pVertexBuffer->Lock(0, 0, (void**)&v, 0);
-//	memcpy(v, &m_vecVertex[0], m_vecVertex.size() * sizeof(ST_PNT2_VERTEX));
-//	m_pVertexBuffer->Unlock();
-//
-//	ST_PNT2_VERTEX* pV = NULL;
-//	m_pMesh->LockVertexBuffer(0, (LPVOID*)&pV);
-//	memcpy(pV, &m_vecVertex[0], m_vecVertex.size() * sizeof(ST_PNT2_VERTEX));
-//	m_pMesh->UnlockVertexBuffer();
-//
-//	DWORD* pI = NULL;
-//	m_pMesh->LockIndexBuffer(0, (LPVOID*)&pI);
-//	memcpy(pI, &m_vecIndex[0], m_vecIndex.size() * sizeof(DWORD));
-//	m_pMesh->UnlockIndexBuffer();
-//
-//}
+void cHeightMapTerrainEdit::AdviceRender()
+{
+	D3DXVECTOR3 vecSelectedTile(0.f, 0.f, 0.f);
+	float fSize = 0.f;
+	float fHeight = 0.f;
+
+	vecSelectedTile.x = (int)m_vTileFrom.x;
+	vecSelectedTile.z = (int)m_vTileFrom.z;
+
+	fSize = (int)m_vBoxScale.x;
+
+	if (vecSelectedTile.x >= 0 && vecSelectedTile.z >= 0)
+	{
+		fHeight = m_vecVertex[vecSelectedTile.x + vecSelectedTile.z * 257].p.y;
+	}
+
+	RECT rt;
+	rt.left = 50;
+	rt.top = 100;
+	rt.right = 51;
+	rt.bottom = 101;
+
+	std::stringstream ss;
+	ss << "SelectedTile : " << vecSelectedTile.x << "." << vecSelectedTile.z << std::endl;
+	ss << "SelectedTileSize : " << fSize << " X " << fSize<< std::endl;
+	ss << "Height : " << fHeight << std::endl << std::endl;
+
+	ss << "4 : Go to MapTool" << std::endl;
+	ss << "F1 : HELP" << std::endl;
+	ss << "F5 : SaveMap" << std::endl << std::endl;
+
+	ss << "Camera Manual" << std::endl;
+	ss << "W : Front Move " << std::endl;
+	ss << "S : Back Move " << std::endl;
+	ss << "Q : Left Move " << std::endl;
+	ss << "E : Right Move " << std::endl;
+	ss << "A : Rotate Left " << std::endl;
+	ss << "D : Rotate Right " << std::endl;
+
+	g_pFontManager->GetFont(g_pFontManager->FONT_DEFAULT)->DrawText(NULL,
+		ss.str().c_str(),	 //pString
+		-1,					//Count
+		&rt,	//pRect
+		DT_LEFT | DT_NOCLIP,//Format,
+		0xFFFFFFFF);		//Color
+
+
+	if (GetAsyncKeyState(VK_F1))
+	{
+		rt.left = 800;
+		rt.top = 100;
+		rt.right = 801;
+		rt.bottom = 101;
+
+		std::stringstream ssAdvice;
+		ssAdvice << "Left Click : SelectTile" << std::endl;
+		ssAdvice << "Right Click : Normalize(1X1)" << std::endl;
+		ssAdvice << "Right Click + SPACE : Normalize(3X3)" << std::endl;
+		ssAdvice << "P : Increase Size" << std::endl;
+		ssAdvice << "O : Decrease Size" << std::endl;
+		ssAdvice << "UP : Increase Height(Bazier)" << std::endl;
+		ssAdvice << "DOWN: Decrease Height(Bazier)" << std::endl;
+		ssAdvice << "N : Increase Height(Gaussian)" << std::endl;
+		ssAdvice << "M : Decrease Height" << std::endl;
+
+		g_pFontManager->GetFont(g_pFontManager->FONT_DEFAULT)->DrawText(NULL,
+			ssAdvice.str().c_str(),	 //pString
+			-1,					//Count
+			&rt,	//pRect
+			DT_LEFT | DT_NOCLIP,//Format,
+			0xFFFFFFFF);		//Color
+	}
+
+
+
+}
