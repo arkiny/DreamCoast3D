@@ -418,6 +418,8 @@ void cSceneEditMode::AddCurrentObjectToSaveStack(cGameObject* pToBeAdded){
 		ST_BOUNDING_SPHERE stSphere = *m_pObjectEraser->GetBoundingSphere();
 		//
 		std::queue<cGameObject*> willbeDelete;
+		
+		// 액션 물체 삭제 확인
 		for (auto p : m_setActionGameObjectAdded){
 			D3DXVECTOR3 vObjectPosition = p->GetPosition();
 			float fDist = D3DXVec3Length(&(stSphere.m_vCenter - vObjectPosition));
@@ -425,12 +427,16 @@ void cSceneEditMode::AddCurrentObjectToSaveStack(cGameObject* pToBeAdded){
 				willbeDelete.push(p);
 			}
 		}
+
+		// 삭제
 		while (!willbeDelete.empty()){
 			cGameObject* erase = willbeDelete.front();
 			m_setActionGameObjectAdded.erase(erase);
 			SAFE_RELEASE(erase);
 			willbeDelete.pop();
 		}
+
+		// 고정물체 삭제확인
 		for (auto p : m_setStaticGameObjectAdded){
 			D3DXVECTOR3 vObjectPosition = p->GetPosition();
 			float fDist = D3DXVec3Length(&(stSphere.m_vCenter - vObjectPosition));
@@ -438,9 +444,11 @@ void cSceneEditMode::AddCurrentObjectToSaveStack(cGameObject* pToBeAdded){
 				willbeDelete.push(p);
 			}
 		}
+
+		// 삭제
 		while (!willbeDelete.empty()){
 			cGameObject* erase = willbeDelete.front();
-			m_setActionGameObjectAdded.erase(erase);
+			m_setStaticGameObjectAdded.erase(erase);
 			SAFE_RELEASE(erase);
 			willbeDelete.pop();
 		}
