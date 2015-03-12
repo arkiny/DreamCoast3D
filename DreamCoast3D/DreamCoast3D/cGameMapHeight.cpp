@@ -29,8 +29,9 @@ void cGameMapHeight::LoadFromFiles(std::string sFilename, std::string sTextureFi
 	m_stMtl.Diffuse = D3DXCOLOR(0.7f, 0.7f, 0.7f, 1.0f);
 	m_stMtl.Specular = D3DXCOLOR(0.7f, 0.7f, 0.7f, 1.0f);
 
+	//std::string sPath = sFilename + sTextureFilename;
 	// 높이에따른 텍스처
-	m_pTexture = g_pTextureManager->GetTexture(std::string("../Resources/Map/TerrainHeightGradient2.png"));
+	m_pTexture = g_pTextureManager->GetTexture(sTextureFilename);
 	
 	// 재질 // 재질을 바르면 그림자 노말맵이 표현 안댐? 어떻게 해야함?
 	m_pTexture2 = g_pTextureManager->GetTexture(std::string("../Resources/Map/terrain_detail_texture.jpg"));

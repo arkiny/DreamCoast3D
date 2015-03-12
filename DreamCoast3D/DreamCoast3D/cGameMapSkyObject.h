@@ -12,6 +12,8 @@ public:
 	cGameMapSkyObject();
 	virtual ~cGameMapSkyObject();
 
+	virtual void SetSkyColor(D3DXCOLOR color);
+
 	virtual void Setup();
 	virtual void Update(float fDelta);
 	virtual void Render();

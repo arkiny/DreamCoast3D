@@ -17,6 +17,7 @@ protected:
 	cGameObject* ParseGameActionSkinnedMeshObj();
 	cGameObject* ParsePlayerbleObj();
 	cGameObject* ParseGameAIObj();
+	cGameObject* ParseSkyObj();
 
 public:
 	cGameObjLoader();

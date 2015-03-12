@@ -2,52 +2,52 @@
 	*GAME_MAP_COUNT 1
 	*HEIGHT_MAP 0 {
 		*GAME_MAP_HEIGHT_RAW_FILE "../Resources/Map/MAP_TEST.raw"
-		*GAME_MAP_HEIGHT_TEXTURE_PATH "../Resources/Map/MAP_TEST.png"
+		*GAME_MAP_HEIGHT_TEXTURE_PATH "../Resources/Map/TerrainHeightGradient2.png"
 		*GAME_MAP_DATA_PATH "../Resources/Map/Map1.txt"
 	}
 	*HEIGHT_MAP 1 {
 		*GAME_MAP_HEIGHT_RAW_FILE "../Resources/Map/FieldMap_1.raw"
-		*GAME_MAP_HEIGHT_TEXTURE_PATH "../Resources/Map/FieldMap_1.bmp"
+		*GAME_MAP_HEIGHT_TEXTURE_PATH "../Resources/Map/TerrainHeightGradient2.png"
 		*GAME_MAP_DATA_PATH "../Resources/Map/Map1.txt"
 	}
 	*HEIGHT_MAP 2 {
 		*GAME_MAP_HEIGHT_RAW_FILE "../Resources/Map/FieldMap_2.raw"
-		*GAME_MAP_HEIGHT_TEXTURE_PATH "../Resources/Map/FieldMap_2.bmp"
+		*GAME_MAP_HEIGHT_TEXTURE_PATH "../Resources/Map/TerrainHeightGradient2.png"
 		*GAME_MAP_DATA_PATH "../Resources/Map/Map1.txt"
 	}
 	*HEIGHT_MAP 3 {
 		*GAME_MAP_HEIGHT_RAW_FILE "../Resources/Map/FieldMap_3.raw"
-		*GAME_MAP_HEIGHT_TEXTURE_PATH "../Resources/Map/FieldMap_3.bmp"
+		*GAME_MAP_HEIGHT_TEXTURE_PATH "../Resources/Map/TerrainHeightGradient2.png"
 		*GAME_MAP_DATA_PATH "../Resources/Map/Map1.txt"
 	}
 	*HEIGHT_MAP 4 {
 		*GAME_MAP_HEIGHT_RAW_FILE "../Resources/Map/FieldMap_4.raw"
-		*GAME_MAP_HEIGHT_TEXTURE_PATH "../Resources/Map/FieldMap_4.bmp"
+		*GAME_MAP_HEIGHT_TEXTURE_PATH "../Resources/Map/TerrainHeightGradient2.png"
 		*GAME_MAP_DATA_PATH "../Resources/Map/Map1.txt"
 	}
 	*HEIGHT_MAP 5 {
 		*GAME_MAP_HEIGHT_RAW_FILE "../Resources/Map/FieldMap_5.raw"
-		*GAME_MAP_HEIGHT_TEXTURE_PATH "../Resources/Map/FieldMap_5.bmp"
+		*GAME_MAP_HEIGHT_TEXTURE_PATH "../Resources/Map/TerrainHeightGradient2.png"
 		*GAME_MAP_DATA_PATH "../Resources/Map/Map1.txt"
 	}
 	*HEIGHT_MAP 6 {
 		*GAME_MAP_HEIGHT_RAW_FILE "../Resources/Map/FieldMap_6.raw"
-		*GAME_MAP_HEIGHT_TEXTURE_PATH "../Resources/Map/FieldMap_6.bmp"
+		*GAME_MAP_HEIGHT_TEXTURE_PATH "../Resources/Map/TerrainHeightGradient2.png"
 		*GAME_MAP_DATA_PATH "../Resources/Map/Map1.txt"
 	}
 	*HEIGHT_MAP 7 {
 		*GAME_MAP_HEIGHT_RAW_FILE "../Resources/Map/FieldMap_7.raw"
-		*GAME_MAP_HEIGHT_TEXTURE_PATH "../Resources/Map/FieldMap_7.bmp"
+		*GAME_MAP_HEIGHT_TEXTURE_PATH "../Resources/Map/TerrainHeightGradient2.png"
 		*GAME_MAP_DATA_PATH "../Resources/Map/Map1.txt"
 	}
 	*HEIGHT_MAP 8 {
 		*GAME_MAP_HEIGHT_RAW_FILE "../Resources/Map/FieldMap_8.raw"
-		*GAME_MAP_HEIGHT_TEXTURE_PATH "../Resources/Map/FieldMap_8.bmp"
+		*GAME_MAP_HEIGHT_TEXTURE_PATH "../Resources/Map/TerrainHeightGradient2.png"
 		*GAME_MAP_DATA_PATH "../Resources/Map/Map1.txt"
 	}
 	*HEIGHT_MAP 9 {
 		*GAME_MAP_HEIGHT_RAW_FILE "../Resources/Map/FieldMap_9.raw"
-		*GAME_MAP_HEIGHT_TEXTURE_PATH "../Resources/Map/FieldMap_9.bmp"
+		*GAME_MAP_HEIGHT_TEXTURE_PATH "../Resources/Map/TerrainHeightGradient2.png"
 		*GAME_MAP_DATA_PATH "../Resources/Map/Map1.txt"
 	}
 	*HEIGHT_MAP 10 {

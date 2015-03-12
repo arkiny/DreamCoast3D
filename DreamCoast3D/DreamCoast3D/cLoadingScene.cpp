@@ -96,6 +96,17 @@ cLoadingScene::~cLoadingScene()
 		gpShadowDepthStencil->Release();
 		gpShadowDepthStencil = NULL;
 	}
+	if (pHWBackBuffer){
+		g_pD3DDevice->SetRenderTarget(0, pHWBackBuffer);
+		g_pD3DDevice->SetDepthStencilSurface(pHWDepthStencilBuffer);
+		g_pD3DDevice->Clear(0, NULL, (D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER), /*D3DCOLOR_XRGB(80, 80, 80)*/0x00000000, 1.0f, 0);
+
+		pHWBackBuffer->Release();
+		pHWBackBuffer = NULL;
+		pHWDepthStencilBuffer->Release();
+		pHWDepthStencilBuffer = NULL;
+	}
+
 }
 
 void cLoadingScene::Setup(std::string sNextScene){
@@ -147,11 +158,7 @@ void cLoadingScene::Start(){
 void cLoadingScene::Update(float fDelta){
 	m_fLoadingTime += fDelta;
 
-	if (m_bBoolWorkDone){
-		// 로딩이 종료후 다음 씬으로 자동 전환
-		m_pDelegate->ChangeSceneFromLoader(m_pNextScene);
-		return;
-	}
+
 }
 
 void cLoadingScene::Render(){
@@ -216,8 +223,7 @@ void cLoadingScene::Render(){
 	}
 
 	// 현재 하드웨어 벡버퍼와 깊이버퍼
-	LPDIRECT3DSURFACE9 pHWBackBuffer = NULL;
-	LPDIRECT3DSURFACE9 pHWDepthStencilBuffer = NULL;
+
 	g_pD3DDevice->GetRenderTarget(0, &pHWBackBuffer);
 	g_pD3DDevice->GetDepthStencilSurface(&pHWDepthStencilBuffer);
 
@@ -269,7 +275,7 @@ void cLoadingScene::Render(){
 	// 하드웨어 백버퍼/깊이버퍼를 사용한다.
 	g_pD3DDevice->SetRenderTarget(0, pHWBackBuffer);
 	g_pD3DDevice->SetDepthStencilSurface(pHWDepthStencilBuffer);
-	//g_pD3DDevice->Clear(0, NULL, (D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER), D3DCOLOR_XRGB(80, 80, 80), 1.0f, 0);
+	g_pD3DDevice->Clear(0, NULL, (D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER), /*D3DCOLOR_XRGB(80, 80, 80)*/0x00000000, 1.0f, 0);
 
 	pHWBackBuffer->Release();
 	pHWBackBuffer = NULL;
@@ -322,6 +328,12 @@ void cLoadingScene::Render(){
 		&m_recFontRect,		//pRect
 		DT_LEFT | DT_NOCLIP,//Format,
 		0xFFFFFFFF);		//Color
+
+	if (m_bBoolWorkDone){
+		// 로딩이 종료후 다음 씬으로 자동 전환
+		m_pDelegate->ChangeSceneFromLoader(m_pNextScene);
+		return;
+	}
 }
 
 void cLoadingScene::Exit(){

@@ -69,8 +69,7 @@ void cGameObjLoader::LoadGameObjectsFromFile(OUT cGameObjManager* pGameManager, 
 		}
 		// TODO 하늘은 좀더 수정이 필요함
 		else if (isEqual(szToken, "*GAMESKYOBJ")){
-			cGameObject* p = new cGameMapSkyObject;
-			p->Setup();
+			cGameObject* p = ParseSkyObj();
 			pGameManager->AddGameObj(p);
 			SAFE_RELEASE(p);
 		}
@@ -79,6 +78,31 @@ void cGameObjLoader::LoadGameObjectsFromFile(OUT cGameObjManager* pGameManager, 
 		}
 	}
 	fclose(m_fp);
+}
+
+cGameObject* cGameObjLoader::ParseSkyObj(){
+	cGameMapSkyObject* p = new cGameMapSkyObject;
+	D3DXCOLOR skycolor;
+	int nLevel = 0;
+	do{
+		char* szToken = GetToken();
+		if (isEqual(szToken, "{")){
+			++nLevel;
+		}
+		else if (isEqual(szToken, "}")){
+			--nLevel;
+		}
+		else if (isEqual(szToken, "*SKY_COLOR")){
+			float r = GetFloat();
+			float g = GetFloat();
+			float b = GetFloat();
+			skycolor = {r, g, b, 1.0f};
+		}
+	} while (nLevel > 0);
+	p->Setup();
+	p->SetSkyColor(skycolor);
+	return p;
+
 }
 
 

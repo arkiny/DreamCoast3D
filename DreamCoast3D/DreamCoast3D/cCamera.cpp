@@ -88,144 +88,145 @@ void cCamera::Update(float delta)
 		m_isTrap = true;
 
 	}
-
-	if (m_pPlayer->m_pCurrentState->GetCurrentStateType() == 0)
-	{
-		m_isMove = false;
-	}
-	else
-	{
-		m_isMove = true;
-	}
-
-
-	if (g_pControlManager->GetInputInfo('P'))
-	{
-		m_nCustomAngle++;
-	}
-	if (g_pControlManager->GetInputInfo('O'))
-	{
-		m_nCustomAngle--;
-	}
-
-	m_vLookAt = *m_pvTarget;
-
-	D3DXVECTOR3 vec(0.f, 0.f, 0.f);
-	vec.x = m_pvTarget->x - m_vEye.x;
-	vec.z = m_pvTarget->z - m_vEye.z;
-
-	D3DXVECTOR3 pvTarget(0.f, 0.f, 0.f);
-	pvTarget.x = cos(m_fDirection);
-	pvTarget.z = sin(m_fDirection);
-	D3DXVec3Normalize(&pvTarget, &pvTarget);
-
-	pvTarget *= m_fDist;
-
-	D3DXMATRIXA16 matY;
-	D3DXMatrixIdentity(&matY);
-	D3DXMatrixRotationY(&matY, D3DX_PI / 2);
-	D3DXVec3TransformCoord(&m_vLookAt, &pvTarget, &matY);
-	m_vLookAt += *m_pvTarget;
-	m_vLookAt.y = m_pvTarget->y - m_fDist;
-
-	D3DXMatrixIdentity(&matY);
-	D3DXMatrixRotationY(&matY, -D3DX_PI / 2);
-	D3DXVec3TransformCoord(&m_vEye, &pvTarget, &matY);
-	m_vEye += *m_pvTarget;
-	m_vEye.y = m_pvTarget->y + m_fDist - m_nCustomAngle;
-
-
-	if (m_isTrap == true)
-	{
-
-		m_pUIDelegate->SetShowCursor(false);
-		if (g_pControlManager->GetInputInfo(VK_MBUTTON) && m_isRButtonDown == false){
-			m_ptPrevMouse = g_pControlManager->GetCurrentCursorPosition();
-			m_isRButtonDown = true;
-		}
-
-		if (g_pControlManager->GetInputInfo(VK_MBUTTON) == false && m_isRButtonDown == true){
-			m_isRButtonDown = false;
-		}
-
-		if (m_isMove == false)
+	if (m_pPlayer){
+		if (m_pPlayer->m_pCurrentState->GetCurrentStateType() == 0)
 		{
-			MouseMove(2000.f);
-			MouseTrap();
-		}
-		else if (g_pControlManager->GetInputInfo(VK_MBUTTON) && m_isRButtonDown == true)
-		{
-			MouseMove(1000.f);
-			MouseTrap();
+			m_isMove = false;
 		}
 		else
 		{
-			PlayerFrontUpdateOnMove(1000.f);
-			MouseTrap();
+			m_isMove = true;
 		}
-	}
-	else{
-		m_pUIDelegate->SetShowCursor(true);
-	}
-
-	if (m_isRButtonDown == false && m_isMove == true)
-	{
-		float fX, fY;
-		vec = m_vEye - m_vLookAt;
-
-		fX = vec.x;
-		fY = vec.z;
-		m_fFixedAngleX = atan2(fY, fX);
-
-		fX = sqrt((vec.x)*(vec.x) + (vec.z)*(vec.z));
-		fY = vec.y;
-		m_fFixedAngleY = atan2(fY, fX);
-
-		m_fAngleX = m_fFixedAngleY;
-		m_fAngleY = m_fFixedAngleX + D3DX_PI / 2;
-	}
 
 
+		if (g_pControlManager->GetInputInfo('P'))
+		{
+			m_nCustomAngle++;
+		}
+		if (g_pControlManager->GetInputInfo('O'))
+		{
+			m_nCustomAngle--;
+		}
 
-	float wheelMove = g_pControlManager->GetWheelMoveDist();
-	if (wheelMove != 0.0f)
-	{
-		m_fDist -= wheelMove / 100.f;
-		if (m_fDist < m_fMin)
-			m_fDist = m_fMin;
-		if (m_fDist > m_fMax)
+		m_vLookAt = *m_pvTarget;
 
-			m_fDist = m_fMax;
-	}
+		D3DXVECTOR3 vec(0.f, 0.f, 0.f);
+		vec.x = m_pvTarget->x - m_vEye.x;
+		vec.z = m_pvTarget->z - m_vEye.z;
+
+		D3DXVECTOR3 pvTarget(0.f, 0.f, 0.f);
+		pvTarget.x = cos(m_fDirection);
+		pvTarget.z = sin(m_fDirection);
+		D3DXVec3Normalize(&pvTarget, &pvTarget);
+
+		pvTarget *= m_fDist;
+
+		D3DXMATRIXA16 matY;
+		D3DXMatrixIdentity(&matY);
+		D3DXMatrixRotationY(&matY, D3DX_PI / 2);
+		D3DXVec3TransformCoord(&m_vLookAt, &pvTarget, &matY);
+		m_vLookAt += *m_pvTarget;
+		m_vLookAt.y = m_pvTarget->y - m_fDist;
+
+		D3DXMatrixIdentity(&matY);
+		D3DXMatrixRotationY(&matY, -D3DX_PI / 2);
+		D3DXVec3TransformCoord(&m_vEye, &pvTarget, &matY);
+		m_vEye += *m_pvTarget;
+		m_vEye.y = m_pvTarget->y + m_fDist - m_nCustomAngle;
+
+
+		if (m_isTrap == true)
+		{
+
+			m_pUIDelegate->SetShowCursor(false);
+			if (g_pControlManager->GetInputInfo(VK_MBUTTON) && m_isRButtonDown == false){
+				m_ptPrevMouse = g_pControlManager->GetCurrentCursorPosition();
+				m_isRButtonDown = true;
+			}
+
+			if (g_pControlManager->GetInputInfo(VK_MBUTTON) == false && m_isRButtonDown == true){
+				m_isRButtonDown = false;
+			}
+
+			if (m_isMove == false)
+			{
+				MouseMove(2000.f);
+				MouseTrap();
+			}
+			else if (g_pControlManager->GetInputInfo(VK_MBUTTON) && m_isRButtonDown == true)
+			{
+				MouseMove(1000.f);
+				MouseTrap();
+			}
+			else
+			{
+				PlayerFrontUpdateOnMove(1000.f);
+				MouseTrap();
+			}
+		}
+		else{
+			m_pUIDelegate->SetShowCursor(true);
+		}
+
+		if (m_isRButtonDown == false && m_isMove == true)
+		{
+			float fX, fY;
+			vec = m_vEye - m_vLookAt;
+
+			fX = vec.x;
+			fY = vec.z;
+			m_fFixedAngleX = atan2(fY, fX);
+
+			fX = sqrt((vec.x)*(vec.x) + (vec.z)*(vec.z));
+			fY = vec.y;
+			m_fFixedAngleY = atan2(fY, fX);
+
+			m_fAngleX = m_fFixedAngleY;
+			m_fAngleY = m_fFixedAngleX + D3DX_PI / 2;
+		}
 
 
 
-	m_vEye = D3DXVECTOR3(0, 0.0f, -m_fDist);
+		float wheelMove = g_pControlManager->GetWheelMoveDist();
+		if (wheelMove != 0.0f)
+		{
+			m_fDist -= wheelMove / 100.f;
+			if (m_fDist < m_fMin)
+				m_fDist = m_fMin;
+			if (m_fDist > m_fMax)
 
-	D3DXMATRIXA16 matTrans, transZ, matRotX, matRotY;
-	D3DXMatrixIdentity(&matTrans);
-	D3DXMatrixIdentity(&transZ);
-	D3DXMatrixRotationX(&matRotX, m_fAngleX);
-	D3DXMatrixRotationY(&matRotY, m_fAngleY);
-
-	D3DXVec3TransformCoord(&m_vEye, &m_vEye, &matRotX);
-	D3DXVec3TransformCoord(&m_vEye, &m_vEye, &matRotY);
+				m_fDist = m_fMax;
+		}
 
 
 
-	if (m_pvTarget)
-	{
-		m_vEye += (*m_pvTarget);
-		m_vLookAt = (*m_pvTarget);
-		m_vLookAt.y += 1.0f;
-	}
+		m_vEye = D3DXVECTOR3(0, 0.0f, -m_fDist);
 
-	if (m_pMap){
-		bool isLand;
-		float fHeight = m_pMap->GetHeight(isLand, &m_vEye);
+		D3DXMATRIXA16 matTrans, transZ, matRotX, matRotY;
+		D3DXMatrixIdentity(&matTrans);
+		D3DXMatrixIdentity(&transZ);
+		D3DXMatrixRotationX(&matRotX, m_fAngleX);
+		D3DXMatrixRotationY(&matRotY, m_fAngleY);
 
-		if (m_vEye.y < fHeight + m_fMin){
-			m_vEye.y = fHeight + m_fMin;
+		D3DXVec3TransformCoord(&m_vEye, &m_vEye, &matRotX);
+		D3DXVec3TransformCoord(&m_vEye, &m_vEye, &matRotY);
+
+
+
+		if (m_pvTarget)
+		{
+			m_vEye += (*m_pvTarget);
+			m_vLookAt = (*m_pvTarget);
+			m_vLookAt.y += 1.0f;
+		}
+
+		if (m_pMap){
+			bool isLand;
+			float fHeight = m_pMap->GetHeight(isLand, &m_vEye);
+
+			if (m_vEye.y < fHeight + m_fMin){
+				m_vEye.y = fHeight + m_fMin;
+			}
 		}
 	}
 	D3DXVECTOR3 dist = m_vEye - m_vLookAt;

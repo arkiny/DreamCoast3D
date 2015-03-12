@@ -2,7 +2,7 @@
 	*GAME_MAP_COUNT 1
 	*HEIGHT_MAP 0 {
 		*GAME_MAP_HEIGHT_RAW_FILE "../Resources/Map/MAP_TEST.raw"
-		*GAME_MAP_HEIGHT_TEXTURE_PATH "../Resources/Map/MAP_TEST.png"
+		*GAME_MAP_HEIGHT_TEXTURE_PATH "../Resources/Map/TerrainHeightGradient2.png"
 		*GAME_MAP_DATA_PATH "../Resources/Map/Map1.txt"
 	}
 }

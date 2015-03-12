@@ -17,6 +17,9 @@ protected:
 
 	SYNTHESIZE(std::string, m_sNextScenePath, NextScenePath);
 
+	LPDIRECT3DSURFACE9 pHWBackBuffer = NULL;
+	LPDIRECT3DSURFACE9 pHWDepthStencilBuffer = NULL;
+
 protected:
 	static void LoadNextScene(LPVOID pParam);
 
