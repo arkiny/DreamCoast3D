@@ -707,7 +707,7 @@ void cSceneEditMode::SaveGameObjectDataToFile(){
 	FILE* fp;
 
 	fopen_s(&fp, "../Resources/SCENE5_GAMEOBJDATA.txt", "w+");
-	ss << "*GAMESKYOBJ" << std::endl;
+	ss << "*GAMESKYOBJ { *SKY_COLOR 0.5	0.6	0.8 } " << std::endl;
 	ss << GetMeshListAsString() << std::endl;
 	ss << GetActionGameObjectAddedAsString() << std::endl;
 	ss << GetPlayableGameObjectAsString() << std::endl;

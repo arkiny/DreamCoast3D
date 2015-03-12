@@ -58,7 +58,7 @@ void cGameObjManager::Update(float fDelta){
 }
 
 void cGameObjManager::Render(){
-	g_pD3DDevice->Clear(0, NULL, (D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER), 0xFFFFFFFF, 1.0f, 0);
+	g_pD3DDevice->Clear(0, NULL, (D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER), 0x00000000, 1.0f, 0);
 	LPDIRECT3DSURFACE9 pHWBackBuffer = NULL;
 	LPDIRECT3DSURFACE9 pHWDepthStencilBuffer = NULL;
 	g_pD3DDevice->GetRenderTarget(0, &pHWBackBuffer);
