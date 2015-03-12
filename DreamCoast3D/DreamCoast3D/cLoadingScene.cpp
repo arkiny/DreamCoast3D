@@ -7,7 +7,7 @@
 #define FOV          (PI/4.0f)							// 시야각
 #define ASPECT_RATIO (1280/(float)720)		// 화면의 종횡비
 #define NEAR_PLANE   1									// 근접 평면
-#define FAR_PLANE    10000								// 원거리 평면
+#define FAR_PLANE    3000								// 원거리 평면
 
 static CRITICAL_SECTION				gCriticalSection;
 
@@ -320,8 +320,7 @@ void cLoadingScene::Render(){
 
 	std::stringstream s;
 	s.precision(2);
-	s << "Loading..." << std::endl 
-		<< "Loading Time: " << std::fixed << m_fLoadingTime << "sec" << std::endl;
+	s << "Loading..."  << std::fixed << m_fLoadingTime << "sec" << std::endl;
 	m_pFont->DrawText(NULL,				 //pSprite
 		s.str().c_str(),	 //pString
 		-1,					//Count

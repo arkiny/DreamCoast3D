@@ -38,10 +38,11 @@ void cUISystemTest::Setup(){
 	// 시작 버튼
 	cUISceneChangeButton* pTestButton = new cUISceneChangeButton(m_pSprite);
 	pTestButton->Setup(
-		std::string("../Resources/UI/UI_AcceptButton.png"), 
-		std::string("../Resources/UI/UI_AcceptButtonOn.png"),
-		std::string("../Resources/UI/UI_AcceptButtonClick.png"));
-	pTestButton->SetPosition(D3DXVECTOR3(90, 50, 0));
+		std::string("../Resources/UI/UI_BUTTON_LOBBY/TE_1_NORMAL.png"), 
+		std::string("../Resources/UI/UI_BUTTON_LOBBY/TE_1_ON.png"),
+		std::string("../Resources/UI/UI_BUTTON_LOBBY/TE_1_CLICK.png"));
+	pTestButton->SetPosition(D3DXVECTOR3(75, 40, 0));
+	pTestButton->SetScale(D3DXVECTOR3(.6f, .6f, 1.0f));
 	pTestButton->SetButtonDeligate(this);
 	pTestButton->SetTargetScene(5);
 	pUIImageView->AddChild(pTestButton);
@@ -49,10 +50,11 @@ void cUISystemTest::Setup(){
 	
 	pTestButton = new cUISceneChangeButton(m_pSprite);
 	pTestButton->Setup(
-		std::string("../Resources/UI/UI_AcceptButton.png"),
-		std::string("../Resources/UI/UI_AcceptButtonOn.png"),
-		std::string("../Resources/UI/UI_AcceptButtonClick.png"));
-	pTestButton->SetPosition(D3DXVECTOR3(90, 100, 0));
+		std::string("../Resources/UI/UI_BUTTON_LOBBY/ME_1_NORMAL.png"),
+		std::string("../Resources/UI/UI_BUTTON_LOBBY/ME_1_ON.png"),
+		std::string("../Resources/UI/UI_BUTTON_LOBBY/ME_1_CLICK.png"));
+	pTestButton->SetPosition(D3DXVECTOR3(75, 90, 0));
+	pTestButton->SetScale(D3DXVECTOR3(.6f, .6f, 1.0f));
 	pTestButton->SetButtonDeligate(this);
 	pTestButton->SetTargetScene(3);
 	pUIImageView->AddChild(pTestButton);
@@ -60,10 +62,11 @@ void cUISystemTest::Setup(){
 
 	pTestButton = new cUISceneChangeButton(m_pSprite);
 	pTestButton->Setup(
-		std::string("../Resources/UI/UI_AcceptButton.png"),
-		std::string("../Resources/UI/UI_AcceptButtonOn.png"),
-		std::string("../Resources/UI/UI_AcceptButtonClick.png"));
-	pTestButton->SetPosition(D3DXVECTOR3(90, 150, 0));
+		std::string("../Resources/UI/UI_BUTTON_LOBBY/PP_1_NORMAL.png"),
+		std::string("../Resources/UI/UI_BUTTON_LOBBY/PP_1_ON.png"),
+		std::string("../Resources/UI/UI_BUTTON_LOBBY/PP_1_CLICK.png"));
+	pTestButton->SetPosition(D3DXVECTOR3(75, 140, 0));
+	pTestButton->SetScale(D3DXVECTOR3(.6f, .6f, 1.0f));
 	pTestButton->SetButtonDeligate(this);
 	pTestButton->SetTargetScene(1);
 	pUIImageView->AddChild(pTestButton);
@@ -71,10 +74,11 @@ void cUISystemTest::Setup(){
 
 	pTestButton = new cUISceneChangeButton(m_pSprite);
 	pTestButton->Setup(
-		std::string("../Resources/UI/UI_AcceptButton.png"),
-		std::string("../Resources/UI/UI_AcceptButtonOn.png"),
-		std::string("../Resources/UI/UI_AcceptButtonClick.png"));
-	pTestButton->SetPosition(D3DXVECTOR3(90, 200, 0));
+		std::string("../Resources/UI/UI_BUTTON_LOBBY/PY_1_NORMAL.png"),
+		std::string("../Resources/UI/UI_BUTTON_LOBBY/PY_1_ON.png"),
+		std::string("../Resources/UI/UI_BUTTON_LOBBY/PY_1_CLICK.png"));
+	pTestButton->SetPosition(D3DXVECTOR3(75, 190, 0));
+	pTestButton->SetScale(D3DXVECTOR3(.6f, .6f, 1.0f));
 	pTestButton->SetButtonDeligate(this);
 	pTestButton->SetTargetScene(4);
 	pUIImageView->AddChild(pTestButton);
@@ -82,10 +86,11 @@ void cUISystemTest::Setup(){
 
 	pTestButton = new cUISceneChangeButton(m_pSprite);
 	pTestButton->Setup(
-		std::string("../Resources/UI/UI_AcceptButton.png"),
-		std::string("../Resources/UI/UI_AcceptButtonOn.png"),
-		std::string("../Resources/UI/UI_AcceptButtonClick.png"));
-	pTestButton->SetPosition(D3DXVECTOR3(90, 250, 0));
+		std::string("../Resources/UI/UI_BUTTON_LOBBY/CR_1_NORMAL.png"),
+		std::string("../Resources/UI/UI_BUTTON_LOBBY/CR_1_ON.png"),
+		std::string("../Resources/UI/UI_BUTTON_LOBBY/CR_1_CLICK.png"));
+	pTestButton->SetPosition(D3DXVECTOR3(75, 240, 0));
+	pTestButton->SetScale(D3DXVECTOR3(.6f, .6f, 1.0f));
 	pTestButton->SetButtonDeligate(this);
 	pTestButton->SetTargetScene(2);
 	pUIImageView->AddChild(pTestButton);
@@ -93,10 +98,11 @@ void cUISystemTest::Setup(){
 
 	pTestButton = new cUISceneChangeButton(m_pSprite);
 	pTestButton->Setup(
-		std::string("../Resources/UI/UI_AcceptButton.png"),
-		std::string("../Resources/UI/UI_AcceptButtonOn.png"),
-		std::string("../Resources/UI/UI_AcceptButtonClick.png"));
-	pTestButton->SetPosition(D3DXVECTOR3(90, 300, 0));
+		std::string("../Resources/UI/UI_BUTTON_LOBBY/QG_1_NORMAL.png"),
+		std::string("../Resources/UI/UI_BUTTON_LOBBY/QG_1_ON.png"),
+		std::string("../Resources/UI/UI_BUTTON_LOBBY/QG_1_CLICK.png"));
+	pTestButton->SetPosition(D3DXVECTOR3(75, 290, 0));
+	pTestButton->SetScale(D3DXVECTOR3(.6f, .6f, 1.0f));
 	pTestButton->SetButtonDeligate(this);
 	pTestButton->SetTargetScene(-2);
 	pUIImageView->AddChild(pTestButton);
@@ -124,15 +130,17 @@ void cUISystemTest::Render(){
 	{
 		m_pUIRoot->Render();
 	}
-	std::string sCopyRight = "All Right Reserved DreamCoast3D™ ⓒ Copyright 2015";
-	std::string sVersion = "Version Alpha";
-	RECT rectCopyRight = { 10, 670, 10, 701 };
-	g_pFontManager->GetFont(g_pFontManager->FONT_DEFAULT)
-		->DrawText(NULL, sCopyRight.c_str(), -1, &rectCopyRight, DT_LEFT | DT_NOCLIP, 0xFFFFFFFF);
 
-	rectCopyRight = { 10, 5, 16, 6 };
-	g_pFontManager->GetFont(g_pFontManager->FONT_DEFAULT)
-		->DrawText(NULL, sVersion.c_str(), -1, &rectCopyRight, DT_LEFT | DT_NOCLIP, 0xFF000000);
+	//이미지로 처리 완료
+	//std::string sCopyRight = "All Right Reserved DreamCoast3D™ ⓒ Copyright 2015";
+	//std::string sVersion = "Version Alpha";
+	//RECT rectCopyRight = { 10, 670, 10, 701 };
+	//g_pFontManager->GetFont(g_pFontManager->FONT_DEFAULT)
+	//	->DrawText(NULL, sCopyRight.c_str(), -1, &rectCopyRight, DT_LEFT | DT_NOCLIP, 0xFFFFFFFF);
+
+	//rectCopyRight = { 10, 5, 16, 6 };
+	//g_pFontManager->GetFont(g_pFontManager->FONT_DEFAULT)
+	//	->DrawText(NULL, sVersion.c_str(), -1, &rectCopyRight, DT_LEFT | DT_NOCLIP, 0xFF000000);
 
 
 }
