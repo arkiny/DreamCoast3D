@@ -66,6 +66,7 @@ cScene::~cScene()
 	if (m_pGameEventManager)
 	{
 		m_pGameEventManager->Destory();
+		m_pGameEventManager = NULL;
 	}
 
 	//SAFE_RELEASE(gpShadowRenderTarget );
@@ -187,14 +188,16 @@ void cScene::Update(float delta){
 		m_pEffectManager->Update(delta);
 	}
 
-	if (m_pUIObjManager){
-		m_pUIObjManager->Update(delta);
-	}
-
 	if (m_pGameEventManager)
 	{
 		m_pGameEventManager->Update(delta);
 	}
+
+	if (m_pUIObjManager){
+		m_pUIObjManager->Update(delta);
+	}
+
+
 
 
 }

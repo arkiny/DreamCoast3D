@@ -18,6 +18,7 @@ void cSkinnedMeshManager::Destroy()
 		it.second->Destroy();
 		//SAFE_RELEASE(it.second);
 	}
+	m_vecSkinnedMesh4Save.clear();
 	m_mapSkinnedMesh.clear();
 }
 

@@ -100,6 +100,8 @@ cSkinnedMesh::cSkinnedMesh()
 	, m_pDebugSphereBody(NULL)
 	, m_pDebugDetailSphereBody(nullptr)
 {
+	m_sSkinnedFile = "";
+	m_sSkinnedFolder = "";
 }
 
 cSkinnedMesh::~cSkinnedMesh(void)
@@ -356,15 +358,15 @@ void cSkinnedMesh::Render(ST_BONE* pBone /*= NULL*/)
 
 		D3DXMATRIXA16 matLightView;
 		{
-			D3DXVECTOR3 vLookatPt(0.0f, 0.0f, 0.0f);
+			D3DXVECTOR3 vLookatPt(128.0f, 0.0f, 128.0f);
 			D3DXVECTOR3 vUpVec(0.0f, 1.0f, 0.0f);
 			D3DXMatrixLookAtLH(&matLightView, &pos, &vLookatPt, &vUpVec);
 		}
 
 		D3DXMATRIXA16 matLightProjection; {
-			D3DXMatrixPerspectiveFovLH(&matLightProjection, D3DX_PI / 4.0f, 1, 0.0001, 5000);
+			//D3DXMatrixPerspectiveFovLH(&matLightProjection, D3DX_PI / 4.0f, 1, 1, 3000);
+			D3DXMatrixOrthoLH(&matLightProjection, 350, 350, 1, 3000);
 		}
-
 		//D3DXMATRIXA16 matView;
 		D3DXMATRIXA16 matProjection;
 		g_pD3DDevice->GetTransform(D3DTS_VIEW, &matView);
@@ -462,10 +464,6 @@ void cSkinnedMesh::RenderShadow(ST_BONE* pBone /*= NULL*/){
 		D3DXVECTOR3 pos;
 		D3DXVec3Normalize(&pos, &dir);
 		pos = -500 * pos;
-		//D3DXVECTOR3 tempPos(-93.3871002f, 234.746628f, -53.4625092);
-		// 빛을 움직이면서 디렉셔널로 움직이면 섀도우맵역시 움직인다.
-		//D3DXVECTOR3 vMove(pMatrix->_41, pMatrix->_42, pMatrix->_43);
-		//pos = pos + vMove;
 
 		D3DXMATRIXA16 matLightView;
 		{
@@ -476,7 +474,7 @@ void cSkinnedMesh::RenderShadow(ST_BONE* pBone /*= NULL*/){
 
 		D3DXMATRIXA16 matLightProjection; {
 			//D3DXMatrixPerspectiveFovLH(&matLightProjection, D3DX_PI / 4.0f, 1, 1, 3000);
-			D3DXMatrixOrthoLH(&matLightProjection, 400, 400, 1, 3000);
+			D3DXMatrixOrthoLH(&matLightProjection, 350, 350, 1, 3000);
 		}
 
 		D3DXMATRIXA16 matView;

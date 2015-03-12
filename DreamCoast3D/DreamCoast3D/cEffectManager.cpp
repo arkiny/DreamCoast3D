@@ -14,10 +14,27 @@ cEffectManager::~cEffectManager()
 	for (auto p : m_setEffects){
 		SAFE_RELEASE(p);
 	}
+
+	while (!m_qeueuOnHitEffectPool.empty()){
+		cEffect* p = m_qeueuOnHitEffectPool.front();
+		m_qeueuOnHitEffectPool.pop();
+		SAFE_RELEASE(p);
+	}
+
+	while (!m_qeueuOnGetHitEffectPool.empty()){
+		cEffect* p = m_qeueuOnGetHitEffectPool.front();
+		m_qeueuOnGetHitEffectPool.pop();
+		SAFE_RELEASE(p);
+	}
 }
 
 void cEffectManager::Setup(){
-
+	// Pre-Load
+	for (UINT i = 0; i < 10; i++){
+		cEffectFireBall* p = new cEffectFireBall;
+		m_qeueuOnHitEffectPool.push(p);
+		p->SetOwner(this);
+	}
 }
 
 void cEffectManager::Start(){
@@ -31,12 +48,14 @@ void cEffectManager::Update(float fDelta){
 		p->Update(fDelta);
 	}
 
-	if (!m_vecEffectTobeDeleted.empty()){
-		for (auto p : m_vecEffectTobeDeleted){
+	if (!m_vecOnHitEffectTobeDeleted.empty()){
+		for (auto p : m_vecOnHitEffectTobeDeleted){
 			m_setEffects.erase(p);
-			SAFE_RELEASE(p);
+			if (p->GetEffectType() == p->E_EFFECT_ONHIT){
+				m_qeueuOnGetHitEffectPool.push(p);
+			}
 		}
-		m_vecEffectTobeDeleted.clear();
+		m_vecOnHitEffectTobeDeleted.clear();
 	}
 }
 
@@ -50,17 +69,28 @@ void cEffectManager::Exit(){
 	// 일단 대기
 }
 
-void cEffectManager::AddEffect(cEffect* pEffect){
-	if (pEffect){
-		SAFE_ADD_REF(pEffect);
-		pEffect->SetOwner(this);
-		m_setEffects.insert(pEffect);
+void cEffectManager::AddEffect(UINT uiType, D3DXVECTOR3 vPos){
+	if (uiType == cEffect::E_EFFECT_ONHIT){
+		if (m_qeueuOnHitEffectPool.empty()){
+			cEffectFireBall* p = new cEffectFireBall;
+			p->Setup();
+			p->SetPosition(vPos);
+			p->SetOwner(this);
+			m_setEffects.insert(p);
+		}
+		else{
+			cEffect* p = m_qeueuOnHitEffectPool.front();
+			m_qeueuOnHitEffectPool.pop();
+			p->Setup();
+			p->SetPosition(vPos);
+			m_setEffects.insert(p);
+		}
 	}
 }
 
 void cEffectManager::DeleteEffect(cEffect* pEffect){
 	if (pEffect){
-		m_vecEffectTobeDeleted.push_back(pEffect);
+		m_vecOnHitEffectTobeDeleted.push_back(pEffect);
 	}
 }
 

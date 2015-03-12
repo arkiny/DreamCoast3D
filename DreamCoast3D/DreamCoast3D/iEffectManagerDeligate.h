@@ -3,6 +3,6 @@ class cEffect;
 
 __interface iEffectManagerDelegate
 {
-	virtual void AddEffect(cEffect* pEffect);
+	virtual void AddEffect(UINT eType, D3DXVECTOR3 vPos);
 };
 

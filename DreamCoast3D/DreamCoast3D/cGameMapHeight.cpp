@@ -18,8 +18,8 @@ cGameMapHeight::cGameMapHeight()
 cGameMapHeight::~cGameMapHeight()
 {
 	SAFE_RELEASE(m_pMesh);
-	SAFE_RELEASE(m_pTexture2);
-	SAFE_RELEASE(m_pTextureNormal);
+	//SAFE_RELEASE(m_pTexture2);
+	//SAFE_RELEASE(m_pTextureNormal);
 	//SAFE_RELEASE(m_pSpecularMapping);
 	//SAFE_DELETE(m_pMousePicking);
 }
@@ -188,7 +188,7 @@ void cGameMapHeight::Render(){
 
 		D3DXMATRIXA16 matLightProjection; {
 			//D3DXMatrixPerspectiveFovLH(&matLightProjection, D3DX_PI / 4.0f, 1, 0.0001f, 30000);
-			D3DXMatrixOrthoLH(&matLightProjection, 400, 400, 1, 3000);
+			D3DXMatrixOrthoLH(&matLightProjection, 350, 350, 1, 3000);
 		}
 
 		D3DXMATRIXA16 matView;
@@ -211,6 +211,9 @@ void cGameMapHeight::Render(){
 			->SetVector("gLightColor", &gLightColor);
 		g_pShaderManager->GetShader("../Resources/Shader/DetailBlending.fx")
 			->SetTexture("DiffuseMap_Tex", m_pTexture);
+
+		// 나를 이 병신이라고 불러다오 ㅡㅡ
+		// 텍스쳐를 도대체 왜 릴리즈해서 지랄이이었음..HD
 		g_pShaderManager->GetShader("../Resources/Shader/DetailBlending.fx")
 			->SetTexture("SpecularMap_Tex", m_pTextureNormal);
 		g_pShaderManager->GetShader("../Resources/Shader/DetailBlending.fx")
@@ -234,70 +237,15 @@ void cGameMapHeight::Render(){
 			for (UINT i = 0; i < numPasses; ++i)
 			{
 				g_pShaderManager->GetShader("../Resources/Shader/DetailBlending.fx")->BeginPass(i);
-				{
+				//{
 					// 구체를 그린다.
-					g_pShaderManager->GetShader("../Resources/Shader/DetailBlending.fx")->CommitChanges();
+					//g_pShaderManager->GetShader("../Resources/Shader/DetailBlending.fx")->CommitChanges();
 					m_pMesh->DrawSubset(0);
-				}
+				//}
 				g_pShaderManager->GetShader("../Resources/Shader/DetailBlending.fx")->EndPass();
 			}
 		}
 		g_pShaderManager->GetShader("../Resources/Shader/DetailBlending.fx")->End();
-		//////////////////////////////////////////////////
-		
-
-		//D3DXMATRIXA16 matLightView;
-		//{
-		//	D3DXVECTOR3 vLookatPt(0.0f, 0.0f, 0.0f);
-		//	D3DXVECTOR3 vUpVec(0.0f, 1.0f, 0.0f);
-		//	D3DXMatrixLookAtLH(&matLightView, &pos, &vLookatPt, &vUpVec);
-		//}
-
-		//D3DXMATRIXA16 matLightProjection; {
-		//	D3DXMatrixPerspectiveFovLH(&matLightProjection, D3DX_PI / 4.0f, 1, 1, 3000);
-		//}
-
-		//g_pD3DDevice->GetTransform(D3DTS_VIEW, &matView);
-		//g_pD3DDevice->GetTransform(D3DTS_PROJECTION, &matProjection);
-		//D3DXMATRIXA16 matViewProject; {
-		//	D3DXMatrixMultiply(&matViewProject, &matView, &matProjection);
-		//}
-
-		//// 쉐이더 전역변수들을 설정
-		//g_pShaderManager->GetShader("../Resources/Shader/ApplyShadow.fx")
-		//	->SetMatrix("gWorldMatrix", &matWorld);
-		//
-		////gLightViewMatrix
-		////gLightProjectionMatrix
-		////gWorldLightPosition
-		////gViewProjectionMatrix
-		////gObjectColor
-		//g_pShaderManager->GetShader("../Resources/Shader/ApplyShadow.fx")
-		//	->SetMatrix("gLightViewMatrix", &matView);
-		//g_pShaderManager->GetShader("../Resources/Shader/ApplyShadow.fx")
-		//	->SetMatrix("gLightProjectionMatrix", &matProjection);
-		//g_pShaderManager->GetShader("../Resources/Shader/ApplyShadow.fx")
-		//	->SetVector("gWorldLightPosition", &D3DXVECTOR4(pos,1.0f));
-		//g_pShaderManager->GetShader("../Resources/Shader/ApplyShadow.fx")
-		//	->SetMatrix("gViewProjectionMatrix", &matViewProject);
-		//g_pShaderManager->GetShader("../Resources/Shader/ApplyShadow.fx")
-		//	->SetVector("gObjectColor", &D3DXVECTOR4(1.0f, 1.0f, 1.0f, 1.0f));
-		//g_pShaderManager->GetShader("../Resources/Shader/ApplyShadow.fx")
-		//	->SetTexture("ShadowMap_Tex", g_pShaderManager->GetShadowRenderTarget());
-		//// 쉐이더를 시작한다.
-		//UINT numPasses = 0;
-		//g_pShaderManager->GetShader("../Resources/Shader/ApplyShadow.fx")->Begin(&numPasses, NULL);
-		//{
-		//	for (UINT i = 0; i < numPasses; ++i)
-		//	{
-		//		g_pShaderManager->GetShader("../Resources/Shader/ApplyShadow.fx")->BeginPass(i);
-		//		{
-		//			m_pMesh->DrawSubset(0);
-		//		}
-		//		g_pShaderManager->GetShader("../Resources/Shader/ApplyShadow.fx")->EndPass();
-		//	}
-		//}
-		//g_pShaderManager->GetShader("../Resources/Shader/ApplyShadow.fx")->End();
 	}
 }
 

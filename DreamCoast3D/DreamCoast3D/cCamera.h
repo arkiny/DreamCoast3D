@@ -4,6 +4,9 @@
 // 고정 카메라는 필요시 확장
 #include "iMap.h"
 #include "iCameraDeligate.h"
+#include "cGamePlayableObject.h"
+
+class cGamePlayableObject;
 
 class cCamera : public cObject, public iCameraDeligate
 {
@@ -29,6 +32,8 @@ protected:
 	bool m_isMove;
 	bool m_isAttack;
 	float m_fPassTime;
+
+	cGamePlayableObject* m_pPlayer;
 
 public:
 	cCamera(void);
@@ -58,5 +63,18 @@ public:
     virtual void AttackCameraMoving();
 
 	int m_nRunout;
+
+	void SetPlayerForCamera(cGameObject* pPlayer);
+
+	void PlayerFrontUpdateOnMove(float fSensitive);
+	void MouseMove(float fSensitive);
+
+	void MouseTrap();
+
+	int m_nCustomAngle;
+
+	POINT ptSave;
+
+	bool m_isTrap;
 };
 

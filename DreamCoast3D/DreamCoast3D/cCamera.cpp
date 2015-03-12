@@ -25,6 +25,13 @@ cCamera::cCamera(void)
 	m_isMove = false;
     m_isAttack = false;
     m_fPassTime = 0.2f;
+
+	m_ptPrevMouse = { -0.f, 0.f };
+
+	m_nCustomAngle = 8;
+	ptSave = { 0, 0 };
+
+	m_isTrap = false;
 }
 
 
@@ -60,7 +67,7 @@ void cCamera::Setup(
 	m_vUp = vUp;
 	m_fAngleX = fAngleX;
 	m_fAngleY = fAngleY;
-	m_fDist = fDist;
+	m_fDist = 13.f;
 	m_fMin = fMin;
 	m_fMax = fMax;
 
@@ -69,18 +76,35 @@ void cCamera::Setup(
 
 void cCamera::Update(float delta)
 {
-	if (g_pControlManager->GetInputInfo(VK_SPACE))
+	if (g_pControlManager->GetInputInfo('T'))
 	{
-		m_isMove = true;
+		//ShowCursor(true);
+		m_isTrap = false;
 	}
 	else
 	{
+		m_isTrap = true;
+		//ShowCursor(false);
+	}
+
+	if (m_pPlayer->m_pCurrentState->GetCurrentStateType() == 0)
+	{
 		m_isMove = false;
 	}
-    if (g_pControlManager->GetInputInfo(VK_CONTROL))
-    {
-        m_isAttack = true;
-    }
+	else
+	{
+		m_isMove = true;
+	}
+
+
+	if (g_pControlManager->GetInputInfo('P'))
+	{
+		m_nCustomAngle++;
+	}
+	if (g_pControlManager->GetInputInfo('O'))
+	{
+		m_nCustomAngle--;
+	}
 
 	m_vLookAt = *m_pvTarget;
 
@@ -106,37 +130,37 @@ void cCamera::Update(float delta)
 	D3DXMatrixRotationY(&matY, -D3DX_PI / 2);
 	D3DXVec3TransformCoord(&m_vEye, &pvTarget, &matY);
 	m_vEye += *m_pvTarget;
-	m_vEye.y = m_pvTarget->y + m_fDist - 7;
+	m_vEye.y = m_pvTarget->y + m_fDist - m_nCustomAngle;
+	
 
+	if (m_isTrap == true)
+	{
+		if (g_pControlManager->GetInputInfo(VK_MBUTTON) && m_isRButtonDown == false){
+			m_ptPrevMouse = g_pControlManager->GetCurrentCursorPosition();
+			m_isRButtonDown = true;
+		}
 
-	if (g_pControlManager->GetInputInfo(VK_MBUTTON) && m_isRButtonDown == false){
-		m_ptPrevMouse = g_pControlManager->GetCurrentCursorPosition();
-		m_isRButtonDown = true;
+		if (g_pControlManager->GetInputInfo(VK_MBUTTON) == false && m_isRButtonDown == true){
+			m_isRButtonDown = false;
+		}
+
+		if (m_isMove == false)
+		{
+			MouseMove(2000.f);
+			MouseTrap();
+		}
+		else if (g_pControlManager->GetInputInfo(VK_MBUTTON) && m_isRButtonDown == true)
+		{
+			MouseMove(1000.f);
+			MouseTrap();
+		}
+		else
+		{
+			PlayerFrontUpdateOnMove(1000.f);
+			MouseTrap();
+		}
 	}
 
-	if (g_pControlManager->GetInputInfo(VK_MBUTTON) == false && m_isRButtonDown == true){
-		m_isRButtonDown = false;
-	}
-
-	if (g_pControlManager->GetInputInfo(VK_MBUTTON) && m_isRButtonDown == true){
-		POINT ptCurrMouse;
-		GetCursorPos(&ptCurrMouse);
-		ScreenToClient(g_hWnd, &ptCurrMouse);
-
-		float fDeltaX = (ptCurrMouse.x - m_ptPrevMouse.x) / 100.f;
-		float fDeltaY = (ptCurrMouse.y - m_ptPrevMouse.y) / 100.f;
-
-		m_fAngleX += fDeltaY;
-		m_fAngleY += fDeltaX;
-
-		if (m_fAngleX >= D3DX_PI / 2.f - 0.0001f)
-			m_fAngleX = D3DX_PI / 2.f - 0.0001f;
-
-		if (m_fAngleX <= -D3DX_PI / 2.f + 0.0001f)
-			m_fAngleX = -D3DX_PI / 2.f + 0.0001f;
-
-		m_ptPrevMouse = ptCurrMouse;
-	}
 
 	if (m_isRButtonDown == false && m_isMove == true)
 	{
@@ -155,6 +179,8 @@ void cCamera::Update(float delta)
 		m_fAngleY = m_fFixedAngleX + D3DX_PI / 2;
 	}
 
+
+
 	float wheelMove = g_pControlManager->GetWheelMoveDist();
 	if (wheelMove != 0.0f)
 	{
@@ -165,7 +191,9 @@ void cCamera::Update(float delta)
 
 			m_fDist = m_fMax;
 	}
-	
+
+
+
 	m_vEye = D3DXVECTOR3(0, 0.0f, -m_fDist);
 
 	D3DXMATRIXA16 matTrans, transZ, matRotX, matRotY;
@@ -176,6 +204,8 @@ void cCamera::Update(float delta)
 
 	D3DXVec3TransformCoord(&m_vEye, &m_vEye, &matRotX);
 	D3DXVec3TransformCoord(&m_vEye, &m_vEye, &matRotY);
+
+
 
 	if (m_pvTarget)
 	{
@@ -194,15 +224,10 @@ void cCamera::Update(float delta)
 	}
 	D3DXVECTOR3 dist = m_vEye - m_vLookAt;
 	float fAfterDist = D3DXVec3Length(&dist);
-    if (m_isAttack)
-    {
-        AttackCameraMoving();
-    }
 
-    D3DXMATRIXA16 matView;
+	D3DXMATRIXA16 matView;
 	D3DXMatrixLookAtLH(&matView, &m_vEye, &m_vLookAt, &m_vUp);
 	g_pD3DDevice->SetTransform(D3DTS_VIEW, &matView);
-
 }
 
 void cCamera::SetTarget(D3DXVECTOR3* pvTarget)
@@ -217,40 +242,6 @@ void cCamera::UpdateAngle(float fAngle)
 
 void cCamera::AttackCameraMoving()
 {
-    //{
-    //    float fAttackTime = 0.2f;
-    //    float nCameraMove = 0.05f;
-    //    float fDist = 0.2f;
-    //    float fShake = 0;
-    //    float fPower = 0;
-    //    float fTimeInterval = 0.1f;
-
-    //    m_fPassTime -= g_pTimer->DeltaTime();
-    //    
-    //    if (m_fPassTime < 0.0f)
-    //    {
-    //        m_isAttack = false;
-    //        m_fPassTime = fAttackTime;
-    //    }
-    //    fShake = m_fPassTime / fTimeInterval;
-
-    //    if (fShake > 1)
-    //    {
-    //        m_vEye.x += nCameraMove;
-    //        m_vLookAt.x += nCameraMove;
-    //        m_vEye.z -= nCameraMove;
-    //        m_vLookAt.z -= nCameraMove;
-
-
-    //    }
-    //    else
-    //    {
-    //        m_vEye.x -= nCameraMove;
-    //        m_vLookAt.x -= nCameraMove;
-    //        m_vEye.z += nCameraMove;
-    //        m_vLookAt.z += nCameraMove;
-    //    }
-    //}
 
 	float nCameraMove = 0.05f;
 	while (m_nRunout < 2)
@@ -273,4 +264,99 @@ void cCamera::AttackCameraMoving()
 			m_vLookAt.z += 3;
 		}
 	}
+}
+
+void cCamera::SetPlayerForCamera(cGameObject* pPlayer)
+{
+	m_pPlayer = (cGamePlayableObject*)pPlayer;
+}
+
+void cCamera::PlayerFrontUpdateOnMove(float fSensitive)
+{
+
+	if (m_isMove)
+	{
+		D3DXMATRIXA16 matRotation;
+		D3DXMatrixIdentity(&matRotation);
+
+		POINT ptCurrMouse = { 0, 0 };
+		POINT ptPrevMouse = { 640, 360 };
+
+		GetCursorPos(&ptCurrMouse);
+		ScreenToClient(g_hWnd, &ptCurrMouse);
+
+		float fDeltaX = (ptCurrMouse.x - ptPrevMouse.x) / fSensitive;
+
+		float m_fAngleX = m_pPlayer->GetPlayerAngle();
+		m_fAngleX += fDeltaX;
+
+		m_pPlayer->SetPlayerAngle(m_fAngleX);
+
+		D3DXMatrixRotationY(&matRotation, m_fAngleX);
+		D3DXVECTOR3 vDir = D3DXVECTOR3(0, 0, -1.f);
+		D3DXVec3TransformNormal(&vDir, &vDir, &matRotation);
+		m_pPlayer->SetFront(vDir);
+		m_pPlayer->SetYangle(m_fAngleX);
+
+		//ptPrevMouse = ptCurrMouse;
+
+		//m_ptPrevMouse = ptPrevMouse;
+
+	}
+}
+
+void cCamera::MouseTrap()
+{
+	//RECT rectClient, rectMouseTrap;
+
+	//GetClientRect(g_hWnd, &rectClient);
+	//rectMouseTrap.right = (rectClient.right - rectClient.left) / 2 + 10;
+	//rectMouseTrap.left = (rectClient.right - rectClient.left) / 2 - 10;
+	//rectMouseTrap.top = (rectClient.bottom - rectClient.top) / 2 - 10;
+	//rectMouseTrap.bottom = (rectClient.bottom - rectClient.top) / 2 + 10;
+
+	POINT p;
+
+	GetCursorPos(&p);
+	ScreenToClient(g_hWnd, &p);
+	//POINT lefttop = { rectMouseTrap.left, rectMouseTrap.top };
+	//POINT rightbottom = { rectMouseTrap.right, rectMouseTrap.bottom };
+	//ClientToScreen(g_hWnd, &lefttop);
+	//ClientToScreen(g_hWnd, &rightbottom);
+	//if (p.x > rightbottom.x || p.x < lefttop.x){
+	//	POINT target = { 640, 360 };
+	//	ClientToScreen(g_hWnd, &target);
+	//	SetCursorPos(target.x, target.y);
+	//}
+	POINT target = { 640, 360 };
+	ClientToScreen(g_hWnd, &target);
+	SetCursorPos(target.x, target.y);
+}
+
+void cCamera::MouseMove(float fSensitive)
+{
+	POINT ptCurrMouse = { 0, 0 };
+	GetCursorPos(&ptCurrMouse);
+	ScreenToClient(g_hWnd, &ptCurrMouse);
+
+	ptSave.x = 640 - ptCurrMouse.x;
+	ptSave.y = 360 - ptCurrMouse.y;
+
+	m_ptPrevMouse.x = 640 + ptSave.x;
+	m_ptPrevMouse.y = 360 + ptSave.y;
+
+	float fDeltaX = (ptCurrMouse.x - m_ptPrevMouse.x) / fSensitive;
+	float fDeltaY = (ptCurrMouse.y - m_ptPrevMouse.y) / fSensitive;
+
+	m_fAngleX += fDeltaY;
+	m_fAngleY += fDeltaX;
+
+
+	if (m_fAngleX >= D3DX_PI / 2.f - 0.0001f)
+		m_fAngleX = D3DX_PI / 2.f - 0.0001f;
+
+	if (m_fAngleX <= -D3DX_PI / 2.f + 0.0001f)
+		m_fAngleX = -D3DX_PI / 2.f + 0.0001f;
+
+	//m_ptPrevMouse = ptCurrMouse;
 }

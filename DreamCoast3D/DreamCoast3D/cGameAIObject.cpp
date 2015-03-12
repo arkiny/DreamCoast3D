@@ -50,6 +50,7 @@ void cGameAIObject::Setup(std::string sFolder, std::string sFile){
 
 void cGameAIObject::Start(){
 	m_pTargetGameObject = NULL;
+	m_fHP = 2;
 	m_pCurrentState = m_vecPatterns[eAISTATE_IDLE];
 	m_pCurrentState->Start(this);
 }
@@ -132,13 +133,16 @@ void cGameAIObject::OnHitTarget(cGameObject* pTarget, float fDamage, D3DXVECTOR3
 		}
 		m_pPrevState = NULL;
 
-		cEffectFireBall* p = new cEffectFireBall;
-		p->Setup();
-		//D3DXVECTOR3 playerPos = this->GetPosition();
-		//playerPos.y = playerPos.y + 1.0f;
-		p->SetPosition(vHitPosition);
-		this->GetEffectDelegate()->AddEffect(p);
-		p->Release();
+		//cEffectFireBall* p = new cEffectFireBall;
+		//p->Setup();
+		////D3DXVECTOR3 playerPos = this->GetPosition();
+		////playerPos.y = playerPos.y + 1.0f;
+		//p->SetPosition(vHitPosition);
+		//this->GetEffectDelegate()->AddEffect(p);
+		//p->Release();
+
+		this->GetEffectDelegate()->AddEffect(cEffect::E_EFFECT_ONHIT, vHitPosition);
+
 
 		// TODO 데미지에 따라 체력 저하
 		m_fHP--;

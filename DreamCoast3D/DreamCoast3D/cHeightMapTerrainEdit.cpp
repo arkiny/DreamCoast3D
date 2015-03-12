@@ -18,7 +18,7 @@ m_pIndexBuffer(NULL)
 	m_fHeight = 1.f;
 	m_fWidth = 1.f;
 	m_isRButton = false;
-
+	m_fDelta = 0.f;
 }
 
 
@@ -189,7 +189,11 @@ void cHeightMapTerrainEdit::Update(float fDelta){
 		NormalizeTile();
 	}
 
-
+	if (GetAsyncKeyState('N'))
+	{
+		m_fDelta += 1;
+		CalGauss(m_vClickFrom.x, m_vClickFrom.z, m_fDelta);
+	}
 }
 
 void cHeightMapTerrainEdit::Render(){
@@ -226,27 +230,14 @@ void cHeightMapTerrainEdit::Render(){
 		}
 
 		g_pD3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
-
-
-	
-	/*}
-	else{
-		D3DXMATRIXA16 matWorld;
-		D3DXMatrixIdentity(&matWorld);
-		g_pD3DDevice->SetTransform(D3DTS_WORLD, &matWorld);
-		g_pD3DDevice->SetMaterial(&m_stMtl);
-		g_pD3DDevice->SetTexture(0, NULL);
-		g_pD3DDevice->SetStreamSource(0, m_pVertexBuffer, 0, sizeof(ST_PNT2_VERTEX));
-		g_pD3DDevice->SetIndices(m_pIndexBuffer);
-
-		g_pD3DDevice->DrawIndexedPrimitive(D3DPT_TRIANGLELIST,
-			0, 0, m_vecVertex.size(), 0, m_vecIndex.size());
-	}*/
 }
 
-void cHeightMapTerrainEdit::ChangeMapYVertexCoord(D3DXVECTOR2 vMin, D3DXVECTOR2 vMax, float fDelta){
-	for (int z = (int)vMin.y; z < (int)vMax.y; z++){
-		for (int x = (int)vMin.x; x < (int)vMax.x; x++){
+void cHeightMapTerrainEdit::ChangeMapYVertexCoord(D3DXVECTOR2 vMin, D3DXVECTOR2 vMax, float fDelta)
+{
+	for (int z = (int)vMin.y; z < (int)vMax.y; z++)
+	{
+		for (int x = (int)vMin.x; x < (int)vMax.x; x++)
+		{
 			
 			float check = m_vecVertex[z*(m_nTileN + 1) + x].p.y + fDelta;
 			if (check > 25.6f){
@@ -259,7 +250,10 @@ void cHeightMapTerrainEdit::ChangeMapYVertexCoord(D3DXVECTOR2 vMin, D3DXVECTOR2 
 		}
 	}
 
-	CalBazier(vMin, vMax);
+	if (GetAsyncKeyState(VK_UP))
+	{
+		CalBazier(vMin, vMax);
+	}
 
 
 	ST_PNT2_VERTEX* v;
@@ -277,31 +271,63 @@ void cHeightMapTerrainEdit::ChangeMapYVertexCoord(D3DXVECTOR2 vMin, D3DXVECTOR2 
 	m_pMesh->LockIndexBuffer(0, (LPVOID*)&pI);
 	memcpy(pI, &m_vecIndex[0], m_vecIndex.size() * sizeof(DWORD));
 	m_pMesh->UnlockIndexBuffer();
+}
 
-	//DWORD* pA = NULL;
-	//m_pMesh->LockAttributeBuffer(0, &pA);
-	//for (size_t i = 0; i < m_vecIndex.size() / 3; ++i)
-	//{
-	//	pA[i] = 0;
-	//}
-	//m_pMesh->UnlockAttributeBuffer();
+void cHeightMapTerrainEdit::CalGauss(int nX, int nZ, float fDelta)
+{
+	float fSizeCheck = 1.f;
+	int nRange = 0.f;
+	while (fSizeCheck > 0.0001f)
+	{
+		nRange++;
+		fSizeCheck = GetGaussian(nRange, 0.f, 1.f + sqrt(sqrt(fDelta)));
+	}
 
-	//std::vector<DWORD> vecAdjBuffer(m_vecIndex.size());
-	//m_pMesh->GenerateAdjacency(0.0f, &vecAdjBuffer[0]);
+	int nGaussX = -nRange;
+	int nGaussZ = -nRange;
 
-	//m_pMesh->OptimizeInplace(
-	//	D3DXMESHOPT_ATTRSORT |
-	//	D3DXMESHOPT_COMPACT |
-	//	D3DXMESHOPT_VERTEXCACHE,
-	//	&vecAdjBuffer[0], 0, 0, 0);
+	for (int z = nZ - nRange; z <= nZ + nRange; z++)
+	{
+		nGaussZ++;
+		for (int x = nX - nRange; x < nX + nRange; x++)
+		{
+			nGaussX++;
+			fSizeCheck = GetGaussian(nGaussX, nGaussZ, 1.f + sqrt(sqrt(fDelta)));
+
+			if (m_vecVertex[x + z*(m_nTileN + 1)].p.y + fSizeCheck * sqrt(fDelta) > 25.6f)
+			{
+				m_vecVertex[x + z*(m_nTileN + 1)].p.y = 25.5f;
+			}
+			else
+			{
+				m_vecVertex[x + z*(m_nTileN + 1)].p.y += fSizeCheck * sqrt(fDelta);
+			}
+
+		}
+		nGaussX = -nRange;
+	}
+
+
+	ST_PNT2_VERTEX* v;
+	m_pVertexBuffer->Lock(0, 0, (void**)&v, 0);
+	memcpy(v, &m_vecVertex[0], m_vecVertex.size() * sizeof(ST_PNT2_VERTEX));
+	m_pVertexBuffer->Unlock();
+
+	ST_PNT2_VERTEX* pV = NULL;
+	m_pMesh->LockVertexBuffer(0, (LPVOID*)&pV);
+	memcpy(pV, &m_vecVertex[0], m_vecVertex.size() * sizeof(ST_PNT2_VERTEX));
+	m_pMesh->UnlockVertexBuffer();
+
+	DWORD* pI = NULL;
+	m_pMesh->LockIndexBuffer(0, (LPVOID*)&pI);
+	memcpy(pI, &m_vecIndex[0], m_vecIndex.size() * sizeof(DWORD));
+	m_pMesh->UnlockIndexBuffer();
+
 }
 
 void cHeightMapTerrainEdit::SaveToRawFile(){
 	FILE* fp = NULL;
 	fopen_s(&fp, "../Resources/Map/test.raw", "w+b");
-
-	//unsigned char y = fgetc(fp);
-	//m_vecVertex[z * (m_nTileN + 1) + x].p = D3DXVECTOR3((float)x, y / 10.0f, (float)z);
 
 	unsigned int c;
 	for (auto p : m_vecVertex){
@@ -309,7 +335,6 @@ void cHeightMapTerrainEdit::SaveToRawFile(){
 		fprintf(fp, "%c", uc);
 	}
 
-	//fputc()
 
 	fclose(fp);
 }
@@ -786,3 +811,70 @@ void cHeightMapTerrainEdit::NormalizeTile()
 	}
 
 }
+
+
+float cHeightMapTerrainEdit::GetGaussian(float fX, float fZ, float fRho)
+{
+	float g = 1.0f / sqrt(2.0f * D3DX_PI * fRho * fRho);
+	return g * exp(-(fX * fX + fZ * fZ) / (2 * fRho * fRho));
+}
+
+//
+//void cHeightMapTerrainEdit::CalGauss(int nX, int nZ, float fDelta)
+//{
+//	if (GetAsyncKeyState('N'))
+//	{
+//		fDelta += 1;
+//	}
+//
+//	if (GetAsyncKeyState('M'))
+//	{
+//		fDelta -= 1;
+//	}
+//
+//	float fSizeCheck = 1.f;
+//	int nRange = 0.f;
+//	while (fSizeCheck > 0.0001f)
+//	{
+//		nRange++;
+//		fSizeCheck = GetGaussian(nRange, 0.f, 1.f + sqrt(sqrt(fDelta)));
+//	}
+//
+//	int nGaussX = -nRange;
+//	int nGaussZ = -nRange;
+//
+//	if (fDelta < 0.f)
+//	{
+//		fDelta = 0.f;
+//		return;
+//	}
+//
+//	for (int z = nZ - nRange; z <= nZ + nRange; z++)
+//	{
+//		nGaussZ++;
+//		for (int x = nX - nRange; x < nX + nRange; x++)
+//		{
+//			nGaussX++;
+//			fSizeCheck = GetGaussian(nGaussX, nGaussZ, 1.f + sqrt(sqrt(fDelta)));
+//			m_vecVertex[x + z*(m_nTileN + 1)].p.y = fSizeCheck * fDelta;
+//		}
+//		nGaussX = -nRange;
+//	}
+//
+//
+//	ST_PNT2_VERTEX* v;
+//	m_pVertexBuffer->Lock(0, 0, (void**)&v, 0);
+//	memcpy(v, &m_vecVertex[0], m_vecVertex.size() * sizeof(ST_PNT2_VERTEX));
+//	m_pVertexBuffer->Unlock();
+//
+//	ST_PNT2_VERTEX* pV = NULL;
+//	m_pMesh->LockVertexBuffer(0, (LPVOID*)&pV);
+//	memcpy(pV, &m_vecVertex[0], m_vecVertex.size() * sizeof(ST_PNT2_VERTEX));
+//	m_pMesh->UnlockVertexBuffer();
+//
+//	DWORD* pI = NULL;
+//	m_pMesh->LockIndexBuffer(0, (LPVOID*)&pI);
+//	memcpy(pI, &m_vecIndex[0], m_vecIndex.size() * sizeof(DWORD));
+//	m_pMesh->UnlockIndexBuffer();
+//
+//}

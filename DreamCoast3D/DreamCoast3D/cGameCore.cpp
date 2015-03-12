@@ -23,6 +23,7 @@ cGameCore::~cGameCore()
 void cGameCore::Setup(){
 	m_pSceneManager = new cSceneManager;
 	cGameLoader cGL;
+
 	cGL.LoadFromGameFile(m_pSceneManager, std::string("../Resources/MAINDATA.txt"));
 	m_pSceneManager->Setup(std::string(""), std::string(""));
 	m_pSceneManager->Start();

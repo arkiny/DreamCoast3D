@@ -2,4 +2,5 @@
 
 __interface iCameraDeligate{
 	void AttackCameraMoving();
+	void SetPlayerForCamera(cGameObject* pPlayer);
 };
