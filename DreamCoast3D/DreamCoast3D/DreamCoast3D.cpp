@@ -156,6 +156,7 @@ ATOM MyRegisterClass(HINSTANCE hInstance)
 	wcex.lpszClassName	= szWindowClass;
 	wcex.hIconSm		= LoadIcon(wcex.hInstance, MAKEINTRESOURCE(IDI_SMALL));
 
+
 	return RegisterClassEx(&wcex);
 }
 
@@ -196,6 +197,7 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
    }
 
    g_hWnd = hWnd;
+   ShowCursor(false);
 
    ShowWindow(hWnd, nCmdShow);
    UpdateWindow(hWnd);

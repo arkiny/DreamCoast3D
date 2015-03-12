@@ -1,6 +1,7 @@
 #pragma once
 
 class cUIObject;
+class cUICursor;
 
 class cUIObjManager : public cObject, public iUIManagerDeligate
 {
@@ -13,6 +14,8 @@ protected:
 	bool m_bSceneChange = false;
 	iSceneDelegate* m_pSceneManager;
 	int m_nNextScene = -1;
+
+	cUICursor* m_pMouseCursor;
 
 public:
 	cUIObjManager();
@@ -34,5 +37,6 @@ public:
 
 	// override iUIManagerDeligate
 	virtual void ChangeScene(int nScene, cUIObject* pSender) override;
+	virtual void SetShowCursor(bool isShow);
 };
 

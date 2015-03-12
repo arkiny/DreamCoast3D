@@ -160,6 +160,9 @@ void cScene::Start(){
 		m_pEffectManager->Start();
 	}
 
+	if (m_pCamera && m_pUIObjManager){
+		m_pCamera->SetUIDelegate(m_pUIObjManager);
+	}
 
 }
 

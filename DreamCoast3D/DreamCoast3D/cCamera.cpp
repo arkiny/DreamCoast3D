@@ -49,7 +49,7 @@ void cCamera::Setup()
 	g_pD3DDevice->GetViewport(&vp);
 
 	D3DXMATRIXA16 matProj;
-	D3DXMatrixPerspectiveFovLH(&matProj, D3DX_PI / 4.0f, vp.Width / (float)vp.Height, 1.0f, 3000.0f);
+	D3DXMatrixPerspectiveFovLH(&matProj, D3DX_PI / 4.0f, 1280.0f / 720.0f, 1.0f, 3000.0f);
 	g_pD3DDevice->SetTransform(D3DTS_PROJECTION, &matProj);
 }
 
@@ -135,6 +135,7 @@ void cCamera::Update(float delta)
 
 	if (m_isTrap == true)
 	{
+		m_pUIDelegate->SetShowCursor(false);
 		if (g_pControlManager->GetInputInfo(VK_MBUTTON) && m_isRButtonDown == false){
 			m_ptPrevMouse = g_pControlManager->GetCurrentCursorPosition();
 			m_isRButtonDown = true;
@@ -160,7 +161,9 @@ void cCamera::Update(float delta)
 			MouseTrap();
 		}
 	}
-
+	else{
+		m_pUIDelegate->SetShowCursor(true);
+	}
 
 	if (m_isRButtonDown == false && m_isMove == true)
 	{

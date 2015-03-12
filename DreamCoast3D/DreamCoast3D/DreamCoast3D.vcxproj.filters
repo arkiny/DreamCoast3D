@@ -352,6 +352,9 @@
     <ClCompile Include="cShaderManager.cpp">
       <Filter>FrameWork\Singletons</Filter>
     </ClCompile>
+    <ClCompile Include="cUICursor.cpp">
+      <Filter>FrameWork\Object\UIObject</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cAction.h">
@@ -719,6 +722,9 @@
     </ClInclude>
     <ClInclude Include="cShaderManager.h">
       <Filter>FrameWork\Singletons</Filter>
+    </ClInclude>
+    <ClInclude Include="cUICursor.h">
+      <Filter>FrameWork\Object\UIObject</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

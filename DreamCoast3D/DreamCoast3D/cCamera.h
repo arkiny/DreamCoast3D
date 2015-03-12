@@ -12,6 +12,8 @@ class cCamera : public cObject, public iCameraDeligate
 {
 protected:
 	SYNTHESIZE(iMap*, m_pMap, Map);
+	SYNTHESIZE(iUIManagerDeligate*, m_pUIDelegate, UIDelegate);
+
 	D3DXVECTOR3		m_vEye;
 	D3DXVECTOR3		m_vLookAt;
 	D3DXVECTOR3		m_vUp;

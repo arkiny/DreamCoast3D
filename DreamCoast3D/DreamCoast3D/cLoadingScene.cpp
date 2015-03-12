@@ -167,7 +167,7 @@ void cLoadingScene::Render(){
 	// 광원-투영 행렬을 만든다.
 	D3DXMATRIXA16 matLightProjection;
 	{
-		D3DXMatrixPerspectiveFovLH(&matLightProjection, D3DX_PI / 4.0f, 1, 1, 3000);
+		D3DXMatrixPerspectiveFovLH(&matLightProjection, D3DX_PI / 4.0f, 1280.0f / 720.0f, 1, 3000);
 	}
 
 	// 뷰/투영행렬을 만든다.

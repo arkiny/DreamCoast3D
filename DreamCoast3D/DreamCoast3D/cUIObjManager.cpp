@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "cUIObjManager.h"
-
+#include "cUICursor.h"
 
 cUIObjManager::cUIObjManager()
 {
@@ -13,9 +13,15 @@ cUIObjManager::~cUIObjManager()
 
 void cUIObjManager::Setup(){
 	// 차후 파일 패스를 받아와서 로드
+	m_pMouseCursor = new cUICursor;
+	std::string sFile = "../Resources/Cursor/cur116.png";
+	m_pMouseCursor->SetTextureFilename(sFile);
 }
 
 void cUIObjManager::Update(float fDelta){
+	if (m_pMouseCursor){
+		m_pMouseCursor->Update(fDelta);
+	}
 	for (auto p : m_vecUIObjects){
 		p->Update(fDelta);
 	}
@@ -34,10 +40,11 @@ void cUIObjManager::Update(float fDelta){
 	}
 }
 
-void cUIObjManager::Render(){
+void cUIObjManager::Render(){	
 	for (auto p : m_vecUIObjects){
 		SAFE_RENDER(p);
 	}
+	SAFE_RENDER(m_pMouseCursor);
 }
 
 void cUIObjManager::AddUI(cUIObject* pUIObj){
@@ -55,6 +62,9 @@ void cUIObjManager::RemoveUI(){
 void cUIObjManager::Destroy(){
 	for (auto p : m_vecUIObjects){
 		SAFE_RELEASE(p);
+	}
+	if (m_pMouseCursor){
+		m_pMouseCursor->Release();
 	}
 	this->Release();
 }
@@ -89,4 +99,10 @@ void cUIObjManager::Start(){
 void cUIObjManager::ChangeScene(int nScene, cUIObject* pSender){
 	m_nNextScene = nScene;
 	m_bSceneChange = true;
+}
+
+void cUIObjManager::SetShowCursor(bool isShow){
+	if (m_pMouseCursor){
+		m_pMouseCursor->SetIsShow(isShow);
+	}
 }
