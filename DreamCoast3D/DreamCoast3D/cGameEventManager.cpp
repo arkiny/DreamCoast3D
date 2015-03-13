@@ -4,6 +4,7 @@
 
 cGameEventManager::cGameEventManager()
 	: m_pGridTileSystem(NULL)
+	, m_pSceneDelegate(NULL)
 {
 }
 
@@ -80,7 +81,12 @@ void cGameEventManager::CheckEventFromRange(cGameObject* pFrom, int nRange)
 		}
 		if (p->GetEventType() == cGameObject::eEventType::E_STORE)
 		{
-
+			
 		}
 	}
+}
+
+void cGameEventManager::SetSceneDelegate(iSceneDelegate* pSceneDelegate)
+{
+	m_pSceneDelegate = pSceneDelegate;
 }

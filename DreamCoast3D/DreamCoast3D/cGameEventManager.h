@@ -34,7 +34,9 @@ public:
 
 	void CheckEventFromRange(cGameObject* pFrom, int nRange);
 
+	void SetSceneDelegate(iSceneDelegate* pSceneDelegate);
+
 private:
-	
+	iSceneDelegate* m_pSceneDelegate;
 };
 

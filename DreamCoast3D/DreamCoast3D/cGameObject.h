@@ -28,6 +28,7 @@ public:
 		E_QUEST,
 		E_TALK,
 		E_STORE,
+		E_PORTAL,
 		E_EMPTY,
 		E_EVENTMAX
 	};

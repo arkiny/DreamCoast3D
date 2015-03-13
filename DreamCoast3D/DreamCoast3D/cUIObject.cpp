@@ -103,6 +103,7 @@ void cUIObject::SetEventDeligate(iGameEventDelegate* pEventDeligate)
 	for (auto p : m_vecChild)
 	{
 		p->SetEventDeligate(pEventDeligate);
+		pEventDeligate->SetSceneDelegate(m_pSceneDeligate);
 	}
 	m_pEventDeligate = pEventDeligate;
 }
