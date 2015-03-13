@@ -4,17 +4,11 @@
 #include "cDataItem.h"
 
 //TODO:
-//화면 밖으로 못벗어나게 하기
 //화면 가장자리 근처에서는 자석같은 느낌으로
 //열때 닫을때 애니메이션 + 애니메이션 끝나기 전에는 상호작용은 무시
 //HACK: 드래그로 화면 밖으로 이동을 시도 했을때 마우스가 원위치로 돌아오기 전에 가장자리에서 떨어져야 더 반응성이 좋을 것 같다.
 
-//아이콘에 스프라이트 이미지를 가지게 한다.
-//이제 짜놓은 구조를 엮어야된다.
-
-//삭제된 슬롯에 빈칸이 되게 해야한다
-//AddItem Get/Set계열 내가 커스텀 해야되겠다
-//SAFE_RELEASE 확실히 제어해야한다.
+//바인딩 아이콘에 대해서 완료 해야한다.
 
 cUIInventory::cUIInventory()
 	: m_isDragging(false)
@@ -25,6 +19,8 @@ cUIInventory::cUIInventory()
 	, m_isMouseOverVisible(false)
 	, m_isMouseDownVisible(false)
 	, m_pFocusSlot(nullptr)
+	, m_eDragState(E_NODRAG)
+	, m_pBindingIcon(nullptr)
 {
 
 }
@@ -46,6 +42,8 @@ cUIInventory::~cUIInventory()
 	{
 		SAFE_RELEASE(m_vecUISlot[i]);
 	}*/
+	SAFE_RELEASE(m_pIconDragSrc);
+	SAFE_RELEASE(m_pBindingIcon);
 
 }
 
@@ -130,17 +128,18 @@ void cUIInventory::Update(float fDelta)
 	//창이 열려 있을 때
 	if (GetisPopped())
 	{
-		//마우스 오버 슬롯 테두리
-		m_pFocusSlot = (cUISlot*)FindFocusSlot(GetvecUISlot());
+		m_pFocusSlot = (cUISlot*)FindFocusSlot(m_vecUISlot);
+		
+		//마우스 오버 슬롯 테두리 위치를 포커싱된 슬롯에 씌운다(이동한다)
 		if (m_pFocusSlot)
 		{
-			m_isMouseOverVisible = true;
+			SetIsMouseOverVisible(true);
 			m_pImageViewMouseOver->SetPosition(m_pUIRoot->GetPosition() + m_pFocusSlot->GetPosition());
 		}
 		else
 		{
-			m_isMouseOverVisible = false;
-			m_isMouseDownVisible = false;
+			SetIsMouseOverVisible(false);
+			SetIsMouseDownVisible(false);
 		}
 		//임시 효과
 		cUIImageView* pImageView = (cUIImageView*)m_pUIRoot;
@@ -166,6 +165,7 @@ void cUIInventory::Update(float fDelta)
 
 			m_pImageViewMouseOver->SetAlpha(fAlpha);
 			m_pImageViewMouseDown->SetAlpha(fAlpha);
+			
 		}
 		//왼버튼Down시
 		if (g_pControlManager->GetInputInfo(VK_LBUTTON)){ OnMouseLBDown(); }
@@ -177,13 +177,17 @@ void cUIInventory::Update(float fDelta)
 		else if (!g_pControlManager->GetInputInfo(VK_RBUTTON)){ OnMouseRBUp(); }
 		
 		//드래그 중이면 드래그 행동
-		if (m_isDragging == true) { Drag(); }
+		if (m_isDragging == true) { Drag(m_eDragState); }
 
 		if (m_pUIRoot)
 		{
 			m_pUIRoot->Update(fDelta);
 		}
-
+		/*if (m_pBindingIcon)
+		{
+			m_pBindingIcon->SetPosition(g_pControlManager->GetCurrentCursorPosition().x, g_pControlManager->GetCurrentCursorPosition().y);
+			m_pBindingIcon->Update(fDelta);
+		}*/
 		m_pImageViewMouseOver->Update(fDelta);
 		m_pImageViewMouseDown->Update(fDelta);
 	}
@@ -208,6 +212,7 @@ void cUIInventory::Render()
 
 		if (m_isMouseOverVisible) { m_pImageViewMouseOver->Render(); }
 		if (m_isMouseDownVisible) { m_pImageViewMouseDown->Render(); }
+		if (m_pBindingIcon){ m_pBindingIcon->Render(); }
 	}
 }
 
@@ -216,7 +221,6 @@ void cUIInventory::AddItem(cDataItem* pDataItem)
 {
 	LPD3DXSPRITE pSprite = nullptr;
 	D3DXCreateSprite(g_pD3DDevice, &pSprite);
-
 
 	for (size_t i = 0; i < m_vecUISlot.size(); ++i)
 	{
@@ -243,8 +247,8 @@ void cUIInventory::OnMouseLBDown()
 	//슬롯에 포커스가 있을때
 	if (m_pFocusSlot)
 	{
-		m_isMouseOverVisible = false;
-		m_isMouseDownVisible = true;
+		SetIsMouseOverVisible(false);
+		SetIsMouseDownVisible(true);
 		m_pImageViewMouseDown->SetPosition(m_pUIRoot->GetPosition() + m_pFocusSlot->GetPosition());
 	}
 	//이건 몸체를 클릭 했을때 이야기
@@ -264,7 +268,15 @@ void cUIInventory::OnMouseLBDown()
 		{
 			//드래그 시작
 			m_isDragging = true;
+			SetDragState(E_WINDOW_DRAG);
 		}
+	}
+	else if (m_pFocusSlot && m_isDragging == false)
+	{
+		m_isDragging = true;
+		SetDragState(E_ICON_DRAG);
+		//드래그 시작 아이콘을 기억
+		m_pIconDragSrc = m_pFocusSlot->GetIcon();
 	}
 }
 void cUIInventory::OnMouseLBUp()
@@ -276,15 +288,18 @@ void cUIInventory::OnMouseLBUp()
 	}
 
 	m_isDragging = false;
-	SetBeforeDragPos(m_pUIRoot->GetPosition());
+	m_eDragState = E_NODRAG;
+	SetBeforeDragPos(m_pUIRoot->GetPosition());//?
 }
 void cUIInventory::OnMouseRBDown()
 {
 	//슬롯에 포커스가 있을때
 	if (m_pFocusSlot)
 	{
-		m_isMouseOverVisible = false;
-		m_isMouseDownVisible = true;
+		SetIsMouseOverVisible(false);
+		SetIsMouseDownVisible(true);
+		//m_isMouseOverVisible = false;
+		//m_isMouseDownVisible = true;
 		m_pImageViewMouseDown->SetPosition(m_pUIRoot->GetPosition() + m_pFocusSlot->GetPosition());
 		if (m_pFocusSlot->GetItem())
 		{
@@ -296,49 +311,60 @@ void cUIInventory::OnMouseRBUp()
 {
 	if (m_pFocusSlot)
 	{
-		m_isMouseOverVisible = true;
-		m_isMouseDownVisible = false;
+		SetIsMouseOverVisible(true);
+		SetIsMouseDownVisible(false);
 	}
 }
-void cUIInventory::Drag()
+void cUIInventory::Drag(EDRAGSTATE eDragState)
 {
 	if (m_isDragging == false) { return; }
 
-	POINT ptClicked = g_pControlManager->GetLClickedCursorPosition();
-	POINT ptCurrent = g_pControlManager->GetCurrentCursorPosition();
-	//D3DXVECTOR3 vCurrRootPos = m_pUIRoot->GetPosition();
-	D3DXVECTOR3 vBeforeDragPos = GetBeforeDragPos();
-
-	RECT rtClientRect;
-	GetClientRect(g_hWnd, &rtClientRect);
-
-	//클릭된 지점과 현재 마우스 좌표간의 차이값
-	POINT ptCursorOffset;
-	ptCursorOffset.x = ptCurrent.x - ptClicked.x;
-	ptCursorOffset.y = ptCurrent.y - ptClicked.y;
-
-	//UI의 목표 좌표(실제 위치가 될 좌표)
-	POINT ptUIDestPos;
-	ptUIDestPos.x = (int)vBeforeDragPos.x + (int)ptCursorOffset.x;
-	ptUIDestPos.y = (int)vBeforeDragPos.y + (int)ptCursorOffset.y;
-
-	//상하좌우 화면밖을 벗어나지 못하게 처리해준다
-	if (ptUIDestPos.x < 0) { ptUIDestPos.x = 0; }
-	else if (ptUIDestPos.x + m_pUIRoot->GetDrawArea().right > rtClientRect.right)
+	if (eDragState == E_WINDOW_DRAG)
 	{
-		ptUIDestPos.x = rtClientRect.right - m_pUIRoot->GetDrawArea().right;
-	}
-	if (ptUIDestPos.y < 0) { ptUIDestPos.y = 0; }
-	else if (ptUIDestPos.y + m_pUIRoot->GetDrawArea().right > rtClientRect.bottom)
-	{
-		ptUIDestPos.y = rtClientRect.bottom - m_pUIRoot->GetDrawArea().bottom;
-	}
+		POINT ptClicked = g_pControlManager->GetLClickedCursorPosition();
+		POINT ptCurrent = g_pControlManager->GetCurrentCursorPosition();
+		//D3DXVECTOR3 vCurrRootPos = m_pUIRoot->GetPosition();
+		D3DXVECTOR3 vBeforeDragPos = GetBeforeDragPos();
 
-	//목표 좌표로 세팅 해준다
-	m_pUIRoot->SetPosition(D3DXVECTOR3(
-		(float)ptUIDestPos.x,
-		(float)ptUIDestPos.y,
-		0));
+		RECT rtClientRect;
+		GetClientRect(g_hWnd, &rtClientRect);
+
+		//클릭된 지점과 현재 마우스 좌표간의 차이값
+		POINT ptCursorOffset;
+		ptCursorOffset.x = ptCurrent.x - ptClicked.x;
+		ptCursorOffset.y = ptCurrent.y - ptClicked.y;
+
+		//UI의 목표 좌표(실제 위치가 될 좌표)
+		POINT ptUIDestPos;
+		ptUIDestPos.x = (int)vBeforeDragPos.x + (int)ptCursorOffset.x;
+		ptUIDestPos.y = (int)vBeforeDragPos.y + (int)ptCursorOffset.y;
+
+		//상하좌우 화면밖을 벗어나지 못하게 처리해준다
+		if (ptUIDestPos.x < 0) { ptUIDestPos.x = 0; }
+		else if (ptUIDestPos.x + m_pUIRoot->GetDrawArea().right > rtClientRect.right)
+		{
+			ptUIDestPos.x = rtClientRect.right - m_pUIRoot->GetDrawArea().right;
+		}
+		if (ptUIDestPos.y < 0) { ptUIDestPos.y = 0; }
+		else if (ptUIDestPos.y + m_pUIRoot->GetDrawArea().right > rtClientRect.bottom)
+		{
+			ptUIDestPos.y = rtClientRect.bottom - m_pUIRoot->GetDrawArea().bottom;
+		}
+
+		//목표 좌표로 세팅 해준다
+		m_pUIRoot->SetPosition(D3DXVECTOR3(
+			(float)ptUIDestPos.x,
+			(float)ptUIDestPos.y,
+			0));
+	}
+	else if (eDragState == E_ICON_DRAG)
+	{
+		/*m_pBindingIcon = cUIIcon::CloneIcon(m_pIconDragSrc);
+		if (m_pIconDragSrc)
+		m_pIconDragSrc->SetAlpha(0.5f);
+
+		m_pBindingIcon->SetPosition(g_pControlManager->GetCurrentCursorPosition().x, g_pControlManager->GetCurrentCursorPosition().y);*/
+	}
 }
 
 cUIObject* cUIInventory::FindFocusSlot(std::vector<cUISlot*>& vecUISlot)
@@ -348,10 +374,10 @@ cUIObject* cUIInventory::FindFocusSlot(std::vector<cUISlot*>& vecUISlot)
 	{
 		//HACK: 이거 꼭 Root의 좌표를 구해와야하나.. 더 좋은 방법이 있을 것 같다. : 민우
 		rtArea = {
-			(LONG)m_pUIRoot->GetPosition().x + vecUISlot[i]->GetPosition().x,
-			(LONG)m_pUIRoot->GetPosition().y + vecUISlot[i]->GetPosition().y,
-			(LONG)m_pUIRoot->GetPosition().x + vecUISlot[i]->GetPosition().x + vecUISlot[i]->GetDrawArea().right,
-			(LONG)m_pUIRoot->GetPosition().y + vecUISlot[i]->GetPosition().y + vecUISlot[i]->GetDrawArea().bottom
+			(LONG)m_pUIRoot->GetPosition().x + (LONG)vecUISlot[i]->GetPosition().x,
+			(LONG)m_pUIRoot->GetPosition().y + (LONG)vecUISlot[i]->GetPosition().y,
+			(LONG)m_pUIRoot->GetPosition().x + (LONG)vecUISlot[i]->GetPosition().x + vecUISlot[i]->GetDrawArea().right,
+			(LONG)m_pUIRoot->GetPosition().y + (LONG)vecUISlot[i]->GetPosition().y + vecUISlot[i]->GetDrawArea().bottom
 		};
 		if (PtInRect(&rtArea, g_pControlManager->GetCurrentCursorPosition()))
 		{

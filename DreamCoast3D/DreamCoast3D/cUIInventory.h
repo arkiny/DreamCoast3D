@@ -12,12 +12,18 @@ class cDataItem;
 class cUIInventory : public cUIPopupWindow, public iUIPopupWindowDelegate, public iUIInventoryDelegate
 {
 protected:
+	enum EDRAGSTATE
+	{
+		E_NODRAG,
+		E_ICON_DRAG,
+		E_WINDOW_DRAG,
+		E_DRAG_MAX
+	};
 	cUIImageView*	m_pImageViewMouseOver;	//마우스 오버 되었을때 씌워질 테두리
-	bool			m_isMouseOverVisible;	//마우스 오버 테두리 출력 여부 결정
 	cUIImageView*	m_pImageViewMouseDown;	//마우스 다운 되었을때 씌워질 테두리
-	bool			m_isMouseDownVisible;	//마우스 다운 테두리 출력 여부 결정
 
 	std::vector<cDataItem*> m_vecOwnItem;	//인벤토리 안에 들어 있는 아이템 벡터 컨테이너
+
 	SYNTHESIZE(bool, m_isDragging, IsDragging);	//드래그 되는 중인가
 	SYNTHESIZE(bool, m_isKeyHold, IsKeyHold);	//키가 눌러진 중인가
 	SYNTHESIZE(iUIPopupWindowDelegate*, m_pUIPopupWindowDelegate, UIPopupWindowDelegate);
@@ -25,6 +31,12 @@ protected:
 	SYNTHESIZE(char, m_chHotKeyCode, HotKey);		//단축키(아스키)
 	SYNTHESIZE(cUISlot*, m_pFocusSlot, FocusSlot);	//현재 하이라이트 된 슬롯
 	SYNTHESIZE(std::vector<cUISlot*>, m_vecUISlot, vecUISlot);//인벤토리의 각 칸
+	SYNTHESIZE(EDRAGSTATE, m_eDragState, DragState);	//현재 드래그 상태
+	SYNTHESIZE(bool, m_isMouseOverVisible, IsMouseOverVisible);//마우스 오버 테두리 출력 여부 결정
+	SYNTHESIZE(bool, m_isMouseDownVisible, IsMouseDownVisible);//마우스 다운 테두리 출력 여부 결정
+	SYNTHESIZE(cUIIcon*, m_pIconDragSrc, IconDragSrc);	//드래그가 시작된 대상 아이콘 저장용
+	SYNTHESIZE(cUIIcon*, m_pBindingIcon, BindingIcon);	//드래그중 마우스에 붙어 있는 아이콘
+
 public:
 	cUIInventory();
 	~cUIInventory();
@@ -37,8 +49,8 @@ public:
 	virtual void cUIInventory::OnMouseRBDown() override;
 	virtual void cUIInventory::OnMouseRBUp() override;
 
-	virtual void cUIInventory::Drag() override;
-	
+	//virtual void cUIInventory::Drag() override;
+	virtual void cUIInventory::Drag(EDRAGSTATE eDragState);
 	virtual cUIObject* cUIInventory::FindFocusSlot(std::vector<cUISlot*>& vecUISlot);		//마우스 커서 아래에 있는 슬롯을 찾는다.
 
 	void cUIInventory::SetupTest();	//기능 테스트용

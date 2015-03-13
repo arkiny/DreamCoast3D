@@ -19,4 +19,5 @@ public:
 	cUIIcon();
 	cUIIcon(LPD3DXSPRITE pSprite);
 	~cUIIcon();
+	static cUIIcon* CloneIcon(cUIIcon* pSrcIcon);
 };
