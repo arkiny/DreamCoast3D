@@ -83,7 +83,7 @@ void cPlayerMove::MoveFront(cGamePlayableObject* pPlayer, float fDelta)
 
 		if (g_pControlManager->GetInputInfo('A') || g_pControlManager->GetInputInfo('D'))
 		{
-			pPlayer->SetMoveSpeed(5.f);
+			pPlayer->SetMoveSpeed(0.f);
 		}
 		else
 		{
@@ -145,7 +145,6 @@ void cPlayerMove::MoveBack(cGamePlayableObject* pPlayer, float fDelta)
 		newPos += vGravity*fDelta;
 
 		pPlayer->SetPosition(newPos);
-
 	}
 	else
 	{
@@ -170,6 +169,7 @@ void cPlayerMove::MoveRight(cGamePlayableObject* pPlayer, float fDelta)
 		D3DXVECTOR3 curPos = pPlayer->GetPosition();
 		D3DXVECTOR3 newPos(0.f, 0.f, 0.f);
 
+		pPlayer->SetYangle(angle);
 
 		if (g_pControlManager->GetInputInfo('S'))
 		{
@@ -179,6 +179,13 @@ void cPlayerMove::MoveRight(cGamePlayableObject* pPlayer, float fDelta)
 		{
 			pPlayer->SetYangle(angle - D3DX_PI / 4);
 		}
+
+		D3DXVec3Normalize(&addVec, &addVec);
+		D3DXVECTOR3 vForce(0.f, 0.f, 0.f);
+		vForce = (pPlayer->GetGameObjDeligate()->isCollidedStaticObject(pPlayer))*1.5f + addVec;
+
+		vDir = vDir + vForce;
+		D3DXVec3Normalize(&vDir, &vDir);
 
 		newPos = curPos + vDir*fDelta*pPlayer->GetMoveSpeed();
 
@@ -212,6 +219,12 @@ void cPlayerMove::MoveLeft(cGamePlayableObject* pPlayer, float fDelta)
 		{
 			pPlayer->SetYangle(angle + D3DX_PI / 4);
 		}
+		D3DXVec3Normalize(&addVec, &addVec);
+		D3DXVECTOR3 vForce(0.f, 0.f, 0.f);
+		vForce = (pPlayer->GetGameObjDeligate()->isCollidedStaticObject(pPlayer))*1.5f + addVec;
+
+		vDir = vDir + vForce;
+		D3DXVec3Normalize(&vDir, &vDir);
 
 		newPos = curPos + vDir*fDelta*pPlayer->GetMoveSpeed();
 

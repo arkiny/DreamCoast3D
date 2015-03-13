@@ -529,12 +529,7 @@ D3DXVECTOR3 cGameObjManager::isCollidedStaticObject(cGameObject* pFrom)
 
 				vForce = vRepulsiveForce / fDist;
 
-				vFinal = vForce;
-			}
-
-			else
-			{
-				continue;
+				return vFinal = vForce;
 			}
 
 		}
