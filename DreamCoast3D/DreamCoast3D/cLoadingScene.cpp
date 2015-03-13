@@ -33,7 +33,7 @@ D3DXVECTOR4				gWorldLightPosition(500.0f, 500.0f, -500.0f, 1.0f);
 D3DXVECTOR4				gWorldCameraPosition(0.0f, 0.0f, -200.0f, 1.0f);
 
 // 물체의 색상
-D3DXVECTOR4				gTorusColor(1, 1, 0, 1);
+D3DXVECTOR4				gTorusColor(0.5, 0.6, 0.8, 1);
 D3DXVECTOR4				gDiscColor(0.8, 0.8, 0.8, 1);
 
 // 그림자맵 렌더타깃
@@ -131,11 +131,46 @@ void cLoadingScene::Setup(std::string sNextScene){
 	gpApplyShadowShader = LoadShader("../Resources/Shader/ApplyShadow.fx");
 	gpCreateShadowShader = LoadShader("../Resources/Shader/CreateShadow.fx");
 	// 모델 로딩
-	gpTorus = LoadModel("../Resources/Char/Dwarf/Dwarf.x");
+	//gpTorus = LoadModel("../Resources/Char/Dwarf/Dwarf.x");
 	gpDisc = LoadModel("../Resources/Shader/disc.x");
 
+	HDC hdc = CreateCompatibleDC(0);
+	LOGFONT lf;
+	ZeroMemory(&lf, sizeof(LOGFONT));
+
+	lf.lfHeight = 15;    // in logical units
+	lf.lfWidth = 10;    // in logical units
+	lf.lfEscapement = 0;
+	lf.lfOrientation = 0;
+	lf.lfWeight = 0;   // boldness, range 0(light) - 1000(bold)
+	lf.lfItalic = false;
+	lf.lfUnderline = false;
+	lf.lfStrikeOut = false;
+	lf.lfCharSet = DEFAULT_CHARSET;
+	lf.lfOutPrecision = 0;
+	lf.lfClipPrecision = 0;
+	lf.lfQuality = 0;
+	lf.lfPitchAndFamily = 0;
+	strcpy_s(lf.lfFaceName, "Consolas"); // font style
+
+	//
+	// Create an ID3DXFont based on 'lf'.
+	//
+	HFONT hFont;
+	HFONT hFontOld;
+	hFont = CreateFontIndirect(&lf);
+	hFontOld = (HFONT)SelectObject(hdc, hFont);
+
+	std::string f = "DreamCoast";
+	D3DXCreateText(g_pD3DDevice, hdc, f.c_str(), 0.001f, 0.01f, &gpTorus, 0, 0);
+
+	SelectObject(hdc, hFontOld);
+	DeleteObject(hFont);
+	DeleteDC(hdc);
+
+
 	D3DXCreateFont(g_pD3DDevice,		//D3D Device
-		40,								//Font height
+		30,								//Font height
 		0,								//Font width
 		FW_NORMAL,						//Font Weight
 		1,								//MipLevels
@@ -204,10 +239,10 @@ void cLoadingScene::Render(){
 			gRotationY -= 2 * PI;
 		}
 		D3DXMATRIXA16 matScale, matRot, matTrans;
-		D3DXMatrixScaling(&matScale, 50, 50, 50);
+		D3DXMatrixScaling(&matScale, 30.0f, 30.0f, 30.0f);
 		D3DXMatrixRotationY(&matRot, gRotationY);
-		D3DXMatrixTranslation(&matTrans, 0, -70, 0);
-		matTorusWorld = matScale*matRot*matTrans;
+		D3DXMatrixTranslation(&matTrans, -70, 0, 0);
+		matTorusWorld = matScale*matTrans*matRot;
 	}
 
 	// 디스크의 월드행렬을 만든다.
