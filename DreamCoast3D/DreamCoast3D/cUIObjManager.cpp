@@ -86,6 +86,7 @@ void cUIObjManager::SetEventDeligate(iGameEventDelegate* pEventManager)
 	for (auto p : m_vecUIObjects)
 	{
 		p->SetEventDeligate(pEventManager);
+		pEventManager->SetSceneDelegate(m_pSceneManager);
 	}
 }
 

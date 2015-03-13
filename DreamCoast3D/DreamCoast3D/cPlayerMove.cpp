@@ -113,6 +113,7 @@ void cPlayerMove::MoveFront(cGamePlayableObject* pPlayer, float fDelta)
 
 void cPlayerMove::MoveBack(cGamePlayableObject* pPlayer, float fDelta)
 {
+
 	D3DXVECTOR3 newPos;
 	D3DXVECTOR3 curPos = pPlayer->GetPosition();
 	D3DXVECTOR3 addVec = (pPlayer->GetFront());
