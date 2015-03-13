@@ -178,6 +178,7 @@
     <ClInclude Include="cUIPlayerInfo.h" />
     <ClInclude Include="cUIPopupWindow.h" />
     <ClInclude Include="cUISceneChangeButton.h" />
+    <ClInclude Include="cUISet4Editor.h" />
     <ClInclude Include="cUISkillShortCut.h" />
     <ClInclude Include="cSkinnedMesh.h" />
     <ClInclude Include="cSkinnedMeshManager.h" />
@@ -302,6 +303,7 @@
     <ClCompile Include="cUIPlayerInfo.cpp" />
     <ClCompile Include="cUIPopupWindow.cpp" />
     <ClCompile Include="cUISceneChangeButton.cpp" />
+    <ClCompile Include="cUISet4Editor.cpp" />
     <ClCompile Include="cUISkillShortCut.cpp" />
     <ClCompile Include="cSkinnedMesh.cpp" />
     <ClCompile Include="cSkinnedMeshManager.cpp" />

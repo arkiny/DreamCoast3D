@@ -355,6 +355,9 @@
     <ClCompile Include="cUICursor.cpp">
       <Filter>FrameWork\Object\UIObject</Filter>
     </ClCompile>
+    <ClCompile Include="cUISet4Editor.cpp">
+      <Filter>EachWorks\HD</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cAction.h">
@@ -725,6 +728,9 @@
     </ClInclude>
     <ClInclude Include="cUICursor.h">
       <Filter>FrameWork\Object\UIObject</Filter>
+    </ClInclude>
+    <ClInclude Include="cUISet4Editor.h">
+      <Filter>EachWorks\HD</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

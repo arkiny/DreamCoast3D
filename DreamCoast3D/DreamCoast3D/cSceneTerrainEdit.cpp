@@ -12,6 +12,7 @@
 #include "cMousePicking.h"
 #include "cCamera.h"
 #include "cEditCursor.h"
+#include "cUISet4Editor.h"
 #include <sstream>
 
 cSceneTerrainEdit::cSceneTerrainEdit()
@@ -45,6 +46,13 @@ void cSceneTerrainEdit::Start(){
 	cUILoader cUL;
 	cUL.LoadGameUIFromFile(this->GetUIObjMng(), m_sGameUIPath);
 	
+	///
+	cUISet4Editor* p = new cUISet4Editor;
+	p->Setup();
+	m_pUIObjManager->AddUI(p);
+	p->Release();
+	///
+
 	for (auto p : m_vecLightSources){
 		p->Start();
 	}
@@ -53,6 +61,15 @@ void cSceneTerrainEdit::Start(){
 	m_pEditMap->Setup();
 	m_pCurrentMap = m_pEditMap;
 	m_pEditMap->AddRef();
+
+	if (m_pUIObjManager){
+		if (m_pDelegate){
+			// UI에 씬매니저 델리게이트 어태치
+			m_pUIObjManager->SetSceneDeligate(m_pDelegate);
+		}
+		// UI매니저 시작
+		m_pUIObjManager->Start();
+	}
 }
 
 void cSceneTerrainEdit::Update(float delta){
@@ -134,6 +151,10 @@ void cSceneTerrainEdit::Update(float delta){
 		m_bOnKeyDown = false;
 		m_fDelayAcuum = m_fDelay + 1.0f;
 	}
+
+	if (m_pUIObjManager){
+		m_pUIObjManager->Update(delta);
+	}
 }
 
 void cSceneTerrainEdit::Render(){
@@ -142,6 +163,9 @@ void cSceneTerrainEdit::Render(){
 	}
 	if (m_pEffectManager){
 		m_pEffectManager->Render();
+	}
+	if (m_pUIObjManager){
+		m_pUIObjManager->Render();
 	}
 	if (m_pCursor){
 		m_pCursor->Render();

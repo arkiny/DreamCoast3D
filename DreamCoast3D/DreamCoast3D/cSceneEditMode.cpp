@@ -14,6 +14,7 @@
 #include "cGameObjectLoader4Edit.h"
 #include "cGamePlayableObject.h"
 #include "cGameObjectEraser.h"
+#include "cUISet4Editor.h"
 #include <sstream>
 
 static CRITICAL_SECTION				gCriticalSectionEditMode;
@@ -75,6 +76,13 @@ void cSceneEditMode::Start(){
 	cUILoader cUL;
 	cUL.LoadGameUIFromFile(this->GetUIObjMng(), m_sGameUIPath);
 
+	///
+	cUISet4Editor* p = new cUISet4Editor;
+	p->Setup();
+	m_pUIObjManager->AddUI(p);
+	p->Release();
+	///
+
 	cMapLoader4Edit cML;
 	cML.LoadGameMapFromFile(this, m_sGameMapPath);
 
@@ -94,6 +102,19 @@ void cSceneEditMode::Start(){
 			m_pGameObjManager->SetEffectDeligate(m_pEffectManager);
 		}
 		m_pEffectManager->Start();
+	}
+
+	if (m_pUIObjManager){
+		// UI에 게임오브젝트 델리게이트 어태치
+		if (m_pGameObjManager){
+			m_pUIObjManager->SetGameObjDeligate(m_pGameObjManager);
+		}
+		if (m_pDelegate){
+			// UI에 씬매니저 델리게이트 어태치
+			m_pUIObjManager->SetSceneDeligate(m_pDelegate);
+		}
+		// UI매니저 시작
+		m_pUIObjManager->Start();
 	}
 
 	assert(m_pCurrentMap == NULL && "m_pCurrentMap Should not has pointer in EditMode");
@@ -124,9 +145,7 @@ void cSceneEditMode::Update(float delta){
 		m_pEffectManager->Update(delta);
 	}
 
-	if (m_pUIObjManager){
-		m_pUIObjManager->Update(delta);
-	}
+
 
 	//
 	if (m_pMousPicking && m_pCurrentMap){
@@ -195,6 +214,10 @@ void cSceneEditMode::Update(float delta){
 				m_bIsClickDown = false;
 			}
 		}
+	}
+
+	if (m_pUIObjManager){
+		m_pUIObjManager->Update(delta);
 	}
 }
 

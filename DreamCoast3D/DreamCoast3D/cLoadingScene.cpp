@@ -4,8 +4,8 @@
 #include <sstream>
 
 #define PI           3.14159265f
-#define FOV          (PI/4.0f)							// 시야각
-#define ASPECT_RATIO (1280/(float)720)		// 화면의 종횡비
+#define FOV          ( D3DX_PI /4.0f)							// 시야각
+#define ASPECT_RATIO (1280.0f/(float)720.0f)			// 화면의 종횡비
 #define NEAR_PLANE   1									// 근접 평면
 #define FAR_PLANE    3000								// 원거리 평면
 

@@ -52,6 +52,7 @@ public:
 		float fMin,
 		float fMax);
 
+	//virtual void Reset();
 	virtual void Update(float delta);	
 	virtual void Render() {}
 	

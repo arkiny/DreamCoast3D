@@ -31,10 +31,7 @@ void cUISystemTest::Setup(){
 	m_pUIRoot->AddChild(pUIImageView);
 	pUIImageView->Release();
 
-
-
 	// 메인 메뉴 0, 터레인 에디터 5, 맵에디터 3, 인게임 1, 저장한 게임 인게임 4, 실험씬 2
-
 	// 시작 버튼
 	cUISceneChangeButton* pTestButton = new cUISceneChangeButton(m_pSprite);
 	pTestButton->Setup(
@@ -107,8 +104,6 @@ void cUISystemTest::Setup(){
 	pTestButton->SetTargetScene(-2);
 	pUIImageView->AddChild(pTestButton);
 	pTestButton->Release();
-
-
 }
 
 void cUISystemTest::Start(){
@@ -124,25 +119,10 @@ void cUISystemTest::Update(float fDelta){
 }
 
 void cUISystemTest::Render(){
-	
-
 	if (m_pSprite)
 	{
 		m_pUIRoot->Render();
 	}
-
-	//이미지로 처리 완료
-	//std::string sCopyRight = "All Right Reserved DreamCoast3D™ ⓒ Copyright 2015";
-	//std::string sVersion = "Version Alpha";
-	//RECT rectCopyRight = { 10, 670, 10, 701 };
-	//g_pFontManager->GetFont(g_pFontManager->FONT_DEFAULT)
-	//	->DrawText(NULL, sCopyRight.c_str(), -1, &rectCopyRight, DT_LEFT | DT_NOCLIP, 0xFFFFFFFF);
-
-	//rectCopyRight = { 10, 5, 16, 6 };
-	//g_pFontManager->GetFont(g_pFontManager->FONT_DEFAULT)
-	//	->DrawText(NULL, sVersion.c_str(), -1, &rectCopyRight, DT_LEFT | DT_NOCLIP, 0xFF000000);
-
-
 }
 
 void cUISystemTest::OnClick(cUIImageButton* pSender){

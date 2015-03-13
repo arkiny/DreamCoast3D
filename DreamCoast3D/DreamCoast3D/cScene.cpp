@@ -116,8 +116,6 @@ void cScene::Start(){
 		p->Start();
 	}
 
-
-
 	// 첫 맵 설정
 	// TODO : 차후 맵간 이동이 있을 것이므로 해당 맵간 로딩도 멀티쓰레드 로딩을 생각해볼 것
 
@@ -164,6 +162,9 @@ void cScene::Start(){
 		m_pCamera->SetUIDelegate(m_pUIObjManager);
 	}
 
+	if (m_pCamera){
+		m_pCamera->Setup();
+	}
 }
 
 void cScene::Update(float delta){
