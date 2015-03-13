@@ -30,6 +30,7 @@ public:
 		E_TALK,
 		E_STORE,
 		E_PORTAL,
+		E_BLOCK,
 		E_EVENTMAX
 	};
 
