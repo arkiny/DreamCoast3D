@@ -71,7 +71,7 @@ void cCamera::Setup(
 	m_fMin = fMin;
 	m_fMax = fMax;
 
-	//Setup();
+	Setup();
 }
 
 void cCamera::Update(float delta)

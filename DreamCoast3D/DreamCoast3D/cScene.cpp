@@ -163,7 +163,7 @@ void cScene::Start(){
 	}
 
 	if (m_pCamera){
-		m_pCamera->Setup();
+		//m_pCamera->Setup();
 	}
 }
 
