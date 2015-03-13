@@ -5,12 +5,15 @@ LPD3DXEFFECT LoadShader(const char * filename);
 LPDIRECT3DTEXTURE9 LoadTexture(const char * filename);
 LPD3DXMESH LoadModel(const char * filename);
 
+class cUIImageView;
+
 class cLoadingScene : public cScene
 {
 protected:
 	volatile int m_nLoadCount = 0;
 	volatile bool m_bBoolWorkDone = false;
-	
+	LPD3DXSPRITE m_pSprite = NULL;
+
 	float		m_fLoadingTime = 0.0f;
 	LPD3DXFONT	m_pFont;
 	RECT		m_recFontRect;
@@ -19,6 +22,8 @@ protected:
 
 	LPDIRECT3DSURFACE9 pHWBackBuffer = NULL;
 	LPDIRECT3DSURFACE9 pHWDepthStencilBuffer = NULL;
+
+	cUIImageView* pUIImageView = NULL;
 
 protected:
 	static void LoadNextScene(LPVOID pParam);

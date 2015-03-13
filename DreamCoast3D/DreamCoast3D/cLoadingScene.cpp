@@ -1,6 +1,8 @@
 #include "stdafx.h"
 #include "cLoadingScene.h"
 #include "cSceneLoader.h"
+#include "cUIObjManager.h"
+#include "cUIImageView.h"
 #include <sstream>
 
 #define PI           3.14159265f
@@ -54,9 +56,12 @@ cLoadingScene::~cLoadingScene()
 	LeaveCriticalSection(&gCriticalSection);
 	DeleteCriticalSection(&gCriticalSection);
 	SAFE_RELEASE(m_pFont);
+	SAFE_RELEASE(m_pSprite);
 	if (m_pNextScene->GetRefCount() > 1){
 		SAFE_RELEASE(m_pNextScene);
 	}
+
+	pUIImageView->Release();
 
 	// 모델을 release 한다.
 	if (gpTorus)
@@ -110,8 +115,27 @@ cLoadingScene::~cLoadingScene()
 }
 
 void cLoadingScene::Setup(std::string sNextScene){
+	D3DXMATRIXA16 matView;
+	D3DXVECTOR3 m_vEye(0.0f, 0.0f, -200.0f);
+	D3DXVECTOR3 m_vLookAt(0.0f, 0.0f, 0.0f);
+	D3DXVECTOR3 m_vUp(0.0f, 1.0f, 0.0f);
+	D3DXMatrixLookAtLH(&matView, &m_vEye, &m_vLookAt, &m_vUp);
+	g_pD3DDevice->SetTransform(D3DTS_VIEW, &matView);
+
+	D3DVIEWPORT9 vp;
+	g_pD3DDevice->GetViewport(&vp);
+
+	D3DXMATRIXA16 matProj;
+	D3DXMatrixPerspectiveFovLH(&matProj, D3DX_PI / 4.0f, 1280.0f / 720.0f, 1.0f, 3000.0f);
+	g_pD3DDevice->SetTransform(D3DTS_PROJECTION, &matProj);
+
 	m_sNextScenePath = sNextScene;
 
+	D3DXCreateSprite(g_pD3DDevice, &m_pSprite);
+	pUIImageView = new cUIImageView(m_pSprite);
+	pUIImageView->SetTextureFilename(std::string("../Resources/UI/UI_LOADING/UI_LOADING_CANVAS.png"));
+	pUIImageView->SetScale(D3DXVECTOR3(1.0f, 1.0f, 1.0f));
+	pUIImageView->SetPosition(D3DXVECTOR3(0, 0, 0));
 
 	// 렌더타깃을 만든다.
 	const int shadowMapSize = 2048;
@@ -192,12 +216,15 @@ void cLoadingScene::Start(){
 
 void cLoadingScene::Update(float fDelta){
 	m_fLoadingTime += fDelta;
-
-
+ 	D3DXVECTOR3 p =  pUIImageView->GetPosition();
+	p.x = p.x - 10.0f * fDelta;
+	pUIImageView->SetPosition(p);
+	pUIImageView->Update(fDelta);
 }
 
 void cLoadingScene::Render(){
 	// 광원-뷰 행렬을 만든다.
+
 	D3DXMATRIXA16 matLightView;
 	{
 		D3DXVECTOR3 vEyePt(gWorldLightPosition.x, gWorldLightPosition.y, gWorldLightPosition.z);
@@ -317,7 +344,6 @@ void cLoadingScene::Render(){
 	pHWDepthStencilBuffer->Release();
 	pHWDepthStencilBuffer = NULL;
 
-
 	// 그림자 입히기 쉐이더 전역변수들을 설정
 	gpApplyShadowShader->SetMatrix("gWorldMatrix", &matTorusWorld);	//원환체
 	gpApplyShadowShader->SetMatrix("gViewProjectionMatrix", &matViewProjection);
@@ -352,6 +378,9 @@ void cLoadingScene::Render(){
 		}
 	}
 	gpApplyShadowShader->End();
+
+
+	pUIImageView->Render();
 
 	std::stringstream s;
 	s.precision(2);
