@@ -19,6 +19,7 @@ cCameraEditing::~cCameraEditing()
 void cCameraEditing::Setup(){
 	cCamera::Setup();
 	cCamera::SetTarget(&m_vPosition);
+	SAFE_RELEASE(m_pMesh);
 	D3DXCreateSphere(g_pD3DDevice, 2.0f, 5, 5, &m_pMesh, NULL);
 	m_stMaterial.Ambient = D3DXCOLOR(.8f, .2f, .2f, 1.0f);
 	m_stMaterial.Diffuse = D3DXCOLOR(.8f, .2f, .2f, 1.0f);

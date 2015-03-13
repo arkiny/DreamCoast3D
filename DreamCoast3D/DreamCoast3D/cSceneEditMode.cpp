@@ -553,7 +553,7 @@ void cSceneEditMode::BindingPrevStaticObject(){
 				m_nCurrentBindingStaticIndex = m_vecStaticGameObjectPreset.size() - 1;
 			}
 			else {
-				m_nCurrentBindingStaticIndex++;
+				m_nCurrentBindingStaticIndex--;
 			}
 			m_pCurrentBindingObject = m_vecStaticGameObjectPreset[m_nCurrentBindingStaticIndex];
 		}
