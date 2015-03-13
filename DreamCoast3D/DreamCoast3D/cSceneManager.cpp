@@ -52,7 +52,31 @@ void cSceneManager::Update(float delta){
 			return;
 		}
 	}
-	//}
+
+	if (m_bIsChangeSceneCall){
+		ChangeScene(m_nNextSceneIndex);
+		assert(m_nNextSceneIndex < m_vecSceneInfoFilePath.size());
+		m_bIsLoading = true;
+
+		if (m_pCurrentScene){
+			m_pCurrentScene->Exit();
+			SAFE_RELEASE(m_pCurrentScene);
+		}
+		m_pCurrentScene = new cLoadingScene;
+		m_pCurrentScene->Setup(m_vecSceneInfoFilePath[m_nNextSceneIndex]);
+
+		//g_pSkinnedMeshManager->Destroy();
+		//g_pAseManager->Destroy();
+		//g_pTextureManager->Destroy();
+		//g_pShaderManager->Destroy();
+
+		// 리소스 로딩
+		g_pShaderManager->CreateShadowTargetAndDepthSurface();
+		m_pCurrentScene->SetDelegate(this);
+		m_pCurrentScene->Start();
+		m_nNextSceneIndex = -1;
+		m_bIsChangeSceneCall = false;
+	}
 }
 
 void cSceneManager::Start(){
@@ -86,25 +110,8 @@ void cSceneManager::SceneFinished(cScene* pSender){
 }
 
 void cSceneManager::ChangeScene(int nNextSceneIndex){
-	assert(nNextSceneIndex < m_vecSceneInfoFilePath.size());
-	m_bIsLoading = true;
-	
-	if (m_pCurrentScene){
-		m_pCurrentScene->Exit();
-		SAFE_RELEASE(m_pCurrentScene);
-	}
-	m_pCurrentScene = new cLoadingScene;
-	m_pCurrentScene->Setup(m_vecSceneInfoFilePath[nNextSceneIndex]);
-
-	//g_pSkinnedMeshManager->Destroy();
-	//g_pAseManager->Destroy();
-	//g_pTextureManager->Destroy();
-	//g_pShaderManager->Destroy();
-
-	// 리소스 로딩
-	g_pShaderManager->CreateShadowTargetAndDepthSurface();
-	m_pCurrentScene->SetDelegate(this);
-	m_pCurrentScene->Start();
+	m_bIsChangeSceneCall = true;
+	m_nNextSceneIndex = nNextSceneIndex;
 }
 
 void cSceneManager::ChangeSceneFromLoader(cScene* pNextScene){

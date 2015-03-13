@@ -77,7 +77,6 @@ cScene::~cScene()
 }
 
 void cScene::Setup(std::string sFilePath){
-
 	m_pGameObjManager = new cGameObjManager;
 	m_pGameObjManager->Setup();
 	m_pGameObjManager->SetDesc("GameObject Manager for Example1");

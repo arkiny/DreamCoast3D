@@ -45,7 +45,7 @@ void cMapLoader::LoadGameMapFromFile(OUT cScene* pScene, IN std::string sFolder,
 
 cGameASEObject* cMapLoader::ParseMapObjectAse(){
 	cGameASEObject* ret = NULL;
-
+	cGameObject::eEventType p = cGameObject::eEventType::E_EMPTY;
 	int nLevel = 0;
 	do{
 		char* szToken = GetToken();
@@ -66,8 +66,11 @@ cGameASEObject* cMapLoader::ParseMapObjectAse(){
 		else if (isEqual(szToken, "*MAP_OBJECT_ASE_SCALE")){
 			ret->SetScale(D3DXVECTOR3(GetFloat(), GetFloat(), GetFloat()));
 		}
+		else if (isEqual(szToken, "*MAP_OBJECT_EVENT_TYPE")){
+			p = (cGameObject::eEventType)GetInteger();
+		}
 	} while (nLevel > 0);
-
+	ret->SetEventType(p);
 	return ret;
 }
 

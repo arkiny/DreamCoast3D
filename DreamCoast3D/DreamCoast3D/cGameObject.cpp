@@ -13,6 +13,7 @@ cGameObject::cGameObject()
 	, m_pGameObjDeligate(NULL)
 	, m_eGameObjectType(eGameObjectType::E_NONE)
 	, m_pEventDelegate(NULL)
+	, m_eEventType(E_EMPTY)
 {
 	m_pTransform = new cTransform;
 	m_pBoundingBox = new ST_BOUNDING_BOX;
