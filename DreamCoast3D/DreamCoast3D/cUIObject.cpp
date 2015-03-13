@@ -41,15 +41,18 @@ void cUIObject::AddChild(cUIObject* pChild){
 	m_vecChild.push_back(pChild);
 	//m_vecChild.find
 }
-void cUIObject::DeleteChild(cUIObject* pChild){
-	//SAFE_RELEASE(pChild);
+void cUIObject::SubChild(cUIObject* pChild){
+	
+	if (!pChild) { return; }
 	pChild->m_pParent = nullptr;
+	//Child 컨테이너에서 인수로 들어온 것과 같은 객체를 찾아서 컨테이너 내에서 삭제하고 Release한다.(자식의 자식들까지 모두)
 	for (size_t i = 0; i < m_vecChild.size(); ++i)
 	{
 		if (m_vecChild[i] == pChild)
 		{
 			m_vecChild.erase(m_vecChild.begin() + i);
-			pChild->Destroy();
+			pChild->Destroy();//(대대손손 다지움)
+			//SAFE_RELEASE(pChild);(대상 자식 하나만 지울 경우)
 		}
 	}
 }

@@ -17,8 +17,7 @@ class cDataItem : public cObject
 		EITEMTYPE_MAX
 	};
 	static std::vector<cDataItem*> g_pDataItem;	//모든 아이템정보를 다 가지고 있을 정적 벡터 컨테이너
-	SYNTHESIZE(cUIIcon*, m_pUIIcon, UIIcon);//인벤토리 안에 들어 갔을때 표시될 아이콘
-
+	SYNTHESIZE(std::string, m_pUIIconImagePath, UIIconImagePath);//인벤토리 안에 들어 갔을때 표시될 아이콘 이미지 경로
 	EITEMTYPE	m_eItemType;
 	int			m_nItemNum;		//아이템/스킬 번호(규칙 필요)
 	bool		m_isStackable;	//겹쳐지는 아이템인지
@@ -30,6 +29,5 @@ public:
 	cDataItem(cUIIcon* pUIIcon);
 	~cDataItem();
 	virtual void cDataItem::SetupItemData(EITEMTYPE	eItemType, int nItemNum, bool isStackable, size_t nMaxStack = 5);
-	//virtual void cDataItem::SetupItemIcon(cUIIcon* pUIIcon);	//만일 교체된다면 이전걸 해제 해줘야 하나? : 민우
 };
 

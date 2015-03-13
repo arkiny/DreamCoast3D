@@ -42,7 +42,7 @@ public:
 	virtual ~cUIObject();
 
 	virtual void AddChild(cUIObject* pChild);
-	virtual void DeleteChild(cUIObject* pChild);
+	virtual void SubChild(cUIObject* pChild);
 	virtual std::vector<cUIObject*>& GetChild();
 
 	virtual void Setup(){}

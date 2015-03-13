@@ -14,14 +14,9 @@ protected:
 		EICONTYPE_MAX
 	};
 	SYNTHESIZE(EICONTYPE, m_eIconType, IconType);
-	static std::vector<cUIIcon> g_vecUIIcon;	//UIIcon이 들어있을 전역 벡터
-
 	//bool m_isBinding;			//마우스에 붙어 있는 중인가(드래그 중인가)
 public:
 	cUIIcon();
 	cUIIcon(LPD3DXSPRITE pSprite);
 	~cUIIcon();
-	virtual LPD3DXSPRITE cUIIcon::GetSprite();
-	virtual void cUIIcon::SetSprite(LPD3DXSPRITE pSprite);
-	//virtual void Render() override;
 };

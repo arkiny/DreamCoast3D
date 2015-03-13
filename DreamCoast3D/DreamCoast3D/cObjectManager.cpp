@@ -26,6 +26,6 @@ void cObjectManager::Destroy(){
 		{
 			OutputDebugString(p->GetDesc().c_str());
 		}
-		_ASSERT(false && "There are cObject which are not deleted");
+		assert(false && "There are cObject which are not deleted");
 	}
 }

@@ -17,9 +17,7 @@ protected:
 	cUIImageView*	m_pImageViewMouseDown;	//마우스 다운 되었을때 씌워질 테두리
 	bool			m_isMouseDownVisible;	//마우스 다운 테두리 출력 여부 결정
 
-	//std::vector<cUIIcon> m_vecUIIcon;		//인벤토리 안에 들어 있는 아이콘 벡터 컨테이너(아이템 객체가 아이콘을 가질 예정)
 	std::vector<cDataItem*> m_vecOwnItem;	//인벤토리 안에 들어 있는 아이템 벡터 컨테이너
-	//std::vector<cUISlot*> m_vecUISlot;		
 	SYNTHESIZE(bool, m_isDragging, IsDragging);	//드래그 되는 중인가
 	SYNTHESIZE(bool, m_isKeyHold, IsKeyHold);	//키가 눌러진 중인가
 	SYNTHESIZE(iUIPopupWindowDelegate*, m_pUIPopupWindowDelegate, UIPopupWindowDelegate);
@@ -44,10 +42,11 @@ public:
 	virtual cUIObject* cUIInventory::FindFocusSlot(std::vector<cUISlot*>& vecUISlot);		//마우스 커서 아래에 있는 슬롯을 찾는다.
 
 	void cUIInventory::SetupTest();	//기능 테스트용
-	virtual void cUIInventory::AddItem(cDataItem* pDataItem) override;
-	virtual void cUIInventory::DeleteItemInSlot(size_t nSlotNum) override;	//슬롯 번호로
-	virtual void cUIInventory::DeleteItemInSlot(cUISlot* pUISlot) override;	//슬롯 포인터로
-	virtual cDataItem* cUIInventory::UseItem(cUISlot* pUISlot);
+	virtual void cUIInventory::AddItem(cDataItem* pDataItem) override;		//아이템 추가
+	virtual void cUIInventory::DeleteItemInSlot(size_t nSlotNum) override;	//슬롯 번호로 아이템 삭제
+	virtual void cUIInventory::DeleteItemInSlot(cUISlot* pUISlot) override;	//슬롯 포인터로 아이템 삭제
+	virtual cDataItem* cUIInventory::UseItem(cUISlot* pUISlot);				//아이템 사용시
 	virtual void cUIInventory::SetupSlot(size_t nRowQnt, size_t nColQnt);	//슬롯을 인자만큼 생성하고 배치한다.
+	virtual void cUIInventory::SwapItemInSlot(cUISlot* pSrcSlot, cUISlot* pDestSlot);	//슬롯간 아이템 교환
 };
 

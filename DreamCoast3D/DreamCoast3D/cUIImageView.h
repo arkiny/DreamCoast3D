@@ -9,6 +9,7 @@ public:
 	cUIImageView(){};
 	cUIImageView(LPD3DXSPRITE pSprite);
 	virtual ~cUIImageView(void);
+	virtual void Setup(std::string sTexturePath, int nDrawRectRight, int nDrawRectBottom, D3DXVECTOR3& vPos, D3DXVECTOR3& vScale);
 	virtual void SetTextureFilename(std::string& sTextureFilename);
 	virtual void Render() override;
 	virtual ST_SIZE GetSize() const override;

@@ -19,6 +19,14 @@ void cUIImageView::SetTextureFilename(std::string& sTextureFilename)
 	SetRect(&m_rectDrawArea, 0, 0, m_stImageInfo.Width, m_stImageInfo.Height);
 }
 
+void cUIImageView::Setup(std::string sTexturePath, int nDrawRectRight, int nDrawRectBottom, D3DXVECTOR3& vPos, D3DXVECTOR3& vScale)
+{
+	SetTextureFilename(sTexturePath);
+	RECT rtDrawArea = { 0, 0, nDrawRectRight, nDrawRectBottom };
+	SetDrawArea(rtDrawArea);
+	SetPosition(vPos);	//부모에 의한 상대좌표
+	SetScale(vScale);
+}
 void cUIImageView::Render()
 {
 	if (!m_pSprite)
