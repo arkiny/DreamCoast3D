@@ -49,7 +49,7 @@ public:
 	virtual void cUIInventory::OnMouseRBDown() override;
 	virtual void cUIInventory::OnMouseRBUp() override;
 
-	//virtual void cUIInventory::Drag() override;
+	virtual void cUIInventory::Drag() override {}
 	virtual void cUIInventory::Drag(EDRAGSTATE eDragState);
 	virtual cUIObject* cUIInventory::FindFocusSlot(std::vector<cUISlot*>& vecUISlot);		//마우스 커서 아래에 있는 슬롯을 찾는다.
 

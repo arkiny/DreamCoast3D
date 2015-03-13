@@ -42,8 +42,8 @@ cUIInventory::~cUIInventory()
 	{
 		SAFE_RELEASE(m_vecUISlot[i]);
 	}*/
-	SAFE_RELEASE(m_pIconDragSrc);
-	SAFE_RELEASE(m_pBindingIcon);
+	//SAFE_RELEASE(m_pIconDragSrc);
+	//SAFE_RELEASE(m_pBindingIcon);
 
 }
 
