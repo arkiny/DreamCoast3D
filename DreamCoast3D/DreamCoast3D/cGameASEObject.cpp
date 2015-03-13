@@ -100,7 +100,7 @@ std::string cGameASEObject::SaveAsStringInfo(){
 	D3DXVECTOR3 vPos, vScale;
 	vPos = GetPosition();
 	vScale = GetScale();
-	ss << "*MAP_OBJECT_ASE_POS " << std::fixed << vPos.x << "\t" << vPos.y << "\t" << vPos.z << std::endl;
+	ss << "*MAP_OBJECT_ASE_POS " << std::fixed << vPos.z << "\t" << vPos.y << "\t" << vPos.x << std::endl;
 	ss << "*MAP_OBJECT_ASE_SCALE " << std::fixed << vScale.x << "\t" << vScale.y << "\t" << vScale.z << std::endl;
 	ss << "*MAP_OBJECT_EVENT_TYPE " << (int)m_eEventType << std::endl;
 	ss << "}" << std::endl;
