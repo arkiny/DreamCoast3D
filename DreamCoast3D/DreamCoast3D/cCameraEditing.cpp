@@ -25,7 +25,7 @@ void cCameraEditing::Setup(){
 	m_stMaterial.Diffuse = D3DXCOLOR(.8f, .2f, .2f, 1.0f);
 	m_stMaterial.Specular = D3DXCOLOR(.8f, .2f, .2f, 1.0f);
 
-	cMapToolCamera::Setup();
+	//cMapToolCamera::Setup();
 }
 
 void cCameraEditing::Update(float fDelta){

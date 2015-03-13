@@ -123,9 +123,7 @@ void cScene::Start(){
 	if (!m_vecGameMaps.empty()){
 		this->SetCurrentMap(0);
 		// 카메라에 타겟 설정
-		if (m_pGameObjManager->GetPlayerableGameObject()){
-			m_pCamera->SetTarget(m_pGameObjManager->GetPlayerableGameObject()->GetTransform()->getPosPointer());
-		}
+	
 		// 게임 오브젝트매니저에 카메라 설정
 		m_pGameObjManager->SetCameraDeligate(m_pCamera);
 
@@ -164,6 +162,9 @@ void cScene::Start(){
 
 	if (m_pCamera){
 		m_pCamera->Setup();
+		if (m_pGameObjManager->GetPlayerableGameObject()){
+			m_pCamera->SetTarget(m_pGameObjManager->GetPlayerableGameObject()->GetTransform()->getPosPointer());
+		}
 	}
 }
 
