@@ -48,5 +48,5 @@ void cDeviceManager::Destroy()
 	SAFE_RELEASE(m_pD3D);
 	//SAFE_RELEASE(m_pD3DDevice);
 	ULONG ul = m_pD3DDevice->Release();
-	_ASSERT(ul == 0 && "All device COM references are not released");
+	assert(ul == 0 && "All device COM references are not released");
 }

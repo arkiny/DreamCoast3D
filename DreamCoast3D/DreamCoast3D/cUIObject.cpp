@@ -39,10 +39,19 @@ void cUIObject::AddChild(cUIObject* pChild){
 	pChild->AddRef();
 	pChild->m_pParent = this;
 	m_vecChild.push_back(pChild);
+	//m_vecChild.find
 }
 void cUIObject::DeleteChild(cUIObject* pChild){
-	SAFE_RELEASE(pChild);
+	//SAFE_RELEASE(pChild);
 	pChild->m_pParent = nullptr;
+	for (size_t i = 0; i < m_vecChild.size(); ++i)
+	{
+		if (m_vecChild[i] == pChild)
+		{
+			m_vecChild.erase(m_vecChild.begin() + i);
+			pChild->Destroy();
+		}
+	}
 }
 
 // : ¹Î¿ì

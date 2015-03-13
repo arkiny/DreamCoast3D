@@ -16,6 +16,7 @@ class cDataItem : public cObject
 		EITEMTYPE_ETC,			//기타(기능성이 없는 아이템)
 		EITEMTYPE_MAX
 	};
+	static std::vector<cDataItem*> g_pDataItem;	//모든 아이템정보를 다 가지고 있을 정적 벡터 컨테이너
 	SYNTHESIZE(cUIIcon*, m_pUIIcon, UIIcon);//인벤토리 안에 들어 갔을때 표시될 아이콘
 
 	EITEMTYPE	m_eItemType;

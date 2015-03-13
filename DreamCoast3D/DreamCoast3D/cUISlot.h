@@ -16,5 +16,7 @@ public:
 	cUISlot(LPD3DXSPRITE pSprite);
 	~cUISlot();
 	//virtual void Update(float fDelta);
-	virtual void Render();
+	virtual void Update(float fDelta) override;
+	virtual void Render() override;
+
 };

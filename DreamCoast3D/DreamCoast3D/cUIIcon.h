@@ -1,6 +1,7 @@
 #pragma once
 #include "cUIImageView.h"
 
+//이 클래스의 객체는 cDataItem 객체에 포함되고, cDataItem이 해제될 때 같이 해제된다.
 class cUIIcon : public cUIImageView
 {
 protected:
@@ -13,6 +14,8 @@ protected:
 		EICONTYPE_MAX
 	};
 	SYNTHESIZE(EICONTYPE, m_eIconType, IconType);
+	static std::vector<cUIIcon> g_vecUIIcon;	//UIIcon이 들어있을 전역 벡터
+
 	//bool m_isBinding;			//마우스에 붙어 있는 중인가(드래그 중인가)
 public:
 	cUIIcon();
@@ -20,6 +23,5 @@ public:
 	~cUIIcon();
 	virtual LPD3DXSPRITE cUIIcon::GetSprite();
 	virtual void cUIIcon::SetSprite(LPD3DXSPRITE pSprite);
-
-	virtual void Render() override;
+	//virtual void Render() override;
 };

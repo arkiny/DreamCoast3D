@@ -14,23 +14,26 @@ cUISlot::cUISlot(LPD3DXSPRITE pSprite)
 	, m_pIcon(nullptr)
 	, m_pItem(nullptr)
 {
-	m_rectDrawArea = { 0, 0, 0, 0 };
 }
 
 cUISlot::~cUISlot()
 {
-	//자기 칸에 가지고 있는 아이템 해제
-	//SAFE_RELEASE(m_pItem);
+
 }
-//void cUISlot::Update(float fDelta)
-//{
-//
-//}
+void cUISlot::Update(float fDelta)
+{
+	if (m_pIcon)
+	{
+		//m_pIcon->SetPosition(GetPosition().x + 4, GetPosition().y + 4);
+		m_pIcon->Update(fDelta);
+	}
+	cUIImageView::Update(fDelta);
+}
 void cUISlot::Render()
 {
-	cUIImageView::Render();
 	if (m_pIcon)
 	{
 		m_pIcon->Render();
 	}
+	cUIImageView::Render();
 }

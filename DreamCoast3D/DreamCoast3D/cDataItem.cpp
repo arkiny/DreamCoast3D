@@ -26,6 +26,7 @@ cDataItem::cDataItem(cUIIcon* pUIIcon)
 
 cDataItem::~cDataItem()
 {
+	//아이템의 아이콘 해제
 	SAFE_RELEASE(m_pUIIcon);
 }
 void cDataItem::SetupItemData(EITEMTYPE	eItemType, int nItemNum, bool isStackable, size_t nMaxStack)
