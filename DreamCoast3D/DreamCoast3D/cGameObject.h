@@ -31,6 +31,7 @@ public:
 		E_STORE,
 		E_PORTAL,
 		E_BLOCK,
+		E_BLOCK_EDIT,
 		E_EVENTMAX
 	};
 

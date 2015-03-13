@@ -102,6 +102,9 @@ std::string cGameASEObject::SaveAsStringInfo(){
 	vScale = GetScale();
 	ss << "*MAP_OBJECT_ASE_POS " << std::fixed << vPos.z << "\t" << vPos.y << "\t" << vPos.x << std::endl;
 	ss << "*MAP_OBJECT_ASE_SCALE " << std::fixed << vScale.x << "\t" << vScale.y << "\t" << vScale.z << std::endl;
+	if (m_eEventType == E_BLOCK_EDIT){
+		m_eEventType = E_BLOCK;
+	}
 	ss << "*MAP_OBJECT_EVENT_TYPE " << (int)m_eEventType << std::endl;
 	ss << "}" << std::endl;
 	return ss.str();

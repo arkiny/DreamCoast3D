@@ -74,7 +74,9 @@ void cGameObjManager::Render(){
 
 	for (auto p : m_setStaticGameObjects){
 		if (m_pFrustum->IsIn(p->GetBoundingSphere())){
-			p->RenderShadow();
+			if (p->GetEventType() != p->E_BLOCK){
+				p->RenderShadow();
+			}
 		}
 	}
 
@@ -91,7 +93,9 @@ void cGameObjManager::Render(){
 
 	for (auto p : m_setStaticGameObjects){
 		if (m_pFrustum->IsIn(p->GetBoundingSphere())){
-			SAFE_RENDER(p);
+			if (p->GetEventType() != p->E_BLOCK){
+				SAFE_RENDER(p);
+			}
 		}
 	}
 
