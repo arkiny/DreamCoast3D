@@ -118,11 +118,11 @@ void cSkinnedMesh::Load(std::string sFolder, std::string sFile){
 	m_sSkinnedFolder = sFolder;
 	m_sSkinnedFile = sFile;
 	
-	g_pShaderManager->GetShader("MultiAnimation.fx");
-	//m_pEffect = LoadEffect("MultiAnimation.fx");
+	g_pShaderManager->GetShader("../Resources/Shader/MultiAnimation.fx");
+	//m_pEffect = LoadEffect("../Resources/Shader/MultiAnimation.fx");
 
 	int nPaletteSize = 0;
-	g_pShaderManager->GetShader("MultiAnimation.fx")->GetInt("MATRIX_PALETTE_SIZE", &nPaletteSize);
+	g_pShaderManager->GetShader("../Resources/Shader/MultiAnimation.fx")->GetInt("MATRIX_PALETTE_SIZE", &nPaletteSize);
 
 	cAllocateHierarchy ah;
 	ah.SetDirectory(sFolder);
@@ -164,7 +164,7 @@ void cSkinnedMesh::Load(char* szDirectory, char* szFilename)
 void cSkinnedMesh::UpdateAndRenderShadow(D3DXMATRIXA16* pParentWorldTM)
 {
 
-	g_pShaderManager->GetShader("MultiAnimation.fx")
+	g_pShaderManager->GetShader("../Resources/Shader/MultiAnimation.fx")
 		->SetMatrix("gWorldMatrix", pParentWorldTM);
 	//if (m_pAnimController)
 	//{
@@ -259,7 +259,7 @@ void cSkinnedMesh::Update(ST_BONE* pCurrent, D3DXMATRIXA16* pmatParent)
 {
 	pCurrent->CombinedTransformationMatrix = pCurrent->TransformationMatrix;
 	//gWorldMatrix
-	g_pShaderManager->GetShader("MultiAnimation.fx")
+	g_pShaderManager->GetShader("../Resources/Shader/MultiAnimation.fx")
 		->SetMatrix("gWorldMatrix", &pCurrent->CombinedTransformationMatrix);
 	
 	if (pmatParent)
@@ -336,20 +336,20 @@ void cSkinnedMesh::Render(ST_BONE* pBone /*= NULL*/)
 		D3DXVec3TransformCoord(&vEye, &vEye, &mInvView);
 
 		//gWorldViewProjectionMatrix
-		g_pShaderManager->GetShader("MultiAnimation.fx")
+		g_pShaderManager->GetShader("../Resources/Shader/MultiAnimation.fx")
 			->SetMatrix("gWorldViewProjectionMatrix", &matViewProj);
 		//gWorldLightPosition
 		D3DLIGHT9 stLight;
 		g_pD3DDevice->GetLight(0, &stLight);
 		D3DXVECTOR3 pos = -500 * stLight.Direction;
-		g_pShaderManager->GetShader("MultiAnimation.fx")
+		g_pShaderManager->GetShader("../Resources/Shader/MultiAnimation.fx")
 			->SetVector("gWorldLightPosition", &D3DXVECTOR4(pos, 0.0f));
 		//gWorldCameraPosition
-		g_pShaderManager->GetShader("MultiAnimation.fx")
+		g_pShaderManager->GetShader("../Resources/Shader/MultiAnimation.fx")
 			->SetVector("gWorldCameraPosition", &D3DXVECTOR4(vEye, 1.0f));
 
 		// set the current number of bones; this tells the effect which shader to use
-		g_pShaderManager->GetShader("MultiAnimation.fx")->SetInt("CurNumBones", pBoneMesh->dwMaxNumFaceInfls - 1);
+		g_pShaderManager->GetShader("../Resources/Shader/MultiAnimation.fx")->SetInt("CurNumBones", pBoneMesh->dwMaxNumFaceInfls - 1);
 
 		g_pD3DDevice->GetLight(0, &stLight);
 		D3DXVECTOR3 dir = stLight.Direction;
@@ -375,27 +375,27 @@ void cSkinnedMesh::Render(ST_BONE* pBone /*= NULL*/)
 			D3DXMatrixMultiply(&matViewProject, &matView, &matProjection);
 		}
 
-		g_pShaderManager->GetShader("MultiAnimation.fx")
+		g_pShaderManager->GetShader("../Resources/Shader/MultiAnimation.fx")
 			->SetVector("gWorldLightPosition", &D3DXVECTOR4(pos, 0.0f));
-		g_pShaderManager->GetShader("MultiAnimation.fx")
+		g_pShaderManager->GetShader("../Resources/Shader/MultiAnimation.fx")
 			->SetMatrix("gLightViewMatrix", &matLightView);
-		g_pShaderManager->GetShader("MultiAnimation.fx")
+		g_pShaderManager->GetShader("../Resources/Shader/MultiAnimation.fx")
 			->SetMatrix("gLightProjectionMatrix", &matLightProjection);
-		g_pShaderManager->GetShader("MultiAnimation.fx")
+		g_pShaderManager->GetShader("../Resources/Shader/MultiAnimation.fx")
 			->SetMatrix("gViewProjectionMatrix", &matViewProject);
-		g_pShaderManager->GetShader("MultiAnimation.fx")
+		g_pShaderManager->GetShader("../Resources/Shader/MultiAnimation.fx")
 			->SetTexture("ShadowMap_Tex", g_pShaderManager->GetShadowRenderTarget());
 
 		// set the technique we use to draw
-		g_pShaderManager->GetShader("MultiAnimation.fx")->SetTechnique("Skinning20");
+		g_pShaderManager->GetShader("../Resources/Shader/MultiAnimation.fx")->SetTechnique("Skinning20");
 
 		UINT uiPasses, uiPass;
 
 		// run through each pass and draw
-		g_pShaderManager->GetShader("MultiAnimation.fx")->Begin(&uiPasses, 0);
+		g_pShaderManager->GetShader("../Resources/Shader/MultiAnimation.fx")->Begin(&uiPasses, 0);
 		for (uiPass = 0; uiPass < uiPasses; ++uiPass)
 		{
-			g_pShaderManager->GetShader("MultiAnimation.fx")->BeginPass(uiPass);
+			g_pShaderManager->GetShader("../Resources/Shader/MultiAnimation.fx")->BeginPass(uiPass);
 
 			// for each palette
 			for (DWORD dwAttrib = 0; dwAttrib < pBoneMesh->dwNumAttrGroups; ++dwAttrib)
@@ -413,29 +413,29 @@ void cSkinnedMesh::Render(ST_BONE* pBone /*= NULL*/)
 				}
 
 				// set the matrix palette into the effect
-				g_pShaderManager->GetShader("MultiAnimation.fx")->SetMatrixArray("amPalette",
+				g_pShaderManager->GetShader("../Resources/Shader/MultiAnimation.fx")->SetMatrixArray("amPalette",
 					m_pmWorkingPalette,
 					pBoneMesh->dwNumPaletteEntries);
 
 				//DiffuseMap_Tex
-				g_pShaderManager->GetShader("MultiAnimation.fx")
+				g_pShaderManager->GetShader("../Resources/Shader/MultiAnimation.fx")
 					->SetTexture("DiffuseMap_Tex", pBoneMesh->vecTexture[pBoneCombos[dwAttrib].AttribId]);
 
 				//SpecularMap_Tex
-				g_pShaderManager->GetShader("MultiAnimation.fx")
+				g_pShaderManager->GetShader("../Resources/Shader/MultiAnimation.fx")
 					->SetTexture("SpecularMap_Tex", pBoneMesh->vecSpecular[pBoneCombos[dwAttrib].AttribId]);
 
 				//NormalMap_Tex
-				g_pShaderManager->GetShader("MultiAnimation.fx")
+				g_pShaderManager->GetShader("../Resources/Shader/MultiAnimation.fx")
 					->SetTexture("NormalMap_Tex", pBoneMesh->vecNormal[pBoneCombos[dwAttrib].AttribId]);
 				
-				g_pShaderManager->GetShader("MultiAnimation.fx")->CommitChanges();
+				g_pShaderManager->GetShader("../Resources/Shader/MultiAnimation.fx")->CommitChanges();
 
 				pBoneMesh->pWorkingMesh->DrawSubset(dwAttrib);
 			}
-			g_pShaderManager->GetShader("MultiAnimation.fx")->EndPass();
+			g_pShaderManager->GetShader("../Resources/Shader/MultiAnimation.fx")->EndPass();
 		}
-		g_pShaderManager->GetShader("MultiAnimation.fx")->End();
+		g_pShaderManager->GetShader("../Resources/Shader/MultiAnimation.fx")->End();
 	}
 
 	//재귀적으로 모든 프레임에 대해서 실행.
