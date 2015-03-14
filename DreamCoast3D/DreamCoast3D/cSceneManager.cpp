@@ -84,7 +84,8 @@ void cSceneManager::Start(){
 	cSceneLoader SceneLoader;
 	if (!m_vecSceneInfoFilePath.empty()){
 		//테스트 하기 편하게 3번씬. 커밋할 때 고쳐야함 : 민우
-		ChangeScene(2);
+		//제발 커밋할땐 고쳐서 올리셈;
+		ChangeScene(0);
 	}
 }
 

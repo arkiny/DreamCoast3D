@@ -28,9 +28,9 @@ void cUISet4Editor::Setup(){
 	// TODO 차후에 QuitToMainMenu로 바꿔야함
 	cUISceneChangeButton* pTestButton = new cUISceneChangeButton(m_pSprite);
 	pTestButton->Setup(
-		std::string("../Resources/UI/UI_BUTTON_LOBBY/QG_1_NORMAL.png"),
-		std::string("../Resources/UI/UI_BUTTON_LOBBY/QG_1_ON.png"),
-		std::string("../Resources/UI/UI_BUTTON_LOBBY/QG_1_CLICK.png"));
+		std::string("../Resources/UI/UI_BUTTON_LOBBY/MM_1_NORMAL.png"),
+		std::string("../Resources/UI/UI_BUTTON_LOBBY/MM_1_ON.png"),
+		std::string("../Resources/UI/UI_BUTTON_LOBBY/MM_1_CLICK.png"));
 	pTestButton->SetPosition(D3DXVECTOR3(1120, 640, 0));
 	pTestButton->SetScale(D3DXVECTOR3(.6f, .6f, 1.0f));
 	pTestButton->SetButtonDeligate(this);
