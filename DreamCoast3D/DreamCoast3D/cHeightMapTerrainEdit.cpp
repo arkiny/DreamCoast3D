@@ -192,7 +192,11 @@ void cHeightMapTerrainEdit::Update(float fDelta){
 	if (GetAsyncKeyState('N'))
 	{
 		m_fDelta += 1;
-		CalGauss(m_vClickFrom.x, m_vClickFrom.z, m_fDelta);
+        if (m_vTileFrom.x != -1.f || m_vTileFrom.z != -1.f)
+        {
+            CalGauss(vFrom.x, vTo.y, m_fDelta);
+        }
+  
 	}
 
 	if (GetAsyncKeyState('M')){
