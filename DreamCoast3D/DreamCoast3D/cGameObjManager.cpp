@@ -335,6 +335,9 @@ bool cGameObjManager::isGameAttackSphereCollided(
 						float scale2 = 1.0f;
 
 						if (isCollided(from, fFrom, scale, to, fTo, scale2)){
+							if (pFrom->GetGameObjectType() == pFrom->E_PLAYABLE){
+								int a = 0;
+							}
 							p->OnHitTarget(pFrom, 10.0f, pSphere.second.m_vCenter);
 							m_pCameraDeligate->AttackCameraMoving();
 						}
