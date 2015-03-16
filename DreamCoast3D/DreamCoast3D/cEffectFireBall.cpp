@@ -15,7 +15,7 @@ cEffectFireBall::~cEffectFireBall()
 void cEffectFireBall::Setup(){
 	m_vecVertex.clear();
 	m_vecMoveInfo.clear();
-	for (int i = 0; i < 100; ++i)
+	for (int i = 0; i < 10; ++i)
 	{
 		ST_PC_VERTEX v;
 		v.c = D3DCOLOR_XRGB(30, 80, 128);
@@ -131,13 +131,17 @@ void cEffectFireBall::Render(){
 	g_pD3DDevice->SetRenderState(D3DRS_POINTSPRITEENABLE, true);
 
 	// 텍스쳐 알파 옵션 설정
+	
 	g_pD3DDevice->SetTextureStageState(0, D3DTSS_ALPHAOP, D3DTOP_MODULATE);
 	g_pD3DDevice->SetTextureStageState(0, D3DTSS_ALPHAARG1, D3DTA_TEXTURE);
 	g_pD3DDevice->SetTextureStageState(0, D3DTSS_ALPHAARG2, D3DTA_DIFFUSE);
 
 	// 알파블랜딩 방식 결정.
+	
+	
 	g_pD3DDevice->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
-	g_pD3DDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_ONE);
+	//	g_pD3DDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_ONE);
+	g_pD3DDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
 
 	g_pD3DDevice->SetRenderState(D3DRS_LIGHTING, false);
 
@@ -148,7 +152,7 @@ void cEffectFireBall::Render(){
 	g_pD3DDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, true);
 	g_pD3DDevice->SetRenderState(D3DRS_ZWRITEENABLE, false);
 
-	LPDIRECT3DTEXTURE9 pTexture = g_pTextureManager->GetTexture("../Resources/Effect/Particle.tga");
+	LPDIRECT3DTEXTURE9 pTexture = g_pTextureManager->GetTexture("../Resources/Effect/A_blood_ring05_emis.png");
 	g_pD3DDevice->SetTexture(0, pTexture);
 
 	g_pD3DDevice->SetFVF(ST_PC_VERTEX::FVF);

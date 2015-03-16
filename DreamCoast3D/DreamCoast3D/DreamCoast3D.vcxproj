@@ -158,6 +158,7 @@
     <ClInclude Include="cMapLoader.h" />
     <ClInclude Include="cMapLoader4Edit.h" />
     <ClInclude Include="cMapToolCamera.h" />
+    <ClInclude Include="cMesh.h" />
     <ClInclude Include="cMousePicking.h" />
     <ClInclude Include="cMtlTex.h" />
     <ClInclude Include="cPlayerAttack.h" />
@@ -284,6 +285,7 @@
     <ClCompile Include="cMapLoader.cpp" />
     <ClCompile Include="cMapLoader4Edit.cpp" />
     <ClCompile Include="cMapToolCamera.cpp" />
+    <ClCompile Include="cMesh.cpp" />
     <ClCompile Include="cMousePicking.cpp" />
     <ClCompile Include="cMtlTex.cpp" />
     <ClCompile Include="cPlayerAttack.cpp" />

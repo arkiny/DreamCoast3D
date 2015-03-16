@@ -114,13 +114,13 @@ template FVFData {
 
 
 Material Multimaterial_A_BloodRing003_MATSub0 {
- 1.000000;1.000000;1.000000;1.000000;;
- 3.200000;
+ 0.000000;0.000000;0.000000;0.000000;;
+ 0.000000;
  0.000000;0.000000;0.000000;;
  0.000000;0.000000;0.000000;;
 
  TextureFilename {
-  "A_blood_ring05_emis.png";
+  "../Resources/Effect/BloodRing/A_blood_ring05_emis.png";
  }
 }
 

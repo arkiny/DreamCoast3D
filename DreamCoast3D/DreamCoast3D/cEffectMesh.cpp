@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "cEffectMesh.h"
-
+#include "cMesh.h"
+#include "cTransform.h"
 
 cEffectMesh::cEffectMesh()
 	:m_fLifeSpan(1.0f),
@@ -12,14 +13,12 @@ cEffectMesh::cEffectMesh()
 cEffectMesh::~cEffectMesh()
 {
 	SAFE_RELEASE(m_pEffectMesh);
-	SAFE_RELEASE(m_pTexture);
 }
 
 void cEffectMesh::Setup(){
 	m_pEffectMesh = g_pStaticMeshManager->GetStaticMesh(std::string("../Resources/Effect/BloodRing/A_BloodRing005_SM.X"));
 	m_pEffectMesh->AddRef();
-	m_pTexture = g_pTextureManager->GetTexture(std::string("../Resources/Effect/BloodRing/A_blood_ring05_emis.png"));
-	m_pTexture->AddRef();
+	m_pTransform->SetScaling(D3DXVECTOR3(0.05f, 0.05f, 0.05f));
 }
 
 void cEffectMesh::Start(){
@@ -31,47 +30,30 @@ void cEffectMesh::Update(float fDelta){
 }
 
 void cEffectMesh::Render(){
-	//// Enable alpha blending.
-	//lpD3DDevice->SetRenderState(D3DRS_ALPHABLENDENABLE,
-	//	TRUE);
+	D3DXMATRIXA16 matWorld;
+	D3DXVECTOR3 v = m_pTransform->GetPosition();
+	//D3DXMatrixIdentity(&matWorld);
+	D3DXMATRIXA16 matView, matInvView;
+	g_pD3DDevice->GetTransform(D3DTS_VIEW, &matView);
+	matView._41 = 0;
+	matView._42 = 0;
+	matView._43 = 0;
+	D3DXMatrixInverse(&matInvView, 0, &matView);
+	D3DXMATRIXA16 matscl;
+	D3DXMatrixScaling(&matscl,
+		m_pTransform->GetScaling().x,
+		m_pTransform->GetScaling().y,
+		m_pTransform->GetScaling().z);
+	matInvView = matscl * matInvView;
+	matInvView._41 = v.x;
+	matInvView._42 = v.y;
+	matInvView._43 = v.z;
 
-	//// Set the source blend state.
-	//lpD3DDevice->SetRenderState(D3DRS_SRCBLEND,
-	//	D3DBLEND_SRCCOLOR);
 
-	//// Set the destination blend state.
-	//lpD3DDevice->SetRenderState(D3DRS_DESTBLEND,
-	//	D3DBLEND_INVSRCCOLOR);
-	//g_pD3DDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
-
-	//D3DMATERIAL9 mtrl;
-	//mtrl.Diffuse = mtrl.Ambient = mtrl.Specular = mtrl.Emissive = D3DXCOLOR(0.0, 0.0, 0.0, 0.5f);
-	//
-	//g_pD3DDevice->SetMaterial(&mtrl);
-
-	// create material
-	D3DMATERIAL9 mtrl;
-	ZeroMemory(&mtrl, sizeof(mtrl));
-	mtrl.Emissive.r = 0.75f;
-	mtrl.Emissive.g = 0.0f;
-	mtrl.Emissive.b = 0.0f;
-	mtrl.Emissive.a = 1.0f;
 	
-	g_pD3DDevice->SetRenderState(D3DRS_EMISSIVEMATERIALSOURCE, D3DMCS_MATERIAL);
-	g_pD3DDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, TRUE);
-	//g_pD3DDevice->SetRenderState(D3DRS_BLENDOP, D3DBLENDOP_ADD);
-	//g_pD3DDevice->SetRenderState(D3DRS_DIFFUSEMATERIALSOURCE, D3DMCS_MATERIAL);
-	g_pD3DDevice->SetTransform(D3DTS_WORLD, GetTransformMatrix());
-	g_pD3DDevice->SetTexture(0, m_pTexture);
-	//D3DMATERIAL9 mtrl;
-	//ZeroMemory(&mtrl, sizeof(mtrl));
-	//mtrl.Ambient = D3DXCOLOR(.8, .8, .8, 1.0f);
-	//mtrl.Diffuse = D3DXCOLOR(.8, .8, .8, 1.0f);
-	//mtrl.Specular = D3DXCOLOR(.8, .8, .8, 1.0f);
-	g_pD3DDevice->SetMaterial(&mtrl);
-	m_pEffectMesh->DrawSubset(0);
-	g_pD3DDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, FALSE);
+	//g_pD3DDevice->SetTransform(D3DTS_WORLD, &matInvView);
 
+	m_pEffectMesh->Render(&matInvView);
 }
 
 void cEffectMesh::Exit(){

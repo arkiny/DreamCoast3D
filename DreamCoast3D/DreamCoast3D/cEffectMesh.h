@@ -1,11 +1,12 @@
 #pragma once
 #include "cEffect.h"
+
+class cMesh;
 class cEffectMesh	: public cEffect
 {
 protected:
-	LPD3DXMESH			m_pEffectMesh;
-	LPDIRECT3DTEXTURE9	m_pTexture;
-	float		m_fLifeSpan;
+	cMesh*			m_pEffectMesh;
+	float			m_fLifeSpan;
 
 public:
 	cEffectMesh();

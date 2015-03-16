@@ -2,17 +2,19 @@
 
 #define g_pStaticMeshManager cStaticMeshManager::GetInstance()
 
+class cMesh;
+
 class cStaticMeshManager
 {
 public:
 	SINGLETONE(cStaticMeshManager);
 
 private:
-	std::map<std::string, LPD3DXMESH>	m_mapStaticMesh;
+	std::map<std::string, cMesh*>	m_mapStaticMesh;
 
 public:
-	LPD3DXMESH GetStaticMesh(char* szPath);
-	LPD3DXMESH GetStaticMesh(std::string sPath);
+	cMesh* GetStaticMesh(char* szPath);
+	cMesh* GetStaticMesh(std::string sPath);
 	void Destroy();
 };
 
