@@ -319,7 +319,7 @@ bool cGameObjManager::isGameAttackSphereCollided(
 				float scale = pFrom->GetScale().x;
 				float scale2 = p->GetScale().x;
 
-				if (isCollided(from, fFrom, scale, to, fTo, scale2)){
+				//if (isCollided(from, fFrom, scale, to, fTo, scale2)){
 					std::map<std::string, ST_BOUNDING_SPHERE>* pMap = p->GetUpdatedDetailedSphere();
 					for (auto pSphere : *pMap){
 
@@ -342,7 +342,7 @@ bool cGameObjManager::isGameAttackSphereCollided(
 							m_pCameraDeligate->AttackCameraMoving();
 						}
 					}
-				}
+				//}
 			}
 			else{
 				continue;
