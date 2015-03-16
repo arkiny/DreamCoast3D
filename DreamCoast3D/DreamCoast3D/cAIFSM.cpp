@@ -314,7 +314,7 @@ int cAIDead::GetCurrentStateType(){
 void cAIBossPage::Start(cGameAIObject* pAIObject)
 {
 	pAIObject->SetPassedTime(0);
-	pAIObject->GetSkinnedMesh()->SetAnimationIndex(12);
+	pAIObject->GetSkinnedMesh()->SetAnimationIndex(m_nIndex);
 }
 
 void cAIBossPage::Execute(cGameAIObject* pAIObject, float fDelta)
@@ -322,6 +322,7 @@ void cAIBossPage::Execute(cGameAIObject* pAIObject, float fDelta)
 	if (pAIObject->GetSkinnedMesh()->GetCurrentAnimationPeriodTime() < pAIObject->GetPassedTime())
 	{
 		pAIObject->ChangeState(pAIObject->eAISTATE_BOSSPAGE);
+		m_nIndex++;
 		return;
 	}
 
