@@ -1,7 +1,5 @@
 #include "MultiAnimation.vsh"
 
-
-
 float4x4 gWorldMatrix : World;
 float4x4 gWorldViewProjectionMatrix : WorldViewProjection;
 float4 gWorldLightPosition
@@ -47,52 +45,54 @@ struct VS_OUTPUT
 	float4 mClipPosition: TEXCOORD7;
 };
 
-VS_OUTPUT VertSkinning( VS_INPUT Input, uniform int nNumBones )
+VS_OUTPUT VertSkinning(VS_INPUT Input, uniform int nNumBones)
 {
 	VS_OUTPUT   Output;
-	
-	float4 oriPosition = Input.Pos;
 
 	// skin VB inputs
 	VS_SKIN_INPUT vsi = { Input.Pos, Input.BlendWeights, Input.BlendIndices, Input.Normal };
-	VS_SKIN_OUTPUT vso = VS_Skin( vsi, nNumBones );
+	VS_SKIN_OUTPUT vso = VS_Skin(vsi, nNumBones);
+	//float4 oriPosition = vso.vPos;
 
 	Output.Pos = mul(float4(vso.vPos.xyz, 1.0f), gWorldViewProjectionMatrix);
 	Output.mUV = Input.TexCoord;
 
 	float4 worldPosition = mul(float4(vso.vPos.xyz, 1.0f), gWorldMatrix);
-	float3 lightDir = worldPosition.xyz - gWorldLightPosition.xyz;
-	Output.mLightDir = normalize(lightDir);
+		float3 lightDir = worldPosition.xyz - gWorldLightPosition.xyz;
+		Output.mLightDir = normalize(lightDir);
 
 	float3 viewDir = normalize(worldPosition.xyz - gWorldCameraPosition.xyz);
-	Output.mViewDir = viewDir;
+		Output.mViewDir = viewDir;
 
 	float3 worldNormal = mul(vso.vNor, (float3x3)gWorldMatrix);
-	Output.N = normalize(worldNormal);
+		Output.N = normalize(worldNormal);
 
 	float3 worldTangent = mul(Input.mTangent, (float3x3)gWorldMatrix);
-	Output.T = normalize(worldTangent);
+		Output.T = normalize(worldTangent);
 
 	float3 worldBinormal = mul(Input.mBinormal, (float3x3)gWorldMatrix);
-	Output.B = normalize(worldBinormal);
+		Output.B = normalize(worldBinormal);
 
-	float4x4 lightViewMatrix = gLightViewMatrix;
-	worldPosition = mul(oriPosition, gWorldMatrix);
-	Output.mClipPosition = mul(worldPosition, lightViewMatrix);
+	
+	float4 position = mul(Input.Pos, gWorldMatrix);
+
+	//Output.mClipPosition = mul(oriPosition, (float3x3)gWorldMatrix);
+	//float4x4 lightViewMatrix = gLightViewMatrix;
+	//Output.Pos = mul(Input.Pos, gWorldMatrix);
+
+	Output.mClipPosition = mul(Output.Pos, gLightViewMatrix);
 	Output.mClipPosition = mul(Output.mClipPosition, gLightProjectionMatrix);
 
 	return Output;
 }
 
-
-
 int CurNumBones = 10;
 
-VertexShader vsArray20[ 4 ] = { 
-	compile vs_2_0 VertSkinning( 1 ),
-	compile vs_2_0 VertSkinning( 2 ),
-	compile vs_2_0 VertSkinning( 3 ),
-	compile vs_2_0 VertSkinning( 4 ) };
+VertexShader vsArray20[4] = {
+	compile vs_2_0 VertSkinning(1),
+	compile vs_2_0 VertSkinning(2),
+	compile vs_2_0 VertSkinning(3),
+	compile vs_2_0 VertSkinning(4) };
 
 
 struct PS_INPUT
@@ -170,24 +170,24 @@ float4 NormalMapping_Pass_0_Pixel_Shader_ps_main(PS_INPUT Input) : COLOR
 		diffuse = gLightColor * albedo.rgb * diffuse;
 
 	float3 specular = 0;
-	if (diffuse.x > 0)
-	{
-		float3 reflection = reflect(lightDir, worldNormal);
-			float3 viewDir = normalize(Input.mViewDir);
+		if (diffuse.x > 0)
+		{
+			float3 reflection = reflect(lightDir, worldNormal);
+				float3 viewDir = normalize(Input.mViewDir);
 
-			specular = saturate(dot(reflection, -viewDir));
-		specular = pow(specular, 20.0f);
+				specular = saturate(dot(reflection, -viewDir));
+			specular = pow(specular, 20.0f);
 
-		float4 specularIntensity = tex2D(SpecularSampler, Input.mUV);
-			specular *= specularIntensity.rgb * gLightColor;
-	}
+			float4 specularIntensity = tex2D(SpecularSampler, Input.mUV);
+				specular *= specularIntensity.rgb * gLightColor;
+		}
 
 	float3 ambient = float3(0.5f, 0.5f, 0.5f) * albedo;
 
-	float3 ret = float3(ambient + diffuse + specular);
+		float3 ret = float3(ambient + diffuse + specular);
 
-	// shadow
-	float currentDepth = Input.mClipPosition.z / Input.mClipPosition.w;
+		// shadow
+		float currentDepth = Input.mClipPosition.z / Input.mClipPosition.w;
 	float2 uv = Input.mClipPosition.xy / Input.mClipPosition.w;
 		uv.y = -uv.y;
 	uv = uv * 0.5 + 0.5;
@@ -202,6 +202,12 @@ float4 NormalMapping_Pass_0_Pixel_Shader_ps_main(PS_INPUT Input) : COLOR
 	return float4(ret, 1);
 }
 
+float4 CreateShadowShader_CreateShadow_Pixel_Shader_ps_main(PS_INPUT Input) : COLOR
+{
+	float depth = Input.mClipPosition.z / Input.mClipPosition.w;
+	return float4(depth.xxx, 1);
+}
+
 //--------------------------------------------------------------------------------------
 // Techniques
 //--------------------------------------------------------------------------------------
@@ -210,7 +216,24 @@ technique Skinning20
 {
 	pass p0
 	{
-		VertexShader = ( vsArray20[ CurNumBones ] );
+		VertexShader = (vsArray20[CurNumBones]);
 		PixelShader = compile ps_2_0 NormalMapping_Pass_0_Pixel_Shader_ps_main();
+	}
+}
+
+//--------------------------------------------------------------//
+// Technique Section for CreateShadowShader
+//--------------------------------------------------------------//
+technique CreateShadowShader
+{
+	pass CreateShadow
+		<
+		string Script = "RenderColorTarget0 = ShadowMap_Tex;"
+		"ClearColor = (255, 255, 255, 255);"
+		"ClearDepth = 1.000000;";
+		>
+	{
+		VertexShader = (vsArray20[CurNumBones]);
+		PixelShader = compile ps_2_0 CreateShadowShader_CreateShadow_Pixel_Shader_ps_main();
 	}
 }

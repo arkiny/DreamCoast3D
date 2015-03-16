@@ -222,7 +222,6 @@
     <ClInclude Include="iUIPopupWindowDelegate.h" />
     <ClInclude Include="iSceneDelegate.h" />
     <ClInclude Include="iUIManagerDeligate.h" />
-    <ClInclude Include="MultiAnimation.fx" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
@@ -359,8 +358,8 @@
     <Image Include="small.ico" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\Resources\Shader\MultiAnimation.vsh" />
     <None Include="cObjectClassDiagram.cd" />
-    <None Include="MultiAnimation.vsh" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Resources\Shader\ApplyShadow.fx">
@@ -392,6 +391,16 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Resources\Shader\NormalMapping.fx">
+      <FileType>Document</FileType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Resources\Shader\MultiAnimationShadow.fx">
+      <FileType>Document</FileType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\Resources\Shader\MultiAnimation.fx">
       <FileType>Document</FileType>
     </None>
   </ItemGroup>

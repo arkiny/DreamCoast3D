@@ -126,8 +126,8 @@ void cLoadingScene::Setup(std::string sNextScene){
 	g_pD3DDevice->GetViewport(&vp);
 
 	D3DXMATRIXA16 matProj;
-	D3DXMatrixPerspectiveFovLH(&matProj, D3DX_PI / 4.0f, 1280.0f / 720.0f, 1.0f, 3000.0f);
-	g_pD3DDevice->SetTransform(D3DTS_PROJECTION, &matProj);
+	D3DXMatrixPerspectiveFovLH(&matProj, D3DX_PI / 4.0f, 1280.0f / 720.0f, 1.0f, 500.0f);
+
 
 	m_sNextScenePath = sNextScene;
 
@@ -236,7 +236,7 @@ void cLoadingScene::Render(){
 	// 광원-투영 행렬을 만든다.
 	D3DXMATRIXA16 matLightProjection;
 	{
-		D3DXMatrixPerspectiveFovLH(&matLightProjection, D3DX_PI / 4.0f, 1280.0f / 720.0f, 1, 3000);
+		D3DXMatrixPerspectiveFovLH(&matLightProjection, D3DX_PI / 4.0f, 1280.0f / 720.0f, 1, 1000);
 	}
 
 	// 뷰/투영행렬을 만든다.

@@ -135,7 +135,7 @@ void cASEInstance::RenderShadow(D3DXMATRIXA16* pMatrix){
 
 	D3DXMATRIXA16 matLightProjection; {
 		//D3DXMatrixPerspectiveFovLH(&matLightProjection, D3DX_PI / 4.0f, 1, 1, 3000);
-		D3DXMatrixOrthoLH(&matLightProjection, 350, 350, 1, 3000);
+		D3DXMatrixOrthoLH(&matLightProjection, 350, 350, 1, 800);
 	}
 
 	D3DXMATRIXA16 matView;
@@ -193,7 +193,7 @@ void cASEInstance::Render(D3DXMATRIXA16* pMatrix)
 		}
 
 		D3DXMATRIXA16 matLightProjection; {
-			D3DXMatrixPerspectiveFovLH(&matLightProjection, D3DX_PI / 4.0f, 1, 1, 3000);
+			D3DXMatrixPerspectiveFovLH(&matLightProjection, D3DX_PI / 4.0f, 1, 1, 8000);
 		}
 
 		D3DXMATRIXA16 matView;

@@ -720,9 +720,6 @@
     <ClInclude Include="cEditCursor.h">
       <Filter>EachWorks\MS</Filter>
     </ClInclude>
-    <ClInclude Include="MultiAnimation.fx">
-      <Filter>FrameWork\FX</Filter>
-    </ClInclude>
     <ClInclude Include="cShaderManager.h">
       <Filter>FrameWork\Singletons</Filter>
     </ClInclude>
@@ -743,9 +740,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="cObjectClassDiagram.cd" />
-    <None Include="MultiAnimation.vsh">
-      <Filter>FrameWork\FX</Filter>
-    </None>
     <None Include="..\Resources\Shader\Soft Shadows.fx">
       <Filter>FrameWork\FX</Filter>
     </None>
@@ -765,6 +759,15 @@
       <Filter>FrameWork\FX</Filter>
     </None>
     <None Include="..\Resources\Shader\NormalMapping.fx">
+      <Filter>FrameWork\FX</Filter>
+    </None>
+    <None Include="..\Resources\Shader\MultiAnimationShadow.fx">
+      <Filter>FrameWork\FX</Filter>
+    </None>
+    <None Include="..\Resources\Shader\MultiAnimation.vsh">
+      <Filter>FrameWork\FX</Filter>
+    </None>
+    <None Include="..\Resources\Shader\MultiAnimation.fx">
       <Filter>FrameWork\FX</Filter>
     </None>
   </ItemGroup>

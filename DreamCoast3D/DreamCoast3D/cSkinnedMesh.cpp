@@ -122,7 +122,8 @@ void cSkinnedMesh::Load(std::string sFolder, std::string sFile){
 	//m_pEffect = LoadEffect("../Resources/Shader/MultiAnimation.fx");
 
 	int nPaletteSize = 0;
-	g_pShaderManager->GetShader("../Resources/Shader/MultiAnimation.fx")->GetInt("MATRIX_PALETTE_SIZE", &nPaletteSize);
+	g_pShaderManager->GetShader("../Resources/Shader/MultiAnimation.fx")
+		->GetInt("MATRIX_PALETTE_SIZE", &nPaletteSize);
 
 	cAllocateHierarchy ah;
 	ah.SetDirectory(sFolder);
@@ -474,7 +475,7 @@ void cSkinnedMesh::RenderShadow(ST_BONE* pBone /*= NULL*/){
 
 		D3DXMATRIXA16 matLightProjection; {
 			//D3DXMatrixPerspectiveFovLH(&matLightProjection, D3DX_PI / 4.0f, 1, 1, 3000);
-			D3DXMatrixOrthoLH(&matLightProjection, 350, 350, 1, 3000);
+			D3DXMatrixOrthoLH(&matLightProjection, 350, 350, 1, 1000);
 		}
 
 		D3DXMATRIXA16 matView;
