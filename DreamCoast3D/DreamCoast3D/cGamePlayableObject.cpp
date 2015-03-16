@@ -90,7 +90,7 @@ void cGamePlayableObject::OnHitTarget(cGameObject* pTarget, float fDamage, D3DXV
 			// todo : 피격 부위 구체화
 			//p->SetPosition(vHitPosition);
 
-			this->GetEffectDelegate()->AddEffect(cEffect::E_EFFECT_ONHIT, playerPos);
+			this->GetEffectDelegate()->AddEffect(cEffect::E_EFFECT_ONHIT, vHitPosition);
 			this->GetStatInfo()->fCurrentHp -= 10.0f;
 
 			this->ChangeState(this->EPLAYABLESTATE_ONHIT);

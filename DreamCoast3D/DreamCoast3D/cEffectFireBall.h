@@ -16,6 +16,9 @@ class cEffectFireBall : public cEffect
 protected:
 	std::vector<ST_PC_VERTEX>	m_vecVertex;
 	std::vector<ST_PARTICLE>	m_vecMoveInfo;
+	LPDIRECT3DTEXTURE9			m_pTexture;
+	
+
 	float m_fPassedTime = 0.0f;
 	float m_fLifeTime = 2.0f;
 	// Utility Function

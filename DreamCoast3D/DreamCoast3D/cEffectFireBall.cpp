@@ -10,6 +10,7 @@ cEffectFireBall::cEffectFireBall()
 
 cEffectFireBall::~cEffectFireBall()
 {
+	//SAFE_RELEASE(m_pTexture);
 }
 
 void cEffectFireBall::Setup(){
@@ -56,7 +57,8 @@ void cEffectFireBall::Setup(){
 		m_vecVertex.push_back(v);
 		m_vecMoveInfo.push_back(stP);
 	}
-	SetPosition(D3DXVECTOR3(128.0f, 10.0f, 128.0f));
+	
+	m_pTexture = g_pTextureManager->GetTexture("../Resources/Effect/A_blood_ring05_emis.png");
 }
 
 void cEffectFireBall::Start(){
@@ -152,8 +154,8 @@ void cEffectFireBall::Render(){
 	g_pD3DDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, true);
 	g_pD3DDevice->SetRenderState(D3DRS_ZWRITEENABLE, false);
 
-	LPDIRECT3DTEXTURE9 pTexture = g_pTextureManager->GetTexture("../Resources/Effect/A_blood_ring05_emis.png");
-	g_pD3DDevice->SetTexture(0, pTexture);
+
+	g_pD3DDevice->SetTexture(0, m_pTexture);
 
 	g_pD3DDevice->SetFVF(ST_PC_VERTEX::FVF);
 

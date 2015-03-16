@@ -335,10 +335,11 @@ bool cGameObjManager::isGameAttackSphereCollided(
 						float scale2 = 1.0f;
 
 						if (isCollided(from, fFrom, scale, to, fTo, scale2)){
-							if (pFrom->GetGameObjectType() == pFrom->E_PLAYABLE){
-								int a = 0;
-							}
-							p->OnHitTarget(pFrom, 10.0f, pSphere.second.m_vCenter);
+							D3DXVECTOR3 vDir, vHit;
+							D3DXVec3Normalize(&vDir, &dist);
+							float scale2 = p->GetScale().x;
+							vHit = to + vDir*scale2;
+							p->OnHitTarget(pFrom, 10.0f, vHit);
 							m_pCameraDeligate->AttackCameraMoving();
 						}
 					}
@@ -463,7 +464,12 @@ void cGameObjManager::AttackMobToPlayer(cGameAIObject* pFrom){
 
 						if (isCollided(from, fFrom, scale, to, fTo, scale2)){
 							if (p->GetGameObjectType() == p->E_PLAYABLE){
-								p->OnHitTarget(pFrom, 10.0f, pSphere.second.m_vCenter);
+
+								D3DXVECTOR3 vDir, vHit;
+								D3DXVec3Normalize(&vDir, &dist);
+								vHit = to + vDir;
+
+								p->OnHitTarget(pFrom, 10.0f, vHit);
 							}
 						}
 					}
