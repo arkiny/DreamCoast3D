@@ -323,6 +323,10 @@ void cAIBossPage::Execute(cGameAIObject* pAIObject, float fDelta)
 	{
 		pAIObject->ChangeState(pAIObject->eAISTATE_BOSSPAGE);
 		m_nIndex++;
+		if (m_nIndex > 20)
+		{
+			m_nIndex = 20;
+		}
 		return;
 	}
 

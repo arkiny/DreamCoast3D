@@ -23,7 +23,7 @@ cGameAIObject::cGameAIObject()
 	m_eGameObjectType = eGameObjectType::E_MOP;
 	//SetYangle(2);
 
-    m_fHP = 2.0f;
+    m_fHP = 1000.0f;
 }
 
 

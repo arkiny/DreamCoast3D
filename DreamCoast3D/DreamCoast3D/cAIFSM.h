@@ -64,7 +64,7 @@ class cAIBossPage : public iAIState
 	virtual void Exit(cGameAIObject* pAIObject);
 	virtual int GetCurrentStateType();
 
-	int m_nIndex = 0;
+	int m_nIndex = 18;
 };
 
 class cAIBossPageFirst : public iAIState
