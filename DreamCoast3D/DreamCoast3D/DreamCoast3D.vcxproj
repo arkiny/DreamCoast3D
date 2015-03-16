@@ -125,6 +125,7 @@
     <ClInclude Include="cEffect.h" />
     <ClInclude Include="cEffectFireBall.h" />
     <ClInclude Include="cEffectManager.h" />
+    <ClInclude Include="cEffectMesh.h" />
     <ClInclude Include="cEffectResourceManager.h" />
     <ClInclude Include="cFontManager.h" />
     <ClInclude Include="cGameAIObject.h" />
@@ -168,6 +169,7 @@
     <ClInclude Include="cSceneTerrainEdit.h" />
     <ClInclude Include="cShaderManager.h" />
     <ClInclude Include="cSkinnedMeshBody.h" />
+    <ClInclude Include="cStaticMeshManager.h" />
     <ClInclude Include="cUICursor.h" />
     <ClInclude Include="cUIExpBar.h" />
     <ClInclude Include="cUIGameMainMenu.h" />
@@ -249,6 +251,7 @@
     <ClCompile Include="cEffect.cpp" />
     <ClCompile Include="cEffectFireBall.cpp" />
     <ClCompile Include="cEffectManager.cpp" />
+    <ClCompile Include="cEffectMesh.cpp" />
     <ClCompile Include="cEffectResourceManager.cpp" />
     <ClCompile Include="cFontManager.cpp" />
     <ClCompile Include="cGameAIObject.cpp" />
@@ -292,6 +295,7 @@
     <ClCompile Include="cSceneTerrainEdit.cpp" />
     <ClCompile Include="cShaderManager.cpp" />
     <ClCompile Include="cSkinnedMeshBody.cpp" />
+    <ClCompile Include="cStaticMeshManager.cpp" />
     <ClCompile Include="cUICursor.cpp" />
     <ClCompile Include="cUIExpBar.cpp" />
     <ClCompile Include="cUIGameMainMenu.cpp" />

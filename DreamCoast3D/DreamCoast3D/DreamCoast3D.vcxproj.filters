@@ -358,6 +358,10 @@
     <ClCompile Include="cUISet4Editor.cpp">
       <Filter>EachWorks\HD</Filter>
     </ClCompile>
+    <ClCompile Include="cEffectMesh.cpp">
+      <Filter>FrameWork\Effects</Filter>
+    </ClCompile>
+    <ClCompile Include="cStaticMeshManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cAction.h">
@@ -729,6 +733,10 @@
     <ClInclude Include="cUISet4Editor.h">
       <Filter>EachWorks\HD</Filter>
     </ClInclude>
+    <ClInclude Include="cEffectMesh.h">
+      <Filter>FrameWork\Effects</Filter>
+    </ClInclude>
+    <ClInclude Include="cStaticMeshManager.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="DreamCoast3D.ico">

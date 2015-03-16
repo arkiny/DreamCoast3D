@@ -2,7 +2,7 @@
 #include "cEffectManager.h"
 #include "cEffect.h"
 #include "cEffectFireBall.h"
-
+#include "cEffectMesh.h"
 
 cEffectManager::cEffectManager()
 {
@@ -35,6 +35,12 @@ void cEffectManager::Setup(){
 		m_qeueuOnHitEffectPool.push(p);
 		p->SetOwner(this);
 	}
+
+	cEffectMesh* p = new cEffectMesh;
+	p->Setup();
+	p->SetPosition(D3DXVECTOR3(128, 1, 128));
+	m_setEffects.insert(p);
+
 }
 
 void cEffectManager::Start(){
