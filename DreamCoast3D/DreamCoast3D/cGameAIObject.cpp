@@ -23,7 +23,7 @@ cGameAIObject::cGameAIObject()
 	m_eGameObjectType = eGameObjectType::E_MOP;
 	//SetYangle(2);
 
-    m_fHP = 2.0f;
+    m_fHP = 10000.0f;
 }
 
 
@@ -53,7 +53,7 @@ void cGameAIObject::Setup(std::string sFolder, std::string sFile){
 
 void cGameAIObject::Start(){
 	m_pTargetGameObject = NULL;
-	m_fHP = 2;
+	m_fHP = 1000.0f;
 	m_pCurrentState = m_vecPatterns[eAISTATE_IDLE];
 	m_pCurrentState->Start(this);
 }
@@ -148,8 +148,9 @@ void cGameAIObject::OnHitTarget(cGameObject* pTarget, float fDamage, D3DXVECTOR3
 
 
 		// TODO 데미지에 따라 체력 저하
-		m_fHP--;
+		
 		if (m_fHP > 0){
+			m_fHP -= fDamage;
 			this->ChangeState(eAISTATE_ONHIT);
 		}
 		else {
