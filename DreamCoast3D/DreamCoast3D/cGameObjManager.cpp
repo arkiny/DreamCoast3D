@@ -73,17 +73,17 @@ void cGameObjManager::Render(){
 	g_pD3DDevice->Clear(0, NULL, (D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER), 0xFFFFFFFF, 1.0f, 0);
 
 	for (auto p : m_setStaticGameObjects){
-		if (m_pFrustum->IsIn(p->GetBoundingSphere())){
+		//if (m_pFrustum->IsIn(p->GetBoundingSphere())){
 			if (p->GetEventType() != p->E_BLOCK){
 				p->RenderShadow();
 			}
-		}
+		//}
 	}
 
 	for (auto p : m_setGameObjects){
-		if (m_pFrustum->IsIn(p->GetBoundingSphere())){
+		//if (m_pFrustum->IsIn(p->GetBoundingSphere())){
 			p->RenderShadow();
-		}
+		//}
 	}
 
 	g_pD3DDevice->SetRenderTarget(0, pHWBackBuffer);
