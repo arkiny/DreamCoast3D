@@ -81,7 +81,7 @@ void cGameEventManager::CheckEventFromRange(cGameObject* pFrom, int nRange)
 		}
 		if (p->GetEventType() == cGameObject::eEventType::E_PORTAL)
 		{
-			m_pSceneDelegate->ChangeScene(5);
+			m_pSceneDelegate->ChangeScene(4);
 		}
 	}
 }

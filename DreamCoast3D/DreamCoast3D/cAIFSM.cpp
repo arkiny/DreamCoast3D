@@ -173,13 +173,17 @@ int cAIMoveToTarget::GetCurrentStateType(){
 void cAIAttack::Start(cGameAIObject* pAIObject){
 	if (pAIObject->GetAItype() == cGameAIObject::E_AI_TYPE::E_AI_BOSS)
 	{
-		if (pAIObject->GetHP() >= 500)
+		if (pAIObject->GetHP() >= 600)
 		{
 			pAIObject->ChangeState(pAIObject->eAISTATE_BOSSPAGE);
 		}
-		else if (pAIObject->GetHP() >= 0)
+		else if (pAIObject->GetHP() >= 300)
 		{
 			pAIObject->ChangeState(pAIObject->eAISTATE_BOSSPAGEFIRST);
+		}
+		else
+		{
+			pAIObject->ChangeState(pAIObject->eAISTATE_BOSSPAGESECOND);
 		}
 
 		return;
@@ -386,14 +390,19 @@ void cAIBossPageFirst::Execute(cGameAIObject* pAIObject, float fDelta)
 
 	if (pAIObject->GetSkinnedMesh()->GetCurrentAnimationPeriodTime() < pAIObject->GetPassedTime())
 	{
+		pAIObject->SetHP(pAIObject->GetHP() - 100);
 		m_nEpsilon = 0;
-		if (m_nIndex == 21)
+		if (m_nIndex == 3)
 		{
 			m_nIndex = 23;
 		}
 		else if (m_nIndex == 23)
 		{
 			m_nIndex = 21;
+		}
+		else if (m_nIndex == 21)
+		{
+			m_nIndex = 3;
 		}
 		pAIObject->ChangeState(pAIObject->eAISTATE_THINK);
 
@@ -416,16 +425,53 @@ int cAIBossPageFirst::GetCurrentStateType()
 void cAIBossPageSecond::Start(cGameAIObject* pAIObject)
 {
 	pAIObject->SetPassedTime(0);
-	pAIObject->GetSkinnedMesh()->SetAnimationIndex(24);
+	pAIObject->GetSkinnedMesh()->SetAnimationIndex(m_nIndex);
 }
 
 void cAIBossPageSecond::Execute(cGameAIObject* pAIObject, float fDelta)
 {
+	if (pAIObject->GetSkinnedMesh()->GetCurrentAnimationPeriodTime() - 0.05f
+		< pAIObject->GetPassedTime() && m_nEpsilon == 0)
+	{
+		m_nEpsilon = 1;
+	}
+
+	if (m_nEpsilon == 1)
+	{
+		D3DXVECTOR3 vCenter(0.f, 0.f, 0.f);
+		vCenter = pAIObject->GetUpdatedDetailedSphere()->begin()->second.m_vCenter;
+		//vCenter.y = 1.f;
+		pAIObject->SetPosition(vCenter);
+		m_nEpsilon = 2;
+	}
+
 	if (pAIObject->GetSkinnedMesh()->GetCurrentAnimationPeriodTime() < pAIObject->GetPassedTime())
 	{
-		pAIObject->ChangeState(pAIObject->eAISTATE_THINK);
+		m_nEpsilon = 0;
+		if (m_nIndex == 18)
+		{
+			m_nIndex = 17;
+			pAIObject->ChangeState(pAIObject->eAISTATE_THINK);
+		}
+		else if (m_nIndex == 17)
+		{
+			m_nIndex = 15;
+			pAIObject->ChangeState(pAIObject->eAISTATE_BOSSPAGESECOND);
+		}
+		else if (m_nIndex == 15)
+		{
+			m_nIndex = 22;
+			pAIObject->ChangeState(pAIObject->eAISTATE_THINK);
+		}
+		else if (m_nIndex == 22)
+		{
+			m_nIndex = 18;
+			pAIObject->ChangeState(pAIObject->eAISTATE_THINK);
+		}
+
 		return;
 	}
+
 	pAIObject->GetGameObjDeligate()->AttackMobToPlayer(pAIObject);
 }
 

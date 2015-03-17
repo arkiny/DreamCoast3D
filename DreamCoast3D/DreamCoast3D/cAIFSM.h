@@ -86,4 +86,7 @@ class cAIBossPageSecond : public iAIState
 	virtual void Execute(cGameAIObject* pAIObject, float fDelta);
 	virtual void Exit(cGameAIObject* pAIObject);
 	virtual int GetCurrentStateType();
+
+	int m_nIndex = 17;
+	int m_nEpsilon = 0;
 };
