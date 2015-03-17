@@ -47,9 +47,9 @@ void cGameAIObject::Setup(std::string sFolder, std::string sFile){
 	m_vecPatterns[eAISTATE_RANDOMMOVE] = new cAIRandomMove;
 	m_vecPatterns[eAISTATE_DEAD] = new cAIDead;
 	m_vecPatterns[eAISTATE_MOVETOTARGET] = new cAIMoveToTarget;
-	m_vecPatterns[eAISTATE_BOSSPAGE] = new cAIBossPage;
-	m_vecPatterns[eAISTATE_BOSSPAGEFIRST] = new cAIBossPageFirst;
-	m_vecPatterns[eAISTATE_BOSSPAGESECOND] = new cAIBossPageSecond;
+	m_vecPatterns[eAISTATE_BOSSPHASEFIRST] = new cAIBossPhaseFirst;
+	m_vecPatterns[eAISTATE_BOSSPHASESECOND] = new cAIBossPhaseSecond;
+	m_vecPatterns[eAISTATE_BOSSPHASETHIRD] = new cAIBossPhaseThird;
 }
 
 void cGameAIObject::Start(){

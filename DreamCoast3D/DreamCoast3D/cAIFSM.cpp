@@ -173,17 +173,17 @@ int cAIMoveToTarget::GetCurrentStateType(){
 void cAIAttack::Start(cGameAIObject* pAIObject){
 	if (pAIObject->GetAItype() == cGameAIObject::E_AI_TYPE::E_AI_BOSS)
 	{
-		if (pAIObject->GetHP() >= 600)
+		if (pAIObject->GetHP() > 600)
 		{
-			pAIObject->ChangeState(pAIObject->eAISTATE_BOSSPAGE);
+			pAIObject->ChangeState(pAIObject->eAISTATE_BOSSPHASEFIRST);
 		}
-		else if (pAIObject->GetHP() >= 300)
+		else if (pAIObject->GetHP() > 300)
 		{
-			pAIObject->ChangeState(pAIObject->eAISTATE_BOSSPAGEFIRST);
+			pAIObject->ChangeState(pAIObject->eAISTATE_BOSSPHASESECOND);
 		}
 		else
 		{
-			pAIObject->ChangeState(pAIObject->eAISTATE_BOSSPAGESECOND);
+			pAIObject->ChangeState(pAIObject->eAISTATE_BOSSPHASETHIRD);
 		}
 
 		return;
@@ -214,7 +214,7 @@ int  cAIAttack::GetCurrentStateType(){
 void cAIOnHit::Start(cGameAIObject* pAIObject){
 	if (pAIObject->GetAItype() == cGameAIObject::E_AI_TYPE::E_AI_BOSS)
 	{
-		pAIObject->ChangeState(pAIObject->eAISTATE_BOSSPAGE);
+		pAIObject->ChangeState(pAIObject->eAISTATE_ATTACK);
 		return;
 	}
 
@@ -330,14 +330,14 @@ int cAIDead::GetCurrentStateType(){
 	return cGameAIObject::EAIOBJECTSTATE::eAISTATE_DEAD;
 }
 
-void cAIBossPage::Start(cGameAIObject* pAIObject)
+void cAIBossPhaseFirst::Start(cGameAIObject* pAIObject)
 {
 	pAIObject->SetPassedTime(0);
 	pAIObject->GetSkinnedMesh()->SetAnimationIndex(m_nIndex);
 
 }
 
-void cAIBossPage::Execute(cGameAIObject* pAIObject, float fDelta)
+void cAIBossPhaseFirst::Execute(cGameAIObject* pAIObject, float fDelta)
 {
 	if (pAIObject->GetSkinnedMesh()->GetCurrentAnimationPeriodTime() < pAIObject->GetPassedTime())
 	{
@@ -354,25 +354,25 @@ void cAIBossPage::Execute(cGameAIObject* pAIObject, float fDelta)
 	pAIObject->GetGameObjDeligate()->AttackMobToPlayer(pAIObject);
 }
 
-void cAIBossPage::Exit(cGameAIObject* pAIObject)
+void cAIBossPhaseFirst::Exit(cGameAIObject* pAIObject)
 {
 
 }
 
-int cAIBossPage::GetCurrentStateType()
+int cAIBossPhaseFirst::GetCurrentStateType()
 {
-	return cGameAIObject::EAIOBJECTSTATE::eAISTATE_BOSSPAGE;
+	return cGameAIObject::EAIOBJECTSTATE::eAISTATE_BOSSPHASEFIRST;
 }
 
 
 ////
-void cAIBossPageFirst::Start(cGameAIObject* pAIObject)
+void cAIBossPhaseSecond::Start(cGameAIObject* pAIObject)
 {
 	pAIObject->SetPassedTime(0);
 	pAIObject->GetSkinnedMesh()->SetAnimationIndex(m_nIndex);
 }
 
-void cAIBossPageFirst::Execute(cGameAIObject* pAIObject, float fDelta)
+void cAIBossPhaseSecond::Execute(cGameAIObject* pAIObject, float fDelta)
 {
 	if (pAIObject->GetSkinnedMesh()->GetCurrentAnimationPeriodTime() - 0.05f
 		< pAIObject->GetPassedTime() && m_nEpsilon == 0)
@@ -411,24 +411,24 @@ void cAIBossPageFirst::Execute(cGameAIObject* pAIObject, float fDelta)
 	pAIObject->GetGameObjDeligate()->AttackMobToPlayer(pAIObject);
 }
 
-void cAIBossPageFirst::Exit(cGameAIObject* pAIObject)
+void cAIBossPhaseSecond::Exit(cGameAIObject* pAIObject)
 {
 }
 
-int cAIBossPageFirst::GetCurrentStateType()
+int cAIBossPhaseSecond::GetCurrentStateType()
 {
-	return cGameAIObject::EAIOBJECTSTATE::eAISTATE_BOSSPAGEFIRST;
+	return cGameAIObject::EAIOBJECTSTATE::eAISTATE_BOSSPHASESECOND;
 }
 
 
 ////
-void cAIBossPageSecond::Start(cGameAIObject* pAIObject)
+void cAIBossPhaseThird::Start(cGameAIObject* pAIObject)
 {
 	pAIObject->SetPassedTime(0);
 	pAIObject->GetSkinnedMesh()->SetAnimationIndex(m_nIndex);
 }
 
-void cAIBossPageSecond::Execute(cGameAIObject* pAIObject, float fDelta)
+void cAIBossPhaseThird::Execute(cGameAIObject* pAIObject, float fDelta)
 {
 	if (pAIObject->GetSkinnedMesh()->GetCurrentAnimationPeriodTime() - 0.05f
 		< pAIObject->GetPassedTime() && m_nEpsilon == 0)
@@ -456,7 +456,7 @@ void cAIBossPageSecond::Execute(cGameAIObject* pAIObject, float fDelta)
 		else if (m_nIndex == 17)
 		{
 			m_nIndex = 15;
-			pAIObject->ChangeState(pAIObject->eAISTATE_BOSSPAGESECOND);
+			pAIObject->ChangeState(pAIObject->eAISTATE_BOSSPHASETHIRD);
 		}
 		else if (m_nIndex == 15)
 		{
@@ -475,11 +475,11 @@ void cAIBossPageSecond::Execute(cGameAIObject* pAIObject, float fDelta)
 	pAIObject->GetGameObjDeligate()->AttackMobToPlayer(pAIObject);
 }
 
-void cAIBossPageSecond::Exit(cGameAIObject* pAIObject)
+void cAIBossPhaseThird::Exit(cGameAIObject* pAIObject)
 {
 }
 
-int cAIBossPageSecond::GetCurrentStateType()
+int cAIBossPhaseThird::GetCurrentStateType()
 {
-	return cGameAIObject::EAIOBJECTSTATE::eAISTATE_BOSSPAGESECOND;
+	return cGameAIObject::EAIOBJECTSTATE::eAISTATE_BOSSPHASETHIRD;
 }
