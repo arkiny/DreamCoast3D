@@ -32,22 +32,10 @@ cSkinnedMeshBody::cSkinnedMeshBody(std::string sFolder, std::string sFile,
 	m_pHair = new cSkinnedMesh(sFolderHair, sFileHair);
 
 	
-	// Attack용 임시처리, HD
-	D3DXVECTOR3 localCenter(0, 0, 0);
-	D3DXMATRIXA16 mat;
-	D3DXFRAME* pFxHand;
-	pFxHand = D3DXFrameFind(m_pRootFrame, "FxHand01");
-	mat = pFxHand->TransformationMatrix;
-	D3DXVec3TransformCoord(&localCenter, &localCenter, &mat);
-	m_stAttacSphere.m_vCenter = localCenter;
-	m_stAttacSphere.m_fRadius = 5.0f;
-	m_stUpdateAttacSphere.m_vCenter = m_stAttacSphere.m_vCenter;
-	m_stUpdateAttacSphere.m_fRadius = m_stAttacSphere.m_fRadius;
-	D3DXCreateSphere(g_pD3DDevice, m_stAttacSphere.m_fRadius, 10, 10, &m_pMesh, NULL);
-
 
 	m_sMainCollisionSphere = "FxCenter";
 	m_fMianColisionSphereRadius = 6.f;
+
 
 
 	//몸중심의 전체적 바운딩스피어를 구해낸 다음 그 값을 cSkinnedMesh의 바운딩스피어 멤버들에게 전달해준다 : 민우
@@ -62,7 +50,11 @@ cSkinnedMeshBody::cSkinnedMeshBody(std::string sFolder, std::string sFile,
 	SAFE_RELEASE(m_pDebugSphereBody);
 	//반지름을 1로 해두고 확장해서 렌더 : 민우
 	//렌더할때 월드 사이즈가 적용이 안되는득?
-	D3DXCreateSphere(g_pD3DDevice, m_stUpdateBoundingSphere.m_fRadius, 10, 10, &m_pDebugSphereBody, NULL);
+	D3DXCreateSphere(g_pD3DDevice, m_stUpdateBoundingSphere.m_fRadius, 
+		10, 10, &m_pDebugSphereBody, NULL);
+	// Attack용 임시처리, HD
+	D3DXCreateSphere(g_pD3DDevice, m_mapAttackSphere.begin()->second.m_fRadius,
+		10, 10, &m_pMesh, NULL);
 
 
 	
@@ -360,13 +352,28 @@ void cSkinnedMeshBody::Render(ST_BONE* pBone /*= NULL*/)
 
 		RenderDebugUpdateSphereBody(pBone, m_mapDebugUpdateSphereBody);
 		
-		if (pBone->Name != nullptr && std::string(pBone->Name) == std::string("FxHand01"))
+		for (auto p : m_mapAttackSphere)
+		{
+					std::string s = p.first.c_str();
+			if (pBone->Name != nullptr && std::string(pBone->Name) == p.first.c_str()){
+
+				g_pD3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
+				g_pD3DDevice->SetTransform(D3DTS_WORLD, &pBone->CombinedTransformationMatrix);
+
+				m_pMesh->DrawSubset(0);
+
+				g_pD3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
+			}
+
+		}
+
+		/*if (pBone->Name != nullptr && std::string(pBone->Name) == std::string("FxHand01"))
 		{
 			g_pD3DDevice->SetTransform(D3DTS_WORLD, &pBone->CombinedTransformationMatrix);
 			g_pD3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
-			m_pMesh->DrawSubset(0);
+			
 			g_pD3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
-		}
+		}*/
 	}
 
 	if (pBone->Name != nullptr && std::string(pBone->Name) == std::string("Bip01-Neck"))

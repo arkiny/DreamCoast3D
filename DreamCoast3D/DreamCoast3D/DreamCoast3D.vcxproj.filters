@@ -358,9 +358,13 @@
     <ClCompile Include="cEffectMesh.cpp">
       <Filter>FrameWork\Effects</Filter>
     </ClCompile>
-    <ClCompile Include="cStaticMeshManager.cpp" />
-    <ClCompile Include="cMesh.cpp" />
     <ClCompile Include="cEffectParticle.cpp">
+      <Filter>FrameWork\Effects</Filter>
+    </ClCompile>
+    <ClCompile Include="cStaticMeshManager.cpp">
+      <Filter>FrameWork\Singletons</Filter>
+    </ClCompile>
+    <ClCompile Include="cMesh.cpp">
       <Filter>FrameWork\Effects</Filter>
     </ClCompile>
   </ItemGroup>
@@ -734,9 +738,13 @@
     <ClInclude Include="cEffectMesh.h">
       <Filter>FrameWork\Effects</Filter>
     </ClInclude>
-    <ClInclude Include="cStaticMeshManager.h" />
-    <ClInclude Include="cMesh.h" />
     <ClInclude Include="cEffectParticle.h">
+      <Filter>FrameWork\Effects</Filter>
+    </ClInclude>
+    <ClInclude Include="cStaticMeshManager.h">
+      <Filter>FrameWork\Singletons</Filter>
+    </ClInclude>
+    <ClInclude Include="cMesh.h">
       <Filter>FrameWork\Effects</Filter>
     </ClInclude>
   </ItemGroup>

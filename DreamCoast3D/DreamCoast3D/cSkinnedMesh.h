@@ -29,9 +29,9 @@ protected:
 	SYNTHESIZE(float, m_fAnimationBlendTime, AnimationBlendTime);
 
 	SYNTHESIZE(ST_BOUNDING_SPHERE, m_stBoundingSphere, BoundingSphere);
-	SYNTHESIZE(ST_BOUNDING_SPHERE, m_stAttacSphere, AttackSphere);
 
-	SYNTHESIZE(ST_BOUNDING_SPHERE, m_stUpdateAttacSphere, UpdateAttackSphere);
+	//SYNTHESIZE(ST_BOUNDING_SPHERE, m_stAttacSphere, AttackSphere);
+	//SYNTHESIZE(ST_BOUNDING_SPHERE, m_stUpdateAttacSphere, UpdateAttackSphere);
 
 	ST_BOUNDING_SPHERE			m_stUpdateBoundingSphere;
 
@@ -51,6 +51,8 @@ protected:
 	std::map<std::string, ST_BOUNDING_SPHERE> m_mapDebugOriginSphereBody;
 	std::map<std::string, ST_BOUNDING_SPHERE> m_mapDebugUpdateSphereBody;
 	
+	std::map<std::string, ST_BOUNDING_SPHERE> m_mapAttackSphere;
+
 	///
 	std::string					m_sMainCollisionSphere;
 	float						m_fMianColisionSphereRadius;
@@ -93,6 +95,7 @@ public:
 		return m_mapDebugUpdateSphereBody; 
 	};
 
+	std::map<std::string, ST_BOUNDING_SPHERE>* GetAttackSpheres() { return &m_mapAttackSphere; }
 
 	// Interface
 	virtual int GetHeadRefNum(){ return -1; }

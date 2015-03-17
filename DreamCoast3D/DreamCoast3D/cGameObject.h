@@ -96,7 +96,10 @@ public:
 	virtual int GetState() { return -1; }
 	virtual std::map<std::string, ST_BOUNDING_SPHERE>* GetUpdatedDetailedSphere() { return NULL; }
 	virtual ST_BOUNDING_SPHERE*	GetCollisionSphere(){ return NULL; }
-	virtual ST_BOUNDING_SPHERE* GetAttackSphere(){ return NULL;	}
+	//virtual ST_BOUNDING_SPHERE* GetAttackSphere(){ return NULL;	}
+	virtual std::map<std::string, ST_BOUNDING_SPHERE>* GetAttackSpheres() { return NULL; }
+
+	
 	virtual void ForcedMoving(D3DXVECTOR3 vDir, float fSpeed) {}
 	virtual float GetMoveSpeed() { return 1.0f; }
 	virtual void SetTargetObject(cGameObject* pTarget) {}

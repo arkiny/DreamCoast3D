@@ -438,38 +438,40 @@ void cGameObjManager::AttackMobToPlayer(cGameAIObject* pFrom){
 		}
 		else{
 			if (p->GetCollisionSphere()){
-				D3DXVECTOR3 from = pFrom->GetAttackSphere()->m_vCenter;
-				D3DXVECTOR3 to = p->GetCollisionSphere()->m_vCenter;
-				D3DXVECTOR3 dist = from - to;
+				for (auto p2 : *pFrom->GetAttackSpheres()){
+					
+					D3DXVECTOR3 from = p2.second.m_vCenter;
+					D3DXVECTOR3 to = p->GetCollisionSphere()->m_vCenter;
+					D3DXVECTOR3 dist = from - to;
 
-				float fFrom = pFrom->GetAttackSphere()->m_fRadius;
-				float fTo = p->GetCollisionSphere()->m_fRadius;
+					float fFrom = p2.second.m_fRadius;
+					float fTo = p->GetCollisionSphere()->m_fRadius;
 
-				float scale = 1.0f;
-				float scale2 = 1.0f;
-				
-				if (isCollided(from, fFrom, scale, to, fTo, scale2)){
-					std::map<std::string, ST_BOUNDING_SPHERE>* pMap = p->GetUpdatedDetailedSphere();
-				
-					for (auto pSphere : *pMap){
+					float scale = 1.0f;
+					float scale2 = 1.0f;
 
-						D3DXVECTOR3 from = pFrom->GetAttackSphere()->m_vCenter;
-						D3DXVECTOR3 to = pSphere.second.m_vCenter;
-						D3DXVECTOR3 dist = from - to;
-						float fFrom = pFrom->GetAttackSphere()->m_fRadius;
-						float fTo = pSphere.second.m_fRadius;
+					if (isCollided(from, fFrom, scale, to, fTo, scale2)){
+						std::map<std::string, ST_BOUNDING_SPHERE>* pMap = p->GetUpdatedDetailedSphere();
 
-						float scale = pFrom->GetScale().x;
-						float scale2 = p->GetTransform()->GetScaling().x;
+						for (auto pSphere : *pMap){
+							D3DXVECTOR3 from = p2.second.m_vCenter;
+							D3DXVECTOR3 to = pSphere.second.m_vCenter;
+							D3DXVECTOR3 dist = from - to;
+							float fFrom = p2.second.m_fRadius;
+							float fTo = pSphere.second.m_fRadius;
 
-						if (isCollided(from, fFrom, scale, to, fTo, scale2)){
-							if (p->GetGameObjectType() == p->E_PLAYABLE){
+							float scale = pFrom->GetScale().x;
+							float scale2 = p->GetTransform()->GetScaling().x;
 
-								D3DXVECTOR3 vDir, vHit;
-								D3DXVec3Normalize(&vDir, &dist);
-								vHit = to + vDir;
+							if (isCollided(from, fFrom, scale, to, fTo, scale2)){
+								if (p->GetGameObjectType() == p->E_PLAYABLE){
 
-								p->OnHitTarget(pFrom, 10.0f, vHit);
+									D3DXVECTOR3 vDir, vHit;
+									D3DXVec3Normalize(&vDir, &dist);
+									vHit = to + vDir;
+
+									p->OnHitTarget(pFrom, 10.0f, vHit);
+								}
 							}
 						}
 					}

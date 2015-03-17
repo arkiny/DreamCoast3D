@@ -100,26 +100,42 @@ cSkinnedMesh::cSkinnedMesh(std::string sFolder, std::string sFile)
 	D3DXFRAME* pFxCenter;
 	D3DXFRAME* pFxHand;
 
-	pFxHand = D3DXFrameFind(m_pRootFrame, "FxHand01");
-	if (pFxHand){
-		mat = pFxHand->TransformationMatrix;
-		D3DXVec3TransformCoord(&localCenter, &localCenter, &mat);
-		m_stAttacSphere.m_vCenter = localCenter;
-		m_stAttacSphere.m_fRadius = 12.0f;
-		m_stUpdateAttacSphere.m_vCenter = m_stAttacSphere.m_vCenter;
-		m_stUpdateAttacSphere.m_fRadius = m_stAttacSphere.m_fRadius;
-	}	
-	else{
+	std::string sInput2 = "FxHand00";
+	m_vecAttackSpheres.push_back(sInput2);
+	m_vecAttackSpheresRadius.push_back(15.0f);
+	sInput2 = "FxHand01";
+	m_vecAttackSpheres.push_back(sInput2);
+	m_vecAttackSpheresRadius.push_back(15.0f);
+
+	D3DXFRAME* pFrame;
+	ST_BOUNDING_SPHERE stBs;
+	for (size_t i = 0; i < m_vecAttackSpheres.size(); i++){
+		pFrame = D3DXFrameFind(m_pRootFrame, m_vecAttackSpheres[i].c_str());
+		D3DXMATRIXA16 matTM;
+		D3DXVECTOR3	vLocalCenter(0, 0, 0); //바운딩 스피어의 중심점을 구해낼 벡터3
+		if (pFrame){
+			stBs.m_vCenter = vLocalCenter;
+			stBs.m_fRadius = m_vecAttackSpheresRadius[i]; //HACK: 이 값(반지름)을 정하는 규칙이 있어야 한다. : 민우
+			m_mapAttackSphere[m_vecAttackSpheres[i]] = stBs;
+			pFrame = NULL;
+		}
+	}
+
+
+	if (m_mapAttackSphere.empty()){
 		pFxCenter = D3DXFrameFind(m_pRootFrame, "FxCenter");
 		if (pFxCenter){
 			mat = pFxCenter->TransformationMatrix;
 			D3DXVec3TransformCoord(&localCenter, &localCenter, &mat);
-			m_stAttacSphere.m_vCenter = localCenter;
-			m_stAttacSphere.m_fRadius = m_mapDebugOriginSphereBody[std::string("FxCenter")].m_fRadius + 2.0f;
+			stBs.m_vCenter = localCenter;
+			stBs.m_fRadius = m_mapDebugOriginSphereBody[std::string("FxCenter")].m_fRadius + 2.0f;
+			m_mapAttackSphere["FxCenter"] = stBs;
 		}
 	}
 
-	D3DXCreateSphere(g_pD3DDevice, m_stAttacSphere.m_fRadius, 10, 10, &m_pATMesh, NULL);
+	if (!m_mapAttackSphere.empty()){
+		D3DXCreateSphere(g_pD3DDevice, 15.0f, 10, 10, &m_pATMesh, NULL);
+	}
 }
 
 cSkinnedMesh::cSkinnedMesh()
@@ -299,7 +315,7 @@ void cSkinnedMesh::Update(ST_BONE* pCurrent, D3DXMATRIXA16* pmatParent)
 	//gWorldMatrix
 	g_pShaderManager->GetShader("../Resources/Shader/MultiAnimation.fx")
 		->SetMatrix("gWorldMatrix", &pCurrent->CombinedTransformationMatrix);
-	
+
 	if (pmatParent)
 	{
 		pCurrent->CombinedTransformationMatrix =
@@ -313,17 +329,21 @@ void cSkinnedMesh::Update(ST_BONE* pCurrent, D3DXMATRIXA16* pmatParent)
 	{
 		D3DXVec3TransformCoord(
 			&m_stUpdateBoundingSphere.m_vCenter,
-			&D3DXVECTOR3(0,0,0),
+			&D3DXVECTOR3(0, 0, 0),
 			&pCurrent->CombinedTransformationMatrix);
 	}
 
-	if (pCurrent->Name != nullptr && std::string(pCurrent->Name) == std::string("FxHand01"))
-	{
-		D3DXVec3TransformCoord(
-			&m_stUpdateAttacSphere.m_vCenter,
-			&D3DXVECTOR3(0, 0, 0),
-			&pCurrent->CombinedTransformationMatrix
-			);
+	for (auto p : m_mapAttackSphere){
+		if (pCurrent->Name != nullptr && std::string(pCurrent->Name) == p.first)
+		{
+			D3DXVECTOR3 pos;
+			D3DXVec3TransformCoord(
+				&pos,
+				&D3DXVECTOR3(0, 0, 0),
+				&pCurrent->CombinedTransformationMatrix
+				);
+			m_mapAttackSphere[p.first].m_vCenter = pos;
+		}
 	}
 
 	if (pCurrent->pFrameSibling)
@@ -344,16 +364,19 @@ void cSkinnedMesh::Render(ST_BONE* pBone /*= NULL*/)
 	if (GetAsyncKeyState(VK_TAB)){
 		RenderDebugUpdateSphereBody(pBone, m_mapDebugUpdateSphereBody);
 	
-		if (pBone->Name != nullptr && std::string(pBone->Name) == std::string("FxHand01"))
+		for (auto p : m_mapAttackSphere)
 		{
-			//if (m_pDebugSphereBody){
-			g_pD3DDevice->SetTransform(D3DTS_WORLD, &pBone->CombinedTransformationMatrix);
-			g_pD3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
+			if (pBone->Name == nullptr || pBone->Name != p.first) { continue; }
+			
 			g_pD3DDevice->SetTexture(0, NULL);
+			g_pD3DDevice->SetRenderState(D3DRS_LIGHTING, false);
+			g_pD3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
+			g_pD3DDevice->SetTransform(D3DTS_WORLD, &pBone->CombinedTransformationMatrix);
 			m_pATMesh->DrawSubset(0);
+			
+			g_pD3DDevice->SetRenderState(D3DRS_LIGHTING, true);
 			g_pD3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
 		}
-	// "FxHand01"
 	}
 	// 각 프레임의 메시 컨테이너에 있는 pSkinInfo를 이용하여 영향받는 모든 
 	// 프레임의 매트릭스를 ppBoneMatrixPtrs에 연결한다.
@@ -390,7 +413,8 @@ void cSkinnedMesh::Render(ST_BONE* pBone /*= NULL*/)
 			->SetVector("gWorldCameraPosition", &D3DXVECTOR4(vEye, 1.0f));
 
 		// set the current number of bones; this tells the effect which shader to use
-		g_pShaderManager->GetShader("../Resources/Shader/MultiAnimation.fx")->SetInt("CurNumBones", pBoneMesh->dwMaxNumFaceInfls - 1);
+		g_pShaderManager->GetShader("../Resources/Shader/MultiAnimation.fx")
+			->SetInt("CurNumBones", pBoneMesh->dwMaxNumFaceInfls - 1);
 
 		g_pD3DDevice->GetLight(0, &stLight);
 		D3DXVECTOR3 dir = stLight.Direction;

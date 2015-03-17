@@ -21,7 +21,9 @@ public:
 	
 
 	virtual ST_BOUNDING_SPHERE* GetCollisionSphere() override;
-	virtual ST_BOUNDING_SPHERE* GetAttackSphere() override;
+	//virtual ST_BOUNDING_SPHERE* GetAttackSphere() override;
+	std::map<std::string, ST_BOUNDING_SPHERE>* GetAttackSpheres() override;
+
 	virtual std::map<std::string, ST_BOUNDING_SPHERE>* GetUpdatedDetailedSphere() override;
 	virtual void ForcedMoving(D3DXVECTOR3 vDir, float fSpeed) override;
 };

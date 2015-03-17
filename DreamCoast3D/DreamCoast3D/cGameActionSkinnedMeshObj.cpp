@@ -52,10 +52,10 @@ ST_BOUNDING_SPHERE* cGameActionSkinnedMeshObj::GetCollisionSphere(){
 	return ret;
 }
 
-ST_BOUNDING_SPHERE* cGameActionSkinnedMeshObj::GetAttackSphere(){
-	ST_BOUNDING_SPHERE* ret = NULL;
+std::map<std::string, ST_BOUNDING_SPHERE>* cGameActionSkinnedMeshObj::GetAttackSpheres(){
+	std::map<std::string, ST_BOUNDING_SPHERE>* ret = NULL;
 	if (m_pSkinnedMesh){
-		ret = &m_pSkinnedMesh->GetUpdateAttackSphere();
+		ret = m_pSkinnedMesh->GetAttackSpheres();
 		//ret->m_fRadius *= GetScale().x;
 		return ret;
 	}
