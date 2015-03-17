@@ -64,6 +64,5 @@ public:
 	virtual void cUIInventory::SetupSlot(size_t nRowQnt, size_t nColQnt);	//슬롯을 인자만큼 생성하고 배치한다.
 	virtual void cUIInventory::SwapItemInSlot(cUISlot* pSrcSlot, cUISlot* pDestSlot);	//슬롯간 아이템 교환
 	virtual void cUIInventory::HighLightFocusSlot();						//마우스 오버/다운 된 슬롯 하이라이트 시키기
-
 };
 

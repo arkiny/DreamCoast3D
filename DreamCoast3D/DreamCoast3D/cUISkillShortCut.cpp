@@ -23,50 +23,65 @@ void cUISkillShortCut::Setup(){
 	D3DXCreateSprite(g_pD3DDevice, &m_pSprite);
 	cUIImageView* pImageView = new cUIImageView(m_pSprite);
 	pImageView->SetTextureFilename(std::string("../Resources/UI/UI_ShortCut/pageBg.tga"));
-	pImageView->SetScale(D3DXVECTOR3(0.8f, 0.8f, 1.0f));
+	pImageView->SetScale(D3DXVECTOR3(1.0f, 1.0f, 1.0f));
 	
 	RECT drawArea = { 0, 0, 77, 112 };
-	pImageView->SetPosition(D3DXVECTOR3(320, clientRect.bottom - drawArea.bottom - 30.f, 0));
+	pImageView->SetPosition(D3DXVECTOR3(60.0f, clientRect.bottom - drawArea.bottom - 30.f, 0));
 	
 	pImageView->SetDrawArea(drawArea);
 	m_pUIRoot = pImageView;
 
 	//slotFrame
-	for (int i = 0; i < 10; i++){
+	for (int i = 0; i < 2; i++){
 		pImageView = new cUIImageView(m_pSprite);
 		pImageView->SetTextureFilename(std::string("../Resources/UI/UI_ShortCut/slotFrame.tga"));
 		pImageView->SetScale(D3DXVECTOR3(.9f, .9f, 1.0f));
-		pImageView->SetPosition(D3DXVECTOR3(i * pImageView->GetSize().fWidth*.9f + 60.0f, 4.0f, 0));
+		pImageView->SetPosition(D3DXVECTOR3(i * pImageView->GetSize().fWidth*.9f + 30.0f, 4.0f, 0));
 		m_pUIRoot->AddChild(pImageView);
+
+		m_vecSlots.push_back(pImageView);
+		
 		SAFE_RELEASE(pImageView);
 	}
 
-	for (int i = 0; i < 10; i++){
+	for (int i = 0; i < 2; i++){
 		pImageView = new cUIImageView(m_pSprite);
 		pImageView->SetTextureFilename(std::string("../Resources/UI/UI_ShortCut/slotFrame.tga"));
 		pImageView->SetScale(D3DXVECTOR3(.9f, .9f, 1.0f));
 		pImageView->SetPosition(
-			D3DXVECTOR3(i * pImageView->GetSize().fWidth*.9f + 60.0f,
+			D3DXVECTOR3(i * pImageView->GetSize().fWidth*.9f + 30.0f,
 			pImageView->GetSize().fHeight*.9f, 0));
 		m_pUIRoot->AddChild(pImageView);
-		SAFE_RELEASE(pImageView);
-	}
 
-	for (int i = 10; i < 13; i++){
-		pImageView = new cUIImageView(m_pSprite);
-		pImageView->SetTextureFilename(std::string("../Resources/UI/UI_ShortCut/slotFrame.tga"));
-		pImageView->SetScale(D3DXVECTOR3(.9f, .9f, 1.0f));
-		pImageView->SetPosition(
-			D3DXVECTOR3(i * pImageView->GetSize().fWidth*.9f + 60.0f + 20.0f,
-			pImageView->GetSize().fHeight*.9f, 0));
-		m_pUIRoot->AddChild(pImageView);
+		m_vecSlots.push_back(pImageView);
+
 		SAFE_RELEASE(pImageView);
 	}
 }
 
 void cUISkillShortCut::Update(float fDelta){
-	if (m_pUIRoot)
+	if (m_pUIRoot){
 		m_pUIRoot->Update(fDelta);
+	}
+	
+	if (g_pControlManager->GetInputInfo('Z') == true || g_pControlManager->GetInputInfo('z') == true){
+		if (m_pGameObjDelgate->GetPlayerStatInfo()->fMaxHp > m_pGameObjDelgate->GetPlayerStatInfo()->fCurrentHp){
+			m_pGameObjDelgate->GetPlayerStatInfo()->fCurrentHp += 10;
+			// effect Ãß°¡
+		}
+	}
+
+	if (g_pControlManager->GetInputInfo('X') == true || g_pControlManager->GetInputInfo('x') == true){
+
+	}
+
+	if (g_pControlManager->GetInputInfo('c')){
+
+	}
+
+	if (g_pControlManager->GetInputInfo('v')){
+
+	}
 }
 
 void cUISkillShortCut::Render(){
