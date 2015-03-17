@@ -135,6 +135,7 @@ void cAIMoveToTarget::Execute(cGameAIObject* pAIObject, float fDelta){
 		D3DXVECTOR3 targetPos = pAIObject->GetTargetObject()->GetPosition();
 		//addVec = targetPos - curPos;
 		D3DXVECTOR3 vDeltaPos = targetPos - curPos;
+
 		D3DXVec3Normalize(&vDeltaPos, &vDeltaPos);
 
 		pAIObject->SetFront(vDeltaPos);
@@ -167,6 +168,7 @@ void cAIMoveToTarget::Execute(cGameAIObject* pAIObject, float fDelta){
 				pAIObject->GetTransform()->SetYAxisAngle(D3DXToRadian(0.0f));
 			}
 		}
+
 	}
 }
 
@@ -294,6 +296,7 @@ void cAIThink::Execute(cGameAIObject* pAIObject, float fDelta){
 				return;
 			}
 		}
+
 		else {
 			pAIObject->ChangeState(pAIObject->eAISTATE_MOVETOTARGET);
 			return;
@@ -389,7 +392,7 @@ void cAIBossPhaseFirst::Execute(cGameAIObject* pAIObject, float fDelta)
 		{
 			m_nIndex = 18;
 		}
-		pAIObject->SetHP(pAIObject->GetHP() - 300);
+		pAIObject->SetHP(pAIObject->GetHP() - 100);
 		pAIObject->ChangeState(pAIObject->eAISTATE_THINK);
 		return;
 		
@@ -418,7 +421,7 @@ void cAIBossPhaseSecond::Start(cGameAIObject* pAIObject)
 void cAIBossPhaseSecond::Execute(cGameAIObject* pAIObject, float fDelta)
 {
 	if (pAIObject->GetSkinnedMesh()->GetCurrentAnimationPeriodTime() - 0.05f
-		< pAIObject->GetPassedTime())
+		< pAIObject->GetPassedTime() && m_nEpsilon == 0)
 	{
 		m_nEpsilon = 1;
 	}
@@ -433,7 +436,7 @@ void cAIBossPhaseSecond::Execute(cGameAIObject* pAIObject, float fDelta)
 
 	if (pAIObject->GetSkinnedMesh()->GetCurrentAnimationPeriodTime() < pAIObject->GetPassedTime())
 	{
-		pAIObject->SetHP(pAIObject->GetHP() - 300);
+		pAIObject->SetHP(pAIObject->GetHP() - 100);
 		m_nEpsilon = 0;
 		if (m_nIndex == 3)
 		{
@@ -493,7 +496,7 @@ void cAIBossPhaseThird::Execute(cGameAIObject* pAIObject, float fDelta)
 		m_nEpsilon = 0;
 		if (pAIObject->GetHP() > 100)
 		{
-			pAIObject->SetHP(pAIObject->GetHP() - 50);
+			pAIObject->SetHP(pAIObject->GetHP() - 30);
 		}
 		if (m_nIndex == 3)
 		{
