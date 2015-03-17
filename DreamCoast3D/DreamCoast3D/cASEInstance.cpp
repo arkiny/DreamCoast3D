@@ -120,7 +120,7 @@ void cASEInstance::RenderShadow(D3DXMATRIXA16* pMatrix){
 	D3DXVECTOR3 dir = stLight.Direction;
 	D3DXVECTOR3 pos;
 	D3DXVec3Normalize(&pos, &dir);
-	pos = -500 * pos;
+	pos = -100 * pos;
 	//D3DXVECTOR3 tempPos(-93.3871002f, 234.746628f, -53.4625092);
 	// 빛을 움직이면서 디렉셔널로 움직이면 섀도우맵역시 움직인다.
 	//D3DXVECTOR3 vMove(pMatrix->_41, pMatrix->_42, pMatrix->_43);
@@ -148,11 +148,18 @@ void cASEInstance::RenderShadow(D3DXMATRIXA16* pMatrix){
 
 	g_pShaderManager->GetShader("../Resources/Shader/CreateShadow.fx")
 		->SetMatrix("gWorldMatrix", pMatrix);
-	g_pShaderManager->GetShader("../Resources/Shader/CreateShadow.fx")
-		->SetMatrix("gLightViewMatrix", &matLightView);
-	g_pShaderManager->GetShader("../Resources/Shader/CreateShadow.fx")
-		->SetMatrix("gLightProjectionMatrix", &matLightProjection);
+	//g_pShaderManager->GetShader("../Resources/Shader/CreateShadow.fx")
+	//	->SetMatrix("gLightViewMatrix", &matLightView);
+	//g_pShaderManager->GetShader("../Resources/Shader/CreateShadow.fx")
+	//	->SetMatrix("gLightProjectionMatrix", &matLightProjection);
 	
+
+	D3DXMATRIXA16 matLightViewProjection; {
+		matLightProjection = matLightView * matLightProjection;
+	}
+	g_pShaderManager->GetShader("../Resources/Shader/CreateShadow.fx")
+		->SetMatrix("gLightViewProjectionMatrix", &matLightViewProjection);
+
 	if (m_pMtlTex)
 	{
 		// 쉐이더를 시작한다.
@@ -184,7 +191,7 @@ void cASEInstance::Render(D3DXMATRIXA16* pMatrix)
 	{
 		D3DLIGHT9 stLight;
 		g_pD3DDevice->GetLight(0, &stLight);
-		D3DXVECTOR3 pos = -500 * stLight.Direction;
+		D3DXVECTOR3 pos = -100 * stLight.Direction;
 		D3DXMATRIXA16 matLightView;
 		{
 			D3DXVECTOR3 vLookatPt(0.0f, 0.0f, 0.0f);

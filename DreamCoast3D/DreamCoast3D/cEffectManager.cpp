@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "cEffectManager.h"
 #include "cEffect.h"
-#include "cEffectFireBall.h"
+#include "cEffectParticle.h"
 #include "cEffectMesh.h"
 
 cEffectManager::cEffectManager()
@@ -31,7 +31,7 @@ cEffectManager::~cEffectManager()
 void cEffectManager::Setup(){
 	// Pre-Load
 	for (UINT i = 0; i < 10; i++){
-		cEffectFireBall* p = new cEffectFireBall;
+		cEffectParticle* p = new cEffectParticle;
 		m_qeueuOnHitEffectPool.push(p);
 		p->SetOwner(this);
 	}
@@ -72,7 +72,7 @@ void cEffectManager::Exit(){
 void cEffectManager::AddEffect(UINT uiType, D3DXVECTOR3 vPos){
 	if (uiType == cEffect::E_EFFECT_ONHIT){
 		if (m_qeueuOnHitEffectPool.empty()){
-			cEffectFireBall* p = new cEffectFireBall;
+			cEffectParticle* p = new cEffectParticle;
 			p->Setup();
 			p->SetPosition(vPos);
 			p->SetOwner(this);

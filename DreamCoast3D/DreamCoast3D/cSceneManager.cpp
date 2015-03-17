@@ -85,7 +85,7 @@ void cSceneManager::Start(){
 	if (!m_vecSceneInfoFilePath.empty()){
 		//테스트 하기 편하게 3번씬. 커밋할 때 고쳐야함 : 민우
 		//제발 커밋할땐 고쳐서 올리셈; //넹;
-		ChangeScene(2);
+		ChangeScene(0);
 	}
 }
 

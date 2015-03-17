@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "cMousePicking.h"
-#include "cEffectFireBall.h"
+#include "cEffectParticle.h"
 
 #define MAP_SIZE 257
 
@@ -119,7 +119,7 @@ D3DXVECTOR3 cMousePicking::GetPickingPoint()
 				if (isColliedTri == true)
 				{
 					m_vClickedPosition = ray.vecOrigin + (fDist*ray.vecDirection);
-					//cEffectFireBall* pcheck = new cEffectFireBall;
+					//cEffectParticle* pcheck = new cEffectParticle;
 					//pcheck->Setup();
 					//pcheck->SetPosition(m_vClickedPosition);
 					//if (m_pEffectDelegate){
@@ -138,7 +138,7 @@ D3DXVECTOR3 cMousePicking::GetPickingPoint()
 				if (isColliedTri == true)
 				{
 					m_vClickedPosition = ray.vecOrigin + (fDist*ray.vecDirection);
-					//cEffectFireBall* pcheck = new cEffectFireBall;
+					//cEffectParticle* pcheck = new cEffectParticle;
 					//pcheck->Setup();
 					//pcheck->SetPosition(m_vClickedPosition);
 					//if (m_pEffectDelegate){
@@ -188,7 +188,7 @@ void cMousePicking::IntersetionTriUpdate()
 				if (isColliedTri == true)
 				{
 					m_vClickedPosition = ray.vecOrigin + (fDist*ray.vecDirection);
-					//cEffectFireBall* pcheck = new cEffectFireBall;
+					//cEffectParticle* pcheck = new cEffectParticle;
 					//pcheck->Setup();
 					//pcheck->SetPosition(m_vClickedPosition);
 					//if (m_pEffectDelegate){
@@ -207,7 +207,7 @@ void cMousePicking::IntersetionTriUpdate()
 				if (isColliedTri == true)
 				{
 					m_vClickedPosition = ray.vecOrigin + (fDist*ray.vecDirection);
-					//cEffectFireBall* pcheck = new cEffectFireBall;
+					//cEffectParticle* pcheck = new cEffectParticle;
 					//pcheck->Setup();
 					//pcheck->SetPosition(m_vClickedPosition);
 					//if (m_pEffectDelegate){

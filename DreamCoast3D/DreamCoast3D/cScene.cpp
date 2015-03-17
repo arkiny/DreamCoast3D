@@ -24,7 +24,7 @@
 #include "cGamePlayableObject.h"
 #include "cGameAIObject.h"
 #include "cUISystemTest.h"
-#include "cEffectFireBall.h"
+#include "cEffectParticle.h"
 
 
 cScene::cScene() 

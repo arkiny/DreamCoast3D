@@ -4,7 +4,7 @@
 #include "cActionMove.h"
 #include "cTransform.h"
 #include "cSkinnedMesh.h"
-#include "cEffectFireBall.h"
+#include "cEffectParticle.h"
 #include <sstream>
 
 cGameAIObject::cGameAIObject()
@@ -137,7 +137,7 @@ void cGameAIObject::OnHitTarget(cGameObject* pTarget, float fDamage, D3DXVECTOR3
 		}
 		m_pPrevState = NULL;
 
-		//cEffectFireBall* p = new cEffectFireBall;
+		//cEffectParticle* p = new cEffectParticle;
 		//p->Setup();
 		////D3DXVECTOR3 playerPos = this->GetPosition();
 		////playerPos.y = playerPos.y + 1.0f;

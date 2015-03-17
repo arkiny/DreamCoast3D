@@ -217,20 +217,176 @@ void cSkinnedMeshBody::RenderShadow(ST_BONE* pBone/* = NULL*/){
 
 	// 각 프레임의 메시 컨테이너에 있는 pSkinInfo를 이용하여 영향받는 모든 
 	// 프레임의 매트릭스를 ppBoneMatrixPtrs에 연결한다.
+	//if (pBone->pMeshContainer)
+	//{
+		//MultiAnimationShadow
+		//float4x4 gWorldMatrix : World;
+		//float4x4 gLightViewMatrix;
+		//float4x4 gLightProjectionMatrix : Projection;
+		//float4x4 gWorldViewProjectionMatrix : WorldViewProjection;
+		//float4	 gWorldLightPosition;
+
+
+		//ST_BONE_MESH* pBoneMesh = (ST_BONE_MESH*)pBone->pMeshContainer;
+
+
+		//// get bone combinations
+		//LPD3DXBONECOMBINATION pBoneCombos =
+		//	(LPD3DXBONECOMBINATION)(pBoneMesh->pBufBoneCombos->GetBufferPointer());
+
+		//D3DXMATRIXA16 matViewProj, matView, matProj;
+		//g_pD3DDevice->GetTransform(D3DTS_VIEW, &matView);
+		//g_pD3DDevice->GetTransform(D3DTS_PROJECTION, &matProj);
+		//matViewProj = matView * matProj;
+
+		//D3DXMATRIXA16 mView, mInvView;
+		//g_pD3DDevice->GetTransform(D3DTS_VIEW, &mView);
+		//D3DXMatrixInverse(&mInvView, 0, &mView);
+		//D3DXVECTOR3 vEye = D3DXVECTOR3(0, 0, 0);
+		//D3DXVec3TransformCoord(&vEye, &vEye, &mInvView);
+
+		////gWorldViewProjectionMatrix
+		//g_pShaderManager->GetShader("../Resources/Shader/MultiAnimationShadow.fx")
+		//	->SetMatrix("gWorldViewProjectionMatrix", &matViewProj);
+		////gWorldLightPosition
+		//D3DLIGHT9 stLight;
+		//g_pD3DDevice->GetLight(0, &stLight);
+		//D3DXVECTOR3 pos = 500 * stLight.Direction;
+		//g_pShaderManager->GetShader("../Resources/Shader/MultiAnimationShadow.fx")
+		//	->SetVector("gWorldLightPosition", &D3DXVECTOR4(pos, 0.0f));
+		////gWorldCameraPosition
+		//g_pShaderManager->GetShader("../Resources/Shader/MultiAnimationShadow.fx")
+		//	->SetVector("gWorldCameraPosition", &D3DXVECTOR4(vEye, 1.0f));
+
+		//// set the current number of bones; this tells the effect which shader to use
+		//g_pShaderManager->GetShader("../Resources/Shader/MultiAnimationShadow.fx")
+		//	->SetInt("CurNumBones", pBoneMesh->dwMaxNumFaceInfls - 1);
+
+
+		//g_pD3DDevice->GetLight(0, &stLight);
+		//D3DXVECTOR3 dir = stLight.Direction;
+		//D3DXVec3Normalize(&pos, &dir);
+		//pos = -500 * pos;
+		////D3DXVECTOR3 tempPos(-93.3871002f, 234.746628f, -53.4625092);
+		//// 빛을 움직이면서 디렉셔널로 움직이면 섀도우맵역시 움직인다.
+		////pBone->CombinedTransformationMatrix();
+		////D3DXVECTOR3 vMove(pMatrix->_41, pMatrix->_42, pMatrix->_43);
+		////pos = pos + vMove;
+
+		//D3DXMATRIXA16 matLightView;
+		//{
+		//	D3DXVECTOR3 vLookatPt(128.0f, 0.0f, 128.0f);
+		//	D3DXVECTOR3 vUpVec(0.0f, 1.0f, 0.0f);
+		//	D3DXMatrixLookAtLH(&matLightView, &pos, &vLookatPt, &vUpVec);
+		//}
+
+		//D3DXMATRIXA16 matLightProjection; {
+		//	//D3DXMatrixPerspectiveFovLH(&matLightProjection, D3DX_PI / 4.0f, 1, 1, 3000);
+		//	D3DXMatrixOrthoLH(&matLightProjection, 350, 350, 1, 3000);
+		//}
+
+		////D3DXMATRIXA16 matView;
+		//D3DXMATRIXA16 matProjection;
+		//g_pD3DDevice->GetTransform(D3DTS_VIEW, &matView);
+		//g_pD3DDevice->GetTransform(D3DTS_PROJECTION, &matProjection);
+		//D3DXMATRIXA16 matViewProject; {
+		//	D3DXMatrixMultiply(&matViewProject, &matView, &matProjection);
+		//}
+
+		//g_pShaderManager->GetShader("../Resources/Shader/MultiAnimationShadow.fx")
+		//	->SetMatrix("gWorldMatrix", &pBone->CombinedTransformationMatrix);
+		//g_pShaderManager->GetShader("../Resources/Shader/MultiAnimationShadow.fx")
+		//	->SetMatrix("gLightViewMatrix", &matLightView);
+		//g_pShaderManager->GetShader("../Resources/Shader/MultiAnimationShadow.fx")
+		//	->SetMatrix("gLightProjectionMatrix", &matLightProjection);
+
+
+		//// set the technique we use to draw
+		//g_pShaderManager->GetShader("../Resources/Shader/MultiAnimationShadow.fx")
+		//	->SetTechnique("CreateShadowShader");
+
+		//// 쉐이더를 시작한다.
+		//UINT numPasses = 0;
+		//g_pShaderManager->GetShader("../Resources/Shader/MultiAnimationShadow.fx")
+		//	->Begin(&numPasses, NULL);
+		//{
+		//	for (UINT i = 0; i < numPasses; ++i)
+		//	{
+		//		g_pShaderManager->GetShader("../Resources/Shader/MultiAnimationShadow.fx")
+		//			->BeginPass(i);
+		//		{
+		//			// for each palette
+		//			for (DWORD dwAttrib = 0; dwAttrib < pBoneMesh->dwNumAttrGroups; ++dwAttrib)
+		//			{
+		//				// set each transform into the palette
+		//				for (DWORD dwPalEntry = 0; dwPalEntry < pBoneMesh->dwNumPaletteEntries; ++dwPalEntry)
+		//				{
+		//					DWORD dwMatrixIndex = pBoneCombos[dwAttrib].BoneId[dwPalEntry];
+		//					if (dwMatrixIndex != UINT_MAX)
+		//					{
+		//						m_pmWorkingPalette[dwPalEntry] =
+		//							pBoneMesh->pBoneOffsetMatrices[dwMatrixIndex] *
+		//							(*pBoneMesh->ppBoneMatrixPtrs[dwMatrixIndex]);
+		//					}
+		//				}
+
+		//				// set the matrix palette into the effect
+		//				g_pShaderManager->GetShader("../Resources/Shader/MultiAnimationShadow.fx")->SetMatrixArray("amPalette",
+		//					m_pmWorkingPalette,
+		//					pBoneMesh->dwNumPaletteEntries);
+
+		//				// 물체를 그린다.
+		//				pBoneMesh->pWorkingMesh->DrawSubset(dwAttrib);
+		//			}
+		//		}
+		//		g_pShaderManager->GetShader("../Resources/Shader/MultiAnimationShadow.fx")
+		//			->EndPass();
+		//	}
+		//}
+		//g_pShaderManager->GetShader("../Resources/Shader/MultiAnimationShadow.fx")
+		//	->End();
+	//}
+
 	if (pBone->pMeshContainer)
 	{
 		ST_BONE_MESH* pBoneMesh = (ST_BONE_MESH*)pBone->pMeshContainer;
 
+		// get bone combinations
+		LPD3DXBONECOMBINATION pBoneCombos =
+			(LPD3DXBONECOMBINATION)(pBoneMesh->pBufBoneCombos->GetBufferPointer());
+
+		D3DXMATRIXA16 matViewProj, matView, matProj;
+		g_pD3DDevice->GetTransform(D3DTS_VIEW, &matView);
+		g_pD3DDevice->GetTransform(D3DTS_PROJECTION, &matProj);
+		matViewProj = matView * matProj;
+
+		D3DXMATRIXA16 mView, mInvView;
+		g_pD3DDevice->GetTransform(D3DTS_VIEW, &mView);
+		D3DXMatrixInverse(&mInvView, 0, &mView);
+		D3DXVECTOR3 vEye = D3DXVECTOR3(0, 0, 0);
+		D3DXVec3TransformCoord(&vEye, &vEye, &mInvView);
+
+		//gWorldViewProjectionMatrix
+		g_pShaderManager->GetShader("../Resources/Shader/MultiAnimationShadow.fx")
+			->SetMatrix("gWorldViewProjectionMatrix", &matViewProj);
+		//gWorldLightPosition
 		D3DLIGHT9 stLight;
 		g_pD3DDevice->GetLight(0, &stLight);
+		D3DXVECTOR3 pos = 500 * stLight.Direction;
+		g_pShaderManager->GetShader("../Resources/Shader/MultiAnimationShadow.fx")
+			->SetVector("gWorldLightPosition", &D3DXVECTOR4(pos, 0.0f));
+		//gWorldCameraPosition
+		g_pShaderManager->GetShader("../Resources/Shader/MultiAnimationShadow.fx")
+			->SetVector("gWorldCameraPosition", &D3DXVECTOR4(vEye, 1.0f));
+
+		// set the current number of bones; this tells the effect which shader to use
+		g_pShaderManager->GetShader("../Resources/Shader/MultiAnimationShadow.fx")
+			->SetInt("CurNumBones", pBoneMesh->dwMaxNumFaceInfls - 1);
+
+		g_pD3DDevice->GetLight(0, &stLight);
 		D3DXVECTOR3 dir = stLight.Direction;
-		D3DXVECTOR3 pos;
 		D3DXVec3Normalize(&pos, &dir);
 		pos = -500 * pos;
-		//D3DXVECTOR3 tempPos(-93.3871002f, 234.746628f, -53.4625092);
-		// 빛을 움직이면서 디렉셔널로 움직이면 섀도우맵역시 움직인다.
-		//D3DXVECTOR3 vMove(pMatrix->_41, pMatrix->_42, pMatrix->_43);
-		//pos = pos + vMove;
 
 		D3DXMATRIXA16 matLightView;
 		{
@@ -244,7 +400,7 @@ void cSkinnedMeshBody::RenderShadow(ST_BONE* pBone/* = NULL*/){
 			D3DXMatrixOrthoLH(&matLightProjection, 350, 350, 1, 3000);
 		}
 
-		D3DXMATRIXA16 matView;
+		//D3DXMATRIXA16 matView;
 		D3DXMATRIXA16 matProjection;
 		g_pD3DDevice->GetTransform(D3DTS_VIEW, &matView);
 		g_pD3DDevice->GetTransform(D3DTS_PROJECTION, &matProjection);
@@ -252,37 +408,52 @@ void cSkinnedMeshBody::RenderShadow(ST_BONE* pBone/* = NULL*/){
 			D3DXMatrixMultiply(&matViewProject, &matView, &matProjection);
 		}
 
-		g_pShaderManager->GetShader("../Resources/Shader/CreateShadow.fx")
-			->SetMatrix("gWorldMatrix", &pBone->CombinedTransformationMatrix);
-		g_pShaderManager->GetShader("../Resources/Shader/CreateShadow.fx")
+		g_pShaderManager->GetShader("../Resources/Shader/MultiAnimationShadow.fx")
 			->SetMatrix("gLightViewMatrix", &matLightView);
-		g_pShaderManager->GetShader("../Resources/Shader/CreateShadow.fx")
+		g_pShaderManager->GetShader("../Resources/Shader/MultiAnimationShadow.fx")
 			->SetMatrix("gLightProjectionMatrix", &matLightProjection);
+		g_pShaderManager->GetShader("../Resources/Shader/MultiAnimationShadow.fx")
+			->SetMatrix("gViewProjectionMatrix", &matViewProject);
 
-		// 쉐이더를 시작한다.
-		UINT numPasses = 0;
-		g_pShaderManager->GetShader("../Resources/Shader/CreateShadow.fx")
-			->Begin(&numPasses, NULL);
+		// set the technique we use to draw
+		g_pShaderManager->GetShader("../Resources/Shader/MultiAnimationShadow.fx")->SetTechnique("CreateShadowShader");
+
+		UINT uiPasses, uiPass;
+
+		// run through each pass and draw
+		g_pShaderManager->GetShader("../Resources/Shader/MultiAnimationShadow.fx")->Begin(&uiPasses, 0);
+		for (uiPass = 0; uiPass < uiPasses; ++uiPass)
 		{
-			for (UINT i = 0; i < numPasses; ++i)
+			g_pShaderManager->GetShader("../Resources/Shader/MultiAnimationShadow.fx")->BeginPass(uiPass);
+
+			// for each palette
+			for (DWORD dwAttrib = 0; dwAttrib < pBoneMesh->dwNumAttrGroups; ++dwAttrib)
 			{
-				g_pShaderManager->GetShader("../Resources/Shader/CreateShadow.fx")
-					->BeginPass(i);
+				// set each transform into the palette
+				for (DWORD dwPalEntry = 0; dwPalEntry < pBoneMesh->dwNumPaletteEntries; ++dwPalEntry)
 				{
-					// for each palette
-					for (DWORD dwAttrib = 0; dwAttrib < pBoneMesh->dwNumAttrGroups; ++dwAttrib)
+					DWORD dwMatrixIndex = pBoneCombos[dwAttrib].BoneId[dwPalEntry];
+					if (dwMatrixIndex != UINT_MAX)
 					{
-						// 물체를 그린다.
-						pBoneMesh->pWorkingMesh->DrawSubset(dwAttrib);
+						m_pmWorkingPalette[dwPalEntry] =
+							pBoneMesh->pBoneOffsetMatrices[dwMatrixIndex] *
+							(*pBoneMesh->ppBoneMatrixPtrs[dwMatrixIndex]);
 					}
 				}
-				g_pShaderManager->GetShader("../Resources/Shader/CreateShadow.fx")
-					->EndPass();
+
+				// set the matrix palette into the effect
+				g_pShaderManager->GetShader("../Resources/Shader/MultiAnimationShadow.fx")->SetMatrixArray("amPalette",
+					m_pmWorkingPalette,
+					pBoneMesh->dwNumPaletteEntries);
+				g_pShaderManager->GetShader("../Resources/Shader/MultiAnimationShadow.fx")->CommitChanges();
+				pBoneMesh->pWorkingMesh->DrawSubset(dwAttrib);
+
 			}
+			g_pShaderManager->GetShader("../Resources/Shader/MultiAnimationShadow.fx")->EndPass();
 		}
-		g_pShaderManager->GetShader("../Resources/Shader/CreateShadow.fx")
-			->End();
+		g_pShaderManager->GetShader("../Resources/Shader/MultiAnimationShadow.fx")->End();
 	}
+
 	//재귀적으로 모든 프레임에 대해서 실행.
 	if (pBone->pFrameSibling)
 	{

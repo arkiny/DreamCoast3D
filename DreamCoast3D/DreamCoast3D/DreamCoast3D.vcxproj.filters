@@ -292,9 +292,6 @@
     <ClCompile Include="cEffect.cpp">
       <Filter>FrameWork\Effects</Filter>
     </ClCompile>
-    <ClCompile Include="cEffectFireBall.cpp">
-      <Filter>FrameWork\Effects</Filter>
-    </ClCompile>
     <ClCompile Include="cEffectManager.cpp">
       <Filter>FrameWork\Effects</Filter>
     </ClCompile>
@@ -363,6 +360,9 @@
     </ClCompile>
     <ClCompile Include="cStaticMeshManager.cpp" />
     <ClCompile Include="cMesh.cpp" />
+    <ClCompile Include="cEffectParticle.cpp">
+      <Filter>FrameWork\Effects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cAction.h">
@@ -665,9 +665,6 @@
     <ClInclude Include="cEffect.h">
       <Filter>FrameWork\Effects</Filter>
     </ClInclude>
-    <ClInclude Include="cEffectFireBall.h">
-      <Filter>FrameWork\Effects</Filter>
-    </ClInclude>
     <ClInclude Include="cEffectManager.h">
       <Filter>FrameWork\Effects</Filter>
     </ClInclude>
@@ -739,6 +736,9 @@
     </ClInclude>
     <ClInclude Include="cStaticMeshManager.h" />
     <ClInclude Include="cMesh.h" />
+    <ClInclude Include="cEffectParticle.h">
+      <Filter>FrameWork\Effects</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="DreamCoast3D.ico">

@@ -4,7 +4,7 @@
 #include "cPlayerMove.h"
 #include "cPlayerAttack.h"
 #include "cPlayerOnHit.h"
-#include "cEffectFireBall.h"
+#include "cEffectParticle.h"
 #include "cSkinnedMesh.h"
 
 cGamePlayableObject::cGamePlayableObject()

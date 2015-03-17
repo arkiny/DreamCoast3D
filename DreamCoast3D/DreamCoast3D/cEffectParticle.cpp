@@ -1,19 +1,19 @@
 #include "stdafx.h"
-#include "cEffectFireBall.h"
+#include "cEffectParticle.h"
 #include "cEffectManager.h"
 
-cEffectFireBall::cEffectFireBall()
+cEffectParticle::cEffectParticle()
 {
 	m_eEffectType = E_EFFECT_ONHIT;
 }
 
 
-cEffectFireBall::~cEffectFireBall()
+cEffectParticle::~cEffectParticle()
 {
 	//SAFE_RELEASE(m_pTexture);
 }
 
-void cEffectFireBall::Setup(){
+void cEffectParticle::Setup(){
 	m_vecVertex.clear();
 	m_vecMoveInfo.clear();
 	for (int i = 0; i < 10; ++i)
@@ -61,10 +61,10 @@ void cEffectFireBall::Setup(){
 	m_pTexture = g_pTextureManager->GetTexture("../Resources/Effect/A_blood_ring05_emis.png");
 }
 
-void cEffectFireBall::Start(){
+void cEffectParticle::Start(){
 }
 
-void cEffectFireBall::Update(float fDelta){
+void cEffectParticle::Update(float fDelta){
 	/*if (GetKeyState(VK_SPACE) & 0x8000){*/
 	m_fPassedTime += fDelta;
 	for (size_t i = 0; i < m_vecVertex.size(); i++){
@@ -119,7 +119,7 @@ void cEffectFireBall::Update(float fDelta){
 	}
 }
 
-void cEffectFireBall::Render(){
+void cEffectParticle::Render(){
 	// 포인트를 확대 축소 할 수 있게 해줌
 	g_pD3DDevice->SetRenderState(D3DRS_POINTSCALEENABLE, true);
 

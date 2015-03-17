@@ -11,7 +11,7 @@ struct ST_PARTICLE{
 	float			_currentTime;
 };
 
-class cEffectFireBall : public cEffect
+class cEffectParticle : public cEffect
 {
 protected:
 	std::vector<ST_PC_VERTEX>	m_vecVertex;
@@ -28,8 +28,8 @@ protected:
 	}
 
 public:
-	cEffectFireBall();
-	~cEffectFireBall();
+	cEffectParticle();
+	~cEffectParticle();
 
 	virtual void Setup();
 	virtual void Start();

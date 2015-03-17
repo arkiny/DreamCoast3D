@@ -123,7 +123,7 @@
     <ClInclude Include="cDeviceManager.h" />
     <ClInclude Include="cEditCursor.h" />
     <ClInclude Include="cEffect.h" />
-    <ClInclude Include="cEffectFireBall.h" />
+    <ClInclude Include="cEffectParticle.h" />
     <ClInclude Include="cEffectManager.h" />
     <ClInclude Include="cEffectMesh.h" />
     <ClInclude Include="cEffectResourceManager.h" />
@@ -250,7 +250,7 @@
     <ClCompile Include="cDeviceManager.cpp" />
     <ClCompile Include="cEditCursor.cpp" />
     <ClCompile Include="cEffect.cpp" />
-    <ClCompile Include="cEffectFireBall.cpp" />
+    <ClCompile Include="cEffectParticle.cpp" />
     <ClCompile Include="cEffectManager.cpp" />
     <ClCompile Include="cEffectMesh.cpp" />
     <ClCompile Include="cEffectResourceManager.cpp" />

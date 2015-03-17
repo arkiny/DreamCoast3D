@@ -22,13 +22,6 @@
 //--------------------------------------------------------------//
 string CreateShadowShader_CreateShadow_Torus : ModelData = ".\\Torus.x";
 
-texture ShadowMap_Tex : RenderColorTarget
-<
-float2 RenderTargetDimensions = { 2048, 2048 };
-string Format = "D3DFMT_R32F";
-float  ClearDepth = 1.000000;
-int    ClearColor = -1;
->;
 struct VS_INPUT
 {
 	float4 mPosition: POSITION;
@@ -40,25 +33,18 @@ struct VS_OUTPUT
 	float4 mClipPosition: TEXCOORD1;
 };
 
-float4x4 gWorldMatrix : World;
-float4x4 gLightViewMatrix
-<
-string UIName = "gLightViewMatrix";
-string UIWidget = "Numeric";
-bool UIVisible = false;
-> = float4x4(1.00, 0.00, 0.00, 0.00, 0.00, 1.00, 0.00, 0.00, 0.00, 0.00, 1.00, 0.00, 0.00, 0.00, 0.00, 1.00);
-float4x4 gLightProjectionMatrix : Projection;
-
-float4 gWorldLightPosition;
+float4x4	gWorldMatrix : World;
+float4x4	gLightViewMatrix;
+float4x4	gLightProjectionMatrix : Projection;
 
 VS_OUTPUT CreateShadowShader_CreateShadow_Vertex_Shader_vs_main(VS_INPUT Input)
 {
 	VS_OUTPUT Output;
-
-	float4x4 lightViewMatrix = gLightViewMatrix;
+	
+	float4x4 lightView = gLightViewMatrix;
 
 	Output.mPosition = mul(Input.mPosition, gWorldMatrix);
-	Output.mPosition = mul(Output.mPosition, lightViewMatrix);
+	Output.mPosition = mul(Output.mPosition, lightView);
 	Output.mPosition = mul(Output.mPosition, gLightProjectionMatrix);
 
 	Output.mClipPosition = Output.mPosition;
@@ -76,12 +62,6 @@ float4 CreateShadowShader_CreateShadow_Pixel_Shader_ps_main(PS_INPUT Input) : CO
 	float depth = Input.mClipPosition.z / Input.mClipPosition.w;
 	return float4(depth.xxx, 1);
 }
-
-float4x4 CreateShadowShader_CreateShadow_Pixel_Shader_gWorldMatrix;
-float4x4 CreateShadowShader_CreateShadow_Pixel_Shader_gLightViewMatrix;
-float4x4 CreateShadowShader_CreateShadow_Pixel_Shader_gLightProjectionMatrix;
-
-float4 CreateShadowShader_CreateShadow_Pixel_Shader_gWorldLightPosition;
 
 //--------------------------------------------------------------//
 // Technique Section for CreateShadowShader
