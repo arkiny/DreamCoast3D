@@ -26,7 +26,6 @@ cSkinnedMesh::cSkinnedMesh(std::string sFolder, std::string sFile)
 	, m_pAnimController(NULL)
 	, m_dwWorkingPaletteSize(0)
 	, m_pmWorkingPalette(NULL)
-	//, m_pEffect(NULL)
 	, m_fAnimationBlendTime(ANIM_BLEND_TIME)
 	, m_fPassedBlendTime(0.0f)
 	, m_isAnimationBlending(false)
@@ -44,6 +43,10 @@ cSkinnedMesh::cSkinnedMesh(std::string sFolder, std::string sFile)
 	m_nMeshRefNumber = pSkinnedMesh->GetMeshRefNumber();
 	m_sSkinnedFolder = pSkinnedMesh->GetSkinnedFolderPath();
 	m_sSkinnedFile = pSkinnedMesh->GetSkinnedFilePath();
+	SetCollisionVectors(pSkinnedMesh->GetCollisionSphereFrameNames(),
+		pSkinnedMesh->GetCollisionSphereRadius());
+	SetAttackVectors(pSkinnedMesh->GetAttackSphereFrameNames(),
+		pSkinnedMesh->GetAttackSphereRadius());
 
 	pSkinnedMesh->m_pAnimController->CloneAnimationController(
 		pSkinnedMesh->m_pAnimController->GetMaxNumAnimationOutputs(),
@@ -63,35 +66,67 @@ cSkinnedMesh::cSkinnedMesh(std::string sFolder, std::string sFile)
 		pAnimSet->SetIndex(m_vecAnimationSet.size());
 		m_vecAnimationSet.push_back(pAnimSet);
 	}
-
+	
+	// to loader
+	//std::vector<std::string> vec;
+	//std::vector<float> vecf;
+	//SetAttackVectors(vec, vecf);
+	//SetCollisionVectors(vec, vecf);
 
 	m_sMainCollisionSphere = "FxCenter";
 	m_fMianColisionSphereRadius = 6.f;
 
-	
-	std::string sInput = "FxCenter";
+
+}
+
+void cSkinnedMesh::SetCollisionVectors(
+	std::vector<std::string> vecNodeNames,
+	std::vector<float> vecRadius){
+	m_vecCollisionSpheres.clear();
+	m_vecCollisionSpheresRadius.clear();
+	assert(vecNodeNames.size() == vecRadius.size());
+	for (size_t i = 0; i < vecNodeNames.size(); i++){
+		m_vecCollisionSpheres.push_back(vecNodeNames[i]);
+		m_vecCollisionSpheresRadius.push_back(vecRadius[i]);
+	}
+
+	/*std::string sInput = "FxCenter";
+	float fInput = 12.f;
+
 	m_vecCollisionSpheres.push_back(sInput);
+	m_vecCollisionSpheresRadius.push_back(fInput);
+
 	sInput = "FxTop";
 	m_vecCollisionSpheres.push_back(sInput);
+	m_vecCollisionSpheresRadius.push_back(fInput);
+
 	sInput = "FxBottom";
 	m_vecCollisionSpheres.push_back(sInput);
-
-	float fInput = 12.f;
-	m_vecCollisionSpheresRadius.push_back(fInput);
-	m_vecCollisionSpheresRadius.push_back(fInput);
-	m_vecCollisionSpheresRadius.push_back(fInput);
-
-	std::vector<std::string>	m_vecAttackSpheres;
-	std::vector<float>			m_vecAttackSpheresRadius;
+	m_vecCollisionSpheresRadius.push_back(fInput);*/
 
 	GetDebugOriginSphereBody(m_mapDebugOriginSphereBody, m_mapDebugUpdateSphereBody);
 
 	if (m_mapDebugOriginSphereBody.find(std::string("FxCenter")) != m_mapDebugOriginSphereBody.end()){
-		m_stUpdateBoundingSphere.m_vCenter = D3DXVECTOR3(0,0,0);
+		m_stUpdateBoundingSphere.m_vCenter = D3DXVECTOR3(0, 0, 0);
 		m_stUpdateBoundingSphere.m_fRadius = m_mapDebugOriginSphereBody[std::string("FxCenter")].m_fRadius;
 
 		SAFE_RELEASE(m_pDebugSphereBody);
 		D3DXCreateSphere(g_pD3DDevice, m_stUpdateBoundingSphere.m_fRadius, 10, 10, &m_pDebugSphereBody, NULL);
+	}
+}
+
+void cSkinnedMesh::SetAttackVectors(
+	std::vector<std::string> vecNodeNames,
+	std::vector<float> vecRadius){
+
+
+	m_vecAttackSpheres.clear();
+	m_vecAttackSpheresRadius.clear();
+
+	assert(vecNodeNames.size() == vecRadius.size());
+	for (size_t i = 0; i < vecNodeNames.size(); i++){
+		m_vecAttackSpheres.push_back(vecNodeNames[i]);
+		m_vecAttackSpheresRadius.push_back(vecRadius[i]);
 	}
 
 	// Attack용 임시처리, HD
@@ -100,12 +135,6 @@ cSkinnedMesh::cSkinnedMesh(std::string sFolder, std::string sFile)
 	D3DXFRAME* pFxCenter;
 	D3DXFRAME* pFxHand;
 
-	std::string sInput2 = "FxHand00";
-	m_vecAttackSpheres.push_back(sInput2);
-	m_vecAttackSpheresRadius.push_back(15.0f);
-	sInput2 = "FxHand01";
-	m_vecAttackSpheres.push_back(sInput2);
-	m_vecAttackSpheresRadius.push_back(15.0f);
 
 	D3DXFRAME* pFrame;
 	ST_BOUNDING_SPHERE stBs;
@@ -121,7 +150,6 @@ cSkinnedMesh::cSkinnedMesh(std::string sFolder, std::string sFile)
 		}
 	}
 
-
 	if (m_mapAttackSphere.empty()){
 		pFxCenter = D3DXFrameFind(m_pRootFrame, "FxCenter");
 		if (pFxCenter){
@@ -134,7 +162,10 @@ cSkinnedMesh::cSkinnedMesh(std::string sFolder, std::string sFile)
 	}
 
 	if (!m_mapAttackSphere.empty()){
-		D3DXCreateSphere(g_pD3DDevice, 15.0f, 10, 10, &m_pATMesh, NULL);
+		SAFE_RELEASE(m_pATMesh);
+		D3DXCreateSphere(g_pD3DDevice,
+			m_mapAttackSphere.begin()->second.m_fRadius,
+			10, 10, &m_pATMesh, NULL);
 	}
 }
 
@@ -143,7 +174,6 @@ cSkinnedMesh::cSkinnedMesh()
 	, m_pAnimController(NULL)
 	, m_dwWorkingPaletteSize(0)
 	, m_pmWorkingPalette(NULL)
-	//, m_pEffect(NULL)
 	, m_fAnimationBlendTime(ANIM_BLEND_TIME)
 	, m_fPassedBlendTime(0.0f)
 	, m_isAnimationBlending(false)

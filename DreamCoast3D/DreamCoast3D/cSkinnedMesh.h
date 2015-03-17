@@ -101,6 +101,25 @@ public:
 	virtual int GetHeadRefNum(){ return -1; }
 	virtual int GetHairRefNum(){ return -1; }
 
+	virtual void SetCollisionVectors(
+		std::vector<std::string> vecNodeNames, 
+		std::vector<float> vecRadius);
+	virtual void SetAttackVectors(
+		std::vector<std::string> vecNodeNames, 
+		std::vector<float> vecRadius);
+
+	//std::vector<std::string>	m_vecCollisionSpheres;
+	//std::vector<float>			m_vecCollisionSpheresRadius;
+
+	//std::vector<std::string>	m_vecAttackSpheres;
+	//std::vector<float>			m_vecAttackSpheresRadius;
+
+	virtual std::vector<std::string> GetCollisionSphereFrameNames(){ return m_vecCollisionSpheres; }
+	virtual std::vector<float>	GetCollisionSphereRadius() { return m_vecCollisionSpheresRadius; }
+	virtual std::vector<std::string> GetAttackSphereFrameNames(){ return m_vecAttackSpheres; }
+	virtual std::vector<float>	GetAttackSphereRadius() { return m_vecAttackSpheresRadius; }
+
+
 protected:
 	cSkinnedMesh();
 

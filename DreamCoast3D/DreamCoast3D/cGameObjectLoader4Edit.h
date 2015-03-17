@@ -20,7 +20,11 @@ protected:
 	//cGameObject* ParseAndLoadSkinnedBodyMesh();
 	//cGameObject* ParseGameActionSkinnedMeshObj();
 
-	
+	void ParseSkinnedCSList(OUT std::vector<std::string>& vecNodeList,
+		OUT std::vector<float>& vecRadiusList);
+
+	void ParseSkinnedASList(OUT std::vector<std::string>& vecNodeList,
+		OUT std::vector<float>& vecRadiusList);
 	///
 
 public:

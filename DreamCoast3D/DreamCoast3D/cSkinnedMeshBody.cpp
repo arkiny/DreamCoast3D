@@ -47,17 +47,14 @@ cSkinnedMeshBody::cSkinnedMeshBody(std::string sFolder, std::string sFile,
 	m_stUpdateBoundingSphere.m_vCenter = m_mapDebugOriginSphereBody[std::string("FxCenter")].m_vCenter;
 	m_stUpdateBoundingSphere.m_fRadius = m_mapDebugOriginSphereBody[std::string("FxCenter")].m_fRadius / 2;
 
-	SAFE_RELEASE(m_pDebugSphereBody);
+	//SAFE_RELEASE(m_pDebugSphereBody);
 	//반지름을 1로 해두고 확장해서 렌더 : 민우
 	//렌더할때 월드 사이즈가 적용이 안되는득?
-	D3DXCreateSphere(g_pD3DDevice, m_stUpdateBoundingSphere.m_fRadius, 
-		10, 10, &m_pDebugSphereBody, NULL);
-	// Attack용 임시처리, HD
-	D3DXCreateSphere(g_pD3DDevice, m_mapAttackSphere.begin()->second.m_fRadius,
-		10, 10, &m_pMesh, NULL);
-
-
-	
+	//D3DXCreateSphere(g_pD3DDevice, m_stUpdateBoundingSphere.m_fRadius, 
+	//	10, 10, &m_pDebugSphereBody, NULL);
+	//// Attack용 임시처리, HD
+	//D3DXCreateSphere(g_pD3DDevice, m_mapAttackSphere.begin()->second.m_fRadius,
+	//	10, 10, &m_pMesh, NULL);
 	//GetDetailCollisionBoundingSpheres(m_vecDetailBoundingSphere);	//TODO: 여기서 구해진 것을 토대로 Update에서 위치를 지속적으로 갱신해야 한다. :민우
 	//D3DXCreateSphere(g_pD3DDevice, 2.5f, 5, 5, &m_pDebugDetailSphereBody, NULL);//세부적인 부분을 보여줄 작은 바운딩스피어
 }
@@ -354,13 +351,13 @@ void cSkinnedMeshBody::Render(ST_BONE* pBone /*= NULL*/)
 		
 		for (auto p : m_mapAttackSphere)
 		{
-					std::string s = p.first.c_str();
+			std::string s = p.first.c_str();
 			if (pBone->Name != nullptr && std::string(pBone->Name) == p.first.c_str()){
 
 				g_pD3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
 				g_pD3DDevice->SetTransform(D3DTS_WORLD, &pBone->CombinedTransformationMatrix);
 
-				m_pMesh->DrawSubset(0);
+				m_pATMesh->DrawSubset(0);
 
 				g_pD3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
 			}

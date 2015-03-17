@@ -187,7 +187,10 @@ void cGameObjLoader::ParseAndLoadSkinnedMeshList(){
 void cGameObjLoader::ParseAndLoadSkinnedMeshtoManager(int nIndex){
 	std::string sFolder;
 	std::string sFile;
-	
+	std::vector<std::string>	vecCSNodeList;
+	std::vector<float>			vecCSRadiusList;
+	std::vector<std::string>	vecASNodeList;
+	std::vector<float>			vecASRadiusList;
 	int nLevel = 0;
 	do{
 		char* szToken = GetToken();
@@ -204,12 +207,68 @@ void cGameObjLoader::ParseAndLoadSkinnedMeshtoManager(int nIndex){
 		else if (isEqual(szToken, "*SKINNEDMESH_FILE")){
 			sFile = GetToken();
 		}
+		else if (isEqual(szToken, "*SKINNEDMESH_CS_LIST")){
+			ParseSkinnedCSList(vecCSNodeList, vecCSRadiusList);
+		}
+		else if (isEqual(szToken, "*SKINNEDMESH_AS_LIST")){
+			ParseSkinnedASList(vecASNodeList, vecASRadiusList);
+		}
 	} while (nLevel > 0);
 
 	m_vecsFolders[nIndex] = sFolder;
 	m_vecsFiles[nIndex] = sFile;
 	
 	g_pSkinnedMeshManager->GetSkinnedMesh(sFolder, sFile);
+	g_pSkinnedMeshManager->GetSkinnedMesh(sFolder, sFile)
+		->SetCollisionVectors(vecCSNodeList, vecCSRadiusList);
+	g_pSkinnedMeshManager->GetSkinnedMesh(sFolder, sFile)
+		->SetAttackVectors(vecASNodeList, vecASRadiusList);
+}
+
+void cGameObjLoader::ParseSkinnedCSList(
+	OUT std::vector<std::string>& vecNodeList,
+	OUT std::vector<float>& vecRadiusList){
+	int nLevel = 0;
+	do{
+		char* szToken = GetToken();
+		if (isEqual(szToken, "{")){
+			++nLevel;
+		}
+		else if (isEqual(szToken, "}")){
+			--nLevel;
+		}
+		else if (isEqual(szToken, "*SKINNEDMESH_CS")){
+			// donothing
+			std::string sToAdd;
+			sToAdd = GetToken();
+			float fToAdd = GetFloat();
+			vecNodeList.push_back(sToAdd);
+			vecRadiusList.push_back(fToAdd);
+		}
+	} while (nLevel > 0);
+}
+
+void cGameObjLoader::ParseSkinnedASList(
+	OUT std::vector<std::string>& vecNodeList,
+	OUT std::vector<float>& vecRadiusList){
+	int nLevel = 0;
+	do{
+		char* szToken = GetToken();
+		if (isEqual(szToken, "{")){
+			++nLevel;
+		}
+		else if (isEqual(szToken, "}")){
+			--nLevel;
+		}
+		else if (isEqual(szToken, "*SKINNEDMESH_AS")){
+			// donothing
+			std::string sToAdd;
+			sToAdd = GetToken();
+			float fToAdd = GetFloat();
+			vecNodeList.push_back(sToAdd);
+			vecRadiusList.push_back(fToAdd);
+		}
+	} while (nLevel > 0);
 }
 
 cGameObject* cGameObjLoader::ParseAndLoadSkinnedBodyMesh(){

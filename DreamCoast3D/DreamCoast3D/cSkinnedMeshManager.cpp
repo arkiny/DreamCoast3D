@@ -49,7 +49,32 @@ std::string cSkinnedMeshManager::GetSkinnedMeshListAsString(){
 		ss << "*SKINNEDMESH " << i << " {" << std::endl;
 		ss << "*SKINNEDMESH_PATH " << "\"" << m_vecSkinnedMesh4Save[i]->GetSkinnedFolderPath() << "\"" << std::endl;
 		ss << "*SKINNEDMESH_FILE " << "\"" << m_vecSkinnedMesh4Save[i]->GetSkinnedFilePath() << "\"" << std::endl;
+
+		std::vector<std::string>	vecSave = m_vecSkinnedMesh4Save[i]->GetCollisionSphereFrameNames();
+		std::vector<float>			vecRad = m_vecSkinnedMesh4Save[i]->GetCollisionSphereRadius();
+		if (!vecSave.empty()){
+			ss << "*SKINNEDMESH_CS_LIST {" << std::endl;
+
+			for (size_t j = 0; j < vecSave.size(); j++){
+				ss << "*SKINNEDMESH_CS " << "\"" << vecSave[j] << "\"" << "\t" << vecRad[j] << std::endl;
+			}
+
+			ss << "}" << std::endl;
+		}
+
+		vecSave = m_vecSkinnedMesh4Save[i]->GetAttackSphereFrameNames();
+		vecRad = m_vecSkinnedMesh4Save[i]->GetAttackSphereRadius();
+
+		if (!vecSave.empty()){
+			ss << "*SKINNEDMESH_AS_LIST {" << std::endl;
+
+			for (size_t j = 0; j < vecSave.size(); j++){
+				ss << "*SKINNEDMESH_AS " << "\"" << vecSave[j] << "\"" << "\t" << vecRad[j] << std::endl;
+			}
+			ss << "}" << std::endl;
+		}
 		ss << "}" << std::endl;
+
 	}
 	ss << "}" << std::endl;
 	return ss.str();

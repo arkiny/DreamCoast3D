@@ -4,6 +4,15 @@
 	*SKINNEDMESH 0 {
 		*SKINNEDMESH_PATH "../Resources/Char/Tera/"
 		*SKINNEDMESH_FILE "Popori_F_Body03.X"
+		*SKINNEDMESH_CS_LIST {
+			*SKINNEDMESH_CS "FxCenter" 12.0
+			*SKINNEDMESH_CS "FxTop" 12.0
+			*SKINNEDMESH_CS "FxBottom" 12.0
+		}
+		*SKINNEDMESH_AS_LIST {
+			*SKINNEDMESH_AS "FxHand00" 15.0
+			*SKINNEDMESH_AS "FxHand01" 15.0
+		}
 	}
 	*SKINNEDMESH 1 {
 		*SKINNEDMESH_PATH "../Resources/Char/Tera/"
