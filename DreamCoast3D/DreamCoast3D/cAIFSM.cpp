@@ -227,6 +227,7 @@ int  cAIAttack::GetCurrentStateType(){
 void cAIOnHit::Start(cGameAIObject* pAIObject){
 	if (pAIObject->GetAItype() == cGameAIObject::E_AI_TYPE::E_AI_BOSS)
 	{
+		pAIObject->SetHP(pAIObject->GetHP() - 100);
 		pAIObject->ChangeState(pAIObject->eAISTATE_THINK);
 		return;
 	}
@@ -391,7 +392,6 @@ void cAIBossPhaseFirst::Execute(cGameAIObject* pAIObject, float fDelta)
 		{
 			m_nIndex = 18;
 		}
-		pAIObject->SetHP(pAIObject->GetHP() - 100);
 		pAIObject->ChangeState(pAIObject->eAISTATE_THINK);
 		return;
 		
@@ -435,7 +435,6 @@ void cAIBossPhaseSecond::Execute(cGameAIObject* pAIObject, float fDelta)
 
 	if (pAIObject->GetSkinnedMesh()->GetCurrentAnimationPeriodTime() < pAIObject->GetPassedTime())
 	{
-		pAIObject->SetHP(pAIObject->GetHP() - 100);
 		m_nEpsilon = 0;
 		if (m_nIndex == 3)
 		{
@@ -493,10 +492,6 @@ void cAIBossPhaseThird::Execute(cGameAIObject* pAIObject, float fDelta)
 	if (pAIObject->GetSkinnedMesh()->GetCurrentAnimationPeriodTime() < pAIObject->GetPassedTime())
 	{
 		m_nEpsilon = 0;
-		if (pAIObject->GetHP() > 100)
-		{
-			pAIObject->SetHP(pAIObject->GetHP() - 30);
-		}
 		if (m_nIndex == 3)
 		{
 			m_nIndex = 18;
