@@ -15,6 +15,7 @@ protected:
 	enum EDRAGSTATE
 	{
 		E_NODRAG,
+		E_EMPTY_DRAG,
 		E_ICON_DRAG,
 		E_WINDOW_DRAG,
 		E_DRAG_MAX
@@ -36,6 +37,8 @@ protected:
 	SYNTHESIZE(bool, m_isMouseDownVisible, IsMouseDownVisible);//마우스 다운 테두리 출력 여부 결정
 	SYNTHESIZE(cUIIcon*, m_pIconDragSrc, IconDragSrc);	//드래그가 시작된 대상 아이콘 저장용
 	SYNTHESIZE(cUIIcon*, m_pBindingIcon, BindingIcon);	//드래그중 마우스에 붙어 있는 아이콘
+	SYNTHESIZE(cUISlot*, m_pSlotDragSrc, SlotDragSrc);	//슬롯 드래그가 시작된 슬롯
+	SYNTHESIZE(cUISlot*, m_pSlotDragDest, SlotDragDest);//슬롯 드래그가 완료될 슬롯
 
 public:
 	cUIInventory();
@@ -60,5 +63,7 @@ public:
 	virtual cDataItem* cUIInventory::UseItem(cUISlot* pUISlot);				//아이템 사용시
 	virtual void cUIInventory::SetupSlot(size_t nRowQnt, size_t nColQnt);	//슬롯을 인자만큼 생성하고 배치한다.
 	virtual void cUIInventory::SwapItemInSlot(cUISlot* pSrcSlot, cUISlot* pDestSlot);	//슬롯간 아이템 교환
+	virtual void cUIInventory::HighLightFocusSlot();						//마우스 오버/다운 된 슬롯 하이라이트 시키기
+
 };
 

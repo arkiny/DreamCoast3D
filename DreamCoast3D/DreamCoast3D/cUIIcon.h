@@ -14,6 +14,7 @@ protected:
 		EICONTYPE_MAX
 	};
 	SYNTHESIZE(EICONTYPE, m_eIconType, IconType);
+	SYNTHESIZE(std::string, m_ImagePath, m_ImagePath);
 	//bool m_isBinding;			//마우스에 붙어 있는 중인가(드래그 중인가)
 public:
 	cUIIcon();

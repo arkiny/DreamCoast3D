@@ -44,7 +44,7 @@ cUIInventory::~cUIInventory()
 	}*/
 	//SAFE_RELEASE(m_pIconDragSrc);
 	//SAFE_RELEASE(m_pBindingIcon);
-
+	SAFE_RELEASE(m_pBindingIcon);
 }
 
 void cUIInventory::Setup()
@@ -61,7 +61,7 @@ void cUIInventory::Setup()
 	GetClientRect(g_hWnd, &clientRect);
 	//스프라이트 생성
 	D3DXCreateSprite(g_pD3DDevice, &m_pSprite);
-
+	
 	m_vecOwnItem.resize(10);//소지하고 있는 아이템 갯수(종류가 되어야함)
 
 
@@ -129,19 +129,11 @@ void cUIInventory::Update(float fDelta)
 	if (GetisPopped())
 	{
 		m_pFocusSlot = (cUISlot*)FindFocusSlot(m_vecUISlot);
-		
-		//마우스 오버 슬롯 테두리 위치를 포커싱된 슬롯에 씌운다(이동한다)
-		if (m_pFocusSlot)
-		{
-			SetIsMouseOverVisible(true);
-			m_pImageViewMouseOver->SetPosition(m_pUIRoot->GetPosition() + m_pFocusSlot->GetPosition());
-		}
-		else
-		{
-			SetIsMouseOverVisible(false);
-			SetIsMouseDownVisible(false);
-		}
-		//임시 효과
+		//마우스 오버/다운된 곳 하이라이트
+		HighLightFocusSlot();
+
+#pragma region 알파블렌딩 효과
+		//임시 효과(기능을 다 구현하고 제대로 만든다)
 		cUIImageView* pImageView = (cUIImageView*)m_pUIRoot;
 		float fAlpha = pImageView->GetAlpha();
 		if (fAlpha < 1.f)
@@ -167,6 +159,8 @@ void cUIInventory::Update(float fDelta)
 			m_pImageViewMouseDown->SetAlpha(fAlpha);
 			
 		}
+#pragma endregion
+
 		//왼버튼Down시
 		if (g_pControlManager->GetInputInfo(VK_LBUTTON)){ OnMouseLBDown(); }
 		//왼버튼Up시
@@ -244,14 +238,10 @@ void cUIInventory::DeleteItemInSlot(cUISlot* pUISlot)
 }
 void cUIInventory::OnMouseLBDown()
 {
-	//슬롯에 포커스가 있을때
-	if (m_pFocusSlot)
-	{
-		SetIsMouseOverVisible(false);
-		SetIsMouseDownVisible(true);
-		m_pImageViewMouseDown->SetPosition(m_pUIRoot->GetPosition() + m_pFocusSlot->GetPosition());
-	}
-	//이건 몸체를 클릭 했을때 이야기
+	//왼마우스가 다운되는걸 판별해서 드래그로 전환하려는 목적의메서드 이므로 드래그중이면 탈출
+	if (m_isDragging) { return; }
+
+	////몸체를 클릭 했을때 WindowDrag로 전환되는 트리거
 	if (m_pFocusSlot == nullptr && m_isDragging == false)
 	{
 		RECT rc;
@@ -271,22 +261,76 @@ void cUIInventory::OnMouseLBDown()
 			SetDragState(E_WINDOW_DRAG);
 		}
 	}
-	else if (m_pFocusSlot && m_isDragging == false)
+	
+	//슬롯을 클릭 했을때 IconDrag로 전환되는 트리거
+	if (m_pFocusSlot && m_isDragging == false)
 	{
-		m_isDragging = true;
-		SetDragState(E_ICON_DRAG);
-		//드래그 시작 아이콘을 기억
-		m_pIconDragSrc = m_pFocusSlot->GetIcon();
+		//슬롯에 포커스가 있을때 마우스 다운 하이라이트
+		SetIsMouseOverVisible(false);
+		SetIsMouseDownVisible(true);
+		m_pImageViewMouseDown->SetPosition(m_pUIRoot->GetPosition() + m_pFocusSlot->GetPosition());
+
+		//현재 클릭된 슬롯에 아이템이 존재하는지 확인
+		bool isItemExist;
+		if (m_pFocusSlot->GetItem()){ isItemExist = true; }
+		else { isItemExist = false; }
+
+		//(아이템이 있으면) 마우스 다운된 슬롯에 아이템이 있어야 드래그로 전환
+		if (isItemExist)
+		{
+			m_isDragging = true;
+			SetDragState(E_ICON_DRAG);
+			//드래그가 시작된 슬롯을 기억
+			m_pSlotDragSrc = m_pFocusSlot;
+
+
+			//m_pBindingIcon = new cUIIcon;
+			//LPD3DXSPRITE pSprite = nullptr;
+			//D3DXCreateSprite(g_pD3DDevice, &pSprite);
+
+			//cUIIcon* pUIIcon = new cUIIcon(pSprite);
+
+			//pUIIcon->Setup(
+			//	m_pSlotDragSrc->GetTextureFilename(),
+			//	56, 56,
+			//	D3DXVECTOR3(4, 4, 0),
+			//	D3DXVECTOR3(.8f, .8f, .8f));
+
+			////m_pBindingIcon = m_pSlotDragSrc->GetIcon();
+			//m_pBindingIcon->SetPosition(D3DXVECTOR3(
+			//	g_pControlManager->GetCurrentCursorPosition().x,
+			//	g_pControlManager->GetCurrentCursorPosition().y,
+			//	0));
+
+			//드래그 시작 아이콘을 기억
+			//m_pIconDragSrc = m_pFocusSlot->GetIcon();
+		}
+		//아이템이 없으면
+		else if (!isItemExist)
+		{
+			m_isDragging = true;
+			SetDragState(E_EMPTY_DRAG);
+		}
 	}
 }
 void cUIInventory::OnMouseLBUp()
 {
+	if (m_eDragState == E_ICON_DRAG)
+	{
+		if (m_pFocusSlot)
+		{
+			SwapItemInSlot(m_pSlotDragSrc, m_pFocusSlot);
+		}
+	}
 	if (m_pFocusSlot)
 	{
-		m_isMouseOverVisible = true;
-		m_isMouseDownVisible = false;
+		//왼버튼은 Up이지만 오른버튼이 Down일경우 눌러진 이미지를 유지해야 하므로 검사
+		if (!g_pControlManager->GetInputInfo(VK_RBUTTON))
+		{
+			m_isMouseOverVisible = true;
+			m_isMouseDownVisible = false;
+		}
 	}
-
 	m_isDragging = false;
 	m_eDragState = E_NODRAG;
 	SetBeforeDragPos(m_pUIRoot->GetPosition());//?
@@ -298,9 +342,8 @@ void cUIInventory::OnMouseRBDown()
 	{
 		SetIsMouseOverVisible(false);
 		SetIsMouseDownVisible(true);
-		//m_isMouseOverVisible = false;
-		//m_isMouseDownVisible = true;
 		m_pImageViewMouseDown->SetPosition(m_pUIRoot->GetPosition() + m_pFocusSlot->GetPosition());
+
 		if (m_pFocusSlot->GetItem())
 		{
 			UseItem(m_pFocusSlot);
@@ -311,8 +354,12 @@ void cUIInventory::OnMouseRBUp()
 {
 	if (m_pFocusSlot)
 	{
-		SetIsMouseOverVisible(true);
-		SetIsMouseDownVisible(false);
+		//오른버튼은 Up이지만 왼버튼이 Down일경우 눌러진 이미지를 유지해야 하므로 검사
+		if (!g_pControlManager->GetInputInfo(VK_LBUTTON))
+		{
+			SetIsMouseOverVisible(true);
+			SetIsMouseDownVisible(false);
+		}
 	}
 }
 void cUIInventory::Drag(EDRAGSTATE eDragState)
@@ -359,20 +406,28 @@ void cUIInventory::Drag(EDRAGSTATE eDragState)
 	}
 	else if (eDragState == E_ICON_DRAG)
 	{
-		/*m_pBindingIcon = cUIIcon::CloneIcon(m_pIconDragSrc);
-		if (m_pIconDragSrc)
-		m_pIconDragSrc->SetAlpha(0.5f);
+	/*m_pBindingIcon->SetPosition(D3DXVECTOR3(
+				g_pControlManager->GetCurrentCursorPosition().x,
+				g_pControlManager->GetCurrentCursorPosition().y,
+				0));	*/
+	}
+	else if (eDragState == E_EMPTY_DRAG)
+	{
 
-		m_pBindingIcon->SetPosition(g_pControlManager->GetCurrentCursorPosition().x, g_pControlManager->GetCurrentCursorPosition().y);*/
 	}
 }
 
 cUIObject* cUIInventory::FindFocusSlot(std::vector<cUISlot*>& vecUISlot)
 {
+	//빈슬롯에 아이콘 드래그가 나오면 이것을 어떻게 처리할 것인가
+
+	if (m_eDragState == E_WINDOW_DRAG) { return nullptr; }	//창을 드래그 하는 중이면 슬롯을 검색할 일이 없으므로 탈출
+	else if (m_eDragState == E_EMPTY_DRAG) { return nullptr; }	//빈슬롯을 드래그 하는 중이면 슬롯을 검색할 일이 없으므로 탈출
 	RECT rtArea;
 	for (size_t i = 0; i < vecUISlot.size(); ++i)
 	{
 		//HACK: 이거 꼭 Root의 좌표를 구해와야하나.. 더 좋은 방법이 있을 것 같다. : 민우
+		//Invectory Root로부터 슬롯의 절대좌표를 구해내는 과정임
 		rtArea = {
 			(LONG)m_pUIRoot->GetPosition().x + (LONG)vecUISlot[i]->GetPosition().x,
 			(LONG)m_pUIRoot->GetPosition().y + (LONG)vecUISlot[i]->GetPosition().y,
@@ -445,6 +500,20 @@ void cUIInventory::SwapItemInSlot(cUISlot* pSrcSlot, cUISlot* pDestSlot)
 	DeleteItemInSlot(pSrcSlot);
 
 	pSrcSlot->SetItem(pDataItem);
+}
+void cUIInventory::HighLightFocusSlot()
+{
+	//마우스 오버 슬롯 테두리 위치를 포커싱된 슬롯에 씌운다(이동한다)
+		if (m_pFocusSlot)
+		{
+			SetIsMouseOverVisible(true);
+			m_pImageViewMouseOver->SetPosition(m_pUIRoot->GetPosition() + m_pFocusSlot->GetPosition());
+		}
+		else
+		{
+			SetIsMouseOverVisible(false);
+			SetIsMouseDownVisible(false);
+		}
 }
 void cUIInventory::SetupTest()
 {

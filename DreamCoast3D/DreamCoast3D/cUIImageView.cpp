@@ -11,6 +11,10 @@ cUIImageView::cUIImageView(LPD3DXSPRITE pSprite)
 cUIImageView::~cUIImageView(void)
 {
 }
+std::string& cUIImageView::GetTextureFilename()
+{
+	return m_sTextureFilename;
+}
 
 void cUIImageView::SetTextureFilename(std::string& sTextureFilename)
 {
