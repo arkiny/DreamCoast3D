@@ -46,8 +46,10 @@ cSkinnedMeshBody::cSkinnedMeshBody(std::string sFolder, std::string sFile,
 	D3DXCreateSphere(g_pD3DDevice, m_stAttacSphere.m_fRadius, 10, 10, &m_pMesh, NULL);
 
 
-	GetDebugOriginSphereBody(m_mapDebugOriginSphereBody, m_mapDebugUpdateSphereBody);
-	
+	m_sMainCollisionSphere = "FxCenter";
+	m_fMianColisionSphereRadius = 6.f;
+
+
 	//몸중심의 전체적 바운딩스피어를 구해낸 다음 그 값을 cSkinnedMesh의 바운딩스피어 멤버들에게 전달해준다 : 민우
 
 	// HD : 프레임워크 위에서의 작업은 기존에 있는 것에서 지우고 수정하는 형태가 아니라
@@ -60,7 +62,7 @@ cSkinnedMeshBody::cSkinnedMeshBody(std::string sFolder, std::string sFile,
 	SAFE_RELEASE(m_pDebugSphereBody);
 	//반지름을 1로 해두고 확장해서 렌더 : 민우
 	//렌더할때 월드 사이즈가 적용이 안되는득?
-	D3DXCreateSphere(g_pD3DDevice, 12.0f, 10, 10, &m_pDebugSphereBody, NULL);
+	D3DXCreateSphere(g_pD3DDevice, m_stUpdateBoundingSphere.m_fRadius, 10, 10, &m_pDebugSphereBody, NULL);
 
 
 	
@@ -215,138 +217,6 @@ void cSkinnedMeshBody::RenderShadow(ST_BONE* pBone/* = NULL*/){
 		}
 	}
 
-	// 각 프레임의 메시 컨테이너에 있는 pSkinInfo를 이용하여 영향받는 모든 
-	// 프레임의 매트릭스를 ppBoneMatrixPtrs에 연결한다.
-	//if (pBone->pMeshContainer)
-	//{
-		//MultiAnimationShadow
-		//float4x4 gWorldMatrix : World;
-		//float4x4 gLightViewMatrix;
-		//float4x4 gLightProjectionMatrix : Projection;
-		//float4x4 gWorldViewProjectionMatrix : WorldViewProjection;
-		//float4	 gWorldLightPosition;
-
-
-		//ST_BONE_MESH* pBoneMesh = (ST_BONE_MESH*)pBone->pMeshContainer;
-
-
-		//// get bone combinations
-		//LPD3DXBONECOMBINATION pBoneCombos =
-		//	(LPD3DXBONECOMBINATION)(pBoneMesh->pBufBoneCombos->GetBufferPointer());
-
-		//D3DXMATRIXA16 matViewProj, matView, matProj;
-		//g_pD3DDevice->GetTransform(D3DTS_VIEW, &matView);
-		//g_pD3DDevice->GetTransform(D3DTS_PROJECTION, &matProj);
-		//matViewProj = matView * matProj;
-
-		//D3DXMATRIXA16 mView, mInvView;
-		//g_pD3DDevice->GetTransform(D3DTS_VIEW, &mView);
-		//D3DXMatrixInverse(&mInvView, 0, &mView);
-		//D3DXVECTOR3 vEye = D3DXVECTOR3(0, 0, 0);
-		//D3DXVec3TransformCoord(&vEye, &vEye, &mInvView);
-
-		////gWorldViewProjectionMatrix
-		//g_pShaderManager->GetShader("../Resources/Shader/MultiAnimationShadow.fx")
-		//	->SetMatrix("gWorldViewProjectionMatrix", &matViewProj);
-		////gWorldLightPosition
-		//D3DLIGHT9 stLight;
-		//g_pD3DDevice->GetLight(0, &stLight);
-		//D3DXVECTOR3 pos = 500 * stLight.Direction;
-		//g_pShaderManager->GetShader("../Resources/Shader/MultiAnimationShadow.fx")
-		//	->SetVector("gWorldLightPosition", &D3DXVECTOR4(pos, 0.0f));
-		////gWorldCameraPosition
-		//g_pShaderManager->GetShader("../Resources/Shader/MultiAnimationShadow.fx")
-		//	->SetVector("gWorldCameraPosition", &D3DXVECTOR4(vEye, 1.0f));
-
-		//// set the current number of bones; this tells the effect which shader to use
-		//g_pShaderManager->GetShader("../Resources/Shader/MultiAnimationShadow.fx")
-		//	->SetInt("CurNumBones", pBoneMesh->dwMaxNumFaceInfls - 1);
-
-
-		//g_pD3DDevice->GetLight(0, &stLight);
-		//D3DXVECTOR3 dir = stLight.Direction;
-		//D3DXVec3Normalize(&pos, &dir);
-		//pos = -500 * pos;
-		////D3DXVECTOR3 tempPos(-93.3871002f, 234.746628f, -53.4625092);
-		//// 빛을 움직이면서 디렉셔널로 움직이면 섀도우맵역시 움직인다.
-		////pBone->CombinedTransformationMatrix();
-		////D3DXVECTOR3 vMove(pMatrix->_41, pMatrix->_42, pMatrix->_43);
-		////pos = pos + vMove;
-
-		//D3DXMATRIXA16 matLightView;
-		//{
-		//	D3DXVECTOR3 vLookatPt(128.0f, 0.0f, 128.0f);
-		//	D3DXVECTOR3 vUpVec(0.0f, 1.0f, 0.0f);
-		//	D3DXMatrixLookAtLH(&matLightView, &pos, &vLookatPt, &vUpVec);
-		//}
-
-		//D3DXMATRIXA16 matLightProjection; {
-		//	//D3DXMatrixPerspectiveFovLH(&matLightProjection, D3DX_PI / 4.0f, 1, 1, 3000);
-		//	D3DXMatrixOrthoLH(&matLightProjection, 350, 350, 1, 3000);
-		//}
-
-		////D3DXMATRIXA16 matView;
-		//D3DXMATRIXA16 matProjection;
-		//g_pD3DDevice->GetTransform(D3DTS_VIEW, &matView);
-		//g_pD3DDevice->GetTransform(D3DTS_PROJECTION, &matProjection);
-		//D3DXMATRIXA16 matViewProject; {
-		//	D3DXMatrixMultiply(&matViewProject, &matView, &matProjection);
-		//}
-
-		//g_pShaderManager->GetShader("../Resources/Shader/MultiAnimationShadow.fx")
-		//	->SetMatrix("gWorldMatrix", &pBone->CombinedTransformationMatrix);
-		//g_pShaderManager->GetShader("../Resources/Shader/MultiAnimationShadow.fx")
-		//	->SetMatrix("gLightViewMatrix", &matLightView);
-		//g_pShaderManager->GetShader("../Resources/Shader/MultiAnimationShadow.fx")
-		//	->SetMatrix("gLightProjectionMatrix", &matLightProjection);
-
-
-		//// set the technique we use to draw
-		//g_pShaderManager->GetShader("../Resources/Shader/MultiAnimationShadow.fx")
-		//	->SetTechnique("CreateShadowShader");
-
-		//// 쉐이더를 시작한다.
-		//UINT numPasses = 0;
-		//g_pShaderManager->GetShader("../Resources/Shader/MultiAnimationShadow.fx")
-		//	->Begin(&numPasses, NULL);
-		//{
-		//	for (UINT i = 0; i < numPasses; ++i)
-		//	{
-		//		g_pShaderManager->GetShader("../Resources/Shader/MultiAnimationShadow.fx")
-		//			->BeginPass(i);
-		//		{
-		//			// for each palette
-		//			for (DWORD dwAttrib = 0; dwAttrib < pBoneMesh->dwNumAttrGroups; ++dwAttrib)
-		//			{
-		//				// set each transform into the palette
-		//				for (DWORD dwPalEntry = 0; dwPalEntry < pBoneMesh->dwNumPaletteEntries; ++dwPalEntry)
-		//				{
-		//					DWORD dwMatrixIndex = pBoneCombos[dwAttrib].BoneId[dwPalEntry];
-		//					if (dwMatrixIndex != UINT_MAX)
-		//					{
-		//						m_pmWorkingPalette[dwPalEntry] =
-		//							pBoneMesh->pBoneOffsetMatrices[dwMatrixIndex] *
-		//							(*pBoneMesh->ppBoneMatrixPtrs[dwMatrixIndex]);
-		//					}
-		//				}
-
-		//				// set the matrix palette into the effect
-		//				g_pShaderManager->GetShader("../Resources/Shader/MultiAnimationShadow.fx")->SetMatrixArray("amPalette",
-		//					m_pmWorkingPalette,
-		//					pBoneMesh->dwNumPaletteEntries);
-
-		//				// 물체를 그린다.
-		//				pBoneMesh->pWorkingMesh->DrawSubset(dwAttrib);
-		//			}
-		//		}
-		//		g_pShaderManager->GetShader("../Resources/Shader/MultiAnimationShadow.fx")
-		//			->EndPass();
-		//	}
-		//}
-		//g_pShaderManager->GetShader("../Resources/Shader/MultiAnimationShadow.fx")
-		//	->End();
-	//}
-
 	if (pBone->pMeshContainer)
 	{
 		ST_BONE_MESH* pBoneMesh = (ST_BONE_MESH*)pBone->pMeshContainer;
@@ -487,7 +357,9 @@ void cSkinnedMeshBody::Render(ST_BONE* pBone /*= NULL*/)
 	//FxTop, FxCenter, FxBottom의 바운딩스피어를 그린다 : 민우
 
 	if (GetAsyncKeyState(VK_TAB)){
+
 		RenderDebugUpdateSphereBody(pBone, m_mapDebugUpdateSphereBody);
+		
 		if (pBone->Name != nullptr && std::string(pBone->Name) == std::string("FxHand01"))
 		{
 			g_pD3DDevice->SetTransform(D3DTS_WORLD, &pBone->CombinedTransformationMatrix);
@@ -678,218 +550,3 @@ int cSkinnedMeshBody::GetHeadRefNum(){
 int cSkinnedMeshBody::GetHairRefNum(){
 	return m_pHair->GetMeshRefNumber();
 }
-
-//
-//void cSkinnedMeshBody::GetDebugOriginSphereBody(
-//	OUT std::map<std::string, ST_BOUNDING_SPHERE>& mapDebugOriginSphereBody,
-//	OUT std::map<std::string, ST_BOUNDING_SPHERE>& mapDebugUpdateSphereBody)
-//{
-//	D3DXFRAME* pFrame;
-//	ST_BOUNDING_SPHERE stBs;
-//	pFrame = D3DXFrameFind(m_pRootFrame, "FxCenter");
-//	D3DXMATRIXA16 matTM = pFrame->TransformationMatrix;
-//	D3DXVECTOR3	vLocalCenter(0, 0, 0); //바운딩 스피어의 중심점을 구해낼 벡터3
-//	D3DXVec3TransformCoord(&vLocalCenter, &vLocalCenter, &matTM);
-//
-//	stBs.m_vCenter = vLocalCenter;
-//	stBs.m_fRadius = 15.f; //HACK: 이 값(반지름)을 정하는 규칙이 있어야 한다. : 민우
-//	mapDebugOriginSphereBody["FxCenter"] = stBs;
-//
-//	pFrame = D3DXFrameFind(m_pRootFrame, "FxTop");
-//	matTM = pFrame->TransformationMatrix;
-//	vLocalCenter = D3DXVECTOR3(0, 0, 0);
-//	D3DXVec3TransformCoord(&vLocalCenter, &vLocalCenter, &matTM);
-//
-//	stBs.m_vCenter = vLocalCenter;
-//	stBs.m_fRadius = 10.f; //HACK: 이 값(반지름)을 정하는 규칙이 있어야 한다. : 민우
-//	mapDebugOriginSphereBody["FxTop"] = stBs;
-//
-//	pFrame = D3DXFrameFind(m_pRootFrame, "FxBottom");
-//	matTM = pFrame->TransformationMatrix;
-//	vLocalCenter = D3DXVECTOR3(0, 0, 0);
-//	D3DXVec3TransformCoord(&vLocalCenter, &vLocalCenter, &matTM);
-//
-//	stBs.m_vCenter = vLocalCenter;
-//	stBs.m_fRadius = 10.f; //HACK: 이 값(반지름)을 정하는 규칙이 있어야 한다. : 민우
-//	mapDebugOriginSphereBody["FxBottom"] = stBs;
-//
-//	mapDebugUpdateSphereBody["FxCenter"] = mapDebugOriginSphereBody["FxCenter"];
-//	mapDebugUpdateSphereBody["FxBottom"] = mapDebugOriginSphereBody["FxBottom"];
-//	mapDebugUpdateSphereBody["FxTop"] = mapDebugOriginSphereBody["FxTop"];
-//}
-//
-//void cSkinnedMeshBody::GetDebugUpdateSphereBody(
-//	IN ST_BONE* pBone,
-//	OUT std::map<std::string, ST_BOUNDING_SPHERE>& mapDebugOriginSphereBody,
-//	OUT std::map<std::string, ST_BOUNDING_SPHERE>& mapDebugUpdateSphereBody)
-//{
-//	for each(auto it in mapDebugUpdateSphereBody)
-//	{
-//		if (pBone->Name == nullptr || pBone->Name != it.first) { continue; }
-//
-//		D3DXVec3TransformCoord(
-//			&it.second.m_vCenter,
-//			&mapDebugOriginSphereBody[it.first].m_vCenter,
-//			&pBone->CombinedTransformationMatrix);
-//	}	
-//}
-//
-//void cSkinnedMeshBody::RenderDebugUpdateSphereBody(
-//	IN ST_BONE* pBone,
-//	OUT std::map<std::string, ST_BOUNDING_SPHERE>& mapDebugUpdateSphereBody)
-//{
-//	//원래 이 코드가 하는 일을 함수로 다르게 만들었다.
-//	/*if (pBone->Name != nullptr && std::string(pBone->Name) == std::string("FxCenter"))
-//	{
-//	g_pD3DDevice->SetTexture(0, nullptr);
-//	g_pD3DDevice->SetRenderState(D3DRS_LIGHTING, false);
-//	g_pD3DDevice->SetTransform(D3DTS_WORLD, &pBone->CombinedTransformationMatrix);
-//	g_pD3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
-//	g_pD3DDevice->SetTexture(0, NULL);
-//	m_pDebugSphereBody->DrawSubset(0);
-//	g_pD3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
-//	g_pD3DDevice->SetRenderState(D3DRS_LIGHTING, true);
-//	}*/
-//	for each(auto it in mapDebugUpdateSphereBody)
-//	{
-//		if (pBone->Name == nullptr || pBone->Name != it.first) { continue; }
-//
-//		g_pD3DDevice->SetTexture(0, NULL);
-//		g_pD3DDevice->SetRenderState(D3DRS_LIGHTING, false);
-//		g_pD3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
-//
-//		D3DXMATRIXA16 matW; D3DXMatrixIdentity(&matW);
-//		//메쉬의 반지름이 1이므로 크기에 맞게 스케일링해서 그린다.
-//		D3DXMatrixScaling(&matW, it.second.m_fRadius, it.second.m_fRadius, it.second.m_fRadius);
-//		matW *= pBone->CombinedTransformationMatrix;
-//		g_pD3DDevice->SetTransform(D3DTS_WORLD, &matW);
-//		m_pDebugSphereBody->DrawSubset(0);
-//		g_pD3DDevice->SetRenderState(D3DRS_LIGHTING, true);
-//		g_pD3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
-//	}
-//}
-
-//void cSkinnedMeshBody::RenderShadow(ST_BONE* pBone/* = NULL*/){
-//	if (pBone->Name != nullptr && std::string(pBone->Name) == std::string("Bip01-Neck"))
-//	{
-//		if (m_pHead){
-//			m_pHead->UpdateAndRenderShadow(&pBone->CombinedTransformationMatrix);
-//		}
-//	}
-//
-//	// 머리부위 바이패드의 월드트랜스폼매트릭스를 받아서 머리카락 렌더 실시
-//	else if (pBone->Name != nullptr && std::string(pBone->Name) == std::string("Bip01-Head"))
-//	{
-//		if (m_pHair){
-//			m_pHair->UpdateAndRenderShadow(&pBone->CombinedTransformationMatrix);
-//		}
-//	}
-//
-//	// 각 프레임의 메시 컨테이너에 있는 pSkinInfo를 이용하여 영향받는 모든 
-//	// 프레임의 매트릭스를 ppBoneMatrixPtrs에 연결한다.
-//	if (pBone->pMeshContainer)
-//	{
-//
-//		g_pShaderManager->GetShader("../Resources/Shader/MultiAnimation.fx")
-//			->SetTechnique("CreateShadowShader");
-//
-//		ST_BONE_MESH* pBoneMesh = (ST_BONE_MESH*)pBone->pMeshContainer;
-//		// get bone combinations
-//		LPD3DXBONECOMBINATION pBoneCombos =
-//			(LPD3DXBONECOMBINATION)(pBoneMesh->pBufBoneCombos->GetBufferPointer());
-//		D3DLIGHT9 stLight;
-//		g_pD3DDevice->GetLight(0, &stLight);
-//		D3DXVECTOR3 dir = stLight.Direction;
-//		D3DXVECTOR3 pos;
-//		D3DXVec3Normalize(&pos, &dir);
-//		pos = -500 * pos;
-//		//D3DXVECTOR3 tempPos(-93.3871002f, 234.746628f, -53.4625092);
-//		// 빛을 움직이면서 디렉셔널로 움직이면 섀도우맵역시 움직인다.
-//		//D3DXVECTOR3 vMove(pMatrix->_41, pMatrix->_42, pMatrix->_43);
-//		//pos = pos + vMove;
-//
-//		D3DXMATRIXA16 matLightView;
-//		{
-//			D3DXVECTOR3 vLookatPt(128.0f, 0.0f, 128.0f);
-//			D3DXVECTOR3 vUpVec(0.0f, 1.0f, 0.0f);
-//			D3DXMatrixLookAtLH(&matLightView, &pos, &vLookatPt, &vUpVec);
-//		}
-//
-//		D3DXMATRIXA16 matLightProjection; {
-//			D3DXMatrixOrthoLH(&matLightProjection, 350, 350, 1, 1000);
-//		}
-//
-//		D3DXMATRIXA16 matView;
-//		D3DXMATRIXA16 matProjection;
-//		g_pD3DDevice->GetTransform(D3DTS_VIEW, &matView);
-//		g_pD3DDevice->GetTransform(D3DTS_PROJECTION, &matProjection);
-//		D3DXMATRIXA16 matViewProject; {
-//			D3DXMatrixMultiply(&matViewProject, &matView, &matProjection);
-//		}
-//
-//
-//		g_pShaderManager->GetShader("../Resources/Shader/MultiAnimation.fx")
-//			->SetMatrix("gLightViewMatrix", &matLightView);
-//
-//		g_pShaderManager->GetShader("../Resources/Shader/MultiAnimation.fx")
-//			->SetMatrix("gLightProjectionMatrix", &matLightProjection);
-//
-//		// set the current number of bones; this tells the effect which shader to use
-//		g_pShaderManager->GetShader("../Resources/Shader/MultiAnimation.fx")
-//			->SetInt("CurNumBones", pBoneMesh->dwMaxNumFaceInfls - 1);
-//
-//	
-//
-//		// 쉐이더를 시작한다.
-//		UINT numPasses = 0;
-//		g_pShaderManager->GetShader("../Resources/Shader/MultiAnimation.fx")
-//			->Begin(&numPasses, NULL);
-//		{
-//			for (UINT i = 0; i < numPasses; ++i)
-//			{
-//				g_pShaderManager->GetShader("../Resources/Shader/MultiAnimation.fx")
-//					->BeginPass(i);
-//				{
-//	
-//					// for each palette
-//					for (DWORD dwAttrib = 0; dwAttrib < pBoneMesh->dwNumAttrGroups; ++dwAttrib)
-//					{
-//						// 물체를 그린다.
-//						// set each transform into the palette
-//						for (DWORD dwPalEntry = 0; dwPalEntry < pBoneMesh->dwNumPaletteEntries; ++dwPalEntry)
-//						{
-//							DWORD dwMatrixIndex = pBoneCombos[dwAttrib].BoneId[dwPalEntry];
-//							if (dwMatrixIndex != UINT_MAX)
-//							{
-//								m_pmWorkingPalette[dwPalEntry] =
-//									pBoneMesh->pBoneOffsetMatrices[dwMatrixIndex] *
-//									(*pBoneMesh->ppBoneMatrixPtrs[dwMatrixIndex]);
-//							}
-//						}
-//						// set the matrix palette into the effect
-//						g_pShaderManager->GetShader("../Resources/Shader/MultiAnimation.fx")->SetMatrixArray("amPalette",
-//							m_pmWorkingPalette,
-//							pBoneMesh->dwNumPaletteEntries);
-//
-//						g_pShaderManager->GetShader("../Resources/Shader/MultiAnimation.fx")->CommitChanges();
-//						pBoneMesh->pWorkingMesh->DrawSubset(dwAttrib);
-//					}
-//				}
-//				g_pShaderManager->GetShader("../Resources/Shader/MultiAnimation.fx")
-//					->EndPass();
-//			}
-//		}
-//		g_pShaderManager->GetShader("../Resources/Shader/MultiAnimation.fx")
-//			->End();
-//	}
-//	//재귀적으로 모든 프레임에 대해서 실행.
-//	if (pBone->pFrameSibling)
-//	{
-//		RenderShadow((ST_BONE*)pBone->pFrameSibling);
-//	}
-//
-//	if (pBone->pFrameFirstChild)
-//	{
-//		RenderShadow((ST_BONE*)pBone->pFrameFirstChild);
-//	}
-//}

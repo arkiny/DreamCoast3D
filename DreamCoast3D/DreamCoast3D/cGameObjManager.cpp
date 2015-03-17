@@ -331,8 +331,9 @@ bool cGameObjManager::isGameAttackSphereCollided(
 						/*float scale = pFrom->GetScale().x;
 						float scale2 = p->GetScale().x;*/
 
-						float scale = 1.0f;
-						float scale2 = 1.0f;
+						float scale = pFrom->GetScale().x;
+						float scale2 = p->GetTransform()->GetScaling().x;
+
 
 						if (isCollided(from, fFrom, scale, to, fTo, scale2)){
 							D3DXVECTOR3 vDir, vHit;
@@ -443,24 +444,23 @@ void cGameObjManager::AttackMobToPlayer(cGameAIObject* pFrom){
 
 				float fFrom = pFrom->GetAttackSphere()->m_fRadius;
 				float fTo = p->GetCollisionSphere()->m_fRadius;
-				/*float scale = pFrom->GetScale().x;
-				float scale2 = p->GetScale().x;*/
+
 				float scale = 1.0f;
 				float scale2 = 1.0f;
+				
 				if (isCollided(from, fFrom, scale, to, fTo, scale2)){
 					std::map<std::string, ST_BOUNDING_SPHERE>* pMap = p->GetUpdatedDetailedSphere();
+				
 					for (auto pSphere : *pMap){
 
-						D3DXVECTOR3 from = pFrom->GetCollisionSphere()->m_vCenter;
+						D3DXVECTOR3 from = pFrom->GetAttackSphere()->m_vCenter;
 						D3DXVECTOR3 to = pSphere.second.m_vCenter;
 						D3DXVECTOR3 dist = from - to;
-						float fFrom = pFrom->GetCollisionSphere()->m_fRadius;
+						float fFrom = pFrom->GetAttackSphere()->m_fRadius;
 						float fTo = pSphere.second.m_fRadius;
-						/*float scale = pFrom->GetScale().x;
-						float scale2 = p->GetScale().x;*/
 
-						float scale = 1.0f;
-						float scale2 = 1.0f;
+						float scale = pFrom->GetScale().x;
+						float scale2 = p->GetTransform()->GetScaling().x;
 
 						if (isCollided(from, fFrom, scale, to, fTo, scale2)){
 							if (p->GetGameObjectType() == p->E_PLAYABLE){

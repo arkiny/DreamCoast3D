@@ -30,7 +30,9 @@ protected:
 
 	SYNTHESIZE(ST_BOUNDING_SPHERE, m_stBoundingSphere, BoundingSphere);
 	SYNTHESIZE(ST_BOUNDING_SPHERE, m_stAttacSphere, AttackSphere);
+
 	SYNTHESIZE(ST_BOUNDING_SPHERE, m_stUpdateAttacSphere, UpdateAttackSphere);
+
 	ST_BOUNDING_SPHERE			m_stUpdateBoundingSphere;
 
 	float						m_fPassedBlendTime;
@@ -44,15 +46,25 @@ protected:
 	
 	LPD3DXMESH					m_pDebugSphereBody;
 	LPD3DXMESH					m_pDebugDetailSphereBody;
+	LPD3DXMESH					m_pATMesh;
 	
 	std::map<std::string, ST_BOUNDING_SPHERE> m_mapDebugOriginSphereBody;
 	std::map<std::string, ST_BOUNDING_SPHERE> m_mapDebugUpdateSphereBody;
+	
+	///
+	std::string					m_sMainCollisionSphere;
+	float						m_fMianColisionSphereRadius;
 
+	std::vector<std::string>	m_vecCollisionSpheres;
+	std::vector<float>			m_vecCollisionSpheresRadius;
+
+	std::vector<std::string>	m_vecAttackSpheres;
+	std::vector<float>			m_vecAttackSpheresRadius;
+	///
 	
 	SYNTHESIZE_PASS_BY_REF(std::string, m_sSkinnedFolder, SkinnedFolderPath);
 	SYNTHESIZE_PASS_BY_REF(std::string, m_sSkinnedFile, SkinnedFilePath);
-	//SYNTHESIZE(ST_BOUNDING_SPHERE, m_stUpdateBoundingSphere, UpdateBoundingSphere);
-	//std::vector<ST_BOUNDING_SPHERE> m_vecDetailBoundingSphere; //FIX: 포인터나 레퍼런스여야함
+
 public:
 	cSkinnedMesh(char* szFolder, char* szFilename);
 	cSkinnedMesh(std::string sFolder, std::string sFile);
@@ -72,13 +84,20 @@ public:
 	virtual ST_BOUNDING_SPHERE&	GetCollisionSphere(){
 		return m_stBoundingSphere;
 	}
+	
 	virtual ST_BOUNDING_SPHERE GetUpdateBoundingSphere(){
 		return m_stUpdateBoundingSphere;
 	}
-	std::map<std::string, ST_BOUNDING_SPHERE>& GetUpdatedDetailedSphere(){ return m_mapDebugUpdateSphereBody; };
 
+	std::map<std::string, ST_BOUNDING_SPHERE>& GetUpdatedDetailedSphere(){
+		return m_mapDebugUpdateSphereBody; 
+	};
+
+
+	// Interface
 	virtual int GetHeadRefNum(){ return -1; }
 	virtual int GetHairRefNum(){ return -1; }
+
 protected:
 	cSkinnedMesh();
 
@@ -104,11 +123,13 @@ protected:
 	void GetDebugOriginSphereBody(
 		OUT std::map<std::string, ST_BOUNDING_SPHERE>& mapDebugOriginSphereBody,
 		OUT std::map<std::string, ST_BOUNDING_SPHERE>& mapDebugUpdateSphereBody);
+
 	//Update내부에서 갱신한다
 	void GetDebugUpdateSphereBody(
 		IN ST_BONE* pBone,
 		OUT std::map<std::string, ST_BOUNDING_SPHERE>& mapDebugOriginSphereBody,
 		OUT std::map<std::string, ST_BOUNDING_SPHERE>& mapDebugUpdateSphereBody);
+	
 	//Render내부에서 동작한다
 	void RenderDebugUpdateSphereBody(IN ST_BONE* pBone, OUT std::map<std::string, ST_BOUNDING_SPHERE>& mapDebugUpdateSphereBody);
 

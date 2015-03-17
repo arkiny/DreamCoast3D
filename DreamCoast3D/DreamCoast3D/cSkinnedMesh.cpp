@@ -15,6 +15,7 @@ cSkinnedMesh::cSkinnedMesh(char* szFolder, char* szFilename)
 	, m_nCurrentAnimation(0)
 	, m_pDebugSphereBody(NULL)
 	, m_pDebugDetailSphereBody(nullptr)
+	, m_pATMesh(NULL)
 	//, m_vPosition(0, 0, 0)
 {
 	cSkinnedMesh(std::string(szFolder), std::string(szFilename));
@@ -32,6 +33,7 @@ cSkinnedMesh::cSkinnedMesh(std::string sFolder, std::string sFile)
 	, m_nCurrentAnimation(0)
 	, m_pDebugSphereBody(NULL)
 	, m_pDebugDetailSphereBody(nullptr)
+	, m_pATMesh(NULL)
 {
 	cSkinnedMesh* pSkinnedMesh = g_pSkinnedMeshManager->GetSkinnedMesh(sFolder, sFile);
 	
@@ -63,6 +65,25 @@ cSkinnedMesh::cSkinnedMesh(std::string sFolder, std::string sFile)
 	}
 
 
+	m_sMainCollisionSphere = "FxCenter";
+	m_fMianColisionSphereRadius = 6.f;
+
+	
+	std::string sInput = "FxCenter";
+	m_vecCollisionSpheres.push_back(sInput);
+	sInput = "FxTop";
+	m_vecCollisionSpheres.push_back(sInput);
+	sInput = "FxBottom";
+	m_vecCollisionSpheres.push_back(sInput);
+
+	float fInput = 12.f;
+	m_vecCollisionSpheresRadius.push_back(fInput);
+	m_vecCollisionSpheresRadius.push_back(fInput);
+	m_vecCollisionSpheresRadius.push_back(fInput);
+
+	std::vector<std::string>	m_vecAttackSpheres;
+	std::vector<float>			m_vecAttackSpheresRadius;
+
 	GetDebugOriginSphereBody(m_mapDebugOriginSphereBody, m_mapDebugUpdateSphereBody);
 
 	if (m_mapDebugOriginSphereBody.find(std::string("FxCenter")) != m_mapDebugOriginSphereBody.end()){
@@ -77,14 +98,28 @@ cSkinnedMesh::cSkinnedMesh(std::string sFolder, std::string sFile)
 	D3DXVECTOR3 localCenter(0, 0, 0);
 	D3DXMATRIXA16 mat;
 	D3DXFRAME* pFxCenter;
-	pFxCenter = D3DXFrameFind(m_pRootFrame, "FxCenter");
-	if (pFxCenter){
-		mat = pFxCenter->TransformationMatrix;
+	D3DXFRAME* pFxHand;
+
+	pFxHand = D3DXFrameFind(m_pRootFrame, "FxHand01");
+	if (pFxHand){
+		mat = pFxHand->TransformationMatrix;
 		D3DXVec3TransformCoord(&localCenter, &localCenter, &mat);
 		m_stAttacSphere.m_vCenter = localCenter;
-		m_stAttacSphere.m_fRadius = m_mapDebugOriginSphereBody[std::string("FxCenter")].m_fRadius + 2.0f;
+		m_stAttacSphere.m_fRadius = 12.0f;
+		m_stUpdateAttacSphere.m_vCenter = m_stAttacSphere.m_vCenter;
+		m_stUpdateAttacSphere.m_fRadius = m_stAttacSphere.m_fRadius;
+	}	
+	else{
+		pFxCenter = D3DXFrameFind(m_pRootFrame, "FxCenter");
+		if (pFxCenter){
+			mat = pFxCenter->TransformationMatrix;
+			D3DXVec3TransformCoord(&localCenter, &localCenter, &mat);
+			m_stAttacSphere.m_vCenter = localCenter;
+			m_stAttacSphere.m_fRadius = m_mapDebugOriginSphereBody[std::string("FxCenter")].m_fRadius + 2.0f;
+		}
 	}
-	//D3DXCreateSphere(g_pD3DDevice, m_stAttacSphere.m_fRadius, 10, 10, &, NULL);
+
+	D3DXCreateSphere(g_pD3DDevice, m_stAttacSphere.m_fRadius, 10, 10, &m_pATMesh, NULL);
 }
 
 cSkinnedMesh::cSkinnedMesh()
@@ -99,6 +134,7 @@ cSkinnedMesh::cSkinnedMesh()
 	, m_nCurrentAnimation(0)
 	, m_pDebugSphereBody(NULL)
 	, m_pDebugDetailSphereBody(nullptr)
+	, m_pATMesh(NULL)
 {
 	m_sSkinnedFile = "";
 	m_sSkinnedFolder = "";
@@ -112,6 +148,7 @@ cSkinnedMesh::~cSkinnedMesh(void)
 	for (auto p : m_vecAnimationSet){
 		SAFE_RELEASE(p);
 	}	
+	SAFE_RELEASE(m_pATMesh);
 }
 
 void cSkinnedMesh::Load(std::string sFolder, std::string sFile){
@@ -278,10 +315,13 @@ void cSkinnedMesh::Update(ST_BONE* pCurrent, D3DXMATRIXA16* pmatParent)
 			&m_stUpdateBoundingSphere.m_vCenter,
 			&D3DXVECTOR3(0,0,0),
 			&pCurrent->CombinedTransformationMatrix);
+	}
 
+	if (pCurrent->Name != nullptr && std::string(pCurrent->Name) == std::string("FxHand01"))
+	{
 		D3DXVec3TransformCoord(
 			&m_stUpdateAttacSphere.m_vCenter,
-			&D3DXVECTOR3(0,0,0),
+			&D3DXVECTOR3(0, 0, 0),
 			&pCurrent->CombinedTransformationMatrix
 			);
 	}
@@ -303,17 +343,17 @@ void cSkinnedMesh::Render(ST_BONE* pBone /*= NULL*/)
 	
 	if (GetAsyncKeyState(VK_TAB)){
 		RenderDebugUpdateSphereBody(pBone, m_mapDebugUpdateSphereBody);
-
-		if (pBone->Name != nullptr && std::string(pBone->Name) == std::string("FxCenter"))
+	
+		if (pBone->Name != nullptr && std::string(pBone->Name) == std::string("FxHand01"))
 		{
 			//if (m_pDebugSphereBody){
 			g_pD3DDevice->SetTransform(D3DTS_WORLD, &pBone->CombinedTransformationMatrix);
 			g_pD3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
 			g_pD3DDevice->SetTexture(0, NULL);
-			m_pDebugSphereBody->DrawSubset(0);
+			m_pATMesh->DrawSubset(0);
 			g_pD3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
 		}
-
+	// "FxHand01"
 	}
 	// 각 프레임의 메시 컨테이너에 있는 pSkinInfo를 이용하여 영향받는 모든 
 	// 프레임의 매트릭스를 ppBoneMatrixPtrs에 연결한다.
@@ -832,46 +872,24 @@ void cSkinnedMesh::GetDebugOriginSphereBody(
 	D3DXFRAME* pFrame;
 	ST_BOUNDING_SPHERE stBs;
 	
-	pFrame = D3DXFrameFind(m_pRootFrame, "FxCenter");
-	D3DXMATRIXA16 matTM;
-	D3DXVECTOR3	vLocalCenter(0, 0, 0); //바운딩 스피어의 중심점을 구해낼 벡터3
-	if (pFrame){
-		//matTM = pFrame->TransformationMatrix;
-		//D3DXVec3TransformCoord(&vLocalCenter, &vLocalCenter, &matTM);
+	for (size_t i = 0; i < m_vecCollisionSpheres.size(); i++){
+		pFrame = D3DXFrameFind(m_pRootFrame, m_vecCollisionSpheres[i].c_str());
+		D3DXMATRIXA16 matTM;
+		D3DXVECTOR3	vLocalCenter(0, 0, 0); //바운딩 스피어의 중심점을 구해낼 벡터3
+		if (pFrame){
+			//matTM = pFrame->TransformationMatrix;
+			//D3DXVec3TransformCoord(&vLocalCenter, &vLocalCenter, &matTM);
 
-		stBs.m_vCenter = vLocalCenter;
-		stBs.m_fRadius = 12.f; //HACK: 이 값(반지름)을 정하는 규칙이 있어야 한다. : 민우
-		mapDebugOriginSphereBody["FxCenter"] = stBs;
-		pFrame = NULL;
+			stBs.m_vCenter = vLocalCenter;
+			stBs.m_fRadius = m_vecCollisionSpheresRadius[i]; //HACK: 이 값(반지름)을 정하는 규칙이 있어야 한다. : 민우
+			mapDebugOriginSphereBody[m_vecCollisionSpheres[i]] = stBs;
+			pFrame = NULL;
+		}
 	}
-
-	pFrame = D3DXFrameFind(m_pRootFrame, "FxTop");
 	
-	if (pFrame){
-		//matTM = pFrame->TransformationMatrix;
-		vLocalCenter = D3DXVECTOR3(0, 0, 0);
-		//D3DXVec3TransformCoord(&vLocalCenter, &vLocalCenter, &matTM);
-
-		stBs.m_vCenter = vLocalCenter;
-		stBs.m_fRadius = 12.f; //HACK: 이 값(반지름)을 정하는 규칙이 있어야 한다. : 민우
-		mapDebugOriginSphereBody["FxTop"] = stBs;
-		pFrame = NULL;
+	for (auto p : mapDebugOriginSphereBody){
+		mapDebugUpdateSphereBody[p.first] = p.second;
 	}
-
-	pFrame = D3DXFrameFind(m_pRootFrame, "FxBottom");
-	if (pFrame){
-		//matTM = pFrame->TransformationMatrix;
-		vLocalCenter = D3DXVECTOR3(0, 0, 0);
-		//D3DXVec3TransformCoord(&vLocalCenter, &vLocalCenter, &matTM);
-
-		stBs.m_vCenter = vLocalCenter;
-		stBs.m_fRadius = 12.f; //HACK: 이 값(반지름)을 정하는 규칙이 있어야 한다. : 민우
-		mapDebugOriginSphereBody["FxBottom"] = stBs;
-	}
-
-	mapDebugUpdateSphereBody["FxCenter"] = mapDebugOriginSphereBody["FxCenter"];
-	mapDebugUpdateSphereBody["FxBottom"] = mapDebugOriginSphereBody["FxBottom"];
-	mapDebugUpdateSphereBody["FxTop"] = mapDebugOriginSphereBody["FxTop"];
 }
 
 void cSkinnedMesh::GetDebugUpdateSphereBody(
@@ -914,10 +932,10 @@ void cSkinnedMesh::RenderDebugUpdateSphereBody(
 		g_pD3DDevice->SetRenderState(D3DRS_LIGHTING, false);
 		g_pD3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
 
-		D3DXMATRIXA16 matW; D3DXMatrixIdentity(&matW);
-		//메쉬의 반지름이 1이므로 크기에 맞게 스케일링해서 그린다.
-		//D3DXMatrixScaling(&matW, it.second.m_fRadius, it.second.m_fRadius, it.second.m_fRadius);
-		//matW *= pBone->CombinedTransformationMatrix;
+		// D3DXMATRIXA16 matW; D3DXMatrixIdentity(&matW);
+		// 메쉬의 반지름이 1이므로 크기에 맞게 스케일링해서 그린다.
+		// D3DXMatrixScaling(&matW, it.second.m_fRadius, it.second.m_fRadius, it.second.m_fRadius);
+		// matW *= pBone->CombinedTransformationMatrix;
 		g_pD3DDevice->SetTransform(D3DTS_WORLD, &pBone->CombinedTransformationMatrix);
 		m_pDebugSphereBody->DrawSubset(0);
 		g_pD3DDevice->SetRenderState(D3DRS_LIGHTING, true);
