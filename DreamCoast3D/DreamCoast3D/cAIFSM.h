@@ -55,6 +55,8 @@ class cAIDead : public iAIState{
 	virtual void Execute(cGameAIObject* pAIObject, float fDelta);
 	virtual void Exit(cGameAIObject* pAIObject);
 	virtual int GetCurrentStateType();
+
+	int m_nIndex = 5;
 };
 
 class cAIBossPhaseFirst : public iAIState
@@ -87,5 +89,16 @@ class cAIBossPhaseThird : public iAIState
 	virtual int GetCurrentStateType();
 
 	int m_nIndex = 3;
+	int m_nEpsilon = 0;
+};
+
+class cAIBossDead : public iAIState
+{
+	virtual void Start(cGameAIObject* pAIObject);
+	virtual void Execute(cGameAIObject* pAIObject, float fDelta);
+	virtual void Exit(cGameAIObject* pAIObject);
+	virtual int GetCurrentStateType();
+
+	int m_nIndex = 5;
 	int m_nEpsilon = 0;
 };

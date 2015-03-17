@@ -50,6 +50,7 @@ void cGameAIObject::Setup(std::string sFolder, std::string sFile){
 	m_vecPatterns[eAISTATE_BOSSPHASEFIRST] = new cAIBossPhaseFirst;
 	m_vecPatterns[eAISTATE_BOSSPHASESECOND] = new cAIBossPhaseSecond;
 	m_vecPatterns[eAISTATE_BOSSPHASETHIRD] = new cAIBossPhaseThird;
+	m_vecPatterns[eAISTATE_BOSSDEAD] = new cAIBossDead;
 }
 
 void cGameAIObject::Start(){

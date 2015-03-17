@@ -10,7 +10,16 @@
 void cAIIdle::Start(cGameAIObject* pAIObject){
 	pAIObject->SetPassedTime(0);
 	//pAIObject->GetSkinnedMesh()->SetAnimationIndex(pAIObject->eAISTATE_IDLE);
-	pAIObject->GetSkinnedMesh()->SetAnimationIndex(6);
+
+	if (pAIObject->GetAItype() == cGameAIObject::E_AI_TYPE::E_AI_BOSS)
+	{
+		pAIObject->GetSkinnedMesh()->SetAnimationIndex(6);
+	}
+	else
+	{
+		pAIObject->GetSkinnedMesh()->SetAnimationIndex(0);
+	}
+
 }
 
 void cAIIdle::Execute(cGameAIObject* pAIObject, float fDelta){
@@ -181,9 +190,13 @@ void cAIAttack::Start(cGameAIObject* pAIObject){
 		{
 			pAIObject->ChangeState(pAIObject->eAISTATE_BOSSPHASESECOND);
 		}
-		else
+		else if (pAIObject->GetHP() > 100)
 		{
 			pAIObject->ChangeState(pAIObject->eAISTATE_BOSSPHASETHIRD);
+		}
+		else if (pAIObject->GetHP() >= 0.f)
+		{
+			pAIObject->ChangeState(pAIObject->eAISTATE_BOSSDEAD);
 		}
 
 		return;
@@ -203,8 +216,6 @@ void cAIAttack::Execute(cGameAIObject* pAIObject, float fDelta){
 }
 
 void cAIAttack::Exit(cGameAIObject* pAIObject){
-	//pAIObject->SetPassedTime(0);
-	//pAIObject->SetAttackCoolTime(0);
 }
 
 int  cAIAttack::GetCurrentStateType(){
@@ -214,7 +225,6 @@ int  cAIAttack::GetCurrentStateType(){
 void cAIOnHit::Start(cGameAIObject* pAIObject){
 	if (pAIObject->GetAItype() == cGameAIObject::E_AI_TYPE::E_AI_BOSS)
 	{
-		//pAIObject->GetSkinnedMesh()->SetAnimationIndex(0);
 		pAIObject->ChangeState(pAIObject->eAISTATE_THINK);
 		return;
 	}
@@ -230,7 +240,7 @@ void cAIOnHit::Execute(cGameAIObject* pAIObject, float fDelta){
 	}
 }
 void cAIOnHit::Exit(cGameAIObject* pAIObject){
-	//pAIObject->SetPassedTime(0);
+
 }
 
 int  cAIOnHit::GetCurrentStateType(){
@@ -248,6 +258,11 @@ void cAIThink::Execute(cGameAIObject* pAIObject, float fDelta){
 		D3DXVECTOR3 vCenter = pAIObject->GetPosition();
 		vecInsight = pAIObject->GetGameObjDeligate()
 			->GetInSightObject(ST_BOUNDING_SPHERE(vCenter, 10.0f));
+		if (pAIObject->GetAItype() == 2)
+		{
+			vecInsight = pAIObject->GetGameObjDeligate()
+				->GetInSightObject(ST_BOUNDING_SPHERE(vCenter, 50.0f));
+		}
 		if (vecInsight.size() <= 1) // 보통은 자기 자신을 포함해서 리턴한다.
 		{
 			pAIObject->SetTargetObject(NULL);
@@ -260,6 +275,10 @@ void cAIThink::Execute(cGameAIObject* pAIObject, float fDelta){
 		D3DXVECTOR3 vCurPos = pAIObject->GetPosition();
 		D3DXVECTOR3 vTargetPos = pAIObject->GetTargetObject()->GetPosition();
 		float fAttackRange = pAIObject->GetAttackRange();
+		if (pAIObject->GetAItype() == 2)
+		{
+			fAttackRange = 4.f;
+		}
 		// pAIObject->SetAttackCoolTime(pAIObject->GetAttackCoolTime() + fDelta);
 		// pAIObject->GetAttackSphere() // 실질적인 타격 스피어
 		// 적을 향해 이동중에 적이 사거리 내에 있을 경우
@@ -319,6 +338,12 @@ void cAIDead::Start(cGameAIObject* pAIObject){
 
 void cAIDead::Execute(cGameAIObject* pAIObject, float fDelta){
     pAIObject->GetGameObjDeligate()->EraseFromGameObjectSet(pAIObject);
+	if (pAIObject->GetSkinnedMesh()->GetCurrentAnimationPeriodTime() < pAIObject->GetPassedTime())
+	{
+		//pAIObject->ChangeState(pAIObject->eAISTATE_DEAD);
+		return;
+	}
+
 }
 
 void cAIDead::Exit(cGameAIObject* pAIObject){
@@ -364,7 +389,7 @@ void cAIBossPhaseFirst::Execute(cGameAIObject* pAIObject, float fDelta)
 		{
 			m_nIndex = 18;
 		}
-		pAIObject->SetHP(pAIObject->GetHP() - 100);
+		pAIObject->SetHP(pAIObject->GetHP() - 300);
 		pAIObject->ChangeState(pAIObject->eAISTATE_THINK);
 		return;
 		
@@ -408,7 +433,7 @@ void cAIBossPhaseSecond::Execute(cGameAIObject* pAIObject, float fDelta)
 
 	if (pAIObject->GetSkinnedMesh()->GetCurrentAnimationPeriodTime() < pAIObject->GetPassedTime())
 	{
-		pAIObject->SetHP(pAIObject->GetHP() - 100);
+		pAIObject->SetHP(pAIObject->GetHP() - 300);
 		m_nEpsilon = 0;
 		if (m_nIndex == 3)
 		{
@@ -466,6 +491,10 @@ void cAIBossPhaseThird::Execute(cGameAIObject* pAIObject, float fDelta)
 	if (pAIObject->GetSkinnedMesh()->GetCurrentAnimationPeriodTime() < pAIObject->GetPassedTime())
 	{
 		m_nEpsilon = 0;
+		if (pAIObject->GetHP() > 100)
+		{
+			pAIObject->SetHP(pAIObject->GetHP() - 50);
+		}
 		if (m_nIndex == 3)
 		{
 			m_nIndex = 18;
@@ -492,7 +521,6 @@ void cAIBossPhaseThird::Execute(cGameAIObject* pAIObject, float fDelta)
 			pAIObject->ChangeState(pAIObject->eAISTATE_THINK);
 		}
 
-
 		return;
 	}
 
@@ -506,4 +534,41 @@ void cAIBossPhaseThird::Exit(cGameAIObject* pAIObject)
 int cAIBossPhaseThird::GetCurrentStateType()
 {
 	return cGameAIObject::EAIOBJECTSTATE::eAISTATE_BOSSPHASETHIRD;
+}
+
+void cAIBossDead::Start(cGameAIObject* pAIObject)
+{
+	pAIObject->SetPassedTime(0);
+	pAIObject->GetSkinnedMesh()->SetAnimationIndex(m_nIndex);
+}
+
+void cAIBossDead::Execute(cGameAIObject* pAIObject, float fDelta)
+{
+	if (pAIObject->GetSkinnedMesh()->GetCurrentAnimationPeriodTime() -0.1f<
+		pAIObject->GetPassedTime())
+	{
+		pAIObject->ChangeState(pAIObject->eAISTATE_DEAD);
+		return;
+	}
+	if (pAIObject->GetSkinnedMesh()->GetCurrentAnimationPeriodTime() < pAIObject->GetPassedTime())
+	{
+		if (m_nIndex == 5)
+		{
+			pAIObject->SetHP(0);
+			m_nIndex = 6;
+			pAIObject->ChangeState(pAIObject->eAISTATE_BOSSDEAD);
+		}
+		return;
+	}
+
+
+}
+
+void cAIBossDead::Exit(cGameAIObject* pAIObject)
+{
+}
+
+int cAIBossDead::GetCurrentStateType()
+{
+	return cGameAIObject::EAIOBJECTSTATE::eAISTATE_BOSSDEAD;
 }
