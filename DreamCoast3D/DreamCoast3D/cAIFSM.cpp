@@ -296,7 +296,6 @@ void cAIThink::Execute(cGameAIObject* pAIObject, float fDelta){
 				return;
 			}
 		}
-
 		else {
 			pAIObject->ChangeState(pAIObject->eAISTATE_MOVETOTARGET);
 			return;

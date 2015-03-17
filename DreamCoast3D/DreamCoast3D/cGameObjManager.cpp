@@ -237,6 +237,7 @@ void cGameObjManager::SetPlayableGameObject(cGameObject* pPlayer){
 }
 
 bool cGameObjManager::isGameObjectCollided(cGameObject* pFrom){
+	float fDelta = g_pTimer->DeltaTime();
 	bool ret = false;
 	if (pFrom->GetCollisionSphere()){
 		for (auto p : m_setGameObjects){
@@ -267,11 +268,11 @@ bool cGameObjManager::isGameObjectCollided(cGameObject* pFrom){
 					
 							if (isCollided(from, fFrom, scale, to, fTo, scale2)){
 								if (pFrom->GetState() < 1){
-									p->ForcedMoving(-dist, pFrom->GetMoveSpeed() * .1f);
+									p->ForcedMoving(-dist, pFrom->GetMoveSpeed() * fDelta);
 								}
 								else {
-									pFrom->ForcedMoving(-dist, pFrom->GetMoveSpeed() * .1f);
-									p->ForcedMoving(-dist, pFrom->GetMoveSpeed() * .3f);
+									pFrom->ForcedMoving(-dist, pFrom->GetMoveSpeed() * fDelta);
+									p->ForcedMoving(-dist, pFrom->GetMoveSpeed() * fDelta);
 								}
 								ret = true;
 							}
