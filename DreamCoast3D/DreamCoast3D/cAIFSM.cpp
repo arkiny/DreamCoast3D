@@ -279,7 +279,7 @@ void cAIThink::Execute(cGameAIObject* pAIObject, float fDelta){
 		float fAttackRange = pAIObject->GetAttackRange();
 		if (pAIObject->GetAItype() == 2)
 		{
-			fAttackRange = 4.f;
+			fAttackRange = 3.f;
 		}
 		// pAIObject->SetAttackCoolTime(pAIObject->GetAttackCoolTime() + fDelta);
 		// pAIObject->GetAttackSphere() // 실질적인 타격 스피어
