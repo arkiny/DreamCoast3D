@@ -214,7 +214,8 @@ int  cAIAttack::GetCurrentStateType(){
 void cAIOnHit::Start(cGameAIObject* pAIObject){
 	if (pAIObject->GetAItype() == cGameAIObject::E_AI_TYPE::E_AI_BOSS)
 	{
-		pAIObject->ChangeState(pAIObject->eAISTATE_ATTACK);
+		//pAIObject->GetSkinnedMesh()->SetAnimationIndex(0);
+		pAIObject->ChangeState(pAIObject->eAISTATE_THINK);
 		return;
 	}
 
@@ -339,12 +340,29 @@ void cAIBossPhaseFirst::Start(cGameAIObject* pAIObject)
 
 void cAIBossPhaseFirst::Execute(cGameAIObject* pAIObject, float fDelta)
 {
+	if (pAIObject->GetSkinnedMesh()->GetCurrentAnimationPeriodTime() - 0.05f
+		< pAIObject->GetPassedTime())
+	{
+		m_nEpsilon = 1;
+	}
+
+	if (m_nEpsilon == 1)
+	{
+		D3DXVECTOR3 vCenter(0.f, 0.f, 0.f);
+		vCenter = pAIObject->GetUpdatedDetailedSphere()->at("FxBottom").m_vCenter;
+		pAIObject->SetPosition(vCenter);
+		m_nEpsilon = 2;
+	}
 	if (pAIObject->GetSkinnedMesh()->GetCurrentAnimationPeriodTime() < pAIObject->GetPassedTime())
 	{
-		m_nIndex += 1;
-		if (m_nIndex > 20)
+		m_nEpsilon = 0;
+		if (m_nIndex == 18)
 		{
-			m_nIndex = 19;
+			m_nIndex = 3;
+		}
+		else if (m_nIndex == 3)
+		{
+			m_nIndex = 18;
 		}
 		pAIObject->SetHP(pAIObject->GetHP() - 100);
 		pAIObject->ChangeState(pAIObject->eAISTATE_THINK);
@@ -375,7 +393,7 @@ void cAIBossPhaseSecond::Start(cGameAIObject* pAIObject)
 void cAIBossPhaseSecond::Execute(cGameAIObject* pAIObject, float fDelta)
 {
 	if (pAIObject->GetSkinnedMesh()->GetCurrentAnimationPeriodTime() - 0.05f
-		< pAIObject->GetPassedTime() && m_nEpsilon == 0)
+		< pAIObject->GetPassedTime())
 	{
 		m_nEpsilon = 1;
 	}
@@ -383,7 +401,7 @@ void cAIBossPhaseSecond::Execute(cGameAIObject* pAIObject, float fDelta)
 	if (m_nEpsilon == 1)
 	{
 		D3DXVECTOR3 vCenter(0.f, 0.f, 0.f);
-		vCenter = pAIObject->GetUpdatedDetailedSphere()->begin()->second.m_vCenter;
+		vCenter = pAIObject->GetUpdatedDetailedSphere()->at("FxBottom").m_vCenter;
 		pAIObject->SetPosition(vCenter);
 		m_nEpsilon = 2;
 	}
@@ -438,9 +456,9 @@ void cAIBossPhaseThird::Execute(cGameAIObject* pAIObject, float fDelta)
 
 	if (m_nEpsilon == 1)
 	{
+		//// FxBottom FxCenter FxTop
 		D3DXVECTOR3 vCenter(0.f, 0.f, 0.f);
-		vCenter = pAIObject->GetUpdatedDetailedSphere()->begin()->second.m_vCenter;
-		//vCenter.y = 1.f;
+		vCenter = pAIObject->GetUpdatedDetailedSphere()->at("FxBottom").m_vCenter;
 		pAIObject->SetPosition(vCenter);
 		m_nEpsilon = 2;
 	}
@@ -448,26 +466,32 @@ void cAIBossPhaseThird::Execute(cGameAIObject* pAIObject, float fDelta)
 	if (pAIObject->GetSkinnedMesh()->GetCurrentAnimationPeriodTime() < pAIObject->GetPassedTime())
 	{
 		m_nEpsilon = 0;
-		if (m_nIndex == 18)
+		if (m_nIndex == 3)
 		{
-			m_nIndex = 17;
+			m_nIndex = 18;
 			pAIObject->ChangeState(pAIObject->eAISTATE_THINK);
 		}
-		else if (m_nIndex == 17)
-		{
-			m_nIndex = 15;
-			pAIObject->ChangeState(pAIObject->eAISTATE_BOSSPHASETHIRD);
-		}
-		else if (m_nIndex == 15)
+		else if (m_nIndex == 18)
 		{
 			m_nIndex = 22;
 			pAIObject->ChangeState(pAIObject->eAISTATE_THINK);
 		}
 		else if (m_nIndex == 22)
 		{
-			m_nIndex = 18;
+			m_nIndex = 16;
 			pAIObject->ChangeState(pAIObject->eAISTATE_THINK);
 		}
+		else if (m_nIndex == 16)
+		{
+			m_nIndex = 24;
+			pAIObject->ChangeState(pAIObject->eAISTATE_BOSSPHASETHIRD);
+		}
+		else if (m_nIndex == 24)
+		{
+			m_nIndex = 3;
+			pAIObject->ChangeState(pAIObject->eAISTATE_THINK);
+		}
+
 
 		return;
 	}

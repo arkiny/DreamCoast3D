@@ -64,7 +64,8 @@ class cAIBossPhaseFirst : public iAIState
 	virtual void Exit(cGameAIObject* pAIObject);
 	virtual int GetCurrentStateType();
 
-	int m_nIndex = 19;
+	int m_nIndex = 3;
+	int m_nEpsilon = 0;
 };
 
 class cAIBossPhaseSecond : public iAIState
@@ -76,8 +77,6 @@ class cAIBossPhaseSecond : public iAIState
 
 	int m_nIndex = 21;
 	int m_nEpsilon = 0;
-
-
 };
 
 class cAIBossPhaseThird : public iAIState
@@ -87,6 +86,6 @@ class cAIBossPhaseThird : public iAIState
 	virtual void Exit(cGameAIObject* pAIObject);
 	virtual int GetCurrentStateType();
 
-	int m_nIndex = 17;
+	int m_nIndex = 3;
 	int m_nEpsilon = 0;
 };
