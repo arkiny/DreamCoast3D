@@ -175,6 +175,7 @@
     <ClInclude Include="cShaderManager.h" />
     <ClInclude Include="cSkinnedMeshBody.h" />
     <ClInclude Include="cStaticMeshManager.h" />
+    <ClInclude Include="cStoreWindow.h" />
     <ClInclude Include="cUICursor.h" />
     <ClInclude Include="cUIExpBar.h" />
     <ClInclude Include="cUIGameMainMenu.h" />
@@ -308,6 +309,7 @@
     <ClCompile Include="cShaderManager.cpp" />
     <ClCompile Include="cSkinnedMeshBody.cpp" />
     <ClCompile Include="cStaticMeshManager.cpp" />
+    <ClCompile Include="cStoreWindow.cpp" />
     <ClCompile Include="cUICursor.cpp" />
     <ClCompile Include="cUIExpBar.cpp" />
     <ClCompile Include="cUIGameMainMenu.cpp" />
