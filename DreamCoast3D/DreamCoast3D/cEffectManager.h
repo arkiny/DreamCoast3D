@@ -10,8 +10,10 @@ protected:
 	std::vector<cEffect*>	m_vecEffectTobeDeleted;
 
 	std::queue<cEffect*>	m_qeueuHPPotionEffectPool;
-
 	std::queue<cEffect*>	m_qeueuOnHitEffectPool;
+
+	std::queue<cEffect*>	m_qeueuSkill1EffectPool;
+
 	std::queue<cEffect*>	m_qeueuOnGetHitEffectPool;
 
 public:

@@ -12,13 +12,13 @@ public:
 		E_EFFECT_GETHIT,
 		E_EFFECT_HPPOTION,
 		E_EFFECT_MPPOTION,
+		E_EFFECT_SKILL1,
 		E_EFFECT_TYPE_MAX
 	};
 
 protected:
 	cTransform* m_pTransform;
 	SYNTHESIZE(cEffectManager*, m_pOwner, Owner);
-	//SYNTHESIZE(iEffectManagerDelegate*, m_pEffectManagerDeligate, EffectMAnagerDeligate);
 	SYNTHESIZE(E_EFFECT_TYPE, m_eEffectType, EffectType);
 public:
 	cEffect();

@@ -380,6 +380,9 @@
       <Filter>EachWorks\HD</Filter>
     </ClCompile>
     <ClCompile Include="iInventoryControl.cpp" />
+    <ClCompile Include="cEffectSkill1.cpp">
+      <Filter>FrameWork\Effects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cAction.h">
@@ -773,6 +776,9 @@
       <Filter>EachWorks\HD</Filter>
     </ClInclude>
     <ClInclude Include="iInventoryControl.h" />
+    <ClInclude Include="cEffectSkill1.h">
+      <Filter>FrameWork\Effects</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="DreamCoast3D.ico">

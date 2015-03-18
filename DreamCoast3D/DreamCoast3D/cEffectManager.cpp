@@ -4,6 +4,7 @@
 #include "cEffectParticle.h"
 #include "cEffectPotion.h"
 #include "cEffectMesh.h"
+#include "cEffectSkill1.h"
 
 cEffectManager::cEffectManager()
 {
@@ -57,6 +58,12 @@ void cEffectManager::Setup(){
 		m_qeueuHPPotionEffectPool.push(p);
 		p->SetOwner(this);
 	}
+	for (UINT i = 0; i < 50; i++){
+		cEffectSkill1* p = new cEffectSkill1;
+		p->SetOwner(this);
+		m_qeueuSkill1EffectPool.push(p);
+	}
+	
 }
 
 void cEffectManager::Start(){
@@ -81,6 +88,9 @@ void cEffectManager::Update(float fDelta){
 			}
 			else if (p->GetEffectType() == p->E_EFFECT_MPPOTION){
 				m_qeueuHPPotionEffectPool.push(p);
+			}
+			else if (p->GetEffectType() == p->E_EFFECT_SKILL1){
+				m_qeueuSkill1EffectPool.push(p);
 			}
 		}
 		m_vecEffectTobeDeleted.clear();
@@ -148,6 +158,25 @@ void cEffectManager::AddEffect(UINT uiType, D3DXVECTOR3 vPos){
 			m_setEffects.insert(p);
 		}
 	}
+	else if (uiType == cEffect::E_EFFECT_SKILL1){
+		if (m_qeueuSkill1EffectPool.empty()){
+			cEffectSkill1* p = new cEffectSkill1;
+			p->SetEffectType(p->E_EFFECT_SKILL1);
+			p->Setup();
+			p->SetPosition(vPos);
+			p->SetOwner(this);
+			m_setEffects.insert(p);
+		}
+		else{
+			cEffect* p = m_qeueuSkill1EffectPool.front();
+			m_qeueuSkill1EffectPool.pop();
+			p->SetEffectType(p->E_EFFECT_SKILL1);
+			p->Setup();
+			p->SetPosition(vPos);
+			m_setEffects.insert(p);
+		}
+	}
+
 }
 
 void cEffectManager::DeleteEffect(cEffect* pEffect){

@@ -128,6 +128,7 @@
     <ClInclude Include="cEffectMesh.h" />
     <ClInclude Include="cEffectPotion.h" />
     <ClInclude Include="cEffectResourceManager.h" />
+    <ClInclude Include="cEffectSkill1.h" />
     <ClInclude Include="cFontManager.h" />
     <ClInclude Include="cGameAIObject.h" />
     <ClInclude Include="cGameASEObject.h" />
@@ -260,6 +261,7 @@
     <ClCompile Include="cEffectMesh.cpp" />
     <ClCompile Include="cEffectPotion.cpp" />
     <ClCompile Include="cEffectResourceManager.cpp" />
+    <ClCompile Include="cEffectSkill1.cpp" />
     <ClCompile Include="cFontManager.cpp" />
     <ClCompile Include="cGameAIObject.cpp" />
     <ClCompile Include="cGameASEObject.cpp" />

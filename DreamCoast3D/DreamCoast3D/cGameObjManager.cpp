@@ -227,6 +227,7 @@ void cGameObjManager::SetEffectDeligate(iEffectManagerDelegate* pEffectDeligate)
 	for (auto p : m_setGameObjects){
 		p->SetEffectDelegate(pEffectDeligate);
 	}
+	m_pEffectDelegate = pEffectDeligate;
 }
 
 
@@ -689,7 +690,7 @@ void cGameObjManager::SetCurrentPosition(D3DXVECTOR3 vCurrentPos)
 
 std::vector<POINT*> cGameObjManager::RangeSkill(cGameObject* pFrom)
 {
-	int nAttackRange = 5;
+	int nAttackRange = 3;
 	D3DXVECTOR3 vFrom;
 	vFrom = pFrom->GetPosition();
 	std::vector<cGameObject*> vecGameObject;
@@ -706,5 +707,13 @@ std::vector<POINT*> cGameObjManager::RangeSkill(cGameObject* pFrom)
 			p->OnHitTarget(pFrom, 300.f, p->GetPosition());
 		}
 	}
+
+	std::vector<POINT*> vec = m_pGridTileSystem->GetAdjCircle(vFrom.x, vFrom.z, nAttackRange);
+	
+	for (size_t i = 0; i < vec.size(); i++){
+		D3DXVECTOR3 effPoint = { vec[i]->x + 0.5f, pFrom->GetPosition().y, vec[i]->y + 0.5f };
+		m_pEffectDelegate->AddEffect(5, effPoint);
+	}
+
 	return m_pGridTileSystem->GetAdjCircle(vFrom.x, vFrom.z, nAttackRange);
 }
