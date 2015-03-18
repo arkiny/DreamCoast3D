@@ -29,9 +29,9 @@ void cUIPopupWindow::Setup(){
 	/// 시작 버튼
 	cUISceneChangeButton* pTestButton = new cUISceneChangeButton(m_pSprite);
 	pTestButton->Setup(
-		std::string("../Resources/UI/UI_AcceptButton.png"),
-		std::string("../Resources/UI/UI_AcceptButtonOn.png"),
-		std::string("../Resources/UI/UI_AcceptButtonClick.png"));
+		std::string("../Resources/UI/UI_BUTTON_LOBBY/M_MM_1_NORMAL.png"),
+		std::string("../Resources/UI/UI_BUTTON_LOBBY/M_MM_1_ON.png"),
+		std::string("../Resources/UI/UI_BUTTON_LOBBY/M_MM_1_CLICK.png"));
 	pTestButton->SetPosition(D3DXVECTOR3(90, 100, 0));
 	pTestButton->SetButtonDeligate(this);
 	pTestButton->SetTargetScene(0);
@@ -40,9 +40,9 @@ void cUIPopupWindow::Setup(){
 
 	pTestButton = new cUISceneChangeButton(m_pSprite);
 	pTestButton->Setup(
-		std::string("../Resources/UI/UI_AcceptButton.png"),
-		std::string("../Resources/UI/UI_AcceptButtonOn.png"),
-		std::string("../Resources/UI/UI_AcceptButtonClick.png"));
+		std::string("../Resources/UI/UI_BUTTON_LOBBY/M_QG_1_NORMAL.png"),
+		std::string("../Resources/UI/UI_BUTTON_LOBBY/M_QG_1_ON.png"),
+		std::string("../Resources/UI/UI_BUTTON_LOBBY/M_QG_1_CLICK.png"));
 	pTestButton->SetPosition(D3DXVECTOR3(90, 150, 0));
 	pTestButton->SetButtonDeligate(this);
 	pTestButton->SetTargetScene(-2);
