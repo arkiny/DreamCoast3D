@@ -101,8 +101,13 @@ void cUIStatWindow::Update(float fDelta){
 		float fcurHP = m_pGameObjDelgate->GetPlayerStatInfo()->fCurrentHp;
 		float fmaxHp = m_pGameObjDelgate->GetPlayerStatInfo()->fMaxHp;
 		float fHPrate = fcurHP / fmaxHp;
+
+		float fcurMP = m_pGameObjDelgate->GetPlayerStatInfo()->fCurrentMana;
+		float fmaxMP = m_pGameObjDelgate->GetPlayerStatInfo()->fMaxMana;
+		float fMPrate = fcurMP / fmaxMP;
+
 		m_pHealth->SetScale(D3DXVECTOR3(21.4*fHPrate, 1.0f, 1.0f));
-		m_pMana->SetScale(D3DXVECTOR3(21.3f, 1.0f, 1.0f));
+		m_pMana->SetScale(D3DXVECTOR3(21.3f*fMPrate, 1.0f, 1.0f));
 	}
 	if (m_pUIRoot)
 		m_pUIRoot->Update(fDelta);

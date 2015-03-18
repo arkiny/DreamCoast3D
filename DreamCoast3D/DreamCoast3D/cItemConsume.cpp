@@ -35,7 +35,7 @@ void cItemConsume::Activate(
 			}
 		}
 		if (m_eConsumeType == E_CONSUME_MP_UP){
-			pGameObjgDeligate->GetPlayerStatInfo()->fCurrentHp += 10;
+			//pGameObjgDeligate->GetPlayerStatInfo()->fCurrentHp += 10;
 			if (pGameObjgDeligate->GetPlayerStatInfo()->fMaxMana > pGameObjgDeligate->GetPlayerStatInfo()->fCurrentMana
 				&& m_nCount > 0){
 				pGameObjgDeligate->GetPlayerStatInfo()->fCurrentMana += 10;

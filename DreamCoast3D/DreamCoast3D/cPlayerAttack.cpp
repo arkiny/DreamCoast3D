@@ -20,8 +20,10 @@ void cPlayerAttack::Execute(cGamePlayableObject* pPlayer, float fDelta){
 
 	if (g_pControlManager->GetInputInfo('C'))
 	{
-		if (pPlayer->GetSkill1CoolTime() >= pPlayer->GetSkill1DelayTime()){
+		if (pPlayer->GetSkill1CoolTime() >= pPlayer->GetSkill1DelayTime()
+			&& pPlayer->GetStatInfo()->fCurrentMana > 10.0f){
 			pPlayer->SetSkill1CoolTime(0.0f);
+			pPlayer->GetStatInfo()->fCurrentMana -= 10.0f;
 			pPlayer->GetGameObjDeligate()->RangeSkill(pPlayer);
 		}
 	}

@@ -20,7 +20,7 @@ void cEffectParticle::Setup(){
 	for (int i = 0; i < 10; ++i)
 	{
 		ST_PC_VERTEX v;
-		v.c = D3DCOLOR_XRGB(30, 80, 128);
+		v.c = D3DCOLOR_XRGB(188, 20, 20);
 		/*ST_PARTICLE stP;
 		stP._vertex.c = D3DCOLOR_XRGB(30, 80, 128);*/
 		//v.p = D3DXVECTOR3(0, 0, 100 - 10 * i);
@@ -75,7 +75,7 @@ void cEffectParticle::Update(float fDelta){
 		if (alpha < 0.0f){
 			alpha = 0.0f;
 		}
-		m_vecVertex[i].c = D3DXCOLOR(128 / 255.0f, 20 / 255.0f, 20 / 255.0f, alpha);
+		m_vecVertex[i].c = D3DXCOLOR(180 / 255.0f, 20 / 255.0f, 20 / 255.0f, alpha);
 		m_vecMoveInfo[i]._currentTime += fDelta;
 	}
 	//}
@@ -149,7 +149,7 @@ void cEffectParticle::Render(){
 	g_pD3DDevice->SetRenderState(D3DRS_LIGHTING, false);
 
 	// 포인트 사이즈 설정
-	g_pD3DDevice->SetRenderState(D3DRS_POINTSIZE, FtoDw(10.0f));
+	g_pD3DDevice->SetRenderState(D3DRS_POINTSIZE, FtoDw(20.0f));
 
 	// 알파블렌디 사용 가능하게 설정.
 	g_pD3DDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, true);
