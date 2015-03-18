@@ -10,6 +10,7 @@
 #include "cUISystemMenu.h"
 #include "cUIPopupWindow.h"
 #include "cUIImageButtonMenu.h"
+#include "cStoreWindow.h"
 
 
 cUILoader::cUILoader()
@@ -108,7 +109,7 @@ void cUILoader::ParseUI(OUT cUIObjManager* pUIManager){
 			}
 
 			else if (isEqual(szTypeName, "UIINVENTORY")){
-				cUIObject* p = new cUIInventory;
+				cUIObject* p = new cStoreWindow;
 				p->Setup();
 				if (p){
 					pUIManager->AddUI(p);

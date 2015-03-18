@@ -12,5 +12,8 @@ public:
 	virtual void Render();
 
 	virtual void OnClick(cUIImageButton* pSender);
+
+	cUIImageButton* m_pHealthButton;
+	cUIImageButton* m_pManaButton;
 };
 

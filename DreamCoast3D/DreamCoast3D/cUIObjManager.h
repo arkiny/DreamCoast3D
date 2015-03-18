@@ -20,7 +20,11 @@ protected:
 	cUICursor* m_pMouseCursor;
 
 	iGameEventDelegate* m_pEventManager;
-	SYNTHESIZE(iInventoryControl*, m_pInventoryControl, InventoryControl);
+	iInventoryControl* m_pInventoryControl;
+	SYNTHESIZE(bool, m_isTrap, Trap);
+	SYNTHESIZE(bool, m_isCursorUpdate, CursorUpdate);
+private:
+	void UpdateTrap();
 
 public:
 	cUIObjManager();
@@ -44,5 +48,16 @@ public:
 	// override iUIManagerDeligate
 	virtual void ChangeScene(int nScene, cUIObject* pSender) override;
 	virtual void SetShowCursor(bool isShow);
+
+	void SetInventoryControl(iInventoryControl* pInventoryControl)
+	{
+		m_pInventoryControl = pInventoryControl;
+	}
+	iInventoryControl* GetInventoryControl()
+	{
+		return m_pInventoryControl;
+	}
+
+
 };
 

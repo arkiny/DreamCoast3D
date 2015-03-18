@@ -174,7 +174,12 @@ void cScene::Start(){
 
 void cScene::Update(float delta){
 	if (m_pCurrentMap){
-		m_pCamera->Update(delta);
+		if (m_isPauseUpdate == false)
+		{
+			m_pCamera->SetTrap(m_pUIObjManager->GetTrap());
+			m_pCamera->Update(delta);
+		}
+
 		m_pPlayableObject = (cGamePlayableObject*)m_pGameObjManager->GetPlayerableGameObject();
 		if (m_pPlayableObject){
 			m_pCamera->UpdateAngle(m_pPlayableObject->GetPlayerAngle());
@@ -207,6 +212,15 @@ void cScene::Update(float delta){
 	}
 
 	if (m_pUIObjManager){
+		if (m_isPauseUpdate == true)
+		{
+			m_pUIObjManager->SetShowCursor(true);
+			m_pUIObjManager->SetCursorUpdate(true);
+		}
+		else
+		{
+			m_pUIObjManager->SetCursorUpdate(false);
+		}
 		m_pUIObjManager->Update(delta);
 	}
 }
@@ -215,15 +229,11 @@ void cScene::Render(){
 	// æ¿¿ª ∑ª¥ı«—¥Ÿ.
 
 	// «ˆ¿Á ∏ ∏∏ ∑ª¥ı∏µ«‘
-	if (m_isPauseUpdate == false)
-	{
-		SAFE_RENDER(m_pGameObjManager);
-		SAFE_RENDER(m_pCurrentMap);
-
-		SAFE_RENDER(m_pUIObjManager);
-		SAFE_RENDER(m_pCamera);
-		SAFE_RENDER(m_pEffectManager);
-	}
+	SAFE_RENDER(m_pGameObjManager);
+	SAFE_RENDER(m_pCurrentMap);
+	SAFE_RENDER(m_pCamera);
+	SAFE_RENDER(m_pEffectManager);
+	SAFE_RENDER(m_pUIObjManager);
 
 }
 

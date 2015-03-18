@@ -19,7 +19,7 @@ public:
 		return 0.5f;
 	};
 	std::string GetTexturePath() override { return std::string(""); }
-	int GetCount() override { return 65535; }
-	void SetCount(int n) {};
+	virtual int GetCount() override { return 65535; }
+	virtual void SetCount(int n) {};
 };
 

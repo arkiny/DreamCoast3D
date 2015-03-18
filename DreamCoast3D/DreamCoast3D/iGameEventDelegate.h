@@ -9,4 +9,5 @@ __interface iGameEventDelegate
 	virtual void SetSceneDelegate(iSceneDelegate* pSceneDelegate);
 	virtual void StoreEvent();
 	virtual void SetUIDelegate(iUIManagerDeligate* m_pUIDelegate);
+	virtual bool GetStoreState();
 };

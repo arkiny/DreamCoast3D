@@ -4,6 +4,8 @@
 
 cUIObjManager::cUIObjManager()
 {
+	m_isTrap = false;
+	m_isCursorUpdate = false;
 }
 
 
@@ -40,11 +42,13 @@ void cUIObjManager::Update(float fDelta){
 	}
 
 	m_pEventManager->StoreEvent();
+	UpdateTrap();
 
 }
 
 void cUIObjManager::Render(){	
 	for (auto p : m_vecUIObjects){
+		
 		SAFE_RENDER(p);
 	}
 	SAFE_RENDER(m_pMouseCursor);
@@ -117,5 +121,22 @@ void cUIObjManager::ChangeScene(int nScene, cUIObject* pSender){
 void cUIObjManager::SetShowCursor(bool isShow){
 	if (m_pMouseCursor){
 		m_pMouseCursor->SetIsShow(isShow);
+	}
+}
+
+void cUIObjManager::UpdateTrap()
+{
+	if (m_isCursorUpdate == false)
+	{
+		if (g_pControlManager->GetInputInfo('T'))
+		{
+			m_isTrap = false;
+			this->SetShowCursor(true);
+		}
+		else
+		{
+			m_isTrap = true;
+			this->SetShowCursor(false);
+		}
 	}
 }

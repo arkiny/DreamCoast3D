@@ -76,18 +76,6 @@ void cCamera::Setup(
 
 void cCamera::Update(float delta)
 {
-
-
-	if (g_pControlManager->GetInputInfo('T'))
-	{
-
-		m_isTrap = false;
-	}
-	else
-	{
-		m_isTrap = true;
-
-	}
 	if (m_pPlayer){
 		if (m_pPlayer->m_pCurrentState->GetCurrentStateType() == 0)
 		{
@@ -164,9 +152,9 @@ void cCamera::Update(float delta)
 				MouseTrap();
 			}
 		}
-		else{
-			m_pUIDelegate->SetShowCursor(true);
-		}
+		//else{
+		//	m_pUIDelegate->SetShowCursor(true);
+		//}
 
 		if (m_isRButtonDown == false && m_isMove == true)
 		{

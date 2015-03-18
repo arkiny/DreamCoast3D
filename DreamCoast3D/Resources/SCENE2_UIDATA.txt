@@ -1,5 +1,5 @@
 *UI_LIST {
-	*UI_COUNT 5 
+	*UI_COUNT 6
 	*UI 0 {
 		*UI_TYPE "UISTAT"
 	}
@@ -13,6 +13,9 @@
 		*UI_TYPE "UIMINIMAP"
 	}
 	*UI 4 {
+		*UI_TYPE "UIINVENTORY"
+	}
+	*UI 5 {
 		*UI_TYPE "UISYSTEMMENU"
 		*UI_SHORTCUT {
 

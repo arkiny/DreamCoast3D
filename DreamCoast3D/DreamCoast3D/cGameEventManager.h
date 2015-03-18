@@ -47,5 +47,9 @@ private:
 	float m_fPassTime;
 	void StoreEvent();
 	void StoreKeyUpdate(float fDelta);
+	bool GetStoreState()
+	{
+		return m_isPause;
+	}
 };
 

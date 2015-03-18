@@ -78,6 +78,8 @@ public:
 
 	POINT ptSave;
 
-	bool m_isTrap;
+	SYNTHESIZE(bool, m_isTrap, Trap);
+
+
 };
 
