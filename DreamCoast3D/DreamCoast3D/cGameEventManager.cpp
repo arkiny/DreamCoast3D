@@ -98,7 +98,7 @@ void cGameEventManager::StoreEvent()
 {
 	if (m_isStoreButton == false)
 	{
-		if (g_pControlManager->GetInputInfo('M'))
+		if (g_pControlManager->GetInputInfo('N'))
 		{
 			if (m_isPause == false)
 			{
@@ -116,7 +116,7 @@ void cGameEventManager::StoreEvent()
 
 void cGameEventManager::StoreKeyUpdate(float fDelta)
 {
-	if (g_pControlManager->GetInputInfo('M') && m_isStoreButton == false)
+	if (g_pControlManager->GetInputInfo('N') && m_isStoreButton == false)
 	{
 		m_isStoreButton = true;
 	}
