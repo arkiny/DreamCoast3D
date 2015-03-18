@@ -130,3 +130,8 @@ void cGameEventManager::StoreKeyUpdate(float fDelta)
 		m_fPassTime = 0.f;
 	}
 }
+
+void cGameEventManager::SetUIDelegate(iUIManagerDeligate* m_pUIDelegate)
+{
+	m_pUIDelegate = m_pUIDelegate;
+}
