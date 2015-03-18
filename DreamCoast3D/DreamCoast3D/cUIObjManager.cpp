@@ -84,6 +84,7 @@ void cUIObjManager::SetSceneDeligate(iSceneDelegate* pSceneManager){
 	}
 	m_pSceneManager = pSceneManager;
 }
+
 void cUIObjManager::SetEventDeligate(iGameEventDelegate* pEventManager)
 {
 	for (auto p : m_vecUIObjects)
@@ -92,6 +93,12 @@ void cUIObjManager::SetEventDeligate(iGameEventDelegate* pEventManager)
 		pEventManager->SetSceneDelegate(m_pSceneManager);
 	}
 	m_pEventManager = pEventManager;
+}
+
+void cUIObjManager::SetEffectDeligate(iEffectManagerDelegate* pEffectManager){
+	for (auto p : m_vecUIObjects){
+		p->SetEffectDelegate(pEffectManager);
+	}
 }
 
 

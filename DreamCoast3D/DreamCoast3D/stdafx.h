@@ -204,6 +204,7 @@ typedef struct ST_STAT_INFO{
 #include "iUIManagerDeligate.h"
 #include "iEffectManagerDeligate.h"
 #include "iGameEventDelegate.h"
+#include "iActivatable.h"
 
 // 모두가 알아야 하는 클래스들
 #include "cObject.h"

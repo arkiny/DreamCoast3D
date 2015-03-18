@@ -7,7 +7,9 @@ class cEffectManager : public cObject, public iEffectManagerDelegate
 protected:
 	std::set<cEffect*>		m_setEffects;
 
-	std::vector<cEffect*>	m_vecOnHitEffectTobeDeleted;
+	std::vector<cEffect*>	m_vecEffectTobeDeleted;
+
+	std::queue<cEffect*>	m_qeueuHPPotionEffectPool;
 
 	std::queue<cEffect*>	m_qeueuOnHitEffectPool;
 	std::queue<cEffect*>	m_qeueuOnGetHitEffectPool;

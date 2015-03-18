@@ -185,13 +185,13 @@
       <Filter>FrameWork\Object\UIObject</Filter>
     </ClCompile>
     <ClCompile Include="cUIPlayerInfo.cpp">
-      <Filter>EachWorks\HD\TODO-DistAfter\InGameUI</Filter>
+      <Filter>EachWorks\HD\TODO-UI\InGameUI</Filter>
     </ClCompile>
     <ClCompile Include="cUIGameSystemShortCut.cpp">
-      <Filter>EachWorks\HD\TODO-DistAfter\InGameUI</Filter>
+      <Filter>EachWorks\HD\TODO-UI\InGameUI</Filter>
     </ClCompile>
     <ClCompile Include="cUIGameMainMenu.cpp">
-      <Filter>EachWorks\HD\TODO-DistAfter\MainMenuUI</Filter>
+      <Filter>EachWorks\HD\TODO-UI\MainMenuUI</Filter>
     </ClCompile>
     <ClCompile Include="cUILoader.cpp">
       <Filter>FrameWork\Loader</Filter>
@@ -245,16 +245,13 @@
       <Filter>FrameWork\Interfaces</Filter>
     </ClCompile>
     <ClCompile Include="cUIExpBar.cpp">
-      <Filter>EachWorks\HD\TODO-DistAfter\InGameUI</Filter>
+      <Filter>EachWorks\HD\TODO-UI\InGameUI</Filter>
     </ClCompile>
     <ClCompile Include="cUIStatWindow.cpp">
-      <Filter>EachWorks\HD\TODO-DistAfter\InGameUI</Filter>
+      <Filter>EachWorks\HD\TODO-UI\InGameUI</Filter>
     </ClCompile>
     <ClCompile Include="cActionIdle.cpp">
       <Filter>FrameWork\Object\GameObject\GameActionObject\Action</Filter>
-    </ClCompile>
-    <ClCompile Include="cUISkillShortCut.cpp">
-      <Filter>EachWorks\MW\Todo</Filter>
     </ClCompile>
     <ClCompile Include="cUIInventory.cpp">
       <Filter>EachWorks\MW\Todo</Filter>
@@ -268,26 +265,8 @@
     <ClCompile Include="cUIIcon.cpp">
       <Filter>EachWorks\MW\Todo</Filter>
     </ClCompile>
-    <ClCompile Include="cUIPopupWindow.cpp">
-      <Filter>EachWorks\HD</Filter>
-    </ClCompile>
-    <ClCompile Include="cUISystemMenu.cpp">
-      <Filter>EachWorks\HD</Filter>
-    </ClCompile>
     <ClCompile Include="iUIManagerDeligate.cpp">
       <Filter>FrameWork\Interfaces</Filter>
-    </ClCompile>
-    <ClCompile Include="cLoadingScene.cpp">
-      <Filter>EachWorks\HD</Filter>
-    </ClCompile>
-    <ClCompile Include="cUISceneChangeButton.cpp">
-      <Filter>EachWorks\HD</Filter>
-    </ClCompile>
-    <ClCompile Include="cUISystemTest.cpp">
-      <Filter>EachWorks\HD</Filter>
-    </ClCompile>
-    <ClCompile Include="cUIImageButtonMenu.cpp">
-      <Filter>EachWorks\HD</Filter>
     </ClCompile>
     <ClCompile Include="cEffect.cpp">
       <Filter>FrameWork\Effects</Filter>
@@ -352,9 +331,6 @@
     <ClCompile Include="cUICursor.cpp">
       <Filter>FrameWork\Object\UIObject</Filter>
     </ClCompile>
-    <ClCompile Include="cUISet4Editor.cpp">
-      <Filter>EachWorks\HD</Filter>
-    </ClCompile>
     <ClCompile Include="cEffectMesh.cpp">
       <Filter>FrameWork\Effects</Filter>
     </ClCompile>
@@ -365,6 +341,36 @@
       <Filter>FrameWork\Singletons</Filter>
     </ClCompile>
     <ClCompile Include="cMesh.cpp">
+      <Filter>FrameWork\Effects</Filter>
+    </ClCompile>
+    <ClCompile Include="cUIImageButtonMenu.cpp">
+      <Filter>EachWorks\HD\TODO-UI\UIWorking</Filter>
+    </ClCompile>
+    <ClCompile Include="cUIPopupWindow.cpp">
+      <Filter>EachWorks\HD\TODO-UI\UIWorking</Filter>
+    </ClCompile>
+    <ClCompile Include="cUISceneChangeButton.cpp">
+      <Filter>EachWorks\HD\TODO-UI\UIWorking</Filter>
+    </ClCompile>
+    <ClCompile Include="cUISet4Editor.cpp">
+      <Filter>EachWorks\HD\TODO-UI\UIWorking</Filter>
+    </ClCompile>
+    <ClCompile Include="cUISkillShortCut.cpp">
+      <Filter>EachWorks\HD\TODO-UI\UIWorking</Filter>
+    </ClCompile>
+    <ClCompile Include="cUISystemMenu.cpp">
+      <Filter>EachWorks\HD\TODO-UI\UIWorking</Filter>
+    </ClCompile>
+    <ClCompile Include="cUISystemTest.cpp">
+      <Filter>EachWorks\HD\TODO-UI\UIWorking</Filter>
+    </ClCompile>
+    <ClCompile Include="cLoadingScene.cpp">
+      <Filter>FrameWork\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="iActivatable.cpp" />
+    <ClCompile Include="cItemWithEffect.cpp" />
+    <ClCompile Include="cItemConsume.cpp" />
+    <ClCompile Include="cEffectPotion.cpp">
       <Filter>FrameWork\Effects</Filter>
     </ClCompile>
   </ItemGroup>
@@ -559,13 +565,13 @@
       <Filter>FrameWork\Object\UIObject</Filter>
     </ClInclude>
     <ClInclude Include="cUIPlayerInfo.h">
-      <Filter>EachWorks\HD\TODO-DistAfter\InGameUI</Filter>
+      <Filter>EachWorks\HD\TODO-UI\InGameUI</Filter>
     </ClInclude>
     <ClInclude Include="cUIGameSystemShortCut.h">
-      <Filter>EachWorks\HD\TODO-DistAfter\InGameUI</Filter>
+      <Filter>EachWorks\HD\TODO-UI\InGameUI</Filter>
     </ClInclude>
     <ClInclude Include="cUIGameMainMenu.h">
-      <Filter>EachWorks\HD\TODO-DistAfter\MainMenuUI</Filter>
+      <Filter>EachWorks\HD\TODO-UI\MainMenuUI</Filter>
     </ClInclude>
     <ClInclude Include="cUILoader.h">
       <Filter>FrameWork\Loader</Filter>
@@ -622,16 +628,13 @@
       <Filter>EachWorks\HD</Filter>
     </ClInclude>
     <ClInclude Include="cUIExpBar.h">
-      <Filter>EachWorks\HD\TODO-DistAfter\InGameUI</Filter>
+      <Filter>EachWorks\HD\TODO-UI\InGameUI</Filter>
     </ClInclude>
     <ClInclude Include="cUIStatWindow.h">
-      <Filter>EachWorks\HD\TODO-DistAfter\InGameUI</Filter>
+      <Filter>EachWorks\HD\TODO-UI\InGameUI</Filter>
     </ClInclude>
     <ClInclude Include="cActionIdle.h">
       <Filter>FrameWork\Object\GameObject\GameActionObject\Action</Filter>
-    </ClInclude>
-    <ClInclude Include="cUISkillShortCut.h">
-      <Filter>EachWorks\MW\Todo</Filter>
     </ClInclude>
     <ClInclude Include="cUIInventory.h">
       <Filter>EachWorks\MW\Todo</Filter>
@@ -645,26 +648,8 @@
     <ClInclude Include="cUIIcon.h">
       <Filter>EachWorks\MW\Todo</Filter>
     </ClInclude>
-    <ClInclude Include="cUIPopupWindow.h">
-      <Filter>EachWorks\HD</Filter>
-    </ClInclude>
-    <ClInclude Include="cUISystemMenu.h">
-      <Filter>EachWorks\HD</Filter>
-    </ClInclude>
     <ClInclude Include="iUIManagerDeligate.h">
       <Filter>FrameWork\Interfaces</Filter>
-    </ClInclude>
-    <ClInclude Include="cLoadingScene.h">
-      <Filter>EachWorks\HD</Filter>
-    </ClInclude>
-    <ClInclude Include="cUISystemTest.h">
-      <Filter>EachWorks\HD</Filter>
-    </ClInclude>
-    <ClInclude Include="cUISceneChangeButton.h">
-      <Filter>EachWorks\HD</Filter>
-    </ClInclude>
-    <ClInclude Include="cUIImageButtonMenu.h">
-      <Filter>EachWorks\HD</Filter>
     </ClInclude>
     <ClInclude Include="cEffect.h">
       <Filter>FrameWork\Effects</Filter>
@@ -732,9 +717,6 @@
     <ClInclude Include="cUICursor.h">
       <Filter>FrameWork\Object\UIObject</Filter>
     </ClInclude>
-    <ClInclude Include="cUISet4Editor.h">
-      <Filter>EachWorks\HD</Filter>
-    </ClInclude>
     <ClInclude Include="cEffectMesh.h">
       <Filter>FrameWork\Effects</Filter>
     </ClInclude>
@@ -745,6 +727,36 @@
       <Filter>FrameWork\Singletons</Filter>
     </ClInclude>
     <ClInclude Include="cMesh.h">
+      <Filter>FrameWork\Effects</Filter>
+    </ClInclude>
+    <ClInclude Include="cUIImageButtonMenu.h">
+      <Filter>EachWorks\HD\TODO-UI\UIWorking</Filter>
+    </ClInclude>
+    <ClInclude Include="cUIPopupWindow.h">
+      <Filter>EachWorks\HD\TODO-UI\UIWorking</Filter>
+    </ClInclude>
+    <ClInclude Include="cUISceneChangeButton.h">
+      <Filter>EachWorks\HD\TODO-UI\UIWorking</Filter>
+    </ClInclude>
+    <ClInclude Include="cUISet4Editor.h">
+      <Filter>EachWorks\HD\TODO-UI\UIWorking</Filter>
+    </ClInclude>
+    <ClInclude Include="cUISkillShortCut.h">
+      <Filter>EachWorks\HD\TODO-UI\UIWorking</Filter>
+    </ClInclude>
+    <ClInclude Include="cUISystemMenu.h">
+      <Filter>EachWorks\HD\TODO-UI\UIWorking</Filter>
+    </ClInclude>
+    <ClInclude Include="cUISystemTest.h">
+      <Filter>EachWorks\HD\TODO-UI\UIWorking</Filter>
+    </ClInclude>
+    <ClInclude Include="cLoadingScene.h">
+      <Filter>FrameWork\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="iActivatable.h" />
+    <ClInclude Include="cItemWithEffect.h" />
+    <ClInclude Include="cItemConsume.h" />
+    <ClInclude Include="cEffectPotion.h">
       <Filter>FrameWork\Effects</Filter>
     </ClInclude>
   </ItemGroup>
@@ -850,15 +862,6 @@
     <Filter Include="FrameWork\Singletons">
       <UniqueIdentifier>{ac9d5c25-bde2-4512-947b-878b6447b5fc}</UniqueIdentifier>
     </Filter>
-    <Filter Include="EachWorks\HD\TODO-DistAfter">
-      <UniqueIdentifier>{1293e4f4-f5d8-42c1-8f4d-a86f1100f92e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="EachWorks\HD\TODO-DistAfter\InGameUI">
-      <UniqueIdentifier>{71622d01-a614-4833-b0b9-b97857248e2e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="EachWorks\HD\TODO-DistAfter\MainMenuUI">
-      <UniqueIdentifier>{a18f39a1-4fb3-416b-b35b-03abf33b497a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="FrameWork\Resource">
       <UniqueIdentifier>{a6d80302-f288-4251-8c93-210c45ed42a2}</UniqueIdentifier>
     </Filter>
@@ -882,6 +885,18 @@
     </Filter>
     <Filter Include="TerrainEditor">
       <UniqueIdentifier>{9acb5022-85ab-4a2a-9d42-af0111416ffa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="EachWorks\HD\TODO-UI">
+      <UniqueIdentifier>{1293e4f4-f5d8-42c1-8f4d-a86f1100f92e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="EachWorks\HD\TODO-UI\InGameUI">
+      <UniqueIdentifier>{71622d01-a614-4833-b0b9-b97857248e2e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="EachWorks\HD\TODO-UI\MainMenuUI">
+      <UniqueIdentifier>{a18f39a1-4fb3-416b-b35b-03abf33b497a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="EachWorks\HD\TODO-UI\UIWorking">
+      <UniqueIdentifier>{d2d24770-429a-4308-af5c-aa67f107f066}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

@@ -29,7 +29,7 @@ protected:
 
 public:
 	cEffectParticle();
-	~cEffectParticle();
+	virtual ~cEffectParticle();
 
 	virtual void Setup();
 	virtual void Start();

@@ -49,7 +49,9 @@ void cUIImageView::Render()
 
 	m_pSprite->End();
 
-	cUIObject::Render();
+	if (m_bShowChild){
+		cUIObject::Render();
+	}
 }
 
 ST_SIZE cUIImageView::GetSize() const

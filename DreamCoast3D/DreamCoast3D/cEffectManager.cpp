@@ -2,6 +2,7 @@
 #include "cEffectManager.h"
 #include "cEffect.h"
 #include "cEffectParticle.h"
+#include "cEffectPotion.h"
 #include "cEffectMesh.h"
 
 cEffectManager::cEffectManager()
@@ -11,6 +12,14 @@ cEffectManager::cEffectManager()
 
 cEffectManager::~cEffectManager()
 {
+
+	//while (!m_vecEffectTobeDeleted.empty()){
+	//	cEffect* p = m_vecEffectTobeDeleted.back();
+	//	m_vecEffectTobeDeleted.pop_back();
+	//	m_setEffects.erase(p);
+	//	SAFE_RELEASE(p);
+	//}
+
 	for (auto p : m_setEffects){
 		SAFE_RELEASE(p);
 	}
@@ -26,6 +35,14 @@ cEffectManager::~cEffectManager()
 		m_qeueuOnGetHitEffectPool.pop();
 		SAFE_RELEASE(p);
 	}
+
+	while (!m_qeueuHPPotionEffectPool.empty()){
+		cEffect* p = m_qeueuHPPotionEffectPool.front();
+		m_qeueuHPPotionEffectPool.pop();
+		SAFE_RELEASE(p);
+	}
+
+
 }
 
 void cEffectManager::Setup(){
@@ -33,6 +50,11 @@ void cEffectManager::Setup(){
 	for (UINT i = 0; i < 10; i++){
 		cEffectParticle* p = new cEffectParticle;
 		m_qeueuOnHitEffectPool.push(p);
+		p->SetOwner(this);
+	}
+	for (UINT i = 0; i < 10; i++){
+		cEffectPotion* p = new cEffectPotion;
+		m_qeueuHPPotionEffectPool.push(p);
 		p->SetOwner(this);
 	}
 }
@@ -48,14 +70,20 @@ void cEffectManager::Update(float fDelta){
 		p->Update(fDelta);
 	}
 
-	if (!m_vecOnHitEffectTobeDeleted.empty()){
-		for (auto p : m_vecOnHitEffectTobeDeleted){
+	if (!m_vecEffectTobeDeleted.empty()){
+		for (auto p : m_vecEffectTobeDeleted){
 			m_setEffects.erase(p);
 			if (p->GetEffectType() == p->E_EFFECT_ONHIT){
 				m_qeueuOnGetHitEffectPool.push(p);
 			}
+			else if (p->GetEffectType() == p->E_EFFECT_HPPOTION){
+				m_qeueuHPPotionEffectPool.push(p);
+			}
+			else if (p->GetEffectType() == p->E_EFFECT_MPPOTION){
+				m_qeueuHPPotionEffectPool.push(p);
+			}
 		}
-		m_vecOnHitEffectTobeDeleted.clear();
+		m_vecEffectTobeDeleted.clear();
 	}
 }
 
@@ -86,11 +114,45 @@ void cEffectManager::AddEffect(UINT uiType, D3DXVECTOR3 vPos){
 			m_setEffects.insert(p);
 		}
 	}
+	else if (uiType == cEffect::E_EFFECT_HPPOTION){
+		if (m_qeueuHPPotionEffectPool.empty()){
+			cEffectPotion* p = new cEffectPotion;
+			p->Setup();
+			p->SetPosition(vPos);
+			p->SetOwner(this);
+			m_setEffects.insert(p);
+		}
+		else{
+			cEffect* p = m_qeueuHPPotionEffectPool.front();
+			m_qeueuHPPotionEffectPool.pop();
+			p->Setup();
+			p->SetPosition(vPos);
+			m_setEffects.insert(p);
+		}
+	}
+	else if (uiType == cEffect::E_EFFECT_MPPOTION){
+		if (m_qeueuHPPotionEffectPool.empty()){
+			cEffectPotion* p = new cEffectPotion;
+			p->SetEffectType(p->E_EFFECT_MPPOTION);
+			p->Setup();
+			p->SetPosition(vPos);
+			p->SetOwner(this);
+			m_setEffects.insert(p);
+		}
+		else{
+			cEffect* p = m_qeueuHPPotionEffectPool.front();
+			m_qeueuHPPotionEffectPool.pop();
+			p->SetEffectType(p->E_EFFECT_MPPOTION);
+			p->Setup();
+			p->SetPosition(vPos);
+			m_setEffects.insert(p);
+		}
+	}
 }
 
 void cEffectManager::DeleteEffect(cEffect* pEffect){
 	if (pEffect){
-		m_vecOnHitEffectTobeDeleted.push_back(pEffect);
+		m_vecEffectTobeDeleted.push_back(pEffect);
 	}
 }
 

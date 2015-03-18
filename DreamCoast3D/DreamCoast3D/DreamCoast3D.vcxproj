@@ -126,6 +126,7 @@
     <ClInclude Include="cEffectParticle.h" />
     <ClInclude Include="cEffectManager.h" />
     <ClInclude Include="cEffectMesh.h" />
+    <ClInclude Include="cEffectPotion.h" />
     <ClInclude Include="cEffectResourceManager.h" />
     <ClInclude Include="cFontManager.h" />
     <ClInclude Include="cGameAIObject.h" />
@@ -153,6 +154,8 @@
     <ClInclude Include="cGameTimer.h" />
     <ClInclude Include="cGridSystem.h" />
     <ClInclude Include="cHeightMapTerrainEdit.h" />
+    <ClInclude Include="cItemConsume.h" />
+    <ClInclude Include="cItemWithEffect.h" />
     <ClInclude Include="cLoader.h" />
     <ClInclude Include="cLoadingScene.h" />
     <ClInclude Include="cMapLoader.h" />
@@ -219,6 +222,7 @@
     <ClInclude Include="iGameEventDelegate.h" />
     <ClInclude Include="iGameObjectDelegate.h" />
     <ClInclude Include="iGameStateObject.h" />
+    <ClInclude Include="iActivatable.h" />
     <ClInclude Include="iMap.h" />
     <ClInclude Include="iPlayerState.h" />
     <ClInclude Include="iUIInventoryDelegate.h" />
@@ -253,6 +257,7 @@
     <ClCompile Include="cEffectParticle.cpp" />
     <ClCompile Include="cEffectManager.cpp" />
     <ClCompile Include="cEffectMesh.cpp" />
+    <ClCompile Include="cEffectPotion.cpp" />
     <ClCompile Include="cEffectResourceManager.cpp" />
     <ClCompile Include="cFontManager.cpp" />
     <ClCompile Include="cGameAIObject.cpp" />
@@ -280,6 +285,8 @@
     <ClCompile Include="cGameTimer.cpp" />
     <ClCompile Include="cGridSystem.cpp" />
     <ClCompile Include="cHeightMapTerrainEdit.cpp" />
+    <ClCompile Include="cItemConsume.cpp" />
+    <ClCompile Include="cItemWithEffect.cpp" />
     <ClCompile Include="cLoader.cpp" />
     <ClCompile Include="cLoadingScene.cpp" />
     <ClCompile Include="cMapLoader.cpp" />
@@ -345,6 +352,7 @@
     <ClCompile Include="iEffectManagerDeligate.cpp" />
     <ClCompile Include="iGameObjectDelegate.cpp" />
     <ClCompile Include="iGameStateObject.cpp" />
+    <ClCompile Include="iActivatable.cpp" />
     <ClCompile Include="iMap.cpp" />
     <ClCompile Include="iPlayerState.cpp" />
     <ClCompile Include="iUIInventoryDelegate.cpp" />

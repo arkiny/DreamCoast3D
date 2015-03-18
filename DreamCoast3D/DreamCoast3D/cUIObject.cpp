@@ -12,6 +12,7 @@ cUIObject::cUIObject()
 	, m_pUIManagerDeligate(NULL)
 	, m_fAlpha(1.f)
 	, m_pEventDeligate(NULL)
+	, m_pEffectManagerDelegate(NULL)
 {
 }
 
@@ -25,6 +26,7 @@ cUIObject::cUIObject(LPD3DXSPRITE pSprite)
 	, m_pUIManagerDeligate(NULL)
 	, m_fAlpha(1.f)
 	, m_pEventDeligate(nullptr)
+	, m_pEffectManagerDelegate(NULL)
 {
 	m_pSprite->AddRef();
 }
@@ -122,4 +124,11 @@ void cUIObject::SetUIManagerDeligate(iUIManagerDeligate* pUImanagerDeligate){
 		p->SetUIManagerDeligate(pUImanagerDeligate);
 	}
 	m_pUIManagerDeligate = pUImanagerDeligate;
+}
+
+void cUIObject::SetEffectDelegate(iEffectManagerDelegate* pEffectManager){
+	for (auto p : m_vecChild){
+		p->SetEffectDelegate(pEffectManager);
+	}
+	m_pEffectManagerDelegate = pEffectManager;
 }

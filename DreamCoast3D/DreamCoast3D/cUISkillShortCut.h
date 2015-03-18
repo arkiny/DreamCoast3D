@@ -2,7 +2,8 @@
 
 class cUISkillIcon;
 class cUIImageView;
-class cDataItem;
+class cItemWithEffect;
+class cUITextView;
 
 // TODO 임시로 만들어놓은 인터페이스 차후 작업후 추가
 __interface iShortCutDragDropDeligate{
@@ -21,11 +22,10 @@ protected:
 	cUIObject*						m_pUIRoot;
 
 	std::vector<cUIImageView*>		m_vecSlots;
-	std::vector<cDataItem*>			m_vecDataInfo;
+	std::vector<cUITextView*>		m_vecItemNums;
 
-	std::vector<cUISkillIcon*>		m_vecSkills;
-
-	std::vector<cDataItem*> m_vecItem;
+	std::vector<cItemWithEffect*>	m_vecItems;
+	std::vector<float>				m_vecDelayCoolTime;
 
 public:
 	cUISkillShortCut();

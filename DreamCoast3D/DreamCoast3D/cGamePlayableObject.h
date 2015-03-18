@@ -35,10 +35,6 @@ protected:
 	SYNTHESIZE(float, m_fPlayerInvincibleTime, PlayerInvincibleTime);
 	SYNTHESIZE(float, m_fPlayerInvincibleCool, m_fPlayerInvincibleCoolTime); 
 
-
-	float m_fCurHp = 100.0f;
-	float m_fMaxHp = 100.0f;
-
 	std::vector<iPlayerState*>	m_vecStates;
 	iPlayerState*				m_pCurrentState;
 

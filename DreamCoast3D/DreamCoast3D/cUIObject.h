@@ -19,11 +19,10 @@ protected:
 	iGameObjectDelegate*		m_pGameObjDelgate;
 	iSceneDelegate*				m_pSceneDeligate;
 	iUIManagerDeligate*			m_pUIManagerDeligate;
-	/*SYNTHESIZE(iGameObjectDelegate*, m_pGameObjDelgate, GameObjDeligate);
-	SYNTHESIZE(iSceneDelegate*, m_pSceneDeligate, SceneDeligate);*/
+	iEffectManagerDelegate*		m_pEffectManagerDelegate;
 
 	// MS
-	iGameEventDelegate* m_pEventDeligate;
+	iGameEventDelegate*			m_pEventDeligate;
 
 public:
 	cUIObject();
@@ -56,6 +55,7 @@ public:
 	virtual void SetSceneDeligate(iSceneDelegate* pSceneDeligate);
 	virtual void SetUIManagerDeligate(iUIManagerDeligate* pUImanagerDeligate);
 	virtual void SetEventDeligate(iGameEventDelegate* pEventDeligate);
+	virtual void SetEffectDelegate(iEffectManagerDelegate* pEffectManager);
 
 	virtual void SetPosition(float x, float y)
 	{

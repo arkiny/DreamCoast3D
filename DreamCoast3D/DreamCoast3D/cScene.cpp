@@ -153,6 +153,10 @@ void cScene::Start(){
 		if (m_pGameObjManager){
 			m_pGameObjManager->SetEffectDeligate(m_pEffectManager);
 		}
+		if (m_pUIObjManager){
+			m_pUIObjManager->SetEffectDeligate(m_pEffectManager);
+		}
+
 		m_pEffectManager->Start();
 	}
 

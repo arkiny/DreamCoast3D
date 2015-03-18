@@ -100,9 +100,10 @@ void cGameObjManager::Render(){
 	}
 
 	for (auto p : m_setGameObjects){
-		if (m_pFrustum->IsIn(p->GetBoundingSphere())){
+		// 차후 Reasonable 하게 처리 가능할때 사용
+		//if (m_pFrustum->IsIn(p->GetBoundingSphere())){
 			SAFE_RENDER(p);
-		}
+		//}
 	}
 }
 
