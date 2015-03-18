@@ -42,8 +42,12 @@ cEffectManager::~cEffectManager()
 		m_qeueuHPPotionEffectPool.pop();
 		SAFE_RELEASE(p);
 	}
-
-
+	while (!m_qeueuSkill1EffectPool.empty()){
+		cEffect* p = m_qeueuSkill1EffectPool.front();
+		m_qeueuSkill1EffectPool.pop();
+		SAFE_RELEASE(p);
+	}
+	
 }
 
 void cEffectManager::Setup(){
