@@ -38,6 +38,9 @@ protected:
 	std::vector<iPlayerState*>	m_vecStates;
 	iPlayerState*				m_pCurrentState;
 
+	const float					m_fSkill1Delay		= 3.0f;
+	float						m_fSkill1CoolTime	= 3.0f;
+
 public:
 	cGamePlayableObject();
 	virtual ~cGamePlayableObject();
@@ -64,5 +67,8 @@ public:
 	virtual void Clone(cGameObject** pTarget) override;
 	std::string SaveAsStringInfo() override;
 
+	float GetSkill1CoolTime() { return m_fSkill1CoolTime; }
+	void SetSkill1CoolTime(float fCool) { m_fSkill1CoolTime = fCool; }
+	float GetSkill1DelayTime() { return m_fSkill1Delay; }
 };
 

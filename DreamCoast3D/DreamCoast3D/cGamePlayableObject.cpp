@@ -51,6 +51,11 @@ void cGamePlayableObject::Update(float fDelta){
 	
 	m_pGameObjDeligate->isGameObjectCollided(this);
 	m_fPlayerInvincibleCool += fDelta;
+	m_fSkill1CoolTime += fDelta;
+
+	if (m_fSkill1CoolTime > m_fSkill1Delay){
+		m_fSkill1CoolTime = m_fSkill1Delay;
+	}
 
 	if (m_fPlayerInvincibleCool > 2.0f) {
 		// 혹시 모를 오버플로우 대비

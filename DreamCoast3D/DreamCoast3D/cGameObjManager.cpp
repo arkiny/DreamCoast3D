@@ -710,10 +710,12 @@ std::vector<POINT*> cGameObjManager::RangeSkill(cGameObject* pFrom)
 
 	std::vector<POINT*> vec = m_pGridTileSystem->GetAdjCircle(vFrom.x, vFrom.z, nAttackRange);
 	
-	for (size_t i = 0; i < vec.size(); i++){
+	/*for (size_t i = 0; i < vec.size(); i++){
 		D3DXVECTOR3 effPoint = { vec[i]->x + 0.5f, pFrom->GetPosition().y, vec[i]->y + 0.5f };
 		m_pEffectDelegate->AddEffect(5, effPoint);
-	}
-
+	}*/
+	D3DXVECTOR3 effPoint = pFrom->GetPosition();
+	effPoint.y += 1.0f;
+	m_pEffectDelegate->AddEffect(5, effPoint);
 	return m_pGridTileSystem->GetAdjCircle(vFrom.x, vFrom.z, nAttackRange);
 }

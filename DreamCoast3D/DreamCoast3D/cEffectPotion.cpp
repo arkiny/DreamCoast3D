@@ -50,7 +50,7 @@ void cEffectPotion::Setup(){
 		stP._vInitialPos = m_vecVertex[i].p;
 		stP._lifeSpan = (rand() % 400) / 200.0f;
 		stP._currentTime = 0.0f;
-		stP._speed = (rand() % 200) / 200.0f;
+		stP._speed = (rand() % 200) / 100.0f;
 
 		D3DXMatrixRotationX(&rotX, D3DXToRadian(rand() % 361));
 		D3DXMatrixRotationY(&rotY, D3DXToRadian(rand() % 361));

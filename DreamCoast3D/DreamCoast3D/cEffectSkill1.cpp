@@ -5,8 +5,8 @@
 cEffectSkill1::cEffectSkill1()
 {
 	m_eEffectType = E_EFFECT_SKILL1;
-	m_vecVertex.resize(50);
-	m_vecMoveInfo.resize(50);
+	m_vecVertex.resize(300);
+	m_vecMoveInfo.resize(300);
 }
 
 
@@ -16,8 +16,8 @@ cEffectSkill1::~cEffectSkill1()
 
 void cEffectSkill1::Setup(){
 	m_fPassedTime = 0;
-	D3DXCOLOR c = D3DCOLOR_XRGB(20, 128, 20);
-	for (int i = 0; i < 50; ++i)
+	D3DXCOLOR c = D3DCOLOR_XRGB(142, 26, 13);
+	for (int i = 0; i < 100; ++i)
 	{
 		//ST_PC_VERTEX v;
 
@@ -25,10 +25,11 @@ void cEffectSkill1::Setup(){
 
 		D3DXVECTOR3 vDirection(0, 1, 0);
 		D3DXMATRIXA16 rot, rotX, rotY, rotZ;
-		D3DXMatrixRotationX(&rotX, D3DXToRadian(rand() % 361));
+		//D3DXMatrixRotationX(&rotX, D3DXToRadian(rand() % 361));
 		D3DXMatrixRotationY(&rotY, D3DXToRadian(rand() % 361));
-		D3DXMatrixRotationZ(&rotZ, D3DXToRadian(rand() % 361));
-		rot = rotX*rotY*rotZ;
+		//D3DXMatrixRotationZ(&rotZ, D3DXToRadian(rand() % 361));
+		//rot = rotX*rotY*rotZ;
+		rot = rotY;
 		D3DXMATRIXA16 localMat;
 		localMat = rot;
 		D3DXVECTOR3 localPos;
@@ -38,15 +39,15 @@ void cEffectSkill1::Setup(){
 
 		ST_PARTICLE stP;
 		stP._vInitialPos = m_vecVertex[i].p;
-		stP._lifeSpan = (rand() % 400) / 200.0f;
+		stP._lifeSpan = 1.0f;/*(rand() % 400) / 200.0f;*/
 		stP._currentTime = 0.0f;
-		stP._speed = (rand() % 200) / 200.0f;
+		stP._speed = 10.0f;/*(rand() % 2000) / 200.0f;*/
 
-		D3DXMatrixRotationX(&rotX, D3DXToRadian(rand() % 361));
-		D3DXMatrixRotationY(&rotY, D3DXToRadian(rand() % 361));
-		D3DXMatrixRotationZ(&rotZ, D3DXToRadian(rand() % 361));
+		D3DXMatrixRotationX(&rotX, D3DXToRadian(90));
+		D3DXMatrixRotationY(&rotY, D3DXToRadian(i * 3.6f));
+		//D3DXMatrixRotationZ(&rotZ, D3DXToRadian(rand() % 361));
 
-		rot = rotX*rotY*rotZ;
+		rot = rotX*rotY/**rotZ*/;
 		localMat = rot;
 		D3DXVECTOR3 vDir;
 		D3DXVec3TransformNormal(&vDir, &vDirection, &localMat);
@@ -55,7 +56,87 @@ void cEffectSkill1::Setup(){
 		m_vecMoveInfo[i] = stP;
 	}
 
-	m_pTexture = g_pTextureManager->GetTexture("../Resources/Effect/splat.png");
+	c = D3DCOLOR_XRGB(255, 121, 21);
+	for (int i = 100; i < 200; ++i)
+	{
+		//ST_PC_VERTEX v;
+
+		m_vecVertex[i].c = c;
+
+		D3DXVECTOR3 vDirection(0, 1, 0);
+		D3DXMATRIXA16 rot, rotX, rotY, rotZ;
+		//D3DXMatrixRotationX(&rotX, D3DXToRadian(rand() % 361));
+		D3DXMatrixRotationY(&rotY, D3DXToRadian(rand() % 361));
+		//D3DXMatrixRotationZ(&rotZ, D3DXToRadian(rand() % 361));
+		//rot = rotX*rotY*rotZ;
+		rot = rotY;
+		D3DXMATRIXA16 localMat;
+		localMat = rot;
+		D3DXVECTOR3 localPos;
+		D3DXVec3TransformCoord(&localPos, &vDirection, &localMat);
+		localPos = localPos * ((rand() % 200) / 2000.0f);
+		m_vecVertex[i].p = localPos;
+
+		ST_PARTICLE stP;
+		stP._vInitialPos = m_vecVertex[i].p;
+		stP._lifeSpan = 1.0f;/*(rand() % 400) / 200.0f;*/
+		stP._currentTime = 0.0f;
+		stP._speed = 10.0f;/*(rand() % 2000) / 200.0f;*/
+
+		D3DXMatrixRotationX(&rotX, D3DXToRadian(90));
+		D3DXMatrixRotationY(&rotY, D3DXToRadian(i * 3.6f));
+		//D3DXMatrixRotationZ(&rotZ, D3DXToRadian(rand() % 361));
+
+		rot = rotX*rotY/**rotZ*/;
+		localMat = rot;
+		D3DXVECTOR3 vDir;
+		D3DXVec3TransformNormal(&vDir, &vDirection, &localMat);
+		stP._direction = vDir;
+
+		m_vecMoveInfo[i] = stP;
+	}
+
+	c = D3DCOLOR_XRGB(255, 255, 0);
+	for (int i = 200; i < 300; ++i)
+	{
+		//ST_PC_VERTEX v;
+
+		m_vecVertex[i].c = c;
+
+		D3DXVECTOR3 vDirection(0, 1, 0);
+		D3DXMATRIXA16 rot, rotX, rotY, rotZ;
+		//D3DXMatrixRotationX(&rotX, D3DXToRadian(rand() % 361));
+		D3DXMatrixRotationY(&rotY, D3DXToRadian(rand() % 361));
+		//D3DXMatrixRotationZ(&rotZ, D3DXToRadian(rand() % 361));
+		//rot = rotX*rotY*rotZ;
+		rot = rotY;
+		D3DXMATRIXA16 localMat;
+		localMat = rot;
+		D3DXVECTOR3 localPos;
+		D3DXVec3TransformCoord(&localPos, &vDirection, &localMat);
+		localPos = localPos * ((rand() % 200) / 2000.0f);
+		m_vecVertex[i].p = localPos;
+
+		ST_PARTICLE stP;
+		stP._vInitialPos = m_vecVertex[i].p;
+		stP._lifeSpan = 1.0f;/*(rand() % 400) / 200.0f;*/
+		stP._currentTime = 0.0f;
+		stP._speed = 10.0f;/*(rand() % 2000) / 200.0f;*/
+
+		D3DXMatrixRotationX(&rotX, D3DXToRadian(90));
+		D3DXMatrixRotationY(&rotY, D3DXToRadian(i * 3.6f));
+		//D3DXMatrixRotationZ(&rotZ, D3DXToRadian(rand() % 361));
+
+		rot = rotX*rotY/**rotZ*/;
+		localMat = rot;
+		D3DXVECTOR3 vDir;
+		D3DXVec3TransformNormal(&vDir, &vDirection, &localMat);
+		stP._direction = vDir;
+
+		m_vecMoveInfo[i] = stP;
+	}
+
+	m_pTexture = g_pTextureManager->GetTexture("../Resources/Effect/Particle.tga");
 }
 
 void cEffectSkill1::Start(){
@@ -64,18 +145,35 @@ void cEffectSkill1::Start(){
 
 void cEffectSkill1::Update(float fDelta){
 	m_fPassedTime += fDelta;
+	size_t size = 100;
 
-	for (size_t i = 0; i < m_vecVertex.size(); i++){
+	if (m_fPassedTime > m_fLifeTime / 20.0f){
+		size = 300;
+	}
+	else if (m_fPassedTime > m_fLifeTime / 40.0f){
+		size = 200;
+	}
+
+	for (size_t i = 0; i < size; i++){
 		m_vecVertex[i].p = m_vecVertex[i].p + (m_vecMoveInfo[i]._direction * m_vecMoveInfo[i]._speed * fDelta);
 		float alpha = 1.0f - (m_vecMoveInfo[i]._currentTime*2.0f / m_vecMoveInfo[i]._lifeSpan);
 
 		if (alpha < 0.0f){
 			alpha = 0.0f;
 		}
+		D3DXCOLOR c = D3DCOLOR_XRGB(142, 26, 13);
+		if (i < 100){
+			c = D3DCOLOR_XRGB(142, 26, 13);;
+		}
+		else if (i >= 100 && i < 200) {
 
-		D3DXCOLOR c = D3DCOLOR_XRGB(20, 128, 20);
+			c = D3DCOLOR_XRGB(255, 121, 21);
+		}
+		else if (i > 200){
+			c = D3DCOLOR_XRGB(255, 255, 0);
+		}
+		
 		m_vecVertex[i].c = D3DXCOLOR(c.r, c.g, c.b, alpha);
-
 		m_vecMoveInfo[i]._currentTime += fDelta;
 	}
 
