@@ -16,7 +16,7 @@ __interface iShortCutDragDropDeligate{
 // 혹은 스킬 사용시 쿨타임을 콜백으로 처리
 // 현재는 그려놓기만 한 UI, 차후 충돌범위등을
 // 재체크해서 드래그앤드롭에 맞게 수정해야한다.
-class cUISkillShortCut : public cUIWindow, public iShortCutDragDropDeligate
+class cUISkillShortCut : public cUIWindow, public iShortCutDragDropDeligate, public iInventoryControl
 {
 protected:
 	cUIObject*						m_pUIRoot;
@@ -37,5 +37,8 @@ public:
 
 	// Overide iShortCutDragCropDelgate
 	virtual void AddShortCutIntoBox(cUISkillIcon* pSkill) override;
+
+	void	UpdateInventoryItemCount(int nIndex, int nCount) override;
+	int		GetInventoryItemCount(int nIndex) override;
 };
 

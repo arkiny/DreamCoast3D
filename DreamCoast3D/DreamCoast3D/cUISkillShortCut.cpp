@@ -197,3 +197,13 @@ void cUISkillShortCut::Render(){
 void cUISkillShortCut::AddShortCutIntoBox(cUISkillIcon* pSkill){
 
 }
+
+void	cUISkillShortCut::UpdateInventoryItemCount(int nIndex, int nCount){
+	assert(nIndex < m_vecItems.size());
+	m_vecItems[nIndex]->SetCount(nCount);
+}
+
+int		cUISkillShortCut::GetInventoryItemCount(int nIndex){
+	assert(nIndex < m_vecItems.size());
+	return m_vecItems[nIndex]->GetCount();
+}

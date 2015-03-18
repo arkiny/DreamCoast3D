@@ -10,6 +10,8 @@ protected:
 	// HACK : Prioriy Queue(Heap)로 처리하면 좋을 듯하다.
 	std::vector<cUIObject*> m_vecUIObjects;
 
+	
+
 	// Update Stack을 없애기 위함
 	bool m_bSceneChange = false;
 	iSceneDelegate* m_pSceneManager;
@@ -18,6 +20,7 @@ protected:
 	cUICursor* m_pMouseCursor;
 
 	iGameEventDelegate* m_pEventManager;
+	SYNTHESIZE(iInventoryControl*, m_pInventoryControl, InventoryControl);
 
 public:
 	cUIObjManager();

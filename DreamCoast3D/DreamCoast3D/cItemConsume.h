@@ -31,5 +31,6 @@ public:
 
 	virtual std::string GetTexturePath();
 	int GetCount() { return m_nCount; }
+	void SetCount(int nCount) { m_nCount = nCount; }
 };
 

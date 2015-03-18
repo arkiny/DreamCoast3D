@@ -367,12 +367,19 @@
     <ClCompile Include="cLoadingScene.cpp">
       <Filter>FrameWork\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="iActivatable.cpp" />
-    <ClCompile Include="cItemWithEffect.cpp" />
-    <ClCompile Include="cItemConsume.cpp" />
     <ClCompile Include="cEffectPotion.cpp">
       <Filter>FrameWork\Effects</Filter>
     </ClCompile>
+    <ClCompile Include="iActivatable.cpp">
+      <Filter>FrameWork\Interfaces</Filter>
+    </ClCompile>
+    <ClCompile Include="cItemConsume.cpp">
+      <Filter>EachWorks\HD</Filter>
+    </ClCompile>
+    <ClCompile Include="cItemWithEffect.cpp">
+      <Filter>EachWorks\HD</Filter>
+    </ClCompile>
+    <ClCompile Include="iInventoryControl.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cAction.h">
@@ -753,12 +760,19 @@
     <ClInclude Include="cLoadingScene.h">
       <Filter>FrameWork\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="iActivatable.h" />
-    <ClInclude Include="cItemWithEffect.h" />
-    <ClInclude Include="cItemConsume.h" />
     <ClInclude Include="cEffectPotion.h">
       <Filter>FrameWork\Effects</Filter>
     </ClInclude>
+    <ClInclude Include="iActivatable.h">
+      <Filter>FrameWork\Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="cItemWithEffect.h">
+      <Filter>EachWorks\HD</Filter>
+    </ClInclude>
+    <ClInclude Include="cItemConsume.h">
+      <Filter>EachWorks\HD</Filter>
+    </ClInclude>
+    <ClInclude Include="iInventoryControl.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="DreamCoast3D.ico">

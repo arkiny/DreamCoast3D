@@ -82,10 +82,11 @@ void cUILoader::ParseUI(OUT cUIObjManager* pUIManager){
 				}
 			}
 			else if (isEqual(szTypeName, "UISKILL")){
-				cUIObject* p = new cUISkillShortCut;
+				cUISkillShortCut* p = new cUISkillShortCut;
 				p->Setup();
 				if (p){
 					pUIManager->AddUI(p);
+					pUIManager->SetInventoryControl(p);
 					SAFE_RELEASE(p);
 				}
 			}
