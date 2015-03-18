@@ -21,7 +21,6 @@ void cSceneManager::Setup(std::string sFolder, std::string sFile){
 
 void cSceneManager::Update(float delta){
 	// 업데이트는 여기서
-	//for (auto p : m_setScenes){
 	if (m_pCurrentScene){
 		m_pCurrentScene->Update(delta);
 	}
@@ -96,7 +95,8 @@ void cSceneManager::AddSceneFilePath(std::string sFilePath){
 
 void cSceneManager::Render(){
 	// 여기서 현재씬을 렌더한다. 각씬이 오브젝트들을 가지고 렌더한다.
-	SAFE_RENDER(m_pCurrentScene);	
+	SAFE_RENDER(m_pCurrentScene);
+
 }
 
 void cSceneManager::Destroy(){
@@ -121,4 +121,9 @@ void cSceneManager::ChangeSceneFromLoader(cScene* pNextScene){
 
 	m_pCurrentScene = pNextScene;
 	m_bIsLoading = false;
+}
+
+void cSceneManager::PauseObjectUpdate(bool isPause)
+{
+	m_pCurrentScene->PauseObjectUpdate(isPause);
 }

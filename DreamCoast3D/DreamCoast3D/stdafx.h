@@ -174,16 +174,16 @@ typedef struct ST_STAT_INFO{
 	int nArmor = 1;					// 방어력
 	int nAgility = 1;				// 민첩성
 	int nAttackSpeed = 1;			// 공속
-	int nMoveSpeed = 10;				// 이동속도
+	int nMoveSpeed = 10;			// 이동속도
 
 	// 실질적 전투수치
-	float fStatAttackPower =1.0f;		//공격력
-	float fStatDefensePower = 1.0f;	//방어력
-	float fKnockingDownRate = 1.0f;	//다운유발확률
-	float fKnockDownResist = 1.0f;				//다운저항치
+	float fStatAttackPower = 100.0f;		//공격력
+	float fStatDefensePower = 1.0f;			//방어력
+	float fKnockingDownRate = 1.0f;			//다운유발확률
+	float fKnockDownResist = 1.0f;			//다운저항치
 	float fCriticalRate = 1.0f;				//크리티컬확률
-	float fCriticalResist = 1.0f;				//크리티컬저항
-	float fCriticalMultiplier = 1.0f;			//크리티컬배율
+	float fCriticalResist = 1.0f;			//크리티컬저항
+	float fCriticalMultiplier = 1.0f;		//크리티컬배율
 
 	// 기본 체력
 	float fMaxHp = 100.0f;

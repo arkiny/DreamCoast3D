@@ -33,10 +33,15 @@ public:
 	/////
 
 	void CheckEventFromRange(cGameObject* pFrom, int nRange);
-
 	void SetSceneDelegate(iSceneDelegate* pSceneDelegate);
 
 private:
 	iSceneDelegate* m_pSceneDelegate;
+	
+	bool m_isPause;
+	bool m_isStoreButton;
+	float m_fPassTime;
+	void StoreEvent();
+	void StoreKeyUpdate(float fDelta);
 };
 

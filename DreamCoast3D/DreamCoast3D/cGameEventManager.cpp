@@ -5,6 +5,9 @@
 cGameEventManager::cGameEventManager()
 	: m_pGridTileSystem(NULL)
 	, m_pSceneDelegate(NULL)
+	, m_isPause(false)
+	, m_isStoreButton(false)
+	, m_fPassTime(0.f)
 {
 }
 
@@ -34,7 +37,7 @@ void cGameEventManager::Start()
 
 void cGameEventManager::Update(float delta)
 {
-
+	StoreKeyUpdate(delta);
 }
 
 void cGameEventManager::Exit()
@@ -89,4 +92,41 @@ void cGameEventManager::CheckEventFromRange(cGameObject* pFrom, int nRange)
 void cGameEventManager::SetSceneDelegate(iSceneDelegate* pSceneDelegate)
 {
 	m_pSceneDelegate = pSceneDelegate;
+}
+
+void cGameEventManager::StoreEvent()
+{
+	if (m_isStoreButton == false)
+	{
+		if (g_pControlManager->GetInputInfo('M'))
+		{
+			if (m_isPause == false)
+			{
+				m_isPause = true;
+			}
+			else if (m_isPause == true)
+			{
+				m_isPause = false;
+			}
+		}
+	}
+
+	m_pSceneDelegate->PauseObjectUpdate(m_isPause);
+}
+
+void cGameEventManager::StoreKeyUpdate(float fDelta)
+{
+	if (g_pControlManager->GetInputInfo('M') && m_isStoreButton == false)
+	{
+		m_isStoreButton = true;
+	}
+	if (m_isStoreButton == true)
+	{
+		m_fPassTime += fDelta;
+	}
+	if (m_fPassTime >= 0.1f)
+	{
+		m_isStoreButton = false;
+		m_fPassTime = 0.f;
+	}
 }

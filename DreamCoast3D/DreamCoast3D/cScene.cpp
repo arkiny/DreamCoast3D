@@ -37,6 +37,7 @@ cScene::cScene()
 	, m_pEffectManager(NULL)
 	, m_pGameEventManager(NULL)
 {
+	m_isPauseUpdate = false;
 }
 
 cScene::~cScene()
@@ -183,10 +184,12 @@ void cScene::Update(float delta){
 			m_pGameObjManager->AdjustYPositionByHeightMap(m_pCurrentMap);
 		}
 
-		if (m_pGameObjManager){
-			m_pGameObjManager->Update(delta);
+		if (m_isPauseUpdate == false)
+		{
+			if (m_pGameObjManager){
+				m_pGameObjManager->Update(delta);
+			}
 		}
-
 
 	}
 
@@ -202,22 +205,22 @@ void cScene::Update(float delta){
 	if (m_pUIObjManager){
 		m_pUIObjManager->Update(delta);
 	}
-
-
-
-
 }
 
 void cScene::Render(){
 	// æ¿¿ª ∑ª¥ı«—¥Ÿ.
 
 	// «ˆ¿Á ∏ ∏∏ ∑ª¥ı∏µ«‘
-	SAFE_RENDER(m_pGameObjManager);
-	SAFE_RENDER(m_pCurrentMap);
+	if (m_isPauseUpdate == false)
+	{
+		SAFE_RENDER(m_pGameObjManager);
+		SAFE_RENDER(m_pCurrentMap);
 
-	SAFE_RENDER(m_pUIObjManager);
-	SAFE_RENDER(m_pCamera);
-	SAFE_RENDER(m_pEffectManager);
+		SAFE_RENDER(m_pUIObjManager);
+		SAFE_RENDER(m_pCamera);
+		SAFE_RENDER(m_pEffectManager);
+	}
+
 }
 
 void cScene::Exit(){
@@ -290,4 +293,9 @@ void cScene::SetCamera(cCamera* pCamera) {
 void cScene::AddLightSrc(cLightSource* pLightSource){
 	SAFE_ADD_REF(pLightSource);
 	m_vecLightSources.push_back(pLightSource);
+}
+
+void cScene::PauseObjectUpdate(bool isPause)
+{
+	m_isPauseUpdate = isPause;
 }

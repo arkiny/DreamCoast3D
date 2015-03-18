@@ -34,5 +34,7 @@ public:
 	void SceneFinished(cScene* pSender) override;
 	void ChangeScene(int nNextSceneIndex) override;
 	void ChangeSceneFromLoader(cScene* pNextScene) override;
+	void PauseObjectUpdate(bool isPause) override;
+
 };
 

@@ -142,6 +142,7 @@ public:
 		return m_pGameEventManager;
 	}
 
-
+	bool m_isPauseUpdate;
+	virtual void PauseObjectUpdate(bool isPause);
 };
 

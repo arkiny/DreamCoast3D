@@ -38,6 +38,9 @@ void cUIObjManager::Update(float fDelta){
 			PostQuitMessage(NULL);
 		}
 	}
+
+	m_pEventManager->StoreEvent();
+
 }
 
 void cUIObjManager::Render(){	
@@ -88,6 +91,7 @@ void cUIObjManager::SetEventDeligate(iGameEventDelegate* pEventManager)
 		p->SetEventDeligate(pEventManager);
 		pEventManager->SetSceneDelegate(m_pSceneManager);
 	}
+	m_pEventManager = pEventManager;
 }
 
 

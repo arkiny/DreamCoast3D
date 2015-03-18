@@ -227,7 +227,9 @@ int  cAIAttack::GetCurrentStateType(){
 void cAIOnHit::Start(cGameAIObject* pAIObject){
 	if (pAIObject->GetAItype() == cGameAIObject::E_AI_TYPE::E_AI_BOSS)
 	{
-		pAIObject->SetHP(pAIObject->GetHP() - 100);
+		ST_STAT_INFO* pPlayerStat = pAIObject->GetGameObjDeligate()->GetPlayerStatInfo();
+		float fDamage = pPlayerStat->fStatAttackPower;
+		pAIObject->SetHP(pAIObject->GetHP() - fDamage);
 		pAIObject->ChangeState(pAIObject->eAISTATE_THINK);
 		return;
 	}

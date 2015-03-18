@@ -17,6 +17,8 @@ protected:
 
 	cUICursor* m_pMouseCursor;
 
+	iGameEventDelegate* m_pEventManager;
+
 public:
 	cUIObjManager();
 	virtual ~cUIObjManager();
