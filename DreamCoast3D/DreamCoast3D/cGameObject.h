@@ -116,5 +116,6 @@ public:
 
     // MS
     virtual void SetHP(float fHP) {};
+	//SYNTHESIZE(float, m_fHP, HP);
 };
 

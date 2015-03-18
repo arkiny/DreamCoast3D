@@ -685,3 +685,24 @@ void cGameObjManager::SetCurrentPosition(D3DXVECTOR3 vCurrentPos)
 {
 	m_vCurrentPos = vCurrentPos;
 }
+
+void cGameObjManager::RangeSkill(cGameObject* pFrom)
+{
+	int nAttackRange = 10;
+	D3DXVECTOR3 vFrom;
+	vFrom = pFrom->GetPosition();
+	std::vector<cGameObject*> vecGameObject;
+	vecGameObject = m_pGridTileSystem->GetAdjObjectCustomer((int)vFrom.x, (int)vFrom.z, nAttackRange);
+
+	for (auto p : vecGameObject)
+	{
+		if (p == pFrom)
+		{
+			continue;
+		}
+		else
+		{
+			p->OnHitTarget(pFrom, 500.f, p->GetPosition());
+		}
+	}
+}

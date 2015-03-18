@@ -22,4 +22,6 @@ __interface iGameObjectDelegate{
 	void SetNextPosition(D3DXVECTOR3 vNextPos);
 	void SetCurrentPosition(D3DXVECTOR3 vCurrentPos);
 	D3DXVECTOR3 GravityForce();
+
+	void RangeSkill(cGameObject* pFrom);
 };

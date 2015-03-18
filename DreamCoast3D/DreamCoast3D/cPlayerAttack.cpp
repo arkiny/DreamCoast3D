@@ -17,6 +17,7 @@ void cPlayerAttack::Start(cGamePlayableObject* pPlayer){
 }
 
 void cPlayerAttack::Execute(cGamePlayableObject* pPlayer, float fDelta){
+
 	pPlayer->SetStatePassedTime(pPlayer->GetStatePassedTime() + fDelta);
 
 	for (auto p : *pPlayer->GetAttackSpheres()){

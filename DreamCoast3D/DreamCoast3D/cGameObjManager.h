@@ -8,6 +8,7 @@
 class cFrustum;
 class cGameMapObject;
 class cGamePlayableObject;
+class cGameAIObject;
 
 class cGameObjManager : public cObject, public iGameObjectDelegate
 {
@@ -105,5 +106,7 @@ private:
 	D3DXVECTOR3 m_vCurrentPos;
 
 	D3DXVECTOR3 GravityForce();
+
+	void RangeSkill(cGameObject* pFrom);
 };
 
