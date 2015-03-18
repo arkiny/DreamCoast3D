@@ -20,7 +20,7 @@ void cPlayerIdle::Start(cGamePlayableObject* pPlayer){
 
 void cPlayerIdle::Execute(cGamePlayableObject* pPlayer, float fDelta){
 
-	if (g_pControlManager->GetInputInfo('N'))
+	if (g_pControlManager->GetInputInfo('C'))
 	{
 		pPlayer->GetGameObjDeligate()->RangeSkill(pPlayer);
 	}

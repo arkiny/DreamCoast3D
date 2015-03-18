@@ -8,7 +8,6 @@
 class cFrustum;
 class cGameMapObject;
 class cGamePlayableObject;
-class cGameAIObject;
 
 class cGameObjManager : public cObject, public iGameObjectDelegate
 {

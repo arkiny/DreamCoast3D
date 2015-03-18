@@ -703,7 +703,7 @@ void cGameObjManager::RangeSkill(cGameObject* pFrom)
 		}
 		else
 		{
-			p->OnHitTarget(pFrom, 500.f, p->GetPosition());
+			p->OnHitTarget(pFrom, 300.f, p->GetPosition());
 		}
 	}
 }
