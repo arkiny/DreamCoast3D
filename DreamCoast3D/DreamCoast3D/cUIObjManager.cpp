@@ -6,6 +6,7 @@ cUIObjManager::cUIObjManager()
 {
 	m_isTrap = false;
 	m_isCursorUpdate = false;
+	m_pEventManager = nullptr;
 }
 
 
@@ -41,7 +42,11 @@ void cUIObjManager::Update(float fDelta){
 		}
 	}
 
-	m_pEventManager->StoreEvent();
+	if (m_pEventManager)
+	{
+		m_pEventManager->StoreEvent();
+
+	}
 	UpdateTrap();
 
 }
