@@ -30,21 +30,21 @@ void cStoreWindow::Setup(){
 
 	cUIImageButton* pUIImageAcceptButton = new cUIImageButton(m_pSprite);
 	pUIImageAcceptButton->Setup(
-		std::string("../Resources/UI/UI_BUTTON_LOBBY/TE_1_NORMAL.png"),
-		std::string("../Resources/UI/UI_BUTTON_LOBBY/TE_1_ON.png"),
-		std::string("../Resources/UI/UI_BUTTON_LOBBY/TE_1_CLICK.png"));
-	pUIImageAcceptButton->SetPosition(D3DXVECTOR3(0, 100, 0.f));
-	pUIImageAcceptButton->SetScale(D3DXVECTOR3(.6f, .6f, 1.0f));
+		std::string("../Resources/UI/UI_STORE/Store_Master.png"),
+		std::string("../Resources/UI/UI_STORE/Store_Master.png"),
+		std::string("../Resources/UI/UI_STORE/Store_Master.png"));
+	pUIImageAcceptButton->SetPosition(D3DXVECTOR3(300, 100, 0.f));
+	pUIImageAcceptButton->SetScale(D3DXVECTOR3(1.0f, 1.0f, 1.0f));
 	pUIImageAcceptButton->SetDelegate(this);
 	m_pUIRoot->AddChild(pUIImageAcceptButton);
 	pUIImageAcceptButton->Release();
 
 	cUIImageButton* pUIImageCancelButton = new cUIImageButton(m_pSprite);
 	pUIImageCancelButton->Setup(
-		std::string("../Resources/UI/UI_BUTTON_LOBBY/TE_1_NORMAL.png"),
-		std::string("../Resources/UI/UI_BUTTON_LOBBY/TE_1_ON.png"),
-		std::string("../Resources/UI/UI_BUTTON_LOBBY/TE_1_CLICK.png"));
-	pUIImageCancelButton->SetPosition(D3DXVECTOR3(200, 100, 0.f));
+		std::string("../Resources/UI/UI_STORE/Store_Speak.png"),
+		std::string("../Resources/UI/UI_STORE/Store_Speak.png"),
+		std::string("../Resources/UI/UI_STORE/Store_Speak.png"));
+	pUIImageCancelButton->SetPosition(D3DXVECTOR3(500, 100, 0.f));
 	pUIImageCancelButton->SetScale(D3DXVECTOR3(.6f, .6f, 1.0f));
 	pUIImageCancelButton->SetDelegate(this);
 	m_pUIRoot->AddChild(pUIImageCancelButton);
@@ -52,10 +52,10 @@ void cStoreWindow::Setup(){
 
 	cUIImageButton* pUIImageHealthButton = new cUIImageButton(m_pSprite);
 	pUIImageHealthButton->Setup(
-		std::string("../Resources/UI/UI_STORE/Store_HealthPotion_Normal.png"),
-		std::string("../Resources/UI/UI_STORE/Store_HealthPotion_On.png"),
-		std::string("../Resources/UI/UI_STORE/Store_HealthPotion_Click.png"));
-	pUIImageHealthButton->SetPosition(D3DXVECTOR3(0, 0, 0.f));
+        std::string("../Resources/ICON/ICON_Item/HP_Potion_Level_33_Tex.tga"),
+        std::string("../Resources/ICON/ICON_Item/HP_Potion_Level_33_Tex.tga"),
+        std::string("../Resources/ICON/ICON_Item/HP_Potion_Level_33_Tex.tga"));
+	pUIImageHealthButton->SetPosition(D3DXVECTOR3(850, 140, 0.f));
 	pUIImageHealthButton->SetScale(D3DXVECTOR3(1.f, 1.f, 1.f));
 	pUIImageHealthButton->SetDelegate(this);
 	m_pUIRoot->AddChild(pUIImageHealthButton);
@@ -65,10 +65,10 @@ void cStoreWindow::Setup(){
 
 	cUIImageButton* pUIImageManaButton = new cUIImageButton(m_pSprite);
 	pUIImageManaButton->Setup(
-		std::string("../Resources/UI/UI_STORE/Store_ManaPotion_Normal.png"),
-		std::string("../Resources/UI/UI_STORE/Store_ManaPotion_On.png"),
-		std::string("../Resources/UI/UI_STORE/Store_ManaPotion_Click.png"));
-	pUIImageManaButton->SetPosition(D3DXVECTOR3(30, 0, 0.f));
+		std::string("../Resources/ICON/ICON_Item/MP_Potion_Level_33_Tex.tga"),
+		std::string("../Resources/ICON/ICON_Item/MP_Potion_Level_33_Tex.tga"),
+		std::string("../Resources/ICON/ICON_Item/MP_Potion_Level_33_Tex.tga"));
+	pUIImageManaButton->SetPosition(D3DXVECTOR3(850, 210, 0.f));
 	pUIImageHealthButton->SetScale(D3DXVECTOR3(1.f, 1.f, 1.f));
 	pUIImageManaButton->SetDelegate(this);
 	m_pUIRoot->AddChild(pUIImageManaButton);
