@@ -8,4 +8,5 @@ __interface iGameEventDelegate
 	virtual void SetCurrentTileSystem(iGridTileSystem* pGridSystem);
 	virtual void SetSceneDelegate(iSceneDelegate* pSceneDelegate);
 	virtual void StoreEvent();
+	virtual void SetUIDelegate(iUIManagerDeligate* m_pUIDelegate);
 };

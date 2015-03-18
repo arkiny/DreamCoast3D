@@ -5,6 +5,7 @@
 cGameEventManager::cGameEventManager()
 	: m_pGridTileSystem(NULL)
 	, m_pSceneDelegate(NULL)
+	, m_pUIDelegate(NULL)
 	, m_isPause(false)
 	, m_isStoreButton(false)
 	, m_fPassTime(0.f)
@@ -110,7 +111,6 @@ void cGameEventManager::StoreEvent()
 			}
 		}
 	}
-
 	m_pSceneDelegate->PauseObjectUpdate(m_isPause);
 }
 

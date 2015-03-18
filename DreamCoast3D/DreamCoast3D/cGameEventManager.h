@@ -3,6 +3,7 @@
 
 class cGameEvent;
 
+
 class cGameEventManager : public cObject, public iGameEventDelegate
 {
 protected:
@@ -11,6 +12,7 @@ protected:
 
 private:
 	iGridTileSystem* m_pGridTileSystem;
+	
 
 public:
 	cGameEventManager();
@@ -34,9 +36,11 @@ public:
 
 	void CheckEventFromRange(cGameObject* pFrom, int nRange);
 	void SetSceneDelegate(iSceneDelegate* pSceneDelegate);
+	void SetUIDelegate(iUIManagerDeligate* m_pUIDelegate);
 
 private:
 	iSceneDelegate* m_pSceneDelegate;
+	iUIManagerDeligate* m_pUIDelegate;
 	
 	bool m_isPause;
 	bool m_isStoreButton;
