@@ -16,11 +16,13 @@ private:
 	std::vector<bool>	m_vecMovable;
 
 
-	std::vector<POINT*> GetAdjCircle(int nX, int nZ, int nRange);
+
 
 public:
 	cGridSystem();
 	~cGridSystem();
+
+	std::vector<POINT*> GetAdjCircle(int nX, int nZ, int nRange);
 
 	// HeightMap Setup
 	void Setup(int nMapSize);
@@ -57,4 +59,7 @@ public:
 	// 몬스터나 플레이어가 매번 업데이트때 실행되서 현재 타일이 자신의 타일과 다를경우
 	// 자신이 있는 타일 업데이트를 실시(빼서 넣기 등등)해야 하기 때문
 	// POINT GetTileCoord(D3DXVECTOR3& vecPos)
+
+
+
 };

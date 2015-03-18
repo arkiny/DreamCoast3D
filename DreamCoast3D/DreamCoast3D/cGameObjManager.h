@@ -106,6 +106,6 @@ private:
 
 	D3DXVECTOR3 GravityForce();
 
-	void RangeSkill(cGameObject* pFrom);
+	std::vector<POINT*> RangeSkill(cGameObject* pFrom);
 };
 

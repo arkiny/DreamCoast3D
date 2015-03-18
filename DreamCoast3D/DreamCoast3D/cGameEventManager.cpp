@@ -77,6 +77,7 @@ void cGameEventManager::CheckEventFromRange(cGameObject* pFrom, int nRange)
 	std::vector<cGameObject*> vecGameObject;
 	vecGameObject = m_pGridTileSystem->GetAdjObjectCustomer(vFrom.x, vFrom.z, nRange);
 
+
 	for (auto p : vecGameObject)
 	{
 		if (p == pFrom)

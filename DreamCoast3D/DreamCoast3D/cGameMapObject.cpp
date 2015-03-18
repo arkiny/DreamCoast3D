@@ -84,6 +84,16 @@ std::vector<cGameObject*> cGameMapObject::GetAdjObjectCustomer(int nX, int nZ, i
 	}
 }
 
+std::vector<POINT*> cGameMapObject::GetAdjCircle(int nX, int nZ, int nRange)
+{
+	if (m_pGridSystem){
+		return m_pGridSystem->GetAdjCircle(nX, nZ, nRange);
+	}
+	else {
+		return std::vector<POINT*>();
+	}
+}
+
 std::vector<cGameObject*> cGameMapObject::GetAdjObjectCircle(int nX, int nZ, int nRange){
 	if (m_pGridSystem){
 		return m_pGridSystem->GetAdjObjectCircle(nX, nZ, nRange);

@@ -23,5 +23,5 @@ __interface iGameObjectDelegate{
 	void SetCurrentPosition(D3DXVECTOR3 vCurrentPos);
 	D3DXVECTOR3 GravityForce();
 
-	void RangeSkill(cGameObject* pFrom);
+	std::vector<POINT*> RangeSkill(cGameObject* pFrom);
 };

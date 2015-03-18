@@ -91,6 +91,7 @@ void cUIObjManager::SetEventDeligate(iGameEventDelegate* pEventManager)
 	{
 		p->SetEventDeligate(pEventManager);
 		pEventManager->SetSceneDelegate(m_pSceneManager);
+		pEventManager->SetUIDelegate(this);
 	}
 	m_pEventManager = pEventManager;
 }

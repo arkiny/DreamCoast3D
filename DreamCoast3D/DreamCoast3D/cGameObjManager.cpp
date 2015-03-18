@@ -687,13 +687,13 @@ void cGameObjManager::SetCurrentPosition(D3DXVECTOR3 vCurrentPos)
 	m_vCurrentPos = vCurrentPos;
 }
 
-void cGameObjManager::RangeSkill(cGameObject* pFrom)
+std::vector<POINT*> cGameObjManager::RangeSkill(cGameObject* pFrom)
 {
-	int nAttackRange = 10;
+	int nAttackRange = 5;
 	D3DXVECTOR3 vFrom;
 	vFrom = pFrom->GetPosition();
 	std::vector<cGameObject*> vecGameObject;
-	vecGameObject = m_pGridTileSystem->GetAdjObjectCustomer((int)vFrom.x, (int)vFrom.z, nAttackRange);
+	vecGameObject = m_pGridTileSystem->GetAdjObjectCircle((int)vFrom.x, (int)vFrom.z, nAttackRange);
 
 	for (auto p : vecGameObject)
 	{
@@ -706,4 +706,5 @@ void cGameObjManager::RangeSkill(cGameObject* pFrom)
 			p->OnHitTarget(pFrom, 300.f, p->GetPosition());
 		}
 	}
+	return m_pGridTileSystem->GetAdjCircle(vFrom.x, vFrom.z, nAttackRange);
 }
