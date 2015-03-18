@@ -19,6 +19,11 @@ void cPlayerMove::Start(cGamePlayableObject* pPlayer){
 
 void cPlayerMove::Execute(cGamePlayableObject* pPlayer, float fDelta){
 
+	if (g_pControlManager->GetInputInfo('C'))
+	{
+		pPlayer->GetGameObjDeligate()->RangeSkill(pPlayer);
+	}
+
 	if (g_pControlManager->GetInputInfo('Q')){
 		D3DXMATRIXA16 matR;
 		float angle = pPlayer->GetPlayerAngle();

@@ -320,108 +320,161 @@ std::vector<POINT*> cGridSystem::GetAdjCircle(int nX, int nZ, int nRange)
 	int PosX = nX;
 	int PosY = nZ;
 
-	for (int i = 0; i < nRan; i++)
+	for (int z = nZ - nRan; z <= nZ + nRan; z++)
 	{
-
-		POINT* pos = new POINT;
-		pos->x = x;
-		pos->y = nRan - z;
-		x += 1;
-		z += 1;
-		if (setPoint.find(pos) == setPoint.end())
+		for (int x = nX - nRan; x <= nX + nRan; x++)
 		{
-			vecPoint.push_back(pos);
-		}
-		setPoint.insert(pos);
-	}
-	x = nRan;
-	z = nRan;
-	for (int i = 0; i < nRan; i++)
-	{
-		POINT* pos = new POINT;
-		pos->x = x;
-		pos->y = -(nRan - z);
-		x -= 1;
-		z -= 1;
-
-		if (setPoint.find(pos) == setPoint.end())
-		{
-			vecPoint.push_back(pos);
-		}
-		setPoint.insert(pos);
-	}
-	x = nRan;
-	z = nRan;
-
-	for (int i = 0; i < nRan; i++)
-	{
-		POINT* pos = new POINT;
-		pos->x = -x;
-		pos->y = +(nRan - z);
-		x -= 1;
-		z -= 1;
-
-		if (setPoint.find(pos) == setPoint.end())
-		{
-			vecPoint.push_back(pos);
-		}
-		setPoint.insert(pos);
-	}
-	x = 0;
-	z = 0;
-
-	for (int i = 0; i < nRan; i++)
-	{
-		POINT* pos = new POINT;
-		pos->x = -x;
-		pos->y = -(nRan - z);
-		x += 1;
-		z += 1;
-
-		if (setPoint.find(pos) == setPoint.end())
-		{
-			vecPoint.push_back(pos);
-		}
-		setPoint.insert(pos);
-	}
-
-	for (int i = 0; i < vecPoint.size(); i++)
-	{
-		vecPoint[i]->x += PosX;
-		vecPoint[i]->y += PosY;
-	}
-
-	std::vector<POINT*> vecTest;
-	vecTest = vecPoint;
-
-	for (int i = 0; i < vecTest.size(); i++)
-	{
-		bool m_isTest = false;
-		int nA = 0;
-		int nB = 0;
-		int x = vecTest[i]->x;
-		int y = vecTest[i]->y;
-		for (nB = y - nRan; nB < y + nRan; nB++)
-		{
-			for (nA = x - nRan; nA < x + nRan; nA++)
-			{
-				POINT* pos = new POINT;
-				pos->x = nA;
-				pos->y = nB;
-				for (int n = 0; n < vecPoint.size(); n++)
-				{
-					if (vecPoint[n]->x == pos->x && vecPoint[n]->y == pos->y)
-					{
-						m_isTest = true;
-						break;
-					}
-				}
-				if (m_isTest == false)
-				{
-					vecPoint.push_back(pos);
-				}
-			}
+			POINT* pPos = new POINT;
+			pPos->x = x;
+			pPos->y = z;
+			vecPoint.push_back(pPos);
 		}
 	}
-	return vecPoint;
+
+	int nSize = vecPoint.size();
+
+	std::vector<POINT*> vecReturn;
+
+
+	for (int i = 0; i < nSize; i++)
+	{
+		D3DXVECTOR3 vFrom(0.f, 0.f, 0.f);
+		vFrom.x = nX;
+		vFrom.z = nZ;
+		D3DXVECTOR3 vTo(0.f, 0.f, 0.f);
+		vTo.x = vecPoint[i]->x;
+		vTo.z = vecPoint[i]->y;
+		D3DXVECTOR3 vDist(0.f, 0.f, 0.f);
+		vDist = vFrom - vTo;
+		float fDist = D3DXVec3Length(&vDist);
+		if (fDist <= nRan)
+		{
+			POINT* pos = new POINT;
+			pos->x = vTo.x;
+			pos->y = vTo.z;
+			vecReturn.push_back(pos);
+		}
+	}
+
+
+
+	//for (int i = 0; i < nRan; i++)
+	//{
+	//	POINT* pos = new POINT;
+	//	pos->x = x;
+	//	pos->y = nRan - z;
+	//	x += 1;
+	//	z += 1;
+	//	if (setPoint.find(pos) == setPoint.end())
+	//	{
+	//		vecPoint.push_back(pos);
+	//	}
+	//	setPoint.insert(pos);
+	//}
+	//x = nRan;
+	//z = nRan;
+	//for (int i = 0; i < nRan; i++)
+	//{
+	//	POINT* pos = new POINT;
+	//	pos->x = x;
+	//	pos->y = -(nRan - z);
+	//	x -= 1;
+	//	z -= 1;
+
+	//	if (setPoint.find(pos) == setPoint.end())
+	//	{
+	//		vecPoint.push_back(pos);
+	//	}
+	//	setPoint.insert(pos);
+	//}
+	//x = nRan;
+	//z = nRan;
+
+	//for (int i = 0; i < nRan; i++)
+	//{
+	//	POINT* pos = new POINT;
+	//	pos->x = -x;
+	//	pos->y = +(nRan - z);
+	//	x -= 1;
+	//	z -= 1;
+
+	//	if (setPoint.find(pos) == setPoint.end())
+	//	{
+	//		vecPoint.push_back(pos);
+	//	}
+	//	setPoint.insert(pos);
+	//}
+	//x = 0;
+	//z = 0;
+
+	//for (int i = 0; i < nRan; i++)
+	//{
+	//	POINT* pos = new POINT;
+	//	pos->x = -x;
+	//	pos->y = -(nRan - z);
+	//	x += 1;
+	//	z += 1;
+
+	//	if (setPoint.find(pos) == setPoint.end())
+	//	{
+	//		vecPoint.push_back(pos);
+	//	}
+	//	setPoint.insert(pos);
+	//}
+
+	//for (int i = 0; i < vecPoint.size(); i++)
+	//{
+	//	vecPoint[i]->x += PosX;
+	//	vecPoint[i]->y += PosY;
+	//}
+
+	//std::vector<POINT*> vecTest;
+	//vecTest = vecPoint;
+
+	//for (int i = 0; i < vecTest.size(); i++)
+	//{
+	//	bool m_isTest = false;
+	//	int nA = 0;
+	//	int nB = 0;
+	//	int x = vecTest[i]->x;
+	//	int y = vecTest[i]->y;
+	//	for (nB = y - nRan; nB < y + nRan; nB++)
+	//	{
+	//		for (nA = x - nRan; nA < x + nRan; nA++)
+	//		{
+	//			POINT* pos = new POINT;
+	//			pos->x = nA;
+	//			pos->y = nB;
+
+	//			D3DXVECTOR3 vFrom(0.f, 0.f, 0.f);
+	//			vFrom.x = nX;
+	//			vFrom.z = nZ;
+	//			D3DXVECTOR3 vTo(0.f, 0.f, 0.f);
+	//			vTo.x = nA;
+	//			vTo.z = nB;
+	//			D3DXVECTOR3 vDist(0.f, 0.f, 0.f);
+	//			vDist = vFrom - vTo;
+
+	//			float fDist = D3DXVec3Length(&vDist);
+	//			
+	//			if (fDist < nRan)
+	//			{
+	//				for (int n = 0; n < vecPoint.size(); n++)
+	//				{
+	//					if (x == pos->x && y == pos->y)
+	//					{
+	//						m_isTest = true;
+	//						break;
+	//					}
+	//				}
+	//				if (m_isTest == false)
+	//				{
+	//					vecPoint.push_back(pos);
+	//				}
+	//			}
+
+	//		}
+	//	}
+	//}
+	return vecReturn;
 }
