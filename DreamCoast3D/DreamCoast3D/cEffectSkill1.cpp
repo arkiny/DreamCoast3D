@@ -55,7 +55,7 @@ void cEffectSkill1::Setup(){
 		m_vecMoveInfo[i] = stP;
 	}
 
-	m_pTexture = g_pTextureManager->GetTexture("../Resources/Effect/Particle.tga");
+	m_pTexture = g_pTextureManager->GetTexture("../Resources/Effect/splat.png");
 }
 
 void cEffectSkill1::Start(){
@@ -108,8 +108,8 @@ void cEffectSkill1::Render(){
 
 
 	g_pD3DDevice->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
-	g_pD3DDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_ONE);
-	//g_pD3DDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
+	//g_pD3DDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_ONE);
+	g_pD3DDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
 
 	g_pD3DDevice->SetRenderState(D3DRS_LIGHTING, false);
 

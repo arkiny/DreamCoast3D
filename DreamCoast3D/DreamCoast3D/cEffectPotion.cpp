@@ -18,16 +18,16 @@ cEffectPotion::~cEffectPotion()
 void cEffectPotion::Setup(){
 
 	m_fPassedTime = 0;
-	D3DXCOLOR c = D3DCOLOR_XRGB(128, 20, 20);
+	D3DXCOLOR c = D3DCOLOR_XRGB(188, 20, 20);
 
 	if (m_eEffectType == E_EFFECT_HPPOTION){
-		c = D3DCOLOR_XRGB(128, 20, 20);
+		c = D3DCOLOR_XRGB(188, 20, 20);
 	}
 	else if (m_eEffectType == E_EFFECT_MPPOTION){
-		c = D3DCOLOR_XRGB(30, 80, 128);
+		c = D3DCOLOR_XRGB(30, 80, 188);
 	}
 
-	for (int i = 0; i < 50; ++i)
+	for (int i = 0; i < 20; ++i)
 	{
 		//ST_PC_VERTEX v;
 		
@@ -66,7 +66,7 @@ void cEffectPotion::Setup(){
 		m_vecMoveInfo[i] = stP;
 	}
 
-	m_pTexture = g_pTextureManager->GetTexture("../Resources/Effect/Particle.tga");
+	m_pTexture = g_pTextureManager->GetTexture("../Resources/Effect/Flag_of_the_Red_Cross.png");
 }
 
 void cEffectPotion::Start(){
@@ -84,12 +84,12 @@ void cEffectPotion::Update(float fDelta){
 			alpha = 0.0f;
 		}
 
-		D3DXCOLOR c = D3DCOLOR_XRGB(128, 20, 20);
+		D3DXCOLOR c = D3DCOLOR_XRGB(188, 20, 20);
 		if (m_eEffectType == E_EFFECT_HPPOTION){
-			c = D3DCOLOR_XRGB(128, 20, 20);
+			c = D3DCOLOR_XRGB(188, 20, 20);
 		}
 		else if (m_eEffectType == E_EFFECT_MPPOTION){
-			c = D3DCOLOR_XRGB(30, 80, 128);
+			c = D3DCOLOR_XRGB(30, 80, 188);
 		}
 		m_vecVertex[i].c = D3DXCOLOR(c.r, c.g, c.b, alpha);
 		
@@ -124,13 +124,13 @@ void cEffectPotion::Render(){
 
 
 	g_pD3DDevice->SetRenderState(D3DRS_SRCBLEND, D3DBLEND_SRCALPHA);
-	g_pD3DDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_ONE);
-	//g_pD3DDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
+	//g_pD3DDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_ONE);
+	g_pD3DDevice->SetRenderState(D3DRS_DESTBLEND, D3DBLEND_INVSRCALPHA);
 
 	g_pD3DDevice->SetRenderState(D3DRS_LIGHTING, false);
 
 	// 포인트 사이즈 설정
-	g_pD3DDevice->SetRenderState(D3DRS_POINTSIZE, FtoDw(10.0f));
+	g_pD3DDevice->SetRenderState(D3DRS_POINTSIZE, FtoDw(4.0f));
 
 	// 알파블렌디 사용 가능하게 설정.
 	g_pD3DDevice->SetRenderState(D3DRS_ALPHABLENDENABLE, true);
