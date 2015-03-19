@@ -17,6 +17,8 @@ public:
 	cUIImageButton* m_pHealthButton;
 	cUIImageButton* m_pManaButton;
 
+	int m_nScore;
+
 private:
 	void GoldRender();
 };

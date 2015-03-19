@@ -8,6 +8,7 @@ cStoreWindow::cStoreWindow()
 {
 	m_pHealthButton = nullptr;
 	m_pManaButton = nullptr;
+	m_nScore = 0;
 }
 
 
@@ -73,6 +74,7 @@ void cStoreWindow::Setup(){
 	m_pManaButton = pUIImageManaButton;
 	m_pManaButton->SetButtonType(cUIImageButton::eButtonType::E_MANA);
 	pUIImageManaButton->Release();
+
 }
 
 void cStoreWindow::Update(float fDelta){
@@ -80,6 +82,9 @@ void cStoreWindow::Update(float fDelta){
 	if (m_bShow == true)
 	{
 		this->m_pEventDeligate->SetStoreState(true);
+
+		m_nScore = m_pGameObjDelgate->GetScore();
+
 		if (m_pUIRoot){
 			m_pUIRoot->Update(fDelta);
 		}
@@ -88,6 +93,8 @@ void cStoreWindow::Update(float fDelta){
 	{
 		this->m_pEventDeligate->SetStoreState(false);
 	}
+
+	
 }
 
 void cStoreWindow::Render(){
@@ -107,16 +114,35 @@ void cStoreWindow::OnClick(cUIImageButton* pSender){
 
 	if (pSender->GetButtonType() == cUIImageButton::eButtonType::E_HEALTH)
 	{
-		int nCount = m_pUIRoot->m_pUIManagerDeligate->GetInventoryControl()->GetInventoryItemCount(0);
-		nCount++;
-		m_pUIRoot->m_pUIManagerDeligate->GetInventoryControl()->UpdateInventoryItemCount(0, nCount);
+		if (m_nScore >= -2000)
+		{
+			int nCount = m_pUIRoot->m_pUIManagerDeligate->GetInventoryControl()->GetInventoryItemCount(0);
+			nCount++;
+			m_pUIRoot->m_pUIManagerDeligate->GetInventoryControl()->UpdateInventoryItemCount(0, nCount);
+			m_nScore -= 50;
+			m_pGameObjDelgate->SetScore(m_nScore);
+		}
+		else
+		{
+			return;
+		}
+		
 	}
 
 	if (pSender->GetButtonType() == cUIImageButton::eButtonType::E_MANA)
 	{
-		int nCount = m_pUIRoot->m_pUIManagerDeligate->GetInventoryControl()->GetInventoryItemCount(1);
-		nCount++;
-		m_pUIRoot->m_pUIManagerDeligate->GetInventoryControl()->UpdateInventoryItemCount(1, nCount);
+		if (m_nScore >= -2000)
+		{
+			int nCount = m_pUIRoot->m_pUIManagerDeligate->GetInventoryControl()->GetInventoryItemCount(1);
+			nCount++;
+			m_pUIRoot->m_pUIManagerDeligate->GetInventoryControl()->UpdateInventoryItemCount(1, nCount);
+			m_nScore -= 50;
+			m_pGameObjDelgate->SetScore(m_nScore);
+		}
+		else
+		{
+			return;
+		}
 	}
 
 }
@@ -124,13 +150,13 @@ void cStoreWindow::OnClick(cUIImageButton* pSender){
 void cStoreWindow::GoldRender()
 {
 	RECT rt;
-	rt.left = 50;
-	rt.top = 100;
-	rt.right = 51;
-	rt.bottom = 101;
+	rt.left = 800;
+	rt.top = 300;
+	rt.right = 801;
+	rt.bottom = 301;
 
 	std::stringstream ss;
-	ss << "SelectedTile : " << "Gold"<< std::endl;
+	ss << "Score : " << m_nScore << std::endl;
 
 	g_pFontManager->GetFont(g_pFontManager->FONT_DEFAULT)->DrawText(NULL,
 		ss.str().c_str(),	 //pString
