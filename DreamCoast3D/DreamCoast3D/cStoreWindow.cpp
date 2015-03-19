@@ -97,6 +97,7 @@ void cStoreWindow::Render(){
 		if (m_pUIRoot){
 			m_pUIRoot->Render();
 		}
+		GoldRender();
 	}
 
 }
@@ -118,4 +119,23 @@ void cStoreWindow::OnClick(cUIImageButton* pSender){
 		m_pUIRoot->m_pUIManagerDeligate->GetInventoryControl()->UpdateInventoryItemCount(1, nCount);
 	}
 
+}
+
+void cStoreWindow::GoldRender()
+{
+	RECT rt;
+	rt.left = 50;
+	rt.top = 100;
+	rt.right = 51;
+	rt.bottom = 101;
+
+	std::stringstream ss;
+	ss << "SelectedTile : " << "Gold"<< std::endl;
+
+	g_pFontManager->GetFont(g_pFontManager->FONT_DEFAULT)->DrawText(NULL,
+		ss.str().c_str(),	 //pString
+		-1,					//Count
+		&rt,	//pRect
+		DT_LEFT | DT_NOCLIP,//Format,
+		0xFFFFFFFF);		//Color
 }
