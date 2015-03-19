@@ -69,7 +69,7 @@ cScene::~cScene()
 		m_pGameEventManager->Destory();
 		m_pGameEventManager = NULL;
 	}
-
+	g_pSoundManager->stopBGM();
 	//SAFE_RELEASE(gpShadowRenderTarget );
 	//SAFE_RELEASE(gpShadowDepthStencil );
 	//SAFE_RELEASE(gpApplyShadowShader  );
@@ -97,6 +97,8 @@ void cScene::Setup(std::string sFilePath){
 }
 
 void cScene::Start(){
+	g_pSoundManager->executeBGM();
+
 	/// 리소스 로딩
 	cGameObjLoader cGOL;
 	cGOL.LoadGameObjectsFromFile(this->GetGameObjMng(), m_sGameObjPath);

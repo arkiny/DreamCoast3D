@@ -21,6 +21,7 @@ cGameCore::~cGameCore()
 }
 
 void cGameCore::Setup(){
+	g_pSoundManager->init();
 	m_pSceneManager = new cSceneManager;
 	cGameLoader cGL;
 
