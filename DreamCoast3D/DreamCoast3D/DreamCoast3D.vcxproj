@@ -173,6 +173,7 @@
     <ClInclude Include="cSceneLoader.h" />
     <ClInclude Include="cSceneTerrainEdit.h" />
     <ClInclude Include="cShaderManager.h" />
+    <ClInclude Include="cSkillIcons.h" />
     <ClInclude Include="cSkinnedMeshBody.h" />
     <ClInclude Include="cStaticMeshManager.h" />
     <ClInclude Include="cStoreWindow.h" />
@@ -307,6 +308,7 @@
     <ClCompile Include="cSceneLoader.cpp" />
     <ClCompile Include="cSceneTerrainEdit.cpp" />
     <ClCompile Include="cShaderManager.cpp" />
+    <ClCompile Include="cSkillIcons.cpp" />
     <ClCompile Include="cSkinnedMeshBody.cpp" />
     <ClCompile Include="cStaticMeshManager.cpp" />
     <ClCompile Include="cStoreWindow.cpp" />

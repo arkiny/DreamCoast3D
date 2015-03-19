@@ -114,6 +114,11 @@ public:
 	// pTarget point has to be NULL
 	virtual void Clone(OUT cGameObject** pTarget) {}
 
+	virtual float GetSkill1CoolTime() { return 0.0f; }
+	virtual void SetSkill1CoolTime(float fCool) {}
+	virtual float GetSkill1DelayTime() { return 0.0f; }
+
+
     // MS
     virtual void SetHP(float fHP) {};
 	//SYNTHESIZE(float, m_fHP, HP);

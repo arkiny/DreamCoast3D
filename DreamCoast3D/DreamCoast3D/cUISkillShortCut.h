@@ -24,6 +24,8 @@ protected:
 	std::vector<cUIImageView*>		m_vecSlots;
 	std::vector<cUITextView*>		m_vecItemNums;
 
+	std::vector<cUIImageView*>		m_vecShadows;
+
 	std::vector<cItemWithEffect*>	m_vecItems;
 	std::vector<float>				m_vecDelayCoolTime;
 

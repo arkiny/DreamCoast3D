@@ -18,7 +18,7 @@ public:
 	virtual float GetCoolTime() {
 		return 0.5f;
 	};
-	std::string GetTexturePath() override { return std::string(""); }
+	virtual std::string GetTexturePath() override { return std::string(""); }
 	virtual int GetCount() override { return 65535; }
 	virtual void SetCount(int n) {};
 };

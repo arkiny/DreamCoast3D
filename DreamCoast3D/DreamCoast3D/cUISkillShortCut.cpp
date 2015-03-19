@@ -5,6 +5,7 @@
 #include "cUIImageButton.h"
 #include "cUITextView.h"
 #include "cItemConsume.h"
+#include "cSkillIcons.h"
 
 cUISkillShortCut::cUISkillShortCut()
 {
@@ -65,18 +66,30 @@ void cUISkillShortCut::Setup(){
 		SAFE_RELEASE(pImageView);
 	}
 
-	/// test
+	/// Items
 	cItemConsume* p = new cItemConsume;
 	m_vecItems.push_back(p);
 	m_vecDelayCoolTime.push_back(p->GetItemCoolTime());
+	
 	pImageView = new cUIImageView(m_pSprite);
 	pImageView->SetTextureFilename(p->GetTexturePath());
 	pImageView->SetScale(D3DXVECTOR3(.72f, .72f, 1.0f));
 	pImageView->SetPosition(D3DXVECTOR3(4.8f, 4.8f, 0));
 	m_vecSlots[0]->AddChild(pImageView);
-	SAFE_RELEASE(pImageView);
-	cUITextView* pTextView = new cUITextView(m_pSprite);
+	
+	
+	cUIImageView* pShadow = NULL;
 
+	///
+	pShadow = new cUIImageView(m_pSprite);
+	pShadow->SetTextureFilename(std::string("../Resources/UI/UI_ShortCut/cooltimeshadow2.png"));
+	pShadow->SetScale(D3DXVECTOR3(0.0f, 1.0f, 1.0f));
+	pShadow->SetPosition(D3DXVECTOR3(0, 0, 0));
+	pImageView->AddChild(pShadow);
+	m_vecShadows.push_back(pShadow);
+	///
+	
+	cUITextView* pTextView = new cUITextView(m_pSprite);
 	std::stringstream ss;
 	ss << p->GetCount();
 	pTextView->SetText(ss.str());
@@ -89,19 +102,35 @@ void cUISkillShortCut::Setup(){
 	pTextView->SetSize(stSize);
 	m_vecSlots[0]->AddChild(pTextView);
 	m_vecItemNums.push_back(pTextView);
+	
+	SAFE_RELEASE(pImageView);
 	SAFE_RELEASE(pTextView);
+	SAFE_RELEASE(pShadow);
 
 	///
 	p = new cItemConsume;
 	p->SetConsumeType(p->E_CONSUME_MP_UP);
 	m_vecItems.push_back(p);
 	m_vecDelayCoolTime.push_back(p->GetItemCoolTime());
+	
 	pImageView = new cUIImageView(m_pSprite);
 	pImageView->SetTextureFilename(p->GetTexturePath());
 	pImageView->SetScale(D3DXVECTOR3(.72f, .72f, 1.0f));
 	pImageView->SetPosition(D3DXVECTOR3(4.8f, 4.8f, 0));
 	m_vecSlots[1]->AddChild(pImageView);
-	SAFE_RELEASE(pImageView);
+	
+	///
+	pShadow = new cUIImageView(m_pSprite);
+	pShadow->SetTextureFilename(std::string("../Resources/UI/UI_ShortCut/cooltimeshadow2.png"));
+	pShadow->SetScale(D3DXVECTOR3(0.0f, 1.0f, 1.0f));
+	pShadow->SetPosition(D3DXVECTOR3(0, 0, 0));
+	pImageView->AddChild(pShadow);
+	m_vecShadows.push_back(pShadow);
+	///
+
+
+
+
 	pTextView = new cUITextView(m_pSprite);
 	ss << p->GetCount();
 	pTextView->SetText(ss.str());
@@ -114,27 +143,64 @@ void cUISkillShortCut::Setup(){
 	pTextView->SetSize(stSize);
 	m_vecSlots[1]->AddChild(pTextView);
 	m_vecItemNums.push_back(pTextView);
+
+	SAFE_RELEASE(pImageView);
 	SAFE_RELEASE(pTextView);
+	SAFE_RELEASE(pShadow);
 
 
+	cSkillIcons* p2 = new cSkillIcons;
+	m_vecItems.push_back(p2);
+	m_vecDelayCoolTime.push_back(p2->GetCoolTime());
+	
+	pImageView = new cUIImageView(m_pSprite);
+	pImageView->SetTextureFilename(p2->GetTexturePath());
+	pImageView->SetScale(D3DXVECTOR3(.72f, .72f, 1.0f));
+	pImageView->SetPosition(D3DXVECTOR3(4.8f, 4.8f, 0));
+	m_vecSlots[2]->AddChild(pImageView);
+	
 	///
-	m_vecItems.push_back(p);
-	p->AddRef();
+	pShadow = new cUIImageView(m_pSprite);
+	pShadow->SetTextureFilename(std::string("../Resources/UI/UI_ShortCut/cooltimeshadow2.png"));
+	pShadow->SetScale(D3DXVECTOR3(0.0f, 1.0f, 1.0f));
+	pShadow->SetPosition(D3DXVECTOR3(0, 0, 0));
+	pImageView->AddChild(pShadow);
+	m_vecShadows.push_back(pShadow);
+	SAFE_RELEASE(pShadow);
+
+	pShadow = new cUIImageView(m_pSprite);
+	pShadow->SetTextureFilename(std::string("../Resources/UI/UI_ShortCut/cooltimeshadow2.png"));
+	pShadow->SetScale(D3DXVECTOR3(0.0f, 1.0f, 1.0f));
+	pShadow->SetPosition(D3DXVECTOR3(0, 0, 0));
+	pImageView->AddChild(pShadow);
+	m_vecShadows.push_back(pShadow);
+	///
+	SAFE_RELEASE(pImageView);
+	SAFE_RELEASE(pShadow);
+
 	m_vecItems.push_back(p);
 	p->AddRef();
 
-	m_vecDelayCoolTime.push_back(p->GetItemCoolTime());
-	m_vecDelayCoolTime.push_back(p->GetItemCoolTime());
 
+	m_vecDelayCoolTime.push_back(p->GetItemCoolTime());
 }
 
 void cUISkillShortCut::Update(float fDelta){
+	float fRate = 0.0f;
 	for (size_t i = 0; i < m_vecDelayCoolTime.size(); i++){
 		if (m_vecDelayCoolTime[i] >= m_vecItems[i]->GetCoolTime()){
+
 			m_vecDelayCoolTime[i] = m_vecItems[i]->GetCoolTime();
+			
+			if (m_vecShadows[i]->GetScale().x != 0.0f){
+				m_vecShadows[i]->SetScale(D3DXVECTOR3(0.0f, 1.0f, 1.0f));
+			}
+		
 		}
 		else{
 			m_vecDelayCoolTime[i] += fDelta;
+			fRate = 1.0f -(m_vecDelayCoolTime[i] / m_vecItems[i]->GetCoolTime());
+			m_vecShadows[i]->SetScale(D3DXVECTOR3(fRate, 1.0f, 1.0f));
 		}
 	}
 
@@ -178,8 +244,11 @@ void cUISkillShortCut::Update(float fDelta){
 		}
 	}
 	
-	if (g_pControlManager->GetInputInfo('c')){
+	if (g_pControlManager->GetInputInfo('C') == true || g_pControlManager->GetInputInfo('c') == true){
 		// 스킬 c슬롯 실행
+		if (m_vecDelayCoolTime[2] >= m_vecItems[2]->GetCoolTime()){
+			m_vecDelayCoolTime[2] = 0.0f;
+		}
 	}
 
 	if (g_pControlManager->GetInputInfo('v')){

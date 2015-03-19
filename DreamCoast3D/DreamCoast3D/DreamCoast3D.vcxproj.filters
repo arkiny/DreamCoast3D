@@ -386,6 +386,7 @@
       <Filter>FrameWork\Interfaces</Filter>
     </ClCompile>
     <ClCompile Include="cStoreWindow.cpp" />
+    <ClCompile Include="cSkillIcons.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cAction.h">
@@ -785,6 +786,7 @@
       <Filter>FrameWork\Interfaces</Filter>
     </ClInclude>
     <ClInclude Include="cStoreWindow.h" />
+    <ClInclude Include="cSkillIcons.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="DreamCoast3D.ico">
