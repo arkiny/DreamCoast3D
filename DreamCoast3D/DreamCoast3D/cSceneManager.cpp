@@ -113,6 +113,8 @@ void cSceneManager::SceneFinished(cScene* pSender){
 void cSceneManager::ChangeScene(int nNextSceneIndex){
 	m_bIsChangeSceneCall = true;
 	m_nNextSceneIndex = nNextSceneIndex;
+	g_pSoundManager->stopBGM();
+	g_pSoundManager->executeBGM();
 }
 
 void cSceneManager::ChangeSceneFromLoader(cScene* pNextScene){
@@ -121,6 +123,8 @@ void cSceneManager::ChangeSceneFromLoader(cScene* pNextScene){
 
 	m_pCurrentScene = pNextScene;
 	m_bIsLoading = false;
+	g_pSoundManager->stopBGM();
+	g_pSoundManager->executeBGM();
 }
 
 void cSceneManager::PauseObjectUpdate(bool isPause)

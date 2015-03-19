@@ -99,6 +99,8 @@ void cGamePlayableObject::OnHitTarget(cGameObject* pTarget, float fDamage, D3DXV
 			//p->SetPosition(vHitPosition);
 
 			this->GetEffectDelegate()->AddEffect(cEffect::E_EFFECT_ONHIT, vHitPosition);
+			g_pSoundManager->executeOnHit(1);
+			
 			if (this->GetStatInfo()->fCurrentHp <= 0)
 			{
 				return;

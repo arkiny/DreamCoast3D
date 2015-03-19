@@ -13,6 +13,7 @@ cPlayerAttack::~cPlayerAttack()
 }
 
 void cPlayerAttack::Start(cGamePlayableObject* pPlayer){
+	g_pSoundManager->executeAttack();
 	pPlayer->GetSkinnedMesh()->SetAnimationIndex(pPlayer->EPLAYABLESTATE_ATTACK);
 }
 

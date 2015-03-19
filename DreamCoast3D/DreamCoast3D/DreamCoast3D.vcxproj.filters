@@ -391,14 +391,14 @@
     <ClCompile Include="cSkillIcons.cpp">
       <Filter>EachWorks\HD</Filter>
     </ClCompile>
-    <ClCompile Include="cSoundManager.cpp">
-      <Filter>EachWorks\HD</Filter>
-    </ClCompile>
     <ClCompile Include="cStoreWindow.cpp">
       <Filter>EachWorks\HD</Filter>
     </ClCompile>
     <ClCompile Include="cUIGameScore.cpp">
       <Filter>EachWorks\HD</Filter>
+    </ClCompile>
+    <ClCompile Include="cSoundManager.cpp">
+      <Filter>FrameWork\Singletons</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -804,14 +804,14 @@
     <ClInclude Include="cSkillIcons.h">
       <Filter>EachWorks\HD</Filter>
     </ClInclude>
-    <ClInclude Include="cSoundManager.h">
-      <Filter>EachWorks\HD</Filter>
-    </ClInclude>
     <ClInclude Include="cStoreWindow.h">
       <Filter>EachWorks\HD</Filter>
     </ClInclude>
     <ClInclude Include="cUIGameScore.h">
       <Filter>EachWorks\HD</Filter>
+    </ClInclude>
+    <ClInclude Include="cSoundManager.h">
+      <Filter>FrameWork\Singletons</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

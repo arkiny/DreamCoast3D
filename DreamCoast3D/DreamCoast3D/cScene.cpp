@@ -70,7 +70,6 @@ cScene::~cScene()
 		m_pGameEventManager->Destory();
 		m_pGameEventManager = NULL;
 	}
-	g_pSoundManager->stopBGM();
 	//SAFE_RELEASE(gpShadowRenderTarget );
 	//SAFE_RELEASE(gpShadowDepthStencil );
 	//SAFE_RELEASE(gpApplyShadowShader  );
@@ -79,6 +78,7 @@ cScene::~cScene()
 }
 
 void cScene::Setup(std::string sFilePath){
+
 	m_pGameObjManager = new cGameObjManager;
 	m_pGameObjManager->Setup();
 	m_pGameObjManager->SetDesc("GameObject Manager for Example1");
@@ -99,6 +99,7 @@ void cScene::Setup(std::string sFilePath){
 
 void cScene::Start(){
 	/// 리소스 로딩
+
 	cGameObjLoader cGOL;
 	cGOL.LoadGameObjectsFromFile(this->GetGameObjMng(), m_sGameObjPath);
 
@@ -172,7 +173,6 @@ void cScene::Start(){
 		}
 	}
 
-	g_pSoundManager->executeBGM();
 }
 
 void cScene::Update(float delta){
@@ -265,6 +265,7 @@ void cScene::AddStaticGameObj(cGameObject* pGameObj){
 }
 
 void cScene::Destroy(){
+
 	this->Release();
 }
 

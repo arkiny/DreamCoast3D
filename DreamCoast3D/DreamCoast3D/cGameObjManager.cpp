@@ -728,5 +728,7 @@ std::vector<POINT*> cGameObjManager::RangeSkill(cGameObject* pFrom)
 	D3DXVECTOR3 effPoint = pFrom->GetPosition();
 	effPoint.y += 1.0f;
 	m_pEffectDelegate->AddEffect(5, effPoint);
+	g_pSoundManager->executeSkill(0);
+	
 	return m_pGridTileSystem->GetAdjCircle(vFrom.x, vFrom.z, nAttackRange);
 }
