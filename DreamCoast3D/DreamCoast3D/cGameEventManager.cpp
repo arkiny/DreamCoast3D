@@ -1,5 +1,6 @@
 #include "stdafx.h"
 #include "cGameEventManager.h"
+#include "cGamePlayableObject.h"
 
 
 cGameEventManager::cGameEventManager()
@@ -9,6 +10,7 @@ cGameEventManager::cGameEventManager()
 	, m_isPause(false)
 	, m_isStoreButton(false)
 	, m_fPassTime(0.f)
+	, m_fDeadAccumTime(0.f)
 {
 }
 
@@ -135,4 +137,14 @@ void cGameEventManager::StoreKeyUpdate(float fDelta)
 void cGameEventManager::SetUIDelegate(iUIManagerDeligate* m_pUIDelegate)
 {
 	m_pUIDelegate = m_pUIDelegate;
+}
+
+void cGameEventManager::PlayerDead(cGameObject* pFrom)
+{
+	pFrom->ChangeState(cGamePlayableObject::EPLAYABLESTATE::EPLAYABLESTATE_DEAD);
+}
+
+void cGameEventManager::DeadScene()
+{
+	m_pSceneDelegate->ChangeScene(0);
 }

@@ -37,7 +37,11 @@ public:
 	void CheckEventFromRange(cGameObject* pFrom, int nRange);
 	void SetSceneDelegate(iSceneDelegate* pSceneDelegate);
 	void SetUIDelegate(iUIManagerDeligate* m_pUIDelegate);
+	void PlayerDead(cGameObject* pFrom);
+	void DeadScene();
 
+
+	float m_fDeadAccumTime;
 private:
 	iSceneDelegate* m_pSceneDelegate;
 	iUIManagerDeligate* m_pUIDelegate;

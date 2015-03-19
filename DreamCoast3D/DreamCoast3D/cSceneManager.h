@@ -36,5 +36,8 @@ public:
 	void ChangeSceneFromLoader(cScene* pNextScene) override;
 	void PauseObjectUpdate(bool isPause) override;
 
+
+	void PlayerPause(bool isPause);
+
 };
 

@@ -166,6 +166,7 @@
     <ClInclude Include="cMousePicking.h" />
     <ClInclude Include="cMtlTex.h" />
     <ClInclude Include="cPlayerAttack.h" />
+    <ClInclude Include="cPlayerDead.h" />
     <ClInclude Include="cPlayerMove.h" />
     <ClInclude Include="cPlayerIdle.h" />
     <ClInclude Include="cPlayerOnHit.h" />
@@ -303,6 +304,7 @@
     <ClCompile Include="cMousePicking.cpp" />
     <ClCompile Include="cMtlTex.cpp" />
     <ClCompile Include="cPlayerAttack.cpp" />
+    <ClCompile Include="cPlayerDead.cpp" />
     <ClCompile Include="cPlayerMove.cpp" />
     <ClCompile Include="cPlayerIdle.cpp" />
     <ClCompile Include="cPlayerOnHit.cpp" />
