@@ -1,5 +1,5 @@
 *UI_LIST {
-	*UI_COUNT 5 
+	*UI_COUNT 7
 	*UI 0 {
 		*UI_TYPE "UISTAT"
 	}
@@ -13,6 +13,12 @@
 		*UI_TYPE "UIMINIMAP"
 	}
 	*UI 4 {
+		*UI_TYPE "UIINVENTORY"
+	}
+	*UI 5 {
+		*UI_TYPE "UISCORE"
+	}
+	*UI 6 {
 		*UI_TYPE "UISYSTEMMENU"
 		*UI_SHORTCUT {
 
@@ -24,9 +30,9 @@
 				}
 				*UI_SHORTCUT_BUTTON {
 					*UI_BUTTON_POSITION 1165.0 659.0
-					*UI_BUTTON_IMAGE_SRC_NORMAL "../Resources/UI/UI_AcceptButton.png"
-					*UI_BUTTON_IMAGE_SRC_ON "../Resources/UI/UI_AcceptButtonOn.png"
-					*UI_BUTTON_IMAGE_SRC_CLICK "../Resources/UI/UI_AcceptButtonClick.png"
+					*UI_BUTTON_IMAGE_SRC_NORMAL "../Resources/UI/UI_BUTTON_LOBBY/SS_2_NORMAL.png"
+					*UI_BUTTON_IMAGE_SRC_ON "../Resources/UI/UI_BUTTON_LOBBY/SS_2_ON.png"
+					*UI_BUTTON_IMAGE_SRC_CLICK "../Resources/UI/UI_BUTTON_LOBBY/SS_2_CLICK.png"
 				}
 			}
 
@@ -36,9 +42,9 @@
 				}
 				*UI_SHORTCUT_BUTTON {
 					*UI_BUTTON_POSITION 1040.0 659.0
-					*UI_BUTTON_IMAGE_SRC_NORMAL "../Resources/UI/UI_AcceptButton.png"
-					*UI_BUTTON_IMAGE_SRC_ON "../Resources/UI/UI_AcceptButtonOn.png"
-					*UI_BUTTON_IMAGE_SRC_CLICK "../Resources/UI/UI_AcceptButtonClick.png"
+					*UI_BUTTON_IMAGE_SRC_NORMAL "../Resources/UI/UI_BUTTON_LOBBY/ST_2_NORMAL.png"
+					*UI_BUTTON_IMAGE_SRC_ON "../Resources/UI/UI_BUTTON_LOBBY/ST_2_ON.png"
+					*UI_BUTTON_IMAGE_SRC_CLICK "../Resources/UI/UI_BUTTON_LOBBY/ST_2_CLICK.png"
 				}		
 			}
 		}

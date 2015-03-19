@@ -1,5 +1,5 @@
 *UI_LIST {
-	*UI_COUNT 6
+	*UI_COUNT 7
 	*UI 0 {
 		*UI_TYPE "UISTAT"
 	}
@@ -18,7 +18,7 @@
 	*UI 5 {
 		*UI_TYPE "UISCORE"
 	}
-	*UI 5 {
+	*UI 6 {
 		*UI_TYPE "UISYSTEMMENU"
 		*UI_SHORTCUT {
 
