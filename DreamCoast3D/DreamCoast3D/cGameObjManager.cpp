@@ -10,6 +10,7 @@ cGameObjManager::cGameObjManager()
 	:m_pFrustum(NULL)
 	, m_pPlayable(NULL)
     , m_fAccumTime(0.f)
+	, m_nScore(0)
 {
 	// MS
 	m_iMap = nullptr;
@@ -52,6 +53,16 @@ void cGameObjManager::Update(float fDelta){
 	while (!m_queueGameObjectTobeErase.empty()){
 		m_setGameObjects.erase(m_queueGameObjectTobeErase.front());
 		m_queueDeadMonster.push(m_queueGameObjectTobeErase.front());
+		if (m_queueGameObjectTobeErase.front()->GetGameObjectType() == cGameObject::E_MOP){
+			cGameAIObject* p = (cGameAIObject*)m_queueGameObjectTobeErase.front();
+			if (p->GetAItype() == p->E_AI_BOSS){
+				m_nScore += 500;
+			}
+			else {
+				m_nScore += 100;
+			}
+		}
+
 		m_queueGameObjectTobeErase.pop();
 	}
     DeadObjectUpdate();

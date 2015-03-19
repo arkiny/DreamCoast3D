@@ -11,6 +11,7 @@ __interface iGameObjectDelegate{
 	std::vector<cGameObject*> GetInSightObject(ST_BOUNDING_SPHERE stSphere);
 	ST_STAT_INFO* GetPlayerStatInfo();
 	void EraseFromGameObjectSet(cGameObject* pFrom);
+	int	GetScore();
 
 	// MS
 	cGameObject* GetPlayerData();

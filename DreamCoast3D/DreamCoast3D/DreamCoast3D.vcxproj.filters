@@ -191,7 +191,7 @@
       <Filter>EachWorks\HD\TODO-UI\InGameUI</Filter>
     </ClCompile>
     <ClCompile Include="cUIGameMainMenu.cpp">
-      <Filter>EachWorks\HD\TODO-UI\MainMenuUI</Filter>
+      <Filter>EachWorks\HD\TODO-UI\UIWorking\MainMenuUI</Filter>
     </ClCompile>
     <ClCompile Include="cUILoader.cpp">
       <Filter>FrameWork\Loader</Filter>
@@ -585,7 +585,7 @@
       <Filter>EachWorks\HD\TODO-UI\InGameUI</Filter>
     </ClInclude>
     <ClInclude Include="cUIGameMainMenu.h">
-      <Filter>EachWorks\HD\TODO-UI\MainMenuUI</Filter>
+      <Filter>EachWorks\HD\TODO-UI\UIWorking\MainMenuUI</Filter>
     </ClInclude>
     <ClInclude Include="cUILoader.h">
       <Filter>FrameWork\Loader</Filter>
@@ -920,11 +920,11 @@
     <Filter Include="EachWorks\HD\TODO-UI\InGameUI">
       <UniqueIdentifier>{71622d01-a614-4833-b0b9-b97857248e2e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="EachWorks\HD\TODO-UI\MainMenuUI">
-      <UniqueIdentifier>{a18f39a1-4fb3-416b-b35b-03abf33b497a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="EachWorks\HD\TODO-UI\UIWorking">
       <UniqueIdentifier>{d2d24770-429a-4308-af5c-aa67f107f066}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="EachWorks\HD\TODO-UI\UIWorking\MainMenuUI">
+      <UniqueIdentifier>{a18f39a1-4fb3-416b-b35b-03abf33b497a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

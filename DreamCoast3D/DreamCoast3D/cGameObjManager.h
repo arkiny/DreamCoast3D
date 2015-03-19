@@ -11,8 +11,12 @@ class cGamePlayableObject;
 
 class cGameObjManager : public cObject, public iGameObjectDelegate
 {
+public:
+	SYNTHESIZE(int, m_nScore, Score);
+
 private:
 	// 프러스텀 컬링용
+
 	cFrustum*						m_pFrustum;
 
 	cGameObject*					m_pPlayable;
@@ -76,6 +80,9 @@ public:
 	void AttackMobToPlayer(cGameAIObject* pFrom) override;
 	ST_STAT_INFO* GetPlayerStatInfo() override;
 	void EraseFromGameObjectSet(cGameObject* pFrom) override;
+	int	GetScore() override {
+		return m_nScore;
+	}
 
 	//MS
 	cGameObject* GetPlayerData() override;
