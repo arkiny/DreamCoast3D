@@ -21,6 +21,7 @@ protected:
 
 	iGameEventDelegate* m_pEventManager;
 	iInventoryControl* m_pInventoryControl;
+	iGameObjectDelegate* m_pGameManager;
 	SYNTHESIZE(bool, m_isTrap, Trap);
 	SYNTHESIZE(bool, m_isCursorUpdate, CursorUpdate);
 private:

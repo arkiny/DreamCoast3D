@@ -7,6 +7,7 @@ cUIObjManager::cUIObjManager()
 	m_isTrap = false;
 	m_isCursorUpdate = false;
 	m_pEventManager = nullptr;
+	m_pGameManager = nullptr;
 }
 
 
@@ -83,6 +84,7 @@ void cUIObjManager::SetGameObjDeligate(iGameObjectDelegate* pGameManager){
 	for (auto p : m_vecUIObjects){
 		p->SetGameObjDeligate(pGameManager);
 	}
+	m_pGameManager = pGameManager;
 }
 
 void cUIObjManager::SetSceneDeligate(iSceneDelegate* pSceneManager){
@@ -129,17 +131,28 @@ void cUIObjManager::SetShowCursor(bool isShow){
 
 void cUIObjManager::UpdateTrap()
 {
-	if (m_isCursorUpdate == false)
+	if (m_pGameManager)
 	{
-		if (g_pControlManager->GetInputInfo('T'))
+		if (m_pGameManager->GetPlayerData())
 		{
-			m_isTrap = false;
-			this->SetShowCursor(true);
+			if (m_isCursorUpdate == false)
+			{
+				if (g_pControlManager->GetInputInfo('T'))
+				{
+					m_isTrap = false;
+					this->SetShowCursor(true);
+				}
+				else
+				{
+					m_isTrap = true;
+					this->SetShowCursor(false);
+				}
+			}
 		}
 		else
 		{
-			m_isTrap = true;
-			this->SetShowCursor(false);
+			m_isTrap = false;
+			this->SetShowCursor(true);
 		}
 	}
 }
