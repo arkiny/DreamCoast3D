@@ -1,7 +1,8 @@
 #pragma once
 #include "cUIWindow.h"
+#include "cUIPopupWindow.h"
 
-class cStoreWindow : public cUIWindow, public iButtonDelegate
+class cStoreWindow : public cUIPopupWindow, public iButtonDelegate
 {
 public:
 	cStoreWindow();

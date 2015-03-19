@@ -98,26 +98,26 @@ void cGameEventManager::SetSceneDelegate(iSceneDelegate* pSceneDelegate)
 
 void cGameEventManager::StoreEvent()
 {
-	if (m_isStoreButton == false)
-	{
-		if (g_pControlManager->GetInputInfo('N'))
-		{
-			if (m_isPause == false)
-			{
-				m_isPause = true;
-			}
-			else if (m_isPause == true)
-			{
-				m_isPause = false;
-			}
-		}
-	}
+	//if (m_isStoreButton == false)
+	//{
+	//	if (g_pControlManager->GetInputInfo('I'))
+	//	{
+	//		if (m_isPause == false)
+	//		{
+	//			m_isPause = true;
+	//		}
+	//		else if (m_isPause == true)
+	//		{
+	//			m_isPause = false;
+	//		}
+	//	}
+	//}
 	m_pSceneDelegate->PauseObjectUpdate(m_isPause);
 }
 
 void cGameEventManager::StoreKeyUpdate(float fDelta)
 {
-	if (g_pControlManager->GetInputInfo('N') && m_isStoreButton == false)
+	if (g_pControlManager->GetInputInfo('I') && m_isStoreButton == false)
 	{
 		m_isStoreButton = true;
 	}

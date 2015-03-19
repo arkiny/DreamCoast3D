@@ -51,5 +51,11 @@ private:
 	{
 		return m_isPause;
 	}
+	void SetStoreState(bool isPause)
+	{
+		m_isPause = isPause;
+	}
+
+
 };
 

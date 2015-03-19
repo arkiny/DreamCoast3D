@@ -280,7 +280,7 @@ cUIPopupWindow* cUILoader::ParseShortCutPopup(){
 				ret->Setup();
 			}
 			else if (isEqual(szTypeName, "UIINVENTORY")){
-				ret = new cUIInventory;
+				ret = new cStoreWindow;
 				ret->Setup();
 			}
 		}

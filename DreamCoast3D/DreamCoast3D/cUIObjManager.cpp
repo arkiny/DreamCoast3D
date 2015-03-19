@@ -41,7 +41,7 @@ void cUIObjManager::Update(float fDelta){
 			PostQuitMessage(NULL);
 		}
 	}
-    if (m_pEventManager)
+	if (m_pEventManager)
 	{
 		m_pEventManager->StoreEvent();
 	}

@@ -50,7 +50,7 @@ cUIInventory::~cUIInventory()
 void cUIInventory::Setup()
 {
 	//단축키 할당
-	SetHotKey('I');
+	//SetHotKey('I');
 	//델리게이트 설정
 	SetUIPopupWindowDelegate(this);
 	//부모 cUIPopupWindow의 멤버. 팝업 되었는지 아닌지 판단하고 그리기를 결정한다.

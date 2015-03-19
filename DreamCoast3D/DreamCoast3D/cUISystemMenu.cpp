@@ -7,6 +7,8 @@
 
 cUISystemMenu::cUISystemMenu()
 {
+	m_isStoreButton = false;
+	m_fPassTime = 0.f;
 }
 
 
@@ -37,6 +39,9 @@ void cUISystemMenu::Setup(){
 }
 
 void cUISystemMenu::Update(float fDelta){
+
+	StoreEvent(fDelta);
+
 	if (m_pUIRoot){
 		m_pUIRoot->Update(fDelta);
 	}
@@ -82,4 +87,37 @@ void cUISystemMenu::MenuControl(cUIImageButtonMenu* pSender, int target){
 	else{
 		m_vecPopUpWindow[target]->SetisPopped(true);
 	}	
+}
+
+void cUISystemMenu::StoreEvent(float fDelta)
+{
+	if (g_pControlManager->GetInputInfo('I') && m_isStoreButton == false)
+	{
+		m_isStoreButton = true;
+	}
+	if (m_isStoreButton == true)
+	{
+		m_fPassTime += fDelta;
+	}
+	if (m_fPassTime >= 0.1f)
+	{
+		m_isStoreButton = false;
+		m_fPassTime = 0.f;
+	}
+
+	if (m_isStoreButton == false)
+	{
+		if (g_pControlManager->GetInputInfo('I'))
+		{
+			if (m_vecPopUpWindow[1]->GetisPopped())
+			{
+				m_vecPopUpWindow[1]->SetisPopped(false);
+			}
+			else
+			{
+				m_vecPopUpWindow[1]->SetisPopped(true);
+			}
+		}
+
+	}
 }

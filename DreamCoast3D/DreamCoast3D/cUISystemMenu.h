@@ -23,5 +23,13 @@ public:
 	
 	virtual void OnClick(cUIImageButton* pSender) override;
 	virtual void MenuControl(cUIImageButtonMenu* pSender, int target) override;
+
+private:
+
+	//MS
+	bool m_isStoreButton;
+	float m_fPassTime;
+
+	void StoreEvent(float fDelta);
 };
 

@@ -78,25 +78,28 @@ void cStoreWindow::Setup(){
 }
 
 void cStoreWindow::Update(float fDelta){
-	bool isPasue = this->m_pEventDeligate->GetStoreState();
-	if (isPasue == true)
+	//bool isPasue = this->m_pEventDeligate->GetStoreState();
+	if (m_bShow == true)
 	{
+		this->m_pEventDeligate->SetStoreState(true);
 		if (m_pUIRoot){
 			m_pUIRoot->Update(fDelta);
 		}
 	}
-
+	else
+	{
+		this->m_pEventDeligate->SetStoreState(false);
+	}
 }
 
 void cStoreWindow::Render(){
-	bool isPasue = this->m_pEventDeligate->GetStoreState();
-	if (isPasue == true)
+
+	if (m_bShow == true)
 	{
 		if (m_pUIRoot){
 			m_pUIRoot->Render();
 		}
 	}
-	
 
 }
 

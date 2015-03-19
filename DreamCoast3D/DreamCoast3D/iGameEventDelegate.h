@@ -10,4 +10,5 @@ __interface iGameEventDelegate
 	virtual void StoreEvent();
 	virtual void SetUIDelegate(iUIManagerDeligate* m_pUIDelegate);
 	virtual bool GetStoreState();
+	virtual void SetStoreState(bool isPause);
 };
