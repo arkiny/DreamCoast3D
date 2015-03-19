@@ -6,7 +6,7 @@ class cStoreWindow : public cUIPopupWindow, public iButtonDelegate
 {
 public:
 	cStoreWindow();
-	~cStoreWindow();
+	virtual ~cStoreWindow();
 
 	virtual void Setup();
 	virtual void Update(float fDelta);
