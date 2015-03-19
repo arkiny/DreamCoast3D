@@ -12,7 +12,7 @@ class cGamePlayableObject;
 class cGameObjManager : public cObject, public iGameObjectDelegate
 {
 public:
-	SYNTHESIZE(int, m_nScore, Score);
+	int m_nScore;
 
 private:
 	// 프러스텀 컬링용
@@ -82,6 +82,9 @@ public:
 	void EraseFromGameObjectSet(cGameObject* pFrom) override;
 	int	GetScore() override {
 		return m_nScore;
+	}
+	void SetScore(int nNewScore) override {
+		m_nScore = nNewScore;
 	}
 
 	//MS

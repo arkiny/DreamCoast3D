@@ -180,6 +180,7 @@
     <ClInclude Include="cUICursor.h" />
     <ClInclude Include="cUIExpBar.h" />
     <ClInclude Include="cUIGameMainMenu.h" />
+    <ClInclude Include="cUIGameScore.h" />
     <ClInclude Include="cUIGameSystemShortCut.h" />
     <ClInclude Include="cUIIcon.h" />
     <ClInclude Include="cUIImageButtonMenu.h" />
@@ -315,6 +316,7 @@
     <ClCompile Include="cUICursor.cpp" />
     <ClCompile Include="cUIExpBar.cpp" />
     <ClCompile Include="cUIGameMainMenu.cpp" />
+    <ClCompile Include="cUIGameScore.cpp" />
     <ClCompile Include="cUIGameSystemShortCut.cpp" />
     <ClCompile Include="cUIIcon.cpp" />
     <ClCompile Include="cUIImageButtonMenu.cpp" />

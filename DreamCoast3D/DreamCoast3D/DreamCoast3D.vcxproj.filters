@@ -387,6 +387,7 @@
     </ClCompile>
     <ClCompile Include="cStoreWindow.cpp" />
     <ClCompile Include="cSkillIcons.cpp" />
+    <ClCompile Include="cUIGameScore.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cAction.h">
@@ -787,6 +788,7 @@
     </ClInclude>
     <ClInclude Include="cStoreWindow.h" />
     <ClInclude Include="cSkillIcons.h" />
+    <ClInclude Include="cUIGameScore.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="DreamCoast3D.ico">

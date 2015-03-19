@@ -12,6 +12,7 @@ __interface iGameObjectDelegate{
 	ST_STAT_INFO* GetPlayerStatInfo();
 	void EraseFromGameObjectSet(cGameObject* pFrom);
 	int	GetScore();
+	void SetScore(int nNewScore);
 
 	// MS
 	cGameObject* GetPlayerData();
