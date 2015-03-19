@@ -599,7 +599,7 @@ void cSkinnedMesh::RenderShadow(ST_BONE* pBone /*= NULL*/){
 
 		D3DXMATRIXA16 matLightProjection; {
 			//D3DXMatrixPerspectiveFovLH(&matLightProjection, D3DX_PI / 4.0f, 1, 1, 3000);
-			D3DXMatrixOrthoLH(&matLightProjection, 350, 350, 1, 3000);
+			D3DXMatrixOrthoLH(&matLightProjection, 350, 350, 1, 800);
 		}
 
 		//D3DXMATRIXA16 matView;
