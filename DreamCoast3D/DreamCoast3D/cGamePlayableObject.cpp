@@ -112,7 +112,7 @@ void cGamePlayableObject::OnHitTarget(cGameObject* pTarget, float fDamage, D3DXV
 	}
 	if (this->GetStatInfo()->fCurrentHp <= 0)
 	{
-		m_pEventDelegate->PlayerDead(this);
+		this->ChangeState(this->EPLAYABLESTATE_DEAD);
 	}
 
 }
