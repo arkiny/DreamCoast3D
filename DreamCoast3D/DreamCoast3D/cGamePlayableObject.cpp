@@ -4,6 +4,7 @@
 #include "cPlayerMove.h"
 #include "cPlayerAttack.h"
 #include "cPlayerOnHit.h"
+#include "cPlayerDead.h"
 #include "cEffectParticle.h"
 #include "cSkinnedMesh.h"
 
@@ -40,6 +41,7 @@ void cGamePlayableObject::Setup(
 	m_vecStates[EPLAYABLESTATE::EPLAYABLESTATE_MOVE] = new cPlayerMove;
 	m_vecStates[EPLAYABLESTATE::EPLAYABLESTATE_ATTACK] = new cPlayerAttack;
 	m_vecStates[EPLAYABLESTATE::EPLAYABLESTATE_ONHIT] = new cPlayerOnHit;
+	m_vecStates[EPLAYABLESTATE::EPLAYABLESTATE_DEAD] = new cPlayerDead;
 
 	m_pCurrentState = m_vecStates[EPLAYABLESTATE::EPLAYABLESTATE_IDLE];
 	m_pCurrentState->Start(this);
@@ -62,6 +64,7 @@ void cGamePlayableObject::Update(float fDelta){
 		// TODO: 차후 맥스 경직값을 정해야함
 		m_fPlayerInvincibleCool = 2.0f;
 	}
+
 }
 
 void cGamePlayableObject::ChangeState(EPLAYABLESTATE eNewState){
@@ -96,11 +99,20 @@ void cGamePlayableObject::OnHitTarget(cGameObject* pTarget, float fDamage, D3DXV
 			//p->SetPosition(vHitPosition);
 
 			this->GetEffectDelegate()->AddEffect(cEffect::E_EFFECT_ONHIT, vHitPosition);
+			if (this->GetStatInfo()->fCurrentHp <= 0)
+			{
+				return;
+			}
 			this->GetStatInfo()->fCurrentHp -= 10.0f;
 
 			this->ChangeState(this->EPLAYABLESTATE_ONHIT);
 		}
 	}
+	if (this->GetStatInfo()->fCurrentHp <= 0)
+	{
+		m_pEventDelegate->PlayerDead(this);
+	}
+
 }
 
 void cGamePlayableObject::Clone(cGameObject** pTarget){

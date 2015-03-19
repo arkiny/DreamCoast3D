@@ -388,6 +388,9 @@
     <ClCompile Include="cStoreWindow.cpp" />
     <ClCompile Include="cSkillIcons.cpp" />
     <ClCompile Include="cUIGameScore.cpp" />
+    <ClCompile Include="cPlayerDead.cpp">
+      <Filter>EachWorks\HD\PlayerFSM</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cAction.h">
@@ -789,6 +792,9 @@
     <ClInclude Include="cStoreWindow.h" />
     <ClInclude Include="cSkillIcons.h" />
     <ClInclude Include="cUIGameScore.h" />
+    <ClInclude Include="cPlayerDead.h">
+      <Filter>EachWorks\HD\PlayerFSM</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="DreamCoast3D.ico">

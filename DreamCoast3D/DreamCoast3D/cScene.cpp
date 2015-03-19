@@ -38,6 +38,7 @@ cScene::cScene()
 	, m_pGameEventManager(NULL)
 {
 	m_isPauseUpdate = false;
+	m_isPlayerPause = false;
 }
 
 cScene::~cScene()
@@ -193,7 +194,7 @@ void cScene::Update(float delta){
 			m_pGameObjManager->AdjustYPositionByHeightMap(m_pCurrentMap);
 		}
 
-		if (m_isPauseUpdate == false)
+		if (m_isPauseUpdate == false && m_isPlayerPause == false)
 		{
 			if (m_pGameObjManager){
 				m_pGameObjManager->Update(delta);
@@ -312,4 +313,9 @@ void cScene::AddLightSrc(cLightSource* pLightSource){
 void cScene::PauseObjectUpdate(bool isPause)
 {
 	m_isPauseUpdate = isPause;
+}
+
+void cScene::PausePlayerUpdate(bool isPause)
+{
+	m_isPlayerPause = isPause;
 }

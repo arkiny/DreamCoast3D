@@ -127,3 +127,8 @@ void cSceneManager::PauseObjectUpdate(bool isPause)
 {
 	m_pCurrentScene->PauseObjectUpdate(isPause);
 }
+
+void cSceneManager::PlayerPause(bool isPause)
+{
+	m_pCurrentScene->PausePlayerUpdate(isPause);
+}

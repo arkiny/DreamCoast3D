@@ -143,6 +143,8 @@ public:
 	}
 
 	bool m_isPauseUpdate;
+	bool m_isPlayerPause;
 	virtual void PauseObjectUpdate(bool isPause);
+	virtual void PausePlayerUpdate(bool isPause);
 };
 

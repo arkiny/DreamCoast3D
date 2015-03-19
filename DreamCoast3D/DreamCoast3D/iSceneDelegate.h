@@ -7,4 +7,5 @@ __interface iSceneDelegate {
 	void ChangeScene(int nNextSceneIndex);
 	void ChangeSceneFromLoader(cScene* pNextScene);
 	void PauseObjectUpdate(bool isPause);
+	void PlayerPause(bool isPause);
 };
