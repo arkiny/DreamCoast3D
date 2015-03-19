@@ -114,7 +114,7 @@ void cStoreWindow::OnClick(cUIImageButton* pSender){
 
 	if (pSender->GetButtonType() == cUIImageButton::eButtonType::E_HEALTH)
 	{
-		if (m_nScore >= -2000)
+		if (m_nScore >= 50)
 		{
 			int nCount = m_pUIRoot->m_pUIManagerDeligate->GetInventoryControl()->GetInventoryItemCount(0);
 			nCount++;
@@ -131,7 +131,7 @@ void cStoreWindow::OnClick(cUIImageButton* pSender){
 
 	if (pSender->GetButtonType() == cUIImageButton::eButtonType::E_MANA)
 	{
-		if (m_nScore >= -2000)
+		if (m_nScore >= 50)
 		{
 			int nCount = m_pUIRoot->m_pUIManagerDeligate->GetInventoryControl()->GetInventoryItemCount(1);
 			nCount++;
