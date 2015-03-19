@@ -385,10 +385,21 @@
     <ClCompile Include="iInventoryControl.cpp">
       <Filter>FrameWork\Interfaces</Filter>
     </ClCompile>
-    <ClCompile Include="cStoreWindow.cpp" />
-    <ClCompile Include="cSkillIcons.cpp" />
-    <ClCompile Include="cUIGameScore.cpp" />
-    <ClCompile Include="cSoundManager.cpp" />
+    <ClCompile Include="cPlayerDead.cpp">
+      <Filter>EachWorks\HD\PlayerFSM</Filter>
+    </ClCompile>
+    <ClCompile Include="cSkillIcons.cpp">
+      <Filter>EachWorks\HD</Filter>
+    </ClCompile>
+    <ClCompile Include="cSoundManager.cpp">
+      <Filter>EachWorks\HD</Filter>
+    </ClCompile>
+    <ClCompile Include="cStoreWindow.cpp">
+      <Filter>EachWorks\HD</Filter>
+    </ClCompile>
+    <ClCompile Include="cUIGameScore.cpp">
+      <Filter>EachWorks\HD</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cAction.h">
@@ -787,10 +798,21 @@
     <ClInclude Include="iInventoryControl.h">
       <Filter>FrameWork\Interfaces</Filter>
     </ClInclude>
-    <ClInclude Include="cStoreWindow.h" />
-    <ClInclude Include="cSkillIcons.h" />
-    <ClInclude Include="cUIGameScore.h" />
-    <ClInclude Include="cSoundManager.h" />
+    <ClInclude Include="cPlayerDead.h">
+      <Filter>EachWorks\HD\PlayerFSM</Filter>
+    </ClInclude>
+    <ClInclude Include="cSkillIcons.h">
+      <Filter>EachWorks\HD</Filter>
+    </ClInclude>
+    <ClInclude Include="cSoundManager.h">
+      <Filter>EachWorks\HD</Filter>
+    </ClInclude>
+    <ClInclude Include="cStoreWindow.h">
+      <Filter>EachWorks\HD</Filter>
+    </ClInclude>
+    <ClInclude Include="cUIGameScore.h">
+      <Filter>EachWorks\HD</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="DreamCoast3D.ico">

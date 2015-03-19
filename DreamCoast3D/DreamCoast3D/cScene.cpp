@@ -98,8 +98,6 @@ void cScene::Setup(std::string sFilePath){
 }
 
 void cScene::Start(){
-	g_pSoundManager->executeBGM();
-
 	/// 리소스 로딩
 	cGameObjLoader cGOL;
 	cGOL.LoadGameObjectsFromFile(this->GetGameObjMng(), m_sGameObjPath);
@@ -173,6 +171,8 @@ void cScene::Start(){
 			m_pCamera->SetTarget(m_pGameObjManager->GetPlayerableGameObject()->GetTransform()->getPosPointer());
 		}
 	}
+
+	g_pSoundManager->executeBGM();
 }
 
 void cScene::Update(float delta){
