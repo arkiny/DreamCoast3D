@@ -16,6 +16,9 @@
 		*UI_TYPE "UIINVENTORY"
 	}
 	*UI 5 {
+		*UI_TYPE "UISCORE"
+	}
+	*UI 5 {
 		*UI_TYPE "UISYSTEMMENU"
 		*UI_SHORTCUT {
 

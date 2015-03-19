@@ -10,7 +10,7 @@ cGameObjManager::cGameObjManager()
 	:m_pFrustum(NULL)
 	, m_pPlayable(NULL)
     , m_fAccumTime(0.f)
-	, m_nScore(0)
+	, m_nScore(1000)
 {
 	// MS
 	m_iMap = nullptr;

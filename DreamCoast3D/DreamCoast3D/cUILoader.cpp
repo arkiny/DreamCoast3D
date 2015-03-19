@@ -11,6 +11,7 @@
 #include "cUIPopupWindow.h"
 #include "cUIImageButtonMenu.h"
 #include "cStoreWindow.h"
+#include "cUIGameScore.h"
 
 
 cUILoader::cUILoader()
@@ -129,69 +130,14 @@ void cUILoader::ParseUI(OUT cUIObjManager* pUIManager){
 				if (token == "*UI_SHORTCUT"){
 					ParseShortCutMenu(pUIManager);
 				}
-				// TODO
-				/*cUISystemMenu* p1 = new cUISystemMenu;
-				p1->Setup();
-
-				cUIPopupWindow* p2 = new cUIPopupWindow;
-				p2->Setup();
-				
-				LPD3DXSPRITE sprite;
-				D3DXCreateSprite(g_pD3DDevice, &sprite);
-				cUIImageButtonMenu* pTestButton = new cUIImageButtonMenu(sprite);
-				sprite->Release();
-
-				pTestButton->Setup(
-					std::string("../Resources/UI/UI_AcceptButton.png"),
-					std::string("../Resources/UI/UI_AcceptButtonOn.png"),
-					std::string("../Resources/UI/UI_AcceptButtonClick.png"));
-
-				RECT tempRect;
-				GetClientRect(g_hWnd, &tempRect);
-
-				float x = tempRect.right - pTestButton->GetSize().fWidth;
-				float y = tempRect.bottom - pTestButton->GetSize().fHeight;
-				pTestButton->SetPosition(D3DXVECTOR3(x, y - 10.0f, 0));
-				p1->AddPopUpWindowAndButton(pTestButton, p2);
-
-				if (pTestButton){
-					pUIManager->AddUI(pTestButton);
-					pTestButton->Release();
+			}
+			else if (isEqual(szTypeName, "UISCORE")){
+				cUIObject* p = new cUIGameScore;
+				p->Setup();
+				if (p){
+					pUIManager->AddUI(p);
+					SAFE_RELEASE(p);
 				}
-				if (p2){
-					pUIManager->AddUI(p2);
-					p2->Release();
-				}
-
-				cUIInventory* p3 = new cUIInventory;
-				p3->Setup();
-
-				pTestButton = new cUIImageButtonMenu(sprite);
-				sprite->Release();
-
-				pTestButton->Setup(
-					std::string("../Resources/UI/UI_AcceptButton.png"),
-					std::string("../Resources/UI/UI_AcceptButtonOn.png"),
-					std::string("../Resources/UI/UI_AcceptButtonClick.png"));
-
-				x = tempRect.right - pTestButton->GetSize().fWidth;
-				y = tempRect.bottom - pTestButton->GetSize().fHeight;
-				pTestButton->SetPosition(D3DXVECTOR3(x - 10.0f - pTestButton->GetSize().fWidth, y - 10.0f, 0));
-
-				p1->AddPopUpWindowAndButton(pTestButton, p3);
-
-				if (pTestButton){
-					pUIManager->AddUI(pTestButton);
-					pTestButton->Release();
-				}
-				if (p3){
-					pUIManager->AddUI(p3);
-					p3->Release();
-				}
-				if (p1){
-					pUIManager->AddUI(p1);
-					p1->Release();
-				}*/
 			}
 		}
 	} while (nLevel > 0);
