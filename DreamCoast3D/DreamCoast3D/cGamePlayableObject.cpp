@@ -104,6 +104,8 @@ void cGamePlayableObject::ChangeState(EPLAYABLESTATE eNewState){
 	//}
 	if (JudgeChange(eNewState))
 	{
+		//여기서부터 캔슬 정보를 잘 제어하도록 수정해야함.
+		//m_pCurrentState->GetCancelInfo()
 		SetPlayableState(eNewState);
 		m_pCurrentState = m_vecStates[eNewState];
 		m_pCurrentState->Start(this);
@@ -131,7 +133,7 @@ bool cGamePlayableObject::JudgeChange(EPLAYABLESTATE eNewState)
 	//CANCEL_REAR
 	else if (m_pCurrentState->GetCancelInfo()[eNewState] == 1)
 	{
-		//return true;
+		return true;
 	}
 	//CANCEL_FORCE
 	else if (m_pCurrentState->GetCancelInfo()[eNewState] == 2)

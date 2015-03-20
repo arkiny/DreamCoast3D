@@ -31,11 +31,9 @@ public:
 		EPLAYABLESTATE_RUN = 2,				//(장착)무기를 들고 달리기
 		EPLAYABLESTATE_COMBO1 = 3,			//(장착)평타1
 		EPLAYABLESTATE_COMBO1R = 4,			//(장착)평타1종료
-		EPLAYABLESTATE_ONHIT = 5,
-		EPLAYABLESTATE_DEAD = 6,
+		EPLAYABLESTATE_ONHIT = 5,			//(장착)피격
+		EPLAYABLESTATE_DEAD = 6,			//(장착)사망
 		//EPLAYABLESTATE_ATTACK,		//(장착)평타
-		
-		
 		//EPLAYABLESTATE_WALK,			//(해제)천천히 걷기
 		EPLAYABLESTATE_MAX
 	};

@@ -5,7 +5,11 @@
 
 cPlayerCommon::cPlayerCommon()
 {
-	//SetIsRestart(false);
+	m_nCurrentStateType = 0;
+	m_IsRestart = false;
+	m_IsDoing = false;
+	m_eStateType = ESTATEGROUP::E_STATEGROUP_IDLE;
+
 }
 
 
@@ -57,7 +61,7 @@ void cPlayerCommon::Execute(cGamePlayableObject* pPlayer, float fDelta)
 	
 	pPlayer->SetStatePassedTime(pPlayer->GetStatePassedTime() + fDelta);
 	//흘러간 시간이 애니메이션 구간길이를 초과하면 애니메이션 종료. 마지막에 fDelta를 더해주는건 조금 애니메이션이 잘리겠지만 안튀게 하기 위한 임시방편
-	if (pPlayer->GetSkinnedMesh()->GetCurrentAnimationPeriodTime() < pPlayer->GetStatePassedTime() + DBL_EPSILON + fDelta)
+	if (pPlayer->GetSkinnedMesh()->GetCurrentAnimationPeriodTime() <= pPlayer->GetStatePassedTime() + DBL_EPSILON + fDelta*2)
 	{
 		SetIsDoing(false);	//애니메이션 종료 선언
 		Exit(pPlayer);		//애니메이션 종료시키기
@@ -65,7 +69,6 @@ void cPlayerCommon::Execute(cGamePlayableObject* pPlayer, float fDelta)
 }
 void cPlayerCommon::Exit(cGamePlayableObject* pPlayer)
 {
-	
 	//재시작되는 동작이면 재시작하고(반복)
 	if (m_IsRestart)
 	{
