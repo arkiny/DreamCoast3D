@@ -10,7 +10,7 @@
 			*SKINNEDMESH_CS "FxBottom" 6.0
 		}
 		*SKINNEDMESH_AS_LIST {
-			*SKINNEDMESH_AS "FxHand00" 7.0
+			*SKINNEDMESH_AS "FxHand00" 24.0
 			*SKINNEDMESH_AS "FxHand01" 7.0
 		}
 	}

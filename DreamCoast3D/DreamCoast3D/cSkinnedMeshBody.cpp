@@ -80,8 +80,13 @@ cSkinnedMeshBody::cSkinnedMeshBody(std::string sFolder, std::string sFile,
 	m_pWeapon = g_pStaticMeshManager->GetStaticMesh(sFolderWeapon + sFileWeapon);
 	m_pTexture = g_pTextureManager->GetTexture(sFolder + sFileTexture);
 
+	//m_mapAttackSphere["Weapon"] = ST_BOUNDING_SPHERE(D3DXVECTOR3(0, 10, 0), 20.0f);
+
 	m_sMainCollisionSphere = "FxCenter";
 	m_fMianColisionSphereRadius = 6.f;
+
+	
+	//m_pWeapon->GetVertexBuffer()
 
 	m_stUpdateBoundingSphere.m_vCenter = m_mapDebugOriginSphereBody[std::string("FxCenter")].m_vCenter;
 	m_stUpdateBoundingSphere.m_fRadius = m_mapDebugOriginSphereBody[std::string("FxCenter")].m_fRadius / 2;
@@ -446,7 +451,7 @@ void cSkinnedMeshBody::Render(ST_BONE* pBone /*= NULL*/)
 	if (GetAsyncKeyState(VK_TAB)){
 
 		RenderDebugUpdateSphereBody(pBone, m_mapDebugUpdateSphereBody);
-		
+
 		for (auto p : m_mapAttackSphere)
 		{
 			std::string s = p.first.c_str();
@@ -494,6 +499,8 @@ void cSkinnedMeshBody::Render(ST_BONE* pBone /*= NULL*/)
 			m_pWeapon->DrawSubset(0);
 		}
 	}
+
+
 	
 	// 각 프레임의 메시 컨테이너에 있는 pSkinInfo를 이용하여 영향받는 모든 
 	// 프레임의 매트릭스를 ppBoneMatrixPtrs에 연결한다.

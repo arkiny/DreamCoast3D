@@ -56,7 +56,7 @@ class cAIDead : public iAIState{
 	virtual void Exit(cGameAIObject* pAIObject);
 	virtual int GetCurrentStateType();
 
-	int m_nIndex = 5;
+	int m_nIndex = 4;
 };
 
 class cAIBossPhaseFirst : public iAIState

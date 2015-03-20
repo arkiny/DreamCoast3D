@@ -362,6 +362,12 @@ void cSkinnedMesh::Update(ST_BONE* pCurrent, D3DXMATRIXA16* pmatParent)
 			&m_stUpdateBoundingSphere.m_vCenter,
 			&D3DXVECTOR3(0, 0, 0),
 			&pCurrent->CombinedTransformationMatrix);
+
+		//D3DXVec3TransformCoord(
+		//	&m_mapAttackSphere["Weapon"].m_vCenter,
+		//	&D3DXVECTOR3(0,2,0),
+		//	&pCurrent->CombinedTransformationMatrix);
+
 	}
 
 	for (auto p : m_mapAttackSphere){

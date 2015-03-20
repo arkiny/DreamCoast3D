@@ -203,7 +203,7 @@ void cAIAttack::Start(cGameAIObject* pAIObject){
 
 		return;
 	}
-	pAIObject->GetSkinnedMesh()->SetAnimationIndex(3);
+	pAIObject->GetSkinnedMesh()->SetAnimationIndex(2);
 	pAIObject->SetPassedTime(0);
 	pAIObject->SetAttackCoolTime(0);
 }
@@ -234,7 +234,7 @@ void cAIOnHit::Start(cGameAIObject* pAIObject){
 		return;
 	}
 
-	pAIObject->GetSkinnedMesh()->SetAnimationIndex(2);
+	pAIObject->GetSkinnedMesh()->SetAnimationIndex(3);
 	pAIObject->SetPassedTime(0);
 }
 
@@ -338,15 +338,37 @@ int  cAIThink::GetCurrentStateType(){
 }
 
 void cAIDead::Start(cGameAIObject* pAIObject){
-	pAIObject->GetSkinnedMesh()->SetAnimationIndex(4);
+	pAIObject->GetSkinnedMesh()->SetAnimationIndex(m_nIndex);
 	pAIObject->SetPassedTime(0);
 }
 
 void cAIDead::Execute(cGameAIObject* pAIObject, float fDelta){
-    pAIObject->GetGameObjDeligate()->EraseFromGameObjectSet(pAIObject);
+ //   pAIObject->GetGameObjDeligate()->EraseFromGameObjectSet(pAIObject);
+	//if (pAIObject->GetSkinnedMesh()->GetCurrentAnimationPeriodTime() < pAIObject->GetPassedTime())
+	//{
+	//	//pAIObject->ChangeState(pAIObject->eAISTATE_DEAD);
+	//	//return;
+	//}
+	//if (pAIObject->GetSkinnedMesh()->GetCurrentAnimationPeriodTime() < pAIObject->GetPassedTime())
+	//{
+	//	pAIObject->SetHP(0);
+	//	pAIObject->ChangeState(pAIObject->eAISTATE_BOSSDEAD);
+	//	return;
+	//}
+	if (pAIObject->GetSkinnedMesh()->GetCurrentAnimationPeriodTime() - 0.1f<
+		pAIObject->GetPassedTime())
+	{
+		pAIObject->GetGameObjDeligate()->EraseFromGameObjectSet(pAIObject);
+		return;
+	}
 	if (pAIObject->GetSkinnedMesh()->GetCurrentAnimationPeriodTime() < pAIObject->GetPassedTime())
 	{
-		//pAIObject->ChangeState(pAIObject->eAISTATE_DEAD);
+		if (m_nIndex == 4)
+		{
+			pAIObject->SetHP(0);
+			m_nIndex = 3;
+			pAIObject->ChangeState(pAIObject->eAISTATE_DEAD);
+		}
 		return;
 	}
 
