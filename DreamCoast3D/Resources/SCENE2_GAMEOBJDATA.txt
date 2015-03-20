@@ -30,7 +30,7 @@
 		*SKINNEDMESH_PATH "../Resources/Char/Tera/Volcanus/"
 		*SKINNEDMESH_FILE "Volcanus_diff.X"
 		*SKINNEDMESH_CS_LIST {
-			*SKINNEDMESH_CS "FxCenter" 12.0
+			*SKINNEDMESH_CS "FxCenter" 30.0
 			*SKINNEDMESH_CS "FxTop" 12.0
 			*SKINNEDMESH_CS "FxBottom" 12.0
 		}

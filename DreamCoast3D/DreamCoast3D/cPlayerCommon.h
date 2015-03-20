@@ -27,5 +27,9 @@ public:
 	virtual void SetIsDoing(bool bDoing){ m_IsDoing = bDoing; }
 	//virtual bool GetIsRestart(){ return m_IsRestart; }
 	//virtual void SetIsRestart(bool IsRestart){ m_IsRestart = IsRestart; };
+
+
+private:
+	float m_fDeadAccumTime;
 };
 

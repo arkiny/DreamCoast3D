@@ -2,10 +2,12 @@
 #include "cPlayerCommon.h"
 #include "cGamePlayableObject.h"
 #include "cSkinnedMesh.h"
+#include "cPlayerDead.h"
 
 cPlayerCommon::cPlayerCommon()
 {
 	//SetIsRestart(false);
+	m_fDeadAccumTime = 0.f;
 }
 
 
@@ -21,6 +23,21 @@ void cPlayerCommon::Start(cGamePlayableObject* pPlayer)
 }
 void cPlayerCommon::Execute(cGamePlayableObject* pPlayer, float fDelta)
 {
+	if (pPlayer->GetStatInfo()->fCurrentHp <= 0)
+	{
+		pPlayer->ChangeState(pPlayer->EPLAYABLESTATE_DEAD);
+
+		// 들어가면 이부분 지워도됨
+		m_fDeadAccumTime += fDelta;
+		if (m_fDeadAccumTime >= 2.0f)
+		{
+			m_fDeadAccumTime = 0.f;
+
+			pPlayer->GetEventDelegate()->DeadScene(true);
+		}
+		///////////////////////////////////////////////////////
+		return;
+	}
 	//스킬사용
 	if (g_pControlManager->GetInputInfo('C'))
 	{

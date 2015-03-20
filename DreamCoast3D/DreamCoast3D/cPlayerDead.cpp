@@ -18,18 +18,16 @@ cPlayerDead::~cPlayerDead()
 
 void cPlayerDead::Start(cGamePlayableObject* pPlayer)
 {
-	cPlayerCommon::Start(pPlayer);
 }
 
 void cPlayerDead::Execute(cGamePlayableObject* pPlayer, float fDelta)
 {
-	cPlayerCommon::Execute(pPlayer, fDelta);
+	//cPlayerCommon::Execute(pPlayer, fDelta);
 
 	m_fDeadAccumTime += fDelta;
 	if (m_fDeadAccumTime >= 2.0f)
 	{
 		m_fDeadAccumTime = 0.f;
-
 
 		pPlayer->GetEventDelegate()->DeadScene(true);
 	}
@@ -37,5 +35,5 @@ void cPlayerDead::Execute(cGamePlayableObject* pPlayer, float fDelta)
 
 void cPlayerDead::Exit(cGamePlayableObject* pPlayer)
 {
-	cPlayerCommon::Exit(pPlayer);
+	//pPlayer->ChangeState(pPlayer->EPLAYABLESTATE_DEAD);
 }
