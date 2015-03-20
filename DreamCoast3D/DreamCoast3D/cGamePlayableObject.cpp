@@ -93,7 +93,6 @@ void cGamePlayableObject::Update(float fDelta){
 		// TODO: 차후 맥스 경직값을 정해야함
 		m_fPlayerInvincibleCool = 2.0f;
 	}
-
 }
 
 void cGamePlayableObject::ChangeState(EPLAYABLESTATE eNewState){
@@ -104,41 +103,42 @@ void cGamePlayableObject::ChangeState(EPLAYABLESTATE eNewState){
 	//	m_pCurrentState = m_vecStates[eNewState];
 	//	//m_fStatePassedTime = 0.0f; //Start에서 함
 	//}
-	if (JudgeChange(eNewState))
+
+	ESTATEGROUP eStateGroup = m_vecStates[eNewState]->GetCurrentStateGroup();
+	if (JudgeChange(eStateGroup))
 	{
 		//여기서부터 캔슬 정보를 잘 제어하도록 수정해야함.
 		//m_pCurrentState->GetCancelInfo()
 		SetPlayableState(eNewState);
 		m_pCurrentState = m_vecStates[eNewState];
 		m_pCurrentState->Start(this);
-	};
+	}
 }
 
 void cGamePlayableObject::ChangeState(int nState){
 	this->ChangeState((EPLAYABLESTATE)nState);
 }
 
-bool cGamePlayableObject::JudgeChange(EPLAYABLESTATE eNewState)
+bool cGamePlayableObject::JudgeChange(ESTATEGROUP eNewStateGroup)
 {
 	//애니메이션이 종료되고 상태를 전환하는건 그냥 True
 	if (!m_pCurrentState->GetIsDoing())
 	{
 		return true;
 	}
-	//int a = m_pCurrentState->GetCancelInfo()[eNewState];
 	
 	//CANCEL_CANT
-	if (m_pCurrentState->GetCancelInfo()[eNewState] == 0)
+	if (m_pCurrentState->GetCancelInfo()[eNewStateGroup] == ECANCELTYPE::E_CANCEL_CANTCANCEL)
 	{
 
 	}
 	//CANCEL_REAR
-	else if (m_pCurrentState->GetCancelInfo()[eNewState] == 1)
+	else if (m_pCurrentState->GetCancelInfo()[eNewStateGroup] == ECANCELTYPE::E_CANCEL_REAR)
 	{
-		return true;
+		//return true;
 	}
 	//CANCEL_FORCE
-	else if (m_pCurrentState->GetCancelInfo()[eNewState] == 2)
+	else if (m_pCurrentState->GetCancelInfo()[eNewStateGroup] == ECANCELTYPE::E_CANCEL_FORCE)
 	{
 		return true;
 	}

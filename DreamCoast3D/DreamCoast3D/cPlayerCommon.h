@@ -31,8 +31,7 @@ public:
 	virtual bool GetIsDoing(){ return m_IsDoing; }
 	virtual void SetIsDoing(bool bDoing){ m_IsDoing = bDoing; }
 
-	virtual ESTATEGROUP GetCurrentStateGroup();
-	virtual ESTATEGROUP SetCurrentStateGroup() { return m_eStateGroup; }
+	virtual ESTATEGROUP GetCurrentStateGroup() { return m_eStateGroup; }
 	virtual void SetStateGroup(ESTATEGROUP eStateGroup){ m_eStateGroup = eStateGroup; }
 
 private:

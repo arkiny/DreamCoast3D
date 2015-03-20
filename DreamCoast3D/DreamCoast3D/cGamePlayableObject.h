@@ -88,7 +88,7 @@ public:
 	void SetSkill1CoolTime(float fCool) { m_fSkill1CoolTime = fCool; }
 	float GetSkill1DelayTime() { return m_fSkill1Delay; }
 
-	virtual bool JudgeChange(EPLAYABLESTATE eNewState);//상태가 변할 수 있는지 판단후 반환
+	virtual bool JudgeChange(ESTATEGROUP eNewStateGroup);//상태가 변할 수 있는지 판단후 반환
 
 };
 

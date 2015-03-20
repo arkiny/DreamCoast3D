@@ -4,6 +4,8 @@
 #include "cSkinnedMesh.h"
 #include "cPlayerDead.h"
 
+//지금 핫 스테이트는 대기, 이동, 공격, 피격, 사망
+
 cPlayerCommon::cPlayerCommon()
 {
 	m_nCurrentStateType = 0;
