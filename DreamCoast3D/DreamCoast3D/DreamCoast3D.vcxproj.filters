@@ -437,6 +437,7 @@
     <ClCompile Include="cPlayerDead.cpp">
       <Filter>EachWorks\MW\PlayerState</Filter>
     </ClCompile>
+    <ClCompile Include="cUICredit.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cAction.h">
@@ -887,6 +888,7 @@
     <ClInclude Include="cPlayerDead.h">
       <Filter>EachWorks\MW\PlayerState</Filter>
     </ClInclude>
+    <ClInclude Include="cUICredit.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="DreamCoast3D.ico">
