@@ -23,12 +23,13 @@ void cAnimationSet::Start()
 
 void cAnimationSet::Update(float fDelta)
 {
-	m_fPassedTime += fDelta;
+	//iPlayerState의 제어가 있는데 굳이 여기서 애니메이션을 제어할 필요가 있나? : 민우
+	/*m_fPassedTime += fDelta;
 	if (m_fPassedTime >= m_pAnimationSet->GetPeriod())
 	{
 		if (m_pDelegate)
 		{
 			m_pDelegate->OnFinishAnimation(this);
 		}
-	}
+	}*/
 }

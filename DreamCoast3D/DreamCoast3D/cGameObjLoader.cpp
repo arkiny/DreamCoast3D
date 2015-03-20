@@ -378,8 +378,8 @@ cGameObject* cGameObjLoader::ParsePlayerbleObj(){
 	ret->SetScale(scale);
 
 	ret->GetSkinnedMesh()->SetAnimationLoop(ret->EPLAYABLESTATE_IDLE, true);
-	ret->GetSkinnedMesh()->SetAnimationLoop(ret->EPLAYABLESTATE_MOVE, true);
-	ret->GetSkinnedMesh()->SetAnimationLoop(ret->EPLAYABLESTATE_ATTACK, true);
+	//ret->GetSkinnedMesh()->SetAnimationLoop(ret->EPLAYABLESTATE_MOVE, true);
+	//ret->GetSkinnedMesh()->SetAnimationLoop(ret->EPLAYABLESTATE_ATTACK, true);
 	//ret->GetSkinnedMesh()->SetAnimationLoop(4, true);
 
 	ret->GetSkinnedMesh()->SetAnimationIndex(0);

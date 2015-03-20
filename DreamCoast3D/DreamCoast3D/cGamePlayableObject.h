@@ -14,17 +14,35 @@ __interface iPlayableCharacter{
 class cGamePlayableObject : public cGameSMeshBodyObject
 {
 public:
+	//enum EPLAYABLESTATE
+	//{
+	//	EPLAYABLESTATE_IDLE,
+	//	EPLAYABLESTATE_MOVE,
+	//	EPLAYABLESTATE_ATTACK,
+	//	EPLAYABLESTATE_ONHIT,
+	//	EPLAYABLESTATE_DEAD,
+	//	EPLAYABLESTATE_MAX
+	//};
+	public:
 	enum EPLAYABLESTATE
 	{
-		EPLAYABLESTATE_IDLE,
-		EPLAYABLESTATE_MOVE,
-		EPLAYABLESTATE_ATTACK,
-		EPLAYABLESTATE_ONHIT,
-		EPLAYABLESTATE_DEAD,
+		EPLAYABLESTATE_UNARMEDWAIT = 0,		//(해제)가만히 서있기
+		EPLAYABLESTATE_IDLE = 1,			//(장착)대기
+		EPLAYABLESTATE_RUN = 2,				//(장착)무기를 들고 달리기
+		EPLAYABLESTATE_COMBO1 = 3,			//(장착)평타1
+		EPLAYABLESTATE_COMBO1R = 4,			//(장착)평타1종료
+		EPLAYABLESTATE_ONHIT = 5,
+		EPLAYABLESTATE_DEAD = 6,
+		//EPLAYABLESTATE_ATTACK,		//(장착)평타
+		
+		
+		//EPLAYABLESTATE_WALK,			//(해제)천천히 걷기
 		EPLAYABLESTATE_MAX
 	};
 
+
 protected:
+	SYNTHESIZE(EPLAYABLESTATE, m_ePlayableState, PlayableState);//플레이어 상태 Enum을 가지고 있어야지
 	ST_STAT_INFO* m_pPlayerStatInfo;
 
 	SYNTHESIZE(D3DXVECTOR3, m_vecFront, Front);
@@ -71,5 +89,8 @@ public:
 	float GetSkill1CoolTime() { return m_fSkill1CoolTime; }
 	void SetSkill1CoolTime(float fCool) { m_fSkill1CoolTime = fCool; }
 	float GetSkill1DelayTime() { return m_fSkill1Delay; }
+
+	virtual bool JudgeChange(EPLAYABLESTATE eNewState);//상태가 변할 수 있는지 판단후 반환
+
 };
 
