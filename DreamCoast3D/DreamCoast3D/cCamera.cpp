@@ -199,12 +199,13 @@ void cCamera::Update(float delta)
 		D3DXVec3TransformCoord(&m_vEye, &m_vEye, &matRotX);
 		D3DXVec3TransformCoord(&m_vEye, &m_vEye, &matRotY);
 
-
-
 		if (m_pvTarget)
 		{
+			
 			m_vEye += (*m_pvTarget);
-			m_vLookAt = (*m_pvTarget);
+			//m_vLookAt = (*m_pvTarget);
+			m_vLookAt = (m_pPlayer->GetUpdatedDetailedSphere()->at("FxCenter").m_vCenter);
+			
 			m_vLookAt.y += 1.0f;
 		}
 
