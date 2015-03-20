@@ -64,6 +64,31 @@ void cSceneManager::Update(float delta){
 		m_pCurrentScene = new cLoadingScene;
 		m_pCurrentScene->Setup(m_vecSceneInfoFilePath[m_nNextSceneIndex]);
 
+		// 차후 시간 가용시 로딩화면에서 조정할수 있게 실시
+		if (m_nNextSceneIndex == 0){
+			g_pSoundManager->StopSound();
+			g_pSoundManager->ExecuteSound(std::string("../Resources/Sounds/BGM/IntroThema.mp3"), true);
+		}
+		else if (m_nNextSceneIndex == 2){
+			g_pSoundManager->StopSound();
+			g_pSoundManager->ExecuteSound(std::string("../Resources/Sounds/BGM/godspeed.mp3"), true);
+		}
+		else if (m_nNextSceneIndex == 4){
+			g_pSoundManager->StopSound();
+			g_pSoundManager->ExecuteSound(std::string("../Resources/Sounds/BGM/kelsike.mp3"), true);
+		}
+		else if (m_nNextSceneIndex == 3 || m_nNextSceneIndex == 5){
+			g_pSoundManager->StopSound();
+			g_pSoundManager->ExecuteSound(std::string("../Resources/Sounds/BGM/k.mp3"), true);
+		}
+		else if (m_nNextSceneIndex == 1  
+			|| m_nNextSceneIndex == 4 
+			){
+			g_pSoundManager->StopSound();
+			g_pSoundManager->ExecuteSound(std::string("../Resources/Sounds/BGM/Village.mp3"), true);
+		}
+
+
 		//g_pSkinnedMeshManager->Destroy();
 		//g_pAseManager->Destroy();
 		//g_pTextureManager->Destroy();
@@ -113,18 +138,13 @@ void cSceneManager::SceneFinished(cScene* pSender){
 void cSceneManager::ChangeScene(int nNextSceneIndex){
 	m_bIsChangeSceneCall = true;
 	m_nNextSceneIndex = nNextSceneIndex;
-	g_pSoundManager->stopBGM();
-	g_pSoundManager->executeBGM();
 }
 
 void cSceneManager::ChangeSceneFromLoader(cScene* pNextScene){
 	m_pCurrentScene->Exit();
 	SAFE_RELEASE(m_pCurrentScene);
-
 	m_pCurrentScene = pNextScene;
 	m_bIsLoading = false;
-	g_pSoundManager->stopBGM();
-	g_pSoundManager->executeBGM();
 }
 
 void cSceneManager::PauseObjectUpdate(bool isPause)

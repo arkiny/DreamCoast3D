@@ -16,6 +16,8 @@ protected:
 
 	std::queue<cEffect*>	m_qeueuOnGetHitEffectPool;
 
+	std::queue<cEffect*>	m_qeueuTrailEffectPool;
+
 public:
 	cEffectManager();
 	virtual ~cEffectManager();
