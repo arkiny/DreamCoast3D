@@ -134,9 +134,9 @@ void cGameEventManager::StoreKeyUpdate(float fDelta)
 	}
 }
 
-void cGameEventManager::SetUIDelegate(iUIManagerDeligate* m_pUIDelegate)
+void cGameEventManager::SetUIDelegate(iUIManagerDeligate* pUIDelegate)
 {
-	m_pUIDelegate = m_pUIDelegate;
+	m_pUIDelegate = pUIDelegate;
 }
 
 void cGameEventManager::PlayerDead(cGameObject* pFrom)
@@ -144,7 +144,7 @@ void cGameEventManager::PlayerDead(cGameObject* pFrom)
 	pFrom->ChangeState(cGamePlayableObject::EPLAYABLESTATE::EPLAYABLESTATE_DEAD);
 }
 
-void cGameEventManager::DeadScene()
+void cGameEventManager::DeadScene(bool isDead)
 {
-	m_pSceneDelegate->ChangeScene(0);
+	m_pUIDelegate->ActiveGameOver(isDead);
 }

@@ -49,7 +49,7 @@
 					*UI_BUTTON_IMAGE_SRC_ON "../Resources/UI/UI_BUTTON_LOBBY/ST_2_ON.png"
 					*UI_BUTTON_IMAGE_SRC_CLICK "../Resources/UI/UI_BUTTON_LOBBY/ST_2_CLICK.png"
 				}		
-			}
+			}		
 		}
 	}
 }

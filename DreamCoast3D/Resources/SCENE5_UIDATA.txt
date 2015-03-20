@@ -1,5 +1,5 @@
 *UI_LIST {
-	*UI_COUNT 7
+	*UI_COUNT 8
 	*UI 0 {
 		*UI_TYPE "UISTAT"
 	}
@@ -19,6 +19,9 @@
 		*UI_TYPE "UISCORE"
 	}
 	*UI 6 {
+		*UI_TYPE "UIGAMEOVER"
+	}
+	*UI 7 {
 		*UI_TYPE "UISYSTEMMENU"
 		*UI_SHORTCUT {
 
@@ -46,7 +49,7 @@
 					*UI_BUTTON_IMAGE_SRC_ON "../Resources/UI/UI_BUTTON_LOBBY/ST_2_ON.png"
 					*UI_BUTTON_IMAGE_SRC_CLICK "../Resources/UI/UI_BUTTON_LOBBY/ST_2_CLICK.png"
 				}		
-			}
+			}		
 		}
 	}
 }

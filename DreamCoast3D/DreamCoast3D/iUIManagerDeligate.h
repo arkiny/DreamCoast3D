@@ -9,5 +9,6 @@ __interface iUIManagerDeligate
 	void ChangeScene(int nScene, cUIObject* pSender);
 	void SetShowCursor(bool isShow);
 	iInventoryControl* GetInventoryControl();
+	void ActiveGameOver(bool isGameOver);
 };
 

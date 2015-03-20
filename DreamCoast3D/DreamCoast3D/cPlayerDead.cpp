@@ -25,7 +25,7 @@ void cPlayerDead::Execute(cGamePlayableObject* pPlayer, float fDelta)
 	if (m_fDeadAccumTime >= 2.0f)
 	{
 		m_fDeadAccumTime = 0.f;
-		pPlayer->GetEventDelegate()->DeadScene();
+		pPlayer->GetEventDelegate()->DeadScene(true);
 	}
 }
 

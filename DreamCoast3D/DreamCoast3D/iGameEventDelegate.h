@@ -12,5 +12,5 @@ __interface iGameEventDelegate
 	virtual bool GetStoreState();
 	virtual void SetStoreState(bool isPause);
 	virtual void PlayerDead(cGameObject* pFrom);
-	virtual void DeadScene();
+	virtual void DeadScene(bool isDead);
 };

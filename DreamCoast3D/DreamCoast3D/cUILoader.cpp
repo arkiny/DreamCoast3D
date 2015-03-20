@@ -12,6 +12,7 @@
 #include "cUIImageButtonMenu.h"
 #include "cStoreWindow.h"
 #include "cUIGameScore.h"
+#include "cGameOverWindow.h"
 
 
 cUILoader::cUILoader()
@@ -136,6 +137,15 @@ void cUILoader::ParseUI(OUT cUIObjManager* pUIManager){
 				p->Setup();
 				if (p){
 					pUIManager->AddUI(p);
+					SAFE_RELEASE(p);
+				}
+			}
+			else if (isEqual(szTypeName, "UIGAMEOVER")){
+				cUIObject* p = new cGameOverWindow;
+				p->Setup();
+				if (p){
+					pUIManager->AddUI(p);
+					pUIManager->AddGameOver(p);
 					SAFE_RELEASE(p);
 				}
 			}
