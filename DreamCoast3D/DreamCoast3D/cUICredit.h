@@ -3,9 +3,6 @@
 class cUICredit :
 	public cUIWindow, public iButtonDelegate
 {
-protected:
-	cUIObject* m_pToMainButton;
-
 public:
 	cUICredit();
 	virtual ~cUICredit();
@@ -15,5 +12,6 @@ public:
 	virtual void Render();
 
 	virtual void OnClick(cUIImageButton* pSender){}
+	virtual void SetSceneDeligate(iSceneDelegate* pSceneDeligate);
 };
 

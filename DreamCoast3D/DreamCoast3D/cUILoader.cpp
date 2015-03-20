@@ -13,7 +13,7 @@
 #include "cStoreWindow.h"
 #include "cUIGameScore.h"
 #include "cGameOverWindow.h"
-
+#include "cUICredit.h"
 
 cUILoader::cUILoader()
 {
@@ -112,6 +112,15 @@ void cUILoader::ParseUI(OUT cUIObjManager* pUIManager){
 
 			else if (isEqual(szTypeName, "UIINVENTORY")){
 				cUIObject* p = new cStoreWindow;
+				p->Setup();
+				if (p){
+					pUIManager->AddUI(p);
+					SAFE_RELEASE(p);
+				}
+			}
+
+			else if (isEqual(szTypeName, "UICREDIT")){
+				cUIObject* p = new cUICredit;
 				p->Setup();
 				if (p){
 					pUIManager->AddUI(p);

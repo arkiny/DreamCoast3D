@@ -4,22 +4,22 @@
 #include "cUISceneChangeButton.h"
 
 cUICredit::cUICredit()
-	:m_pToMainButton(NULL)
 {
 }
 
 
 cUICredit::~cUICredit()
 {
-	if (m_pToMainButton){
-		m_pToMainButton->Destroy();
+	if (m_pUIRoot){
+		m_pUIRoot->Destroy();
 	}
+	SAFE_RELEASE(m_pSprite);
 }
 
 void cUICredit::Setup(){
 	D3DXCreateSprite(g_pD3DDevice, &m_pSprite);
 	cUIImageView* pUIImageView = new cUIImageView(m_pSprite);
-	pUIImageView->SetTextureFilename(std::string("../Resources/UI/UI_LOADING/UI_LOADING_CANVAS.png"));
+	pUIImageView->SetTextureFilename(std::string("../Resources/UI/UI_CREDIT/UI_CREDIT_CANVAS.png"));
 	pUIImageView->SetScale(D3DXVECTOR3(1.0f, 1.0f, 1.0f));
 	pUIImageView->SetPosition(D3DXVECTOR3(0, 0, 0));
 	m_pUIRoot = pUIImageView;
@@ -36,15 +36,13 @@ void cUICredit::Setup(){
 	pTestButton->SetScale(D3DXVECTOR3(.6f, .6f, 1.0f));
 	pTestButton->SetButtonDeligate(this);
 	pTestButton->SetTargetScene(0);
-	m_pToMainButton = pTestButton;
+	m_pUIRoot->AddChild(pTestButton);
+	SAFE_RELEASE(pTestButton);
 }
 
 void cUICredit::Update(float fDelta){
 	if (m_pUIRoot){
 		m_pUIRoot->Update(fDelta);
-	}
-	if (m_pToMainButton){
-		m_pToMainButton->Update(fDelta);
 	}
 }
 
@@ -52,7 +50,10 @@ void cUICredit::Render(){
 	if (m_pUIRoot){
 		m_pUIRoot->Render();
 	}
-	if (m_pToMainButton){
-		m_pToMainButton->Render();
+}
+
+void cUICredit::SetSceneDeligate(iSceneDelegate* pSceneDeligate){
+	if (m_pUIRoot){
+		m_pUIRoot->SetSceneDeligate(pSceneDeligate);
 	}
 }
