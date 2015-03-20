@@ -68,6 +68,13 @@ public:
 		std::string sFolderHair, std::string sFileHair
 		);
 
+	virtual void Setup(
+		std::string sFolder, std::string sFile,
+		std::string sFolderHead, std::string sFileHead,
+		std::string sFolderHair, std::string sFileHair,
+		std::string sFolderWeapon, std::string sFileWeapon,
+		std::string sFileTexture);
+
 	virtual void Update(float fDelta);
 
 	virtual void ChangeState(int nState) override;

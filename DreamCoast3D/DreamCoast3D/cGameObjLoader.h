@@ -10,9 +10,16 @@ protected:
 	std::vector<std::string> m_vecsFolders;
 	std::vector<std::string> m_vecsFiles;
 
+	std::vector<std::string> m_vecStaticFolders;
+	std::vector<std::string> m_vecStaticFiles;
+
 	void ParseAndLoadSkinnedMeshList();
+	void ParseAndLoadStaticMeshList();
+
 	void ParseAndLoadSkinnedMeshtoManager(int nIndex);
-	
+	void ParseAndLoadStaticMeshtoManager(int nIndex);
+
+
 	cGameObject* ParseAndLoadSkinnedBodyMesh();
 	cGameObject* ParseGameActionSkinnedMeshObj();
 	cGameObject* ParsePlayerbleObj();

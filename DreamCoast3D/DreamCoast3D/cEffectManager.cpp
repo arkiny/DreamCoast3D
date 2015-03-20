@@ -3,7 +3,6 @@
 #include "cEffect.h"
 #include "cEffectParticle.h"
 #include "cEffectPotion.h"
-#include "cEffectMesh.h"
 #include "cEffectSkill1.h"
 #include "cEffectTrail.h"
 

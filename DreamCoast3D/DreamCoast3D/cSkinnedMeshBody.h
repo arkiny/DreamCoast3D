@@ -7,6 +7,10 @@ class cSkinnedMeshBody : public cSkinnedMesh
 protected:
 	cSkinnedMesh*	m_pHead;
 	cSkinnedMesh*	m_pHair;
+
+	LPD3DXMESH			m_pWeapon;
+	LPDIRECT3DTEXTURE9	m_pTexture;	
+
 	LPD3DXMESH		m_pMesh;
 	bool m_bIsfirst = true;
 	//충돌용 바운딩 스피어 값 채우기용. ST_BONE_MESH 에서 그대로 받아올거다. : 민우
@@ -18,7 +22,13 @@ public:
 	cSkinnedMeshBody(std::string sFolder, std::string sFile,
 		std::string sFolderHead, std::string sFileHead,
 		std::string sFolderHair, std::string sFileHair);
-	
+
+	cSkinnedMeshBody(std::string sFolder, std::string sFile,
+		std::string sFolderHead, std::string sFileHead,
+		std::string sFolderHair, std::string sFileHair,
+		std::string sFolderWeapon, std::string sFileWeapon, std::string sFileTexture);
+
+
 	virtual ~cSkinnedMeshBody();
 
 	//virtual void Setup(

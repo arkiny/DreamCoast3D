@@ -53,12 +53,29 @@ void cGamePlayableObject::Setup(
 	){
 	cGameSMeshBodyObject::Setup(sFolder, sFile, sFolderHead, sFileHead, sFolderHair, sFileHair);
 
-	/*m_vecStates.resize(EPLAYABLESTATE::EPLAYABLESTATE_MAX);
+	m_vecStates.resize(EPLAYABLESTATE::EPLAYABLESTATE_MAX);
+	m_vecStates[EPLAYABLESTATE::EPLAYABLESTATE_UNARMEDWAIT] = new cPlayerUnarmedWait;
 	m_vecStates[EPLAYABLESTATE::EPLAYABLESTATE_IDLE] = new cPlayerIdle;
-	m_vecStates[EPLAYABLESTATE::EPLAYABLESTATE_MOVE] = new cPlayerMove;
-	m_vecStates[EPLAYABLESTATE::EPLAYABLESTATE_ATTACK] = new cPlayerAttack;
+	m_vecStates[EPLAYABLESTATE::EPLAYABLESTATE_RUN] = new cPlayerRun;
+	m_vecStates[EPLAYABLESTATE::EPLAYABLESTATE_COMBO1] = new cPlayerCombo1;
+	m_vecStates[EPLAYABLESTATE::EPLAYABLESTATE_COMBO1R] = new cPlayerCombo1R;
 	m_vecStates[EPLAYABLESTATE::EPLAYABLESTATE_ONHIT] = new cPlayerOnHit;
-	m_vecStates[EPLAYABLESTATE::EPLAYABLESTATE_DEAD] = new cPlayerDead;*/
+	m_vecStates[EPLAYABLESTATE::EPLAYABLESTATE_DEAD] = new cPlayerDead;
+
+
+	m_pCurrentState = m_vecStates[EPLAYABLESTATE::EPLAYABLESTATE_IDLE];
+	m_pCurrentState->Start(this);
+}
+
+void cGamePlayableObject::Setup(
+	std::string sFolder, std::string sFile,
+	std::string sFolderHead, std::string sFileHead,
+	std::string sFolderHair, std::string sFileHair,
+	std::string sFolderWeapon, std::string sFileWeapon
+	, std::string sFileTexture){
+	cGameSMeshBodyObject::Setup(sFolder, sFile, sFolderHead, sFileHead, sFolderHair, sFileHair, sFolderWeapon, sFileWeapon, sFileTexture);
+
+	
 
 	m_vecStates.resize(EPLAYABLESTATE::EPLAYABLESTATE_MAX);
 	m_vecStates[EPLAYABLESTATE::EPLAYABLESTATE_UNARMEDWAIT] = new cPlayerUnarmedWait;

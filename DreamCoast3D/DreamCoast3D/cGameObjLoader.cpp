@@ -45,7 +45,9 @@ void cGameObjLoader::LoadGameObjectsFromFile(OUT cGameObjManager* pGameManager, 
 		if (isEqual(szToken, "*SKINNEDMESH_LIST")){
 			ParseAndLoadSkinnedMeshList();
 		}
-
+		else if (isEqual(szToken, "*STATICMESH_LIST")){
+			ParseAndLoadStaticMeshList();
+		}
 		else if (isEqual(szToken, "*GAMEACTIONSKINNEDMESHOBJ")){
 			cGameObject* p = ParseGameActionSkinnedMeshObj();
 			pGameManager->AddGameObj(p);
@@ -184,6 +186,28 @@ void cGameObjLoader::ParseAndLoadSkinnedMeshList(){
 	} while (nLevel > 0);
 }
 
+void cGameObjLoader::ParseAndLoadStaticMeshList(){
+	int nLevel = 0;
+	do{
+		char* szToken = GetToken();
+		if (isEqual(szToken, "{")){
+			++nLevel;
+		}
+		else if (isEqual(szToken, "}")){
+			--nLevel;
+		}
+		else if (isEqual(szToken, "*STATICMESH_LIST_COUNT")){
+			int size = GetInteger();
+			m_vecStaticFolders.resize(size);
+			m_vecStaticFiles.resize(size);
+		}
+		else if (isEqual(szToken, "*STATICMESH")){
+			int nIndex = GetInteger();
+			ParseAndLoadStaticMeshtoManager(nIndex);
+		}
+	} while (nLevel > 0);
+}
+
 void cGameObjLoader::ParseAndLoadSkinnedMeshtoManager(int nIndex){
 	std::string sFolder;
 	std::string sFile;
@@ -223,6 +247,32 @@ void cGameObjLoader::ParseAndLoadSkinnedMeshtoManager(int nIndex){
 		->SetCollisionVectors(vecCSNodeList, vecCSRadiusList);
 	g_pSkinnedMeshManager->GetSkinnedMesh(sFolder, sFile)
 		->SetAttackVectors(vecASNodeList, vecASRadiusList);
+}
+
+void cGameObjLoader::ParseAndLoadStaticMeshtoManager(int nIndex){
+	std::string sFolder;
+	std::string sFile;
+	int nLevel = 0;
+	do{
+		char* szToken = GetToken();
+		if (isEqual(szToken, "{")){
+			++nLevel;
+		}
+		else if (isEqual(szToken, "}")){
+			--nLevel;
+		}
+		else if (isEqual(szToken, "*STATICMESH_PATH")){
+			sFolder = GetToken();
+		}
+		else if (isEqual(szToken, "*STATICMESH_FILE")){
+			sFile = GetToken();
+		}
+	} while (nLevel > 0);
+
+	m_vecStaticFolders[nIndex] = sFolder;
+	m_vecStaticFiles[nIndex] = sFile;
+
+	g_pStaticMeshManager->GetStaticMesh(sFolder + sFile);
 }
 
 void cGameObjLoader::ParseSkinnedCSList(
@@ -334,7 +384,8 @@ cGameObject* cGameObjLoader::ParseAndLoadSkinnedBodyMesh(){
 
 cGameObject* cGameObjLoader::ParsePlayerbleObj(){
 	cGamePlayableObject* ret = NULL;
-	int nBodyIndex = -1, nHeadIndex = -1, nHairIndex = -1;
+	std::string	sMeshTexture = "";
+	int nBodyIndex = -1, nHeadIndex = -1, nHairIndex = -1, nWeaponIndex = -1;
 	D3DXVECTOR3 pos(0, 0, 0), scale(1.0f, 1.0f, 1.0f);
 	int nLevel = 0;
 	do{
@@ -354,6 +405,10 @@ cGameObject* cGameObjLoader::ParsePlayerbleObj(){
 		else if (isEqual(szToken, "*SKINNEDMESHAIR_REF")){
 			nHairIndex = GetInteger();
 		}
+		else if (isEqual(szToken, "*STATICMESHWEAPON_REF")){
+			nWeaponIndex = GetInteger();
+			sMeshTexture = GetToken();
+		}
 		else if (isEqual(szToken, "*POISTION")){
 			pos.x = GetFloat();
 			pos.y = GetFloat();
@@ -371,9 +426,18 @@ cGameObject* cGameObjLoader::ParsePlayerbleObj(){
 	} while (nLevel > 0);
 
 	ret = new cGamePlayableObject;
-	ret->Setup(m_vecsFolders[nBodyIndex], m_vecsFiles[nBodyIndex],
-		m_vecsFolders[nHeadIndex], m_vecsFiles[nHeadIndex],
-		m_vecsFolders[nHairIndex], m_vecsFiles[nHairIndex]);
+	if (nWeaponIndex >= 0){
+		ret->Setup(m_vecsFolders[nBodyIndex], m_vecsFiles[nBodyIndex],
+			m_vecsFolders[nHeadIndex], m_vecsFiles[nHeadIndex],
+			m_vecsFolders[nHairIndex], m_vecsFiles[nHairIndex],
+			m_vecStaticFolders[nWeaponIndex], m_vecStaticFiles[nWeaponIndex], sMeshTexture);
+	}
+	else {
+		ret->Setup(m_vecsFolders[nBodyIndex], m_vecsFiles[nBodyIndex],
+			m_vecsFolders[nHeadIndex], m_vecsFiles[nHeadIndex],
+			m_vecsFolders[nHairIndex], m_vecsFiles[nHairIndex]);
+	}
+
 	ret->SetPosition(pos);
 	ret->SetScale(scale);
 

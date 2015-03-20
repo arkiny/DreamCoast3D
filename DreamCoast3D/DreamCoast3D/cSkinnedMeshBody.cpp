@@ -7,7 +7,9 @@ cSkinnedMeshBody::cSkinnedMeshBody()
 	:m_pHead(NULL),
 	m_pHair(NULL),
 	m_pMesh(NULL),
-	cSkinnedMesh()
+	cSkinnedMesh(),
+	m_pWeapon(NULL),
+	m_pTexture(NULL)
 {
 }
 
@@ -17,6 +19,7 @@ cSkinnedMeshBody::~cSkinnedMeshBody()
 	SAFE_RELEASE(m_pHead);
 	SAFE_RELEASE(m_pHair);
 	SAFE_RELEASE(m_pMesh);
+	SAFE_RELEASE(m_pWeapon);
 }
 
 cSkinnedMeshBody::cSkinnedMeshBody(std::string sFolder, std::string sFile,
@@ -25,19 +28,19 @@ cSkinnedMeshBody::cSkinnedMeshBody(std::string sFolder, std::string sFile,
 	:m_pHead(NULL),
 	m_pHair(NULL),
 	m_pMesh(NULL),
-	cSkinnedMesh(sFolder, sFile)
+	cSkinnedMesh(sFolder, sFile),
+	m_pWeapon(NULL),
+	m_pTexture(NULL)
 {
 	g_pShaderManager->GetShader("../Resources/Shader/MultiAnimation.fx");
 	m_pHead = new cSkinnedMesh(sFolderHead, sFileHead);
 	m_pHair = new cSkinnedMesh(sFolderHair, sFileHair);
 
-	
 
 	m_sMainCollisionSphere = "FxCenter";
 	m_fMianColisionSphereRadius = 6.f;
 
-
-
+	//m_pWeapon = g_pStaticMeshManager->GetStaticMesh("../Resources/Char/Tera/HumanM/TwoHand21_SM.x");
 	//몸중심의 전체적 바운딩스피어를 구해낸 다음 그 값을 cSkinnedMesh의 바운딩스피어 멤버들에게 전달해준다 : 민우
 
 	// HD : 프레임워크 위에서의 작업은 기존에 있는 것에서 지우고 수정하는 형태가 아니라
@@ -58,6 +61,32 @@ cSkinnedMeshBody::cSkinnedMeshBody(std::string sFolder, std::string sFile,
 	//GetDetailCollisionBoundingSpheres(m_vecDetailBoundingSphere);	//TODO: 여기서 구해진 것을 토대로 Update에서 위치를 지속적으로 갱신해야 한다. :민우
 	//D3DXCreateSphere(g_pD3DDevice, 2.5f, 5, 5, &m_pDebugDetailSphereBody, NULL);//세부적인 부분을 보여줄 작은 바운딩스피어
 }
+
+cSkinnedMeshBody::cSkinnedMeshBody(std::string sFolder, std::string sFile,
+	std::string sFolderHead, std::string sFileHead,
+	std::string sFolderHair, std::string sFileHair,
+	std::string sFolderWeapon, std::string sFileWeapon, std::string sFileTexture)
+	:m_pHead(NULL),
+	m_pHair(NULL),
+	m_pMesh(NULL),
+	m_pWeapon(NULL),
+	m_pTexture(NULL),
+	cSkinnedMesh(sFolder, sFile)
+{
+	g_pShaderManager->GetShader("../Resources/Shader/MultiAnimation.fx");
+	m_pHead = new cSkinnedMesh(sFolderHead, sFileHead);
+	m_pHair = new cSkinnedMesh(sFolderHair, sFileHair);
+
+	m_pWeapon = g_pStaticMeshManager->GetStaticMesh(sFolderWeapon + sFileWeapon);
+	m_pTexture = g_pTextureManager->GetTexture(sFolder + sFileTexture);
+
+	m_sMainCollisionSphere = "FxCenter";
+	m_fMianColisionSphereRadius = 6.f;
+
+	m_stUpdateBoundingSphere.m_vCenter = m_mapDebugOriginSphereBody[std::string("FxCenter")].m_vCenter;
+	m_stUpdateBoundingSphere.m_fRadius = m_mapDebugOriginSphereBody[std::string("FxCenter")].m_fRadius / 2;
+}
+
 
 //캐릭터 몸의 1차 충돌(피격)체크용 전체적 바운딩스피어를 구한다 : 민우
 //void cSkinnedMeshBody::GetCollisionBoundingSphere(OUT D3DXVECTOR3& vCenter, OUT float& fRadius)
@@ -203,6 +232,75 @@ void cSkinnedMeshBody::RenderShadow(ST_BONE* pBone/* = NULL*/){
 	{
 		if (m_pHair){
 			m_pHair->UpdateAndRenderShadow(&pBone->CombinedTransformationMatrix);
+		}
+	}
+
+	else if (pBone->Name != nullptr && std::string(pBone->Name) == std::string("R_Sword"))
+	{
+		if (m_pWeapon){
+			D3DLIGHT9 stLight;
+			g_pD3DDevice->GetLight(0, &stLight);
+			D3DXVECTOR3 dir = stLight.Direction;
+			D3DXVECTOR3 pos;
+			D3DXVec3Normalize(&pos, &dir);
+			pos = -500 * pos;
+			//D3DXVECTOR3 tempPos(-93.3871002f, 234.746628f, -53.4625092);
+			// 빛을 움직이면서 디렉셔널로 움직이면 섀도우맵역시 움직인다.
+			//D3DXVECTOR3 vMove(pMatrix->_41, pMatrix->_42, pMatrix->_43);
+			//pos = pos + vMove;
+
+			D3DXMATRIXA16 matLightView;
+			{
+				D3DXVECTOR3 vLookatPt(128.0f, 0.0f, 128.0f);
+				D3DXVECTOR3 vUpVec(0.0f, 1.0f, 0.0f);
+				D3DXMatrixLookAtLH(&matLightView, &pos, &vLookatPt, &vUpVec);
+			}
+
+			D3DXMATRIXA16 matLightProjection; {
+				//D3DXMatrixPerspectiveFovLH(&matLightProjection, D3DX_PI / 4.0f, 1, 1, 3000);
+				D3DXMatrixOrthoLH(&matLightProjection, 350, 350, 1, 800);
+			}
+
+			D3DXMATRIXA16 matView;
+			D3DXMATRIXA16 matProjection;
+			g_pD3DDevice->GetTransform(D3DTS_VIEW, &matView);
+			g_pD3DDevice->GetTransform(D3DTS_PROJECTION, &matProjection);
+			D3DXMATRIXA16 matViewProject; {
+				D3DXMatrixMultiply(&matViewProject, &matView, &matProjection);
+			}
+
+			g_pShaderManager->GetShader("../Resources/Shader/CreateShadow.fx")
+				->SetMatrix("gWorldMatrix", &pBone->CombinedTransformationMatrix);
+			g_pShaderManager->GetShader("../Resources/Shader/CreateShadow.fx")
+				->SetMatrix("gLightViewMatrix", &matLightView);
+			g_pShaderManager->GetShader("../Resources/Shader/CreateShadow.fx")
+				->SetMatrix("gLightProjectionMatrix", &matLightProjection);
+
+
+			D3DXMATRIXA16 matLightViewProjection; {
+				matLightProjection = matLightView * matLightProjection;
+			}
+			g_pShaderManager->GetShader("../Resources/Shader/CreateShadow.fx")
+				->SetMatrix("gLightViewProjectionMatrix", &matLightViewProjection);
+
+			// 쉐이더를 시작한다.
+			UINT numPasses = 0;
+			g_pShaderManager->GetShader("../Resources/Shader/CreateShadow.fx")
+				->Begin(&numPasses, NULL);
+			{
+				for (UINT i = 0; i < numPasses; ++i)
+				{
+					g_pShaderManager->GetShader("../Resources/Shader/CreateShadow.fx")
+						->BeginPass(i);
+					{
+						m_pWeapon->DrawSubset(0);
+					}
+					g_pShaderManager->GetShader("../Resources/Shader/CreateShadow.fx")
+						->EndPass();
+				}
+			}
+			g_pShaderManager->GetShader("../Resources/Shader/CreateShadow.fx")
+				->End();
 		}
 	}
 
@@ -388,6 +486,15 @@ void cSkinnedMeshBody::Render(ST_BONE* pBone /*= NULL*/)
 		}
 	}
 
+	else if (pBone->Name != nullptr && std::string(pBone->Name) == std::string("R_Sword"))
+	{
+		if (m_pWeapon){
+			g_pD3DDevice->SetTexture(0, m_pTexture);
+			g_pD3DDevice->SetTransform(D3DTS_WORLD, &pBone->CombinedTransformationMatrix);
+			m_pWeapon->DrawSubset(0);
+		}
+	}
+	
 	// 각 프레임의 메시 컨테이너에 있는 pSkinInfo를 이용하여 영향받는 모든 
 	// 프레임의 매트릭스를 ppBoneMatrixPtrs에 연결한다.
 	if (pBone->pMeshContainer)
@@ -408,9 +515,6 @@ void cSkinnedMeshBody::Render(ST_BONE* pBone /*= NULL*/)
 		D3DXMatrixInverse(&mInvView, 0, &mView);
 		D3DXVECTOR3 vEye = D3DXVECTOR3(0, 0, 0);
 		D3DXVec3TransformCoord(&vEye, &vEye, &mInvView);
-
-
-
 
 
 		//gWorldViewProjectionMatrix

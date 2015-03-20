@@ -127,7 +127,6 @@
     <ClInclude Include="cEffect.h" />
     <ClInclude Include="cEffectParticle.h" />
     <ClInclude Include="cEffectManager.h" />
-    <ClInclude Include="cEffectMesh.h" />
     <ClInclude Include="cEffectPotion.h" />
     <ClInclude Include="cEffectResourceManager.h" />
     <ClInclude Include="cEffectSkill1.h" />
@@ -189,6 +188,7 @@
     <ClInclude Include="cSkillIcons.h" />
     <ClInclude Include="cSkinnedMeshBody.h" />
     <ClInclude Include="cSoundManager.h" />
+    <ClInclude Include="cStaticMesh.h" />
     <ClInclude Include="cStaticMeshManager.h" />
     <ClInclude Include="cStoreWindow.h" />
     <ClInclude Include="cUICredit.h" />
@@ -279,7 +279,6 @@
     <ClCompile Include="cEffect.cpp" />
     <ClCompile Include="cEffectParticle.cpp" />
     <ClCompile Include="cEffectManager.cpp" />
-    <ClCompile Include="cEffectMesh.cpp" />
     <ClCompile Include="cEffectPotion.cpp" />
     <ClCompile Include="cEffectResourceManager.cpp" />
     <ClCompile Include="cEffectSkill1.cpp" />
@@ -341,6 +340,7 @@
     <ClCompile Include="cSkillIcons.cpp" />
     <ClCompile Include="cSkinnedMeshBody.cpp" />
     <ClCompile Include="cSoundManager.cpp" />
+    <ClCompile Include="cStaticMesh.cpp" />
     <ClCompile Include="cStaticMeshManager.cpp" />
     <ClCompile Include="cStoreWindow.cpp" />
     <ClCompile Include="cUICredit.cpp" />

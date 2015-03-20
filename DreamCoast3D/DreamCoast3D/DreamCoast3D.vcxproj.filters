@@ -316,9 +316,6 @@
     <ClCompile Include="cUICursor.cpp">
       <Filter>FrameWork\Object\UIObject</Filter>
     </ClCompile>
-    <ClCompile Include="cEffectMesh.cpp">
-      <Filter>FrameWork\Effects</Filter>
-    </ClCompile>
     <ClCompile Include="cEffectParticle.cpp">
       <Filter>FrameWork\Effects</Filter>
     </ClCompile>
@@ -438,6 +435,7 @@
       <Filter>EachWorks\MW\PlayerState</Filter>
     </ClCompile>
     <ClCompile Include="cUICredit.cpp" />
+    <ClCompile Include="cStaticMesh.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cAction.h">
@@ -767,9 +765,6 @@
     <ClInclude Include="cUICursor.h">
       <Filter>FrameWork\Object\UIObject</Filter>
     </ClInclude>
-    <ClInclude Include="cEffectMesh.h">
-      <Filter>FrameWork\Effects</Filter>
-    </ClInclude>
     <ClInclude Include="cEffectParticle.h">
       <Filter>FrameWork\Effects</Filter>
     </ClInclude>
@@ -889,6 +884,7 @@
       <Filter>EachWorks\MW\PlayerState</Filter>
     </ClInclude>
     <ClInclude Include="cUICredit.h" />
+    <ClInclude Include="cStaticMesh.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="DreamCoast3D.ico">
