@@ -205,21 +205,6 @@
     <ClCompile Include="cGamePlayableObject.cpp">
       <Filter>EachWorks\HD</Filter>
     </ClCompile>
-    <ClCompile Include="cPlayerMove.cpp">
-      <Filter>EachWorks\HD\PlayerFSM</Filter>
-    </ClCompile>
-    <ClCompile Include="cPlayerIdle.cpp">
-      <Filter>EachWorks\HD\PlayerFSM</Filter>
-    </ClCompile>
-    <ClCompile Include="iPlayerState.cpp">
-      <Filter>EachWorks\HD\PlayerFSM</Filter>
-    </ClCompile>
-    <ClCompile Include="cPlayerAttack.cpp">
-      <Filter>EachWorks\HD\PlayerFSM</Filter>
-    </ClCompile>
-    <ClCompile Include="cPlayerOnHit.cpp">
-      <Filter>EachWorks\HD\PlayerFSM</Filter>
-    </ClCompile>
     <ClCompile Include="cGameAIObject.cpp">
       <Filter>EachWorks\HD</Filter>
     </ClCompile>
@@ -385,9 +370,6 @@
     <ClCompile Include="iInventoryControl.cpp">
       <Filter>FrameWork\Interfaces</Filter>
     </ClCompile>
-    <ClCompile Include="cPlayerDead.cpp">
-      <Filter>EachWorks\HD\PlayerFSM</Filter>
-    </ClCompile>
     <ClCompile Include="cSkillIcons.cpp">
       <Filter>EachWorks\HD</Filter>
     </ClCompile>
@@ -402,6 +384,55 @@
     </ClCompile>
     <ClCompile Include="cGameOverWindow.cpp">
       <Filter>EachWorks\MS</Filter>
+    </ClCompile>
+    <ClCompile Include="cEffectTrail.cpp" />
+    <ClCompile Include="cPlayerAttack_Origin.cpp">
+      <Filter>EachWorks\HD\PlayerFSM</Filter>
+    </ClCompile>
+    <ClCompile Include="cPlayerDead_Origin.cpp">
+      <Filter>EachWorks\HD\PlayerFSM</Filter>
+    </ClCompile>
+    <ClCompile Include="cPlayerIdle_Origin.cpp">
+      <Filter>EachWorks\HD\PlayerFSM</Filter>
+    </ClCompile>
+    <ClCompile Include="cPlayerMove_Origin.cpp">
+      <Filter>EachWorks\HD\PlayerFSM</Filter>
+    </ClCompile>
+    <ClCompile Include="cPlayerOnHit_Origin.cpp">
+      <Filter>EachWorks\HD\PlayerFSM</Filter>
+    </ClCompile>
+    <ClCompile Include="iPlayerState_Origin.cpp">
+      <Filter>EachWorks\HD\PlayerFSM</Filter>
+    </ClCompile>
+    <ClCompile Include="cPlayerAttack.cpp">
+      <Filter>EachWorks\MW\PlayerState</Filter>
+    </ClCompile>
+    <ClCompile Include="cPlayerCombo1.cpp">
+      <Filter>EachWorks\MW\PlayerState</Filter>
+    </ClCompile>
+    <ClCompile Include="cPlayerCombo1R.cpp">
+      <Filter>EachWorks\MW\PlayerState</Filter>
+    </ClCompile>
+    <ClCompile Include="cPlayerCommon.cpp">
+      <Filter>EachWorks\MW\PlayerState</Filter>
+    </ClCompile>
+    <ClCompile Include="cPlayerIdle.cpp">
+      <Filter>EachWorks\MW\PlayerState</Filter>
+    </ClCompile>
+    <ClCompile Include="cPlayerMove.cpp">
+      <Filter>EachWorks\MW\PlayerState</Filter>
+    </ClCompile>
+    <ClCompile Include="cPlayerOnHit.cpp">
+      <Filter>EachWorks\MW\PlayerState</Filter>
+    </ClCompile>
+    <ClCompile Include="cPlayerRun.cpp">
+      <Filter>EachWorks\MW\PlayerState</Filter>
+    </ClCompile>
+    <ClCompile Include="cPlayerUnarmedWait.cpp">
+      <Filter>EachWorks\MW\PlayerState</Filter>
+    </ClCompile>
+    <ClCompile Include="iPlayerState.cpp">
+      <Filter>EachWorks\MW\PlayerState</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -612,21 +643,6 @@
     <ClInclude Include="cGameSMeshBodyObject.h">
       <Filter>EachWorks\MW</Filter>
     </ClInclude>
-    <ClInclude Include="cPlayerMove.h">
-      <Filter>EachWorks\HD\PlayerFSM</Filter>
-    </ClInclude>
-    <ClInclude Include="cPlayerIdle.h">
-      <Filter>EachWorks\HD\PlayerFSM</Filter>
-    </ClInclude>
-    <ClInclude Include="iPlayerState.h">
-      <Filter>EachWorks\HD\PlayerFSM</Filter>
-    </ClInclude>
-    <ClInclude Include="cPlayerOnHit.h">
-      <Filter>EachWorks\HD\PlayerFSM</Filter>
-    </ClInclude>
-    <ClInclude Include="cPlayerAttack.h">
-      <Filter>EachWorks\HD\PlayerFSM</Filter>
-    </ClInclude>
     <ClInclude Include="cGameAIObject.h">
       <Filter>EachWorks\HD</Filter>
     </ClInclude>
@@ -801,9 +817,6 @@
     <ClInclude Include="iInventoryControl.h">
       <Filter>FrameWork\Interfaces</Filter>
     </ClInclude>
-    <ClInclude Include="cPlayerDead.h">
-      <Filter>EachWorks\HD\PlayerFSM</Filter>
-    </ClInclude>
     <ClInclude Include="cSkillIcons.h">
       <Filter>EachWorks\HD</Filter>
     </ClInclude>
@@ -818,6 +831,55 @@
     </ClInclude>
     <ClInclude Include="cGameOverWindow.h">
       <Filter>EachWorks\MS</Filter>
+    </ClInclude>
+    <ClInclude Include="cEffectTrail.h" />
+    <ClInclude Include="cPlayerAttack_Origin.h">
+      <Filter>EachWorks\HD\PlayerFSM</Filter>
+    </ClInclude>
+    <ClInclude Include="cPlayerDead_Origin.h">
+      <Filter>EachWorks\HD\PlayerFSM</Filter>
+    </ClInclude>
+    <ClInclude Include="cPlayerIdle_Origin.h">
+      <Filter>EachWorks\HD\PlayerFSM</Filter>
+    </ClInclude>
+    <ClInclude Include="cPlayerMove_Origin.h">
+      <Filter>EachWorks\HD\PlayerFSM</Filter>
+    </ClInclude>
+    <ClInclude Include="cPlayerOnHit_Origin.h">
+      <Filter>EachWorks\HD\PlayerFSM</Filter>
+    </ClInclude>
+    <ClInclude Include="iPlayerState_Origin.h">
+      <Filter>EachWorks\HD\PlayerFSM</Filter>
+    </ClInclude>
+    <ClInclude Include="cPlayerAttack.h">
+      <Filter>EachWorks\MW\PlayerState</Filter>
+    </ClInclude>
+    <ClInclude Include="cPlayerCombo1.h">
+      <Filter>EachWorks\MW\PlayerState</Filter>
+    </ClInclude>
+    <ClInclude Include="cPlayerCombo1R.h">
+      <Filter>EachWorks\MW\PlayerState</Filter>
+    </ClInclude>
+    <ClInclude Include="cPlayerCommon.h">
+      <Filter>EachWorks\MW\PlayerState</Filter>
+    </ClInclude>
+    <ClInclude Include="cPlayerIdle.h">
+      <Filter>EachWorks\MW\PlayerState</Filter>
+    </ClInclude>
+    <ClInclude Include="cPlayerMove.h">
+      <Filter>EachWorks\MW\PlayerState</Filter>
+    </ClInclude>
+    <ClInclude Include="cPlayerOnHit.h">
+      <Filter>EachWorks\MW\PlayerState</Filter>
+    </ClInclude>
+    <ClInclude Include="cPlayerRun.h">
+      <Filter>EachWorks\MW\PlayerState</Filter>
+    </ClInclude>
+    <ClInclude Include="cPlayerUnarmedWait.h">
+      <Filter>EachWorks\MW\PlayerState</Filter>
+    </ClInclude>
+    <ClInclude Include="iPlayerState.h">
+      <Filter>EachWorks\MW\PlayerState</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -957,6 +1019,9 @@
     </Filter>
     <Filter Include="EachWorks\HD\TODO-UI\UIWorking\MainMenuUI">
       <UniqueIdentifier>{a18f39a1-4fb3-416b-b35b-03abf33b497a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="EachWorks\MW\PlayerState">
+      <UniqueIdentifier>{96fd0dd4-5531-4965-8848-27247d502772}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

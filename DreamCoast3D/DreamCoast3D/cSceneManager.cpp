@@ -50,6 +50,10 @@ void cSceneManager::Update(float delta){
 			ChangeScene(5);
 			return;
 		}
+		if (GetAsyncKeyState(VK_F9)){ // 캐릭터 애니메이션 테스트 씬 : 민우
+			ChangeScene(6);
+			return;
+		}
 	}
 
 	if (m_bIsChangeSceneCall){

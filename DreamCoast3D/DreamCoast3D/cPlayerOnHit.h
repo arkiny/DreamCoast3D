@@ -1,4 +1,4 @@
- #pragma once
+#pragma once
 #include "iPlayerState.h"
 
 class cPlayerOnHit : public iPlayerState
@@ -12,4 +12,19 @@ public:
 	void Exit(cGamePlayableObject* pPlayer);
 	int GetCurrentStateType() { return 3; }
 };
-
+//안심 백업 : 민우
+// #pragma once
+//#include "iPlayerState.h"
+//
+//class cPlayerOnHit : public iPlayerState
+//{
+//public:
+//	cPlayerOnHit();
+//	~cPlayerOnHit();
+//
+//	void Start(cGamePlayableObject* pPlayer);
+//	void Execute(cGamePlayableObject* pPlayer, float fDelta);
+//	void Exit(cGamePlayableObject* pPlayer);
+//	int GetCurrentStateType() { return 3; }
+//};
+//

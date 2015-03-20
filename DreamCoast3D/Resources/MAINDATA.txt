@@ -17,4 +17,5 @@
 	*SCENE 3 "../Resources/SCENE4_MAIN.txt"
 	*SCENE 4 "../Resources/SCENE5_MAIN.txt"
 	*SCENE 5 "../Resources/SCENE6_MAIN.txt"
+	*SCENE 6 "../Resources/SCENE7_MAIN.txt"
 } 

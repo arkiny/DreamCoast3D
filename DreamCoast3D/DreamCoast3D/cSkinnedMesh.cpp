@@ -12,7 +12,7 @@ cSkinnedMesh::cSkinnedMesh(char* szFolder, char* szFilename)
 	, m_fAnimationBlendTime(ANIM_BLEND_TIME)
 	, m_fPassedBlendTime(0.0f)
 	, m_isAnimationBlending(false)
-	, m_nCurrentAnimation(0)
+	, m_nCurrentAnimation(1)
 	, m_pDebugSphereBody(NULL)
 	, m_pDebugDetailSphereBody(nullptr)
 	, m_pATMesh(NULL)
@@ -29,7 +29,7 @@ cSkinnedMesh::cSkinnedMesh(std::string sFolder, std::string sFile)
 	, m_fAnimationBlendTime(ANIM_BLEND_TIME)
 	, m_fPassedBlendTime(0.0f)
 	, m_isAnimationBlending(false)
-	, m_nCurrentAnimation(0)
+	, m_nCurrentAnimation(1)
 	, m_pDebugSphereBody(NULL)
 	, m_pDebugDetailSphereBody(nullptr)
 	, m_pATMesh(NULL)
@@ -254,7 +254,8 @@ void cSkinnedMesh::UpdateAndRenderShadow(D3DXMATRIXA16* pParentWorldTM)
 	//{
 	//	m_pAnimController->AdvanceTime(g_pTimer->DeltaTime(), NULL);
 	//}
-	m_vecAnimationSet[m_nCurrentAnimation]->Update(g_pTimer->DeltaTime());
+	//애니메이션 제어는 iPlayerState쪽을 따른다. 일단 주석 : 민우
+	//m_vecAnimationSet[m_nCurrentAnimation]->Update(g_pTimer->DeltaTime());
 	
 	//블렌딩 타입 노멀(수정해야됨)
 	if (m_isAnimationBlending && EANIMBLENDTYPE::EANIMBLENDTYPE_NORMAL)
@@ -784,11 +785,11 @@ void cSkinnedMesh::SetAnimationIndex(DWORD dwIndex)
 	cAnimationSet* pNext = m_vecAnimationSet[dwIndex];
 	
 	//이 코드가 같은 애니메이션을 자꾸 중복실행하게 만든다. 상의해봐야 할 부분 : 민우
-	if (pNext->GetIsLoop())
+	/*if (pNext->GetIsLoop())
 	{
 		SetAnimationIndexBlend(dwIndex);
 	}
-	else
+	else*/
 	{
 		pNext->SetDelegate(this);
 		pNext->SetPrevAnimation(pCurr);
@@ -825,7 +826,7 @@ void cSkinnedMesh::SetAnimationIndexBlend(DWORD dwIndex)
 
 	m_fPassedBlendTime = 0.0f;
 	m_isAnimationBlending = true;*/
-	SetAnimationIndexBlendEX(dwIndex, EANIMBLENDTYPE::EANIMBLENDTYPE_CONTINUE_WEIGHT);
+	SetAnimationIndexBlendEX(dwIndex, EANIMBLENDTYPE::EANIMBLENDTYPE_NONE);
 }
 void cSkinnedMesh::SetAnimationIndexBlendEX(DWORD dwIndex, EANIMBLENDTYPE eAnimBlendType)
 {
@@ -849,8 +850,14 @@ void cSkinnedMesh::SetAnimationIndexBlendEX(DWORD dwIndex, EANIMBLENDTYPE eAnimB
 	D3DXTRACK_DESC desc;
 	m_pAnimController->GetTrackDesc(0, &desc);
 	m_pAnimController->SetTrackDesc(1, &desc);
-	
-	if (eAnimBlendType == EANIMBLENDTYPE::EANIMBLENDTYPE_NORMAL)
+	if (eAnimBlendType == EANIMBLENDTYPE::EANIMBLENDTYPE_NONE)
+	{
+		m_pAnimController->SetTrackWeight(0, 1.0f);
+		m_pAnimController->SetTrackEnable(1, false);
+		m_isAnimationBlending = false;
+	}
+
+	else if (eAnimBlendType == EANIMBLENDTYPE::EANIMBLENDTYPE_NORMAL)
 	{
 		m_pAnimController->SetTrackWeight(0, 0.0f);
 		m_pAnimController->SetTrackWeight(1, 1.0f);
@@ -892,7 +899,9 @@ void cSkinnedMesh::SetAnimationLoop(DWORD dwIndex, bool isLoop)
 }
 //Heedong.peter.lee
 void cSkinnedMesh::OnFinishAnimation(cAnimationSet* pSender){
-	SetAnimationIndex(pSender->GetPrevAnimation()->GetIndex());
+	//플레이어 상태관리를 하고 있는데도 스킨드메쉬에서 애니메이션을 제어할 필요가 있을까...? : 민우
+	//SetAnimationIndex(pSender->GetPrevAnimation()->GetIndex());
+	//SetAnimationIndex(1);
 }
 
 
