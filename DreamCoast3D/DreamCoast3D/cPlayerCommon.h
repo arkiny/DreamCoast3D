@@ -30,7 +30,16 @@ public:
 	virtual void SetIsRestart(bool bRestart){ m_IsRestart = bRestart; }
 	virtual bool GetIsDoing(){ return m_IsDoing; }
 	virtual void SetIsDoing(bool bDoing){ m_IsDoing = bDoing; }
+<<<<<<< HEAD
 	virtual ESTATEGROUP GetStateType(){ return m_eStateType; }
 	virtual void SetStateType(ESTATEGROUP eStateType){ m_eStateType = eStateType; }
+=======
+	//virtual bool GetIsRestart(){ return m_IsRestart; }
+	//virtual void SetIsRestart(bool IsRestart){ m_IsRestart = IsRestart; };
+
+
+private:
+	float m_fDeadAccumTime;
+>>>>>>> origin/master
 };
 
