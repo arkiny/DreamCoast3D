@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "cUIObjManager.h"
 #include "cUICursor.h"
+#include "cUIPopupWindow.h"
 
 cUIObjManager::cUIObjManager()
 {
@@ -8,6 +9,7 @@ cUIObjManager::cUIObjManager()
 	m_isCursorUpdate = false;
 	m_pEventManager = nullptr;
 	m_pGameManager = nullptr;
+	m_isRender = false;
 }
 
 
@@ -27,7 +29,15 @@ void cUIObjManager::Update(float fDelta){
 		m_pMouseCursor->Update(fDelta);
 	}
 	for (auto p : m_vecUIObjects){
-		p->Update(fDelta);
+		if (m_isRender == false)
+		{
+			p->Update(fDelta);
+		}
+		else
+		{
+			m_vecUIGameOver[0]->Update(fDelta);
+		}
+
 	}
 
 	// XXX 
@@ -52,8 +62,15 @@ void cUIObjManager::Update(float fDelta){
 
 void cUIObjManager::Render(){	
 	for (auto p : m_vecUIObjects){
-		
-		SAFE_RENDER(p);
+		if (m_isRender == false)
+		{
+			SAFE_RENDER(p);
+		}
+		else
+		{
+			m_vecUIGameOver[0]->Render();
+		}
+
 	}
 	SAFE_RENDER(m_pMouseCursor);
 }
@@ -63,6 +80,12 @@ void cUIObjManager::AddUI(cUIObject* pUIObj){
 		SAFE_ADD_REF(pUIObj);
 		pUIObj->SetUIManagerDeligate(this);
 		m_vecUIObjects.push_back(pUIObj);
+	}
+}
+
+void cUIObjManager::AddGameOver(cUIObject* pGameOver){
+	if (pGameOver){
+		m_vecUIGameOver.push_back(pGameOver);
 	}
 }
 
@@ -155,4 +178,15 @@ void cUIObjManager::UpdateTrap()
 			this->SetShowCursor(true);
 		}
 	}
+}
+
+void cUIObjManager::ActiveGameOver(bool isGameOver)
+{
+	if (m_vecUIGameOver.size() > 0)
+	{
+		cUIPopupWindow* pGameOver = (cUIPopupWindow*)m_vecUIGameOver[0];
+		pGameOver->SetisPopped(isGameOver);
+		m_isRender = isGameOver;
+	}
+
 }

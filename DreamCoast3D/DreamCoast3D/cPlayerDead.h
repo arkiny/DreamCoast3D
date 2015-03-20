@@ -1,5 +1,4 @@
 #pragma once
-//#include "iPlayerState.h"
 #include "cPlayerCommon.h"
 
 class cPlayerDead : public cPlayerCommon

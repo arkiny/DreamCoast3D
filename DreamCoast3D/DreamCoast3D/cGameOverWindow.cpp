@@ -19,40 +19,39 @@ void cGameOverWindow::Setup()
 {
 	D3DXCreateSprite(g_pD3DDevice, &m_pSprite);
 	cUIImageView* pUIImageView = new cUIImageView(m_pSprite);
-	pUIImageView->SetTextureFilename(std::string("../Resources/UI/UI_STORE/Store_BackGround.png"));
-	pUIImageView->SetScale(D3DXVECTOR3(1.0f, 1.0f, 1.0f));
-	pUIImageView->SetPosition(D3DXVECTOR3(0, 0, 0));
+	pUIImageView->SetTextureFilename(std::string("../Resources/UI/UI_GameOver/Game_Over.jpg"));
+	pUIImageView->SetScale(D3DXVECTOR3(1.34f, 1.34f, 1.0f));
+	pUIImageView->SetPosition(D3DXVECTOR3(0.f, 0.f, 0.f));
 	m_pUIRoot = pUIImageView;
-
-	cUIImageButton* pUIImageReturnButton = new cUIImageButton(m_pSprite);
-	pUIImageReturnButton->Setup(
-		std::string("../Resources/UI/UI_STORE/Store_Master.png"),
-		std::string("../Resources/UI/UI_STORE/Store_Master.png"),
-		std::string("../Resources/UI/UI_STORE/Store_Master.png"));
-	pUIImageReturnButton->SetPosition(D3DXVECTOR3(300, 100, 0.f));
-	pUIImageReturnButton->SetScale(D3DXVECTOR3(1.0f, 1.0f, 1.0f));
-	pUIImageReturnButton->SetDelegate(this);
-	m_pUIRoot->AddChild(pUIImageReturnButton);
-	pUIImageReturnButton->Release();
-
-	cUIImageButton* pUIImageExitButton = new cUIImageButton(m_pSprite);
-	pUIImageExitButton->Setup(
-		std::string("../Resources/UI/UI_STORE/Store_Speak.png"),
-		std::string("../Resources/UI/UI_STORE/Store_Speak.png"),
-		std::string("../Resources/UI/UI_STORE/Store_Speak.png"));
-	pUIImageExitButton->SetPosition(D3DXVECTOR3(500, 100, 0.f));
-	pUIImageExitButton->SetScale(D3DXVECTOR3(.6f, .6f, 1.0f));
-	pUIImageExitButton->SetDelegate(this);
-	m_pUIRoot->AddChild(pUIImageExitButton);
-	pUIImageExitButton->Release();
 }
 
 void cGameOverWindow::Update(float fDelta)
 {
+	if (m_bShow)
+	{
+		if (g_pControlManager->GetInputInfo(VK_RETURN))
+		{
+			m_pSceneDeligate->ChangeScene(0);
+		}
+
+		if (m_pUIRoot)
+		{
+			m_pUIRoot->Update(fDelta);
+		}
+	}
+
 }
 
 void cGameOverWindow::Render()
 {
+	if (m_bShow)
+	{
+		if (m_pUIRoot)
+		{
+			m_pUIRoot->Render();
+		}
+	}
+
 }
 
 void cGameOverWindow::OnClick(cUIImageButton* pSender)

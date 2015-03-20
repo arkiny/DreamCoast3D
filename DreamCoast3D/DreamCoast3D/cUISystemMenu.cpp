@@ -117,6 +117,14 @@ void cUISystemMenu::StoreEvent(float fDelta)
 			{
 				m_vecPopUpWindow[1]->SetisPopped(true);
 			}
+			//if (m_vecPopUpWindow[2]->GetisPopped())
+			//{
+			//	m_vecPopUpWindow[2]->SetisPopped(false);
+			//}
+			//else
+			//{
+			//	m_vecPopUpWindow[2]->SetisPopped(true);
+			//}
 		}
 
 	}

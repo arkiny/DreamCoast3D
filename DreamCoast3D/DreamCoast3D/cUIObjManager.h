@@ -10,6 +10,8 @@ protected:
 	// HACK : Prioriy Queue(Heap)로 처리하면 좋을 듯하다.
 	std::vector<cUIObject*> m_vecUIObjects;
 
+	std::vector<cUIObject*> m_vecUIGameOver;
+
 	
 
 	// Update Stack을 없애기 위함
@@ -59,6 +61,9 @@ public:
 		return m_pInventoryControl;
 	}
 
+	virtual void AddGameOver(cUIObject* pUIRoot);
+	virtual void ActiveGameOver(bool isGameOver);
 
+	bool m_isRender;
 };
 
