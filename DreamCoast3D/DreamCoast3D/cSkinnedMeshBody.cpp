@@ -19,7 +19,7 @@ cSkinnedMeshBody::~cSkinnedMeshBody()
 	SAFE_RELEASE(m_pHead);
 	SAFE_RELEASE(m_pHair);
 	SAFE_RELEASE(m_pMesh);
-	SAFE_RELEASE(m_pWeapon);
+	//SAFE_RELEASE(m_pWeapon);
 }
 
 cSkinnedMeshBody::cSkinnedMeshBody(std::string sFolder, std::string sFile,
