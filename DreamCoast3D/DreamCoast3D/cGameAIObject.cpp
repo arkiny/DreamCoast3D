@@ -52,7 +52,14 @@ void cGameAIObject::Setup(std::string sFolder, std::string sFile){
 
 void cGameAIObject::Start(){
 	m_pTargetGameObject = NULL;
-	m_fHP = 1000.0f;
+	if (E_AI_TYPE::E_AI_BOSS)
+	{
+		m_fHP = 1000.0f;
+	}
+	else
+	{
+		m_fHP = 100.f;
+	}
 	m_pCurrentState = m_vecPatterns[eAISTATE_IDLE];
 	m_pCurrentState->Start(this);
 }

@@ -225,7 +225,7 @@ int  cAIAttack::GetCurrentStateType(){
 }
 
 void cAIOnHit::Start(cGameAIObject* pAIObject){
-	if (pAIObject->GetAItype() == cGameAIObject::E_AI_TYPE::E_AI_BOSS)
+	//if (pAIObject->GetAItype() == cGameAIObject::E_AI_TYPE::E_AI_BOSS)
 	{
 		ST_STAT_INFO* pPlayerStat = pAIObject->GetGameObjDeligate()->GetPlayerStatInfo();
 		float fDamage = pPlayerStat->fStatAttackPower;
