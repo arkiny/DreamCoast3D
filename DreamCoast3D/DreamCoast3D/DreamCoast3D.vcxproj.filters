@@ -382,7 +382,6 @@
     <ClCompile Include="cGameOverWindow.cpp">
       <Filter>EachWorks\MS</Filter>
     </ClCompile>
-    <ClCompile Include="cEffectTrail.cpp" />
     <ClCompile Include="cPlayerAttack_Origin.cpp">
       <Filter>EachWorks\HD\PlayerFSM</Filter>
     </ClCompile>
@@ -434,8 +433,11 @@
     <ClCompile Include="cPlayerDead.cpp">
       <Filter>EachWorks\MW\PlayerState</Filter>
     </ClCompile>
-    <ClCompile Include="cUICredit.cpp" />
+    <ClCompile Include="cEffectTrail.cpp">
+      <Filter>FrameWork\Effects</Filter>
+    </ClCompile>
     <ClCompile Include="cStaticMesh.cpp" />
+    <ClCompile Include="cUICredit.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cAction.h">
@@ -831,7 +833,6 @@
     <ClInclude Include="cGameOverWindow.h">
       <Filter>EachWorks\MS</Filter>
     </ClInclude>
-    <ClInclude Include="cEffectTrail.h" />
     <ClInclude Include="cPlayerAttack_Origin.h">
       <Filter>EachWorks\HD\PlayerFSM</Filter>
     </ClInclude>
@@ -882,6 +883,9 @@
     </ClInclude>
     <ClInclude Include="cPlayerDead.h">
       <Filter>EachWorks\MW\PlayerState</Filter>
+    </ClInclude>
+    <ClInclude Include="cEffectTrail.h">
+      <Filter>FrameWork\Effects</Filter>
     </ClInclude>
     <ClInclude Include="cUICredit.h" />
     <ClInclude Include="cStaticMesh.h" />
@@ -1092,6 +1096,42 @@
       <Filter>FrameWork\Resource</Filter>
     </Text>
     <Text Include="test.txt">
+      <Filter>FrameWork\Resource</Filter>
+    </Text>
+    <Text Include="..\Resources\SCENE5_GAMEOBJDATA.txt">
+      <Filter>FrameWork\Resource</Filter>
+    </Text>
+    <Text Include="..\Resources\SCENE5_MAIN.txt">
+      <Filter>FrameWork\Resource</Filter>
+    </Text>
+    <Text Include="..\Resources\SCENE5_MAPDATA.txt">
+      <Filter>FrameWork\Resource</Filter>
+    </Text>
+    <Text Include="..\Resources\SCENE5_UIDATA.txt">
+      <Filter>FrameWork\Resource</Filter>
+    </Text>
+    <Text Include="..\Resources\SCENE6_GAMEOBJDATA.txt">
+      <Filter>FrameWork\Resource</Filter>
+    </Text>
+    <Text Include="..\Resources\SCENE6_MAIN.txt">
+      <Filter>FrameWork\Resource</Filter>
+    </Text>
+    <Text Include="..\Resources\SCENE6_MAPDATA.txt">
+      <Filter>FrameWork\Resource</Filter>
+    </Text>
+    <Text Include="..\Resources\SCENE6_UIDATA.txt">
+      <Filter>FrameWork\Resource</Filter>
+    </Text>
+    <Text Include="..\Resources\SCENE7_GAMEOBJDATA.txt">
+      <Filter>FrameWork\Resource</Filter>
+    </Text>
+    <Text Include="..\Resources\SCENE7_MAIN.txt">
+      <Filter>FrameWork\Resource</Filter>
+    </Text>
+    <Text Include="..\Resources\SCENE7_MAPDATA.txt">
+      <Filter>FrameWork\Resource</Filter>
+    </Text>
+    <Text Include="..\Resources\SCENE7_UIDATA.txt">
       <Filter>FrameWork\Resource</Filter>
     </Text>
   </ItemGroup>

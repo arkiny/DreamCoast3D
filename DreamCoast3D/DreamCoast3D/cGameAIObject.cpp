@@ -48,6 +48,15 @@ void cGameAIObject::Setup(std::string sFolder, std::string sFile){
 	m_vecPatterns[eAISTATE_BOSSPHASESECOND] = new cAIBossPhaseSecond;
 	m_vecPatterns[eAISTATE_BOSSPHASETHIRD] = new cAIBossPhaseThird;
 	m_vecPatterns[eAISTATE_BOSSDEAD] = new cAIBossDead;
+
+	if (E_AI_TYPE::E_AI_BOSS)
+	{
+		m_fHP = 1000.0f;
+	}
+	else
+	{
+		m_fHP = 100.f;
+	}
 }
 
 void cGameAIObject::Start(){
@@ -156,7 +165,7 @@ void cGameAIObject::OnHitTarget(cGameObject* pTarget, float fDamage, D3DXVECTOR3
 		// TODO 데미지에 따라 체력 저하
 		
 		if (m_fHP > 0){
-			m_fHP -= fDamage;
+			//m_fHP -= fDamage;
 			this->ChangeState(eAISTATE_ONHIT);
 		}
 		else {

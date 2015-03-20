@@ -98,6 +98,18 @@
     <Text Include="..\Resources\SCENE4_MAIN.txt" />
     <Text Include="..\Resources\SCENE4_MAPDATA.txt" />
     <Text Include="..\Resources\SCENE4_UIDATA.txt" />
+    <Text Include="..\Resources\SCENE5_GAMEOBJDATA.txt" />
+    <Text Include="..\Resources\SCENE5_MAIN.txt" />
+    <Text Include="..\Resources\SCENE5_MAPDATA.txt" />
+    <Text Include="..\Resources\SCENE5_UIDATA.txt" />
+    <Text Include="..\Resources\SCENE6_GAMEOBJDATA.txt" />
+    <Text Include="..\Resources\SCENE6_MAIN.txt" />
+    <Text Include="..\Resources\SCENE6_MAPDATA.txt" />
+    <Text Include="..\Resources\SCENE6_UIDATA.txt" />
+    <Text Include="..\Resources\SCENE7_GAMEOBJDATA.txt" />
+    <Text Include="..\Resources\SCENE7_MAIN.txt" />
+    <Text Include="..\Resources\SCENE7_MAPDATA.txt" />
+    <Text Include="..\Resources\SCENE7_UIDATA.txt" />
     <Text Include="ReadMe.txt" />
     <Text Include="test.txt" />
   </ItemGroup>

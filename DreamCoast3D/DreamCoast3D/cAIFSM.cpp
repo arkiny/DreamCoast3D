@@ -234,7 +234,7 @@ void cAIOnHit::Start(cGameAIObject* pAIObject){
 		return;
 	}
 
-	pAIObject->GetSkinnedMesh()->SetAnimationIndex(3);
+	pAIObject->GetSkinnedMesh()->SetAnimationIndex(2);
 	pAIObject->SetPassedTime(0);
 }
 
@@ -338,7 +338,8 @@ int  cAIThink::GetCurrentStateType(){
 }
 
 void cAIDead::Start(cGameAIObject* pAIObject){
-
+	pAIObject->GetSkinnedMesh()->SetAnimationIndex(4);
+	pAIObject->SetPassedTime(0);
 }
 
 void cAIDead::Execute(cGameAIObject* pAIObject, float fDelta){

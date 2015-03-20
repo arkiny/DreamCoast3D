@@ -2,4 +2,4 @@
 1 run		달리기
 2 atk01		공격
 3 flinch	피격
-4 Death		사망
+4 Death		죽음
