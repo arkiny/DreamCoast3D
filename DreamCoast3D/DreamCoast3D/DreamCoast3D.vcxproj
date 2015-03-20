@@ -120,6 +120,7 @@
     <ClInclude Include="cCameraEditing.h" />
     <ClInclude Include="cControlManager.h" />
     <ClInclude Include="cDataItem.h" />
+    <ClInclude Include="cEffectTrail.h" />
     <ClInclude Include="cGameOverWindow.h" />
     <ClInclude Include="cDeviceManager.h" />
     <ClInclude Include="cEditCursor.h" />
@@ -259,6 +260,7 @@
     <ClCompile Include="cCameraEditing.cpp" />
     <ClCompile Include="cControlManager.cpp" />
     <ClCompile Include="cDataItem.cpp" />
+    <ClCompile Include="cEffectTrail.cpp" />
     <ClCompile Include="cGameOverWindow.cpp" />
     <ClCompile Include="cDeviceManager.cpp" />
     <ClCompile Include="cEditCursor.cpp" />

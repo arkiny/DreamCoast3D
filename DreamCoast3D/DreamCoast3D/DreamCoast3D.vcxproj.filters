@@ -403,6 +403,7 @@
     <ClCompile Include="cGameOverWindow.cpp">
       <Filter>EachWorks\MS</Filter>
     </ClCompile>
+    <ClCompile Include="cEffectTrail.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cAction.h">
@@ -819,6 +820,7 @@
     <ClInclude Include="cGameOverWindow.h">
       <Filter>EachWorks\MS</Filter>
     </ClInclude>
+    <ClInclude Include="cEffectTrail.h" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="DreamCoast3D.ico">
