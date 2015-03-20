@@ -23,6 +23,8 @@ cPlayerCombo1::~cPlayerCombo1()
 void cPlayerCombo1::Start(cGamePlayableObject* pPlayer)
 {
 	cPlayerCommon::Start(pPlayer);
+	g_pSoundManager->executeAttack();
+
 	//pPlayer->GetSkinnedMesh()->SetAnimationIndex(pPlayer->EPLAYABLESTATE_COMBO1);
 }
 void cPlayerCombo1::Execute(cGamePlayableObject* pPlayer, float fDelta)

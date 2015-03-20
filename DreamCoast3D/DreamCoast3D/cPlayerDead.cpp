@@ -30,8 +30,8 @@ void cPlayerDead::Execute(cGamePlayableObject* pPlayer, float fDelta)
 	{
 		m_fDeadAccumTime = 0.f;
 
-		pPlayer->GetEventDelegate()->DeadScene(true);
 
+		pPlayer->GetEventDelegate()->DeadScene(true);
 	}
 }
 

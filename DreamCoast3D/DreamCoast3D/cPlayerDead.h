@@ -1,4 +1,5 @@
 #pragma once
+
 #include "cPlayerCommon.h"
 
 class cPlayerDead : public cPlayerCommon
