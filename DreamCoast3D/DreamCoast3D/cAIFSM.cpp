@@ -225,7 +225,7 @@ int  cAIAttack::GetCurrentStateType(){
 }
 
 void cAIOnHit::Start(cGameAIObject* pAIObject){
-	//if (pAIObject->GetAItype() == cGameAIObject::E_AI_TYPE::E_AI_BOSS)
+	if (pAIObject->GetAItype() == cGameAIObject::E_AI_TYPE::E_AI_BOSS)
 	{
 		ST_STAT_INFO* pPlayerStat = pAIObject->GetGameObjDeligate()->GetPlayerStatInfo();
 		float fDamage = pPlayerStat->fStatAttackPower;
@@ -233,6 +233,14 @@ void cAIOnHit::Start(cGameAIObject* pAIObject){
 		pAIObject->ChangeState(pAIObject->eAISTATE_THINK);
 		return;
 	}
+    else
+    {
+        ST_STAT_INFO* pPlayerStat = pAIObject->GetGameObjDeligate()->GetPlayerStatInfo();
+        float fDamage = pPlayerStat->fStatAttackPower;
+        pAIObject->SetHP(pAIObject->GetHP() - fDamage*5);
+        pAIObject->ChangeState(pAIObject->eAISTATE_THINK);
+        return;
+    }
 
 	pAIObject->GetSkinnedMesh()->SetAnimationIndex(3);
 	pAIObject->SetPassedTime(0);
@@ -569,6 +577,7 @@ void cAIBossDead::Execute(cGameAIObject* pAIObject, float fDelta)
 	if (pAIObject->GetSkinnedMesh()->GetCurrentAnimationPeriodTime() -0.1f<
 		pAIObject->GetPassedTime())
 	{
+        pAIObject->GetGameObjDeligate()->EraseFromGameObjectSet(pAIObject);
 		pAIObject->ChangeState(pAIObject->eAISTATE_DEAD);
 		return;
 	}
