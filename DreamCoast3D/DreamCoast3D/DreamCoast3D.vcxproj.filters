@@ -400,6 +400,9 @@
     <ClCompile Include="cSoundManager.cpp">
       <Filter>FrameWork\Singletons</Filter>
     </ClCompile>
+    <ClCompile Include="cGameOverWindow.cpp">
+      <Filter>EachWorks\MS</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cAction.h">
@@ -812,6 +815,9 @@
     </ClInclude>
     <ClInclude Include="cSoundManager.h">
       <Filter>FrameWork\Singletons</Filter>
+    </ClInclude>
+    <ClInclude Include="cGameOverWindow.h">
+      <Filter>EachWorks\MS</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
