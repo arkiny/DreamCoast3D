@@ -1,7 +1,8 @@
 #pragma once
 #include "iPlayerState.h"
+#include "cPlayerCommon.h"
 
-class cPlayerOnHit : public iPlayerState
+class cPlayerOnHit : public cPlayerCommon
 {
 public:
 	cPlayerOnHit();
@@ -10,7 +11,7 @@ public:
 	void Start(cGamePlayableObject* pPlayer);
 	void Execute(cGamePlayableObject* pPlayer, float fDelta);
 	void Exit(cGamePlayableObject* pPlayer);
-	int GetCurrentStateType() { return 3; }
+	//int GetCurrentStateType() { return 3; }
 };
 //안심 백업 : 민우
 // #pragma once

@@ -4,7 +4,7 @@
 #include "cPlayerMove.h"
 #include "cPlayerAttack.h"
 #include "cPlayerOnHit.h"
-#include "cPlayerDead_Origin.h"
+#include "cPlayerDead.h"
 #include "cEffectParticle.h"
 #include "cSkinnedMesh.h"
 
@@ -66,6 +66,8 @@ void cGamePlayableObject::Setup(
 	m_vecStates[EPLAYABLESTATE::EPLAYABLESTATE_RUN] = new cPlayerRun;
 	m_vecStates[EPLAYABLESTATE::EPLAYABLESTATE_COMBO1] = new cPlayerCombo1;
 	m_vecStates[EPLAYABLESTATE::EPLAYABLESTATE_COMBO1R] = new cPlayerCombo1R;
+	m_vecStates[EPLAYABLESTATE::EPLAYABLESTATE_ONHIT] = new cPlayerOnHit;
+	m_vecStates[EPLAYABLESTATE::EPLAYABLESTATE_DEAD] = new cPlayerDead;
 
 
 	m_pCurrentState = m_vecStates[EPLAYABLESTATE::EPLAYABLESTATE_IDLE];
@@ -144,36 +146,35 @@ int cGamePlayableObject::GetState() {
 }
 
 void cGamePlayableObject::OnHitTarget(cGameObject* pTarget, float fDamage, D3DXVECTOR3 vHitPosition){
-	//if (m_pCurrentState != m_vecStates[this->EPLAYABLESTATE_ONHIT]){
-	//	if (m_fPlayerInvincibleCool > m_fPlayerInvincibleTime){
-	//		
-	//		m_fPlayerInvincibleCool = 0.0f;
-	//		
-	//
-	//		D3DXVECTOR3 playerPos = this->GetPosition();
-	//		playerPos.y = playerPos.y + 1.0f;
-	//		
-	//		
-	//		// todo : 피격 부위 구체화
-	//		//p->SetPosition(vHitPosition);
+	if (m_pCurrentState != m_vecStates[this->EPLAYABLESTATE_ONHIT]){
+		if (m_fPlayerInvincibleCool > m_fPlayerInvincibleTime){
 
-	//		this->GetEffectDelegate()->AddEffect(cEffect::E_EFFECT_ONHIT, vHitPosition);
-	//		g_pSoundManager->executeOnHit(1);
-	//		
-	//		if (this->GetStatInfo()->fCurrentHp <= 0)
-	//		{
-	//			return;
-	//		}
-	//		this->GetStatInfo()->fCurrentHp -= 10.0f;
+			m_fPlayerInvincibleCool = 0.0f;
 
-	//		this->ChangeState(this->EPLAYABLESTATE_ONHIT);
-	//	}
-	//}
-	//if (this->GetStatInfo()->fCurrentHp <= 0)
-	//{
-	//	this->ChangeState(this->EPLAYABLESTATE_DEAD);
-	//}
 
+			D3DXVECTOR3 playerPos = this->GetPosition();
+			playerPos.y = playerPos.y + 1.0f;
+
+
+			// todo : 피격 부위 구체화
+			//p->SetPosition(vHitPosition);
+
+			this->GetEffectDelegate()->AddEffect(cEffect::E_EFFECT_ONHIT, vHitPosition);
+			g_pSoundManager->executeOnHit(1);
+
+			if (this->GetStatInfo()->fCurrentHp <= 0)
+			{
+				return;
+			}
+			this->GetStatInfo()->fCurrentHp -= 10.0f;
+
+			this->ChangeState(this->EPLAYABLESTATE_ONHIT);
+		}
+	}
+	if (this->GetStatInfo()->fCurrentHp <= 0)
+	{
+		this->ChangeState(this->EPLAYABLESTATE_DEAD);
+	}
 }
 
 void cGamePlayableObject::Clone(cGameObject** pTarget){

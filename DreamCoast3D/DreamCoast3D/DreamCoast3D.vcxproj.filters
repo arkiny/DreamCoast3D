@@ -434,6 +434,9 @@
     <ClCompile Include="iPlayerState.cpp">
       <Filter>EachWorks\MW\PlayerState</Filter>
     </ClCompile>
+    <ClCompile Include="cPlayerDead.cpp">
+      <Filter>EachWorks\MW\PlayerState</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cAction.h">
@@ -879,6 +882,9 @@
       <Filter>EachWorks\MW\PlayerState</Filter>
     </ClInclude>
     <ClInclude Include="iPlayerState.h">
+      <Filter>EachWorks\MW\PlayerState</Filter>
+    </ClInclude>
+    <ClInclude Include="cPlayerDead.h">
       <Filter>EachWorks\MW\PlayerState</Filter>
     </ClInclude>
   </ItemGroup>
