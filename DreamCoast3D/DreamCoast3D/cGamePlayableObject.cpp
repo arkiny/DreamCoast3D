@@ -70,7 +70,9 @@ void cGamePlayableObject::Setup(
 	m_vecStates[EPLAYABLESTATE::EPLAYABLESTATE_DEAD] = new cPlayerDead;
 
 
-	m_pCurrentState = m_vecStates[EPLAYABLESTATE::EPLAYABLESTATE_IDLE];
+	//m_pCurrentState = m_vecStates[EPLAYABLESTATE::EPLAYABLESTATE_IDLE];
+	m_pCurrentState = m_vecStates[EPLAYABLESTATE::EPLAYABLESTATE_COMBO1];
+
 	m_pCurrentState->Start(this);
 }
 

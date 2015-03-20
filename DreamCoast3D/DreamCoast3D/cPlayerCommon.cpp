@@ -6,16 +6,11 @@
 
 cPlayerCommon::cPlayerCommon()
 {
-<<<<<<< HEAD
 	m_nCurrentStateType = 0;
 	m_IsRestart = false;
 	m_IsDoing = false;
-	m_eStateType = ESTATEGROUP::E_STATEGROUP_IDLE;
-
-=======
-	//SetIsRestart(false);
+	m_eStateGroup = ESTATEGROUP::E_STATEGROUP_IDLE;
 	m_fDeadAccumTime = 0.f;
->>>>>>> origin/master
 }
 
 

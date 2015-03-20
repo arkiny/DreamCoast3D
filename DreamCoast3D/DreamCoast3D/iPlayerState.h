@@ -30,6 +30,7 @@ __interface iPlayerState{
 	int GetCurrentStateType();
 	virtual std::map < int, ECANCELTYPE > GetCancelInfo();
 	bool GetIsDoing();
+	ESTATEGROUP GetCurrentStateGroup();
 };
 //안심 백업 : 민우
 //#pragma once

@@ -9,6 +9,7 @@ cPlayerIdle::cPlayerIdle()
 	m_nCurrentStateType = 1; //1번 Idle
 	SetIsRestart(true);	//상태 재시작 여부
 	SetIsDoing(false);
+	SetStateGroup(ESTATEGROUP::E_STATEGROUP_IDLE);
 
 	//m_IsRestart = false;
 	//m_IsDoing = false;

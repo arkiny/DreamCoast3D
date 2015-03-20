@@ -16,7 +16,7 @@ protected:
 	std::map < int, ECANCELTYPE > m_mapCancelInfo;		//현재 동작이 다음 동작으로 가는데 캔슬 가능 불가능 여부
 	bool m_IsRestart;	//반복될 동작인가
 	bool m_IsDoing;		//동작이 진행중인가
-	ESTATEGROUP m_eStateType;								//어떤 형태의 상태인지
+	ESTATEGROUP m_eStateGroup;								//어떤 형태의 상태인지
 	
 public:
 	cPlayerCommon();
@@ -30,16 +30,13 @@ public:
 	virtual void SetIsRestart(bool bRestart){ m_IsRestart = bRestart; }
 	virtual bool GetIsDoing(){ return m_IsDoing; }
 	virtual void SetIsDoing(bool bDoing){ m_IsDoing = bDoing; }
-<<<<<<< HEAD
-	virtual ESTATEGROUP GetStateType(){ return m_eStateType; }
-	virtual void SetStateType(ESTATEGROUP eStateType){ m_eStateType = eStateType; }
-=======
-	//virtual bool GetIsRestart(){ return m_IsRestart; }
-	//virtual void SetIsRestart(bool IsRestart){ m_IsRestart = IsRestart; };
 
+	virtual ESTATEGROUP GetCurrentStateGroup();
+	virtual ESTATEGROUP SetCurrentStateGroup() { return m_eStateGroup; }
+	virtual void SetStateGroup(ESTATEGROUP eStateGroup){ m_eStateGroup = eStateGroup; }
 
 private:
 	float m_fDeadAccumTime;
->>>>>>> origin/master
+
 };
 
