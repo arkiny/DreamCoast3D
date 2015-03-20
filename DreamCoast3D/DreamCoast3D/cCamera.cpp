@@ -77,7 +77,7 @@ void cCamera::Setup(
 void cCamera::Update(float delta)
 {
 	if (m_pPlayer){
-		if (m_pPlayer->m_pCurrentState->GetCurrentStateType() == 0)
+		if (m_pPlayer->m_pCurrentState->GetCurrentStateType() == 1)
 		{
 			m_isMove = false;
 		}
@@ -201,11 +201,18 @@ void cCamera::Update(float delta)
 
 		if (m_pvTarget)
 		{
-			
-			m_vEye += (*m_pvTarget);
-			//m_vLookAt = (*m_pvTarget);
-			m_vLookAt = (m_pPlayer->GetUpdatedDetailedSphere()->at("FxCenter").m_vCenter);
-			
+			if (m_pPlayer->m_pCurrentState->GetCurrentStateType() == 1
+				|| m_pPlayer->m_pCurrentState->GetCurrentStateType() == 2)
+			{
+				m_vLookAt = (*m_pvTarget);
+				m_vEye += (*m_pvTarget);
+			}
+			else
+			{
+				m_vLookAt = (m_pPlayer->GetUpdatedDetailedSphere()->at("FxBottom").m_vCenter);
+				m_vEye += (m_pPlayer->GetUpdatedDetailedSphere()->at("FxBottom").m_vCenter);
+			}
+
 			m_vLookAt.y += 1.0f;
 		}
 
@@ -215,6 +222,7 @@ void cCamera::Update(float delta)
 
 			if (m_vEye.y < fHeight + m_fMin){
 				m_vEye.y = fHeight + m_fMin;
+
 			}
 		}
 	}
