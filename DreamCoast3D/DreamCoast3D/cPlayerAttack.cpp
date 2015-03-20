@@ -30,8 +30,7 @@ void cPlayerAttack::Execute(cGamePlayableObject* pPlayer, float fDelta){
 	}
 
 	pPlayer->SetStatePassedTime(pPlayer->GetStatePassedTime() + fDelta);
-	std::map<std::string, ST_BOUNDING_SPHERE>* pSp = pPlayer->GetAttackSpheres();
-	
+	//std::map<std::string, ST_BOUNDING_SPHERE>* pSp = pPlayer->GetAttackSpheres();
 	// 파티클을 이용한 트레일 이펙트는 폐기
 	/*for (auto p : *pSp){
 		pPlayer->GetEffectDelegate()->AddEffect(6, p.second.m_vCenter);

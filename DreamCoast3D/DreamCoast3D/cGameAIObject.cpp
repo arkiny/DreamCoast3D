@@ -144,7 +144,7 @@ void cGameAIObject::OnHitTarget(cGameObject* pTarget, float fDamage, D3DXVECTOR3
 		//p->Release();
 
 		this->GetEffectDelegate()->AddEffect(cEffect::E_EFFECT_ONHIT, vHitPosition);
-
+		g_pSoundManager->executeOnHit(0);
 
 		// TODO 데미지에 따라 체력 저하
 		
