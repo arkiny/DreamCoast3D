@@ -20,9 +20,14 @@ public:
 	void executeOnHit(int);
 	void executeOnDie(int);
 
+	void ExecuteSound(std::string sSoundPath, bool isLoop);
+	void StopSound();
+
+
 private:
 	irrklang::ISoundEngine* engine;
 	int m_bgmplayinglist;
 	bool m_init = true;
+	std::string m_sCurrentPlayBGM;
 };
 

@@ -179,6 +179,7 @@
     <ClInclude Include="cSoundManager.h" />
     <ClInclude Include="cStaticMeshManager.h" />
     <ClInclude Include="cStoreWindow.h" />
+    <ClInclude Include="cEffectTrail.h" />
     <ClInclude Include="cUICursor.h" />
     <ClInclude Include="cUIExpBar.h" />
     <ClInclude Include="cUIGameMainMenu.h" />
@@ -317,6 +318,7 @@
     <ClCompile Include="cSoundManager.cpp" />
     <ClCompile Include="cStaticMeshManager.cpp" />
     <ClCompile Include="cStoreWindow.cpp" />
+    <ClCompile Include="cEffectTrail.cpp" />
     <ClCompile Include="cUICursor.cpp" />
     <ClCompile Include="cUIExpBar.cpp" />
     <ClCompile Include="cUIGameMainMenu.cpp" />

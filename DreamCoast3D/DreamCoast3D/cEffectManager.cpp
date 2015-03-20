@@ -5,6 +5,7 @@
 #include "cEffectPotion.h"
 #include "cEffectMesh.h"
 #include "cEffectSkill1.h"
+#include "cEffectTrail.h"
 
 cEffectManager::cEffectManager()
 {
@@ -47,7 +48,11 @@ cEffectManager::~cEffectManager()
 		m_qeueuSkill1EffectPool.pop();
 		SAFE_RELEASE(p);
 	}
-	
+	while (!m_qeueuTrailEffectPool.empty()){
+		cEffect* p = m_qeueuTrailEffectPool.front();
+		m_qeueuTrailEffectPool.pop();
+		SAFE_RELEASE(p);
+	}
 }
 
 void cEffectManager::Setup(){
@@ -67,7 +72,13 @@ void cEffectManager::Setup(){
 		p->SetOwner(this);
 		m_qeueuSkill1EffectPool.push(p);
 	}
-	
+	for (UINT i = 0; i < 100; i++){
+		cEffectTrail* p = new cEffectTrail;
+		p->SetOwner(this);
+		m_qeueuTrailEffectPool.push(p);
+	}
+
+	//cEffectTrail
 }
 
 void cEffectManager::Start(){
@@ -95,6 +106,9 @@ void cEffectManager::Update(float fDelta){
 			}
 			else if (p->GetEffectType() == p->E_EFFECT_SKILL1){
 				m_qeueuSkill1EffectPool.push(p);
+			}
+			else if (p->GetEffectType() == p->E_EFFECT_TRAIL){
+				m_qeueuTrailEffectPool.push(p);
 			}
 		}
 		m_vecEffectTobeDeleted.clear();
@@ -180,7 +194,24 @@ void cEffectManager::AddEffect(UINT uiType, D3DXVECTOR3 vPos){
 			m_setEffects.insert(p);
 		}
 	}
-
+	else if (uiType == cEffect::E_EFFECT_TRAIL){
+		if (m_qeueuTrailEffectPool.empty()){
+			cEffectTrail* p = new cEffectTrail;
+			p->SetEffectType(p->E_EFFECT_TRAIL);
+			p->Setup();
+			p->SetPosition(vPos);
+			p->SetOwner(this);
+			m_setEffects.insert(p);
+		}
+		else{
+			cEffect* p = m_qeueuTrailEffectPool.front();
+			m_qeueuTrailEffectPool.pop();
+			p->SetEffectType(p->E_EFFECT_TRAIL);
+			p->Setup();
+			p->SetPosition(vPos);
+			m_setEffects.insert(p);
+		}
+	}
 }
 
 void cEffectManager::DeleteEffect(cEffect* pEffect){
