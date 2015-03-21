@@ -98,6 +98,7 @@ void cSoundManager::ExecuteSound(std::string sSoundPath, bool isLoop){
 		m_sCurrentPlayBGM = sSoundPath;
 	}
 }
+
 void cSoundManager::StopSound(){
 	if (m_init){
 		engine->removeSoundSource(m_sCurrentPlayBGM.c_str());
