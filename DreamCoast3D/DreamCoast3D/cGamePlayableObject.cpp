@@ -17,6 +17,7 @@
 #include "cPlayerCombo3.h"
 #include "cPlayerCombo3R.h"
 #include "cPlayerCombo4.h"
+#include "cPlayerBackRun.h"
 
 
 //지금 나는
@@ -74,6 +75,7 @@ void cGamePlayableObject::Setup(
 	m_vecStates[EPLAYABLESTATE::EPLAYABLESTATE_TUMBLING] = new cPlayerUnarmedWait;
 	m_vecStates[EPLAYABLESTATE::EPLAYABLESTATE_ONHIT] = new cPlayerOnHit;
 	m_vecStates[EPLAYABLESTATE::EPLAYABLESTATE_DEAD] = new cPlayerDead;
+	m_vecStates[EPLAYABLESTATE::EPLAYABLESTATE_BACKRUN] = new cPlayerBackRun;
 
 	m_pCurrentState = m_vecStates[EPLAYABLESTATE::EPLAYABLESTATE_IDLE];
 	m_pCurrentState->Start(this);
@@ -101,6 +103,7 @@ void cGamePlayableObject::Setup(
 	m_vecStates[EPLAYABLESTATE::EPLAYABLESTATE_TUMBLING] = new cPlayerUnarmedWait;
 	m_vecStates[EPLAYABLESTATE::EPLAYABLESTATE_ONHIT] = new cPlayerOnHit;
 	m_vecStates[EPLAYABLESTATE::EPLAYABLESTATE_DEAD] = new cPlayerDead;
+	m_vecStates[EPLAYABLESTATE::EPLAYABLESTATE_BACKRUN] = new cPlayerBackRun;
 
 	m_pCurrentState = m_vecStates[EPLAYABLESTATE::EPLAYABLESTATE_IDLE];
 	

@@ -67,6 +67,7 @@ protected:
 	
 	SYNTHESIZE_PASS_BY_REF(std::string, m_sSkinnedFolder, SkinnedFolderPath);
 	SYNTHESIZE_PASS_BY_REF(std::string, m_sSkinnedFile, SkinnedFilePath);
+	SYNTHESIZE(double, m_dAdvanceTimeDelta, AdvanceTimeDelta);	//애니메이션 Advance시킬 때 들어갈 시간 변화량
 
 public:
 	cSkinnedMesh(char* szFolder, char* szFilename);

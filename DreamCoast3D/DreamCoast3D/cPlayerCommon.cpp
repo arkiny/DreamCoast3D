@@ -52,7 +52,10 @@ void cPlayerCommon::Execute(cGamePlayableObject* pPlayer, float fDelta)
 			pPlayer->GetGameObjDeligate()->RangeSkill(pPlayer);
 		}
 	}
-
+	/*if (g_pControlManager->GetInputInfo('G'))
+	{
+		pPlayer->ChangeState(pPlayer->EPLAYABLESTATE_BACKRUN);
+	}*/
 	//어떤 동작이든 방향키가 입력되면 RUN동작을 시도한다
 	if (g_pControlManager->GetInputInfo('W') || 
 		g_pControlManager->GetInputInfo('S') ||

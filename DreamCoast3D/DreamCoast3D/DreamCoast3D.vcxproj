@@ -180,6 +180,7 @@
     <ClInclude Include="cMtlTex.h" />
     <ClInclude Include="cPlayerAttack.h" />
     <ClInclude Include="cPlayerAttack_Origin.h" />
+    <ClInclude Include="cPlayerBackRun.h" />
     <ClInclude Include="cPlayerCombo1.h" />
     <ClInclude Include="cPlayerCombo1R.h" />
     <ClInclude Include="cPlayerCombo2.h" />
@@ -337,6 +338,7 @@
     <ClCompile Include="cMtlTex.cpp" />
     <ClCompile Include="cPlayerAttack.cpp" />
     <ClCompile Include="cPlayerAttack_Origin.cpp" />
+    <ClCompile Include="cPlayerBackRun.cpp" />
     <ClCompile Include="cPlayerCombo1.cpp" />
     <ClCompile Include="cPlayerCombo1R.cpp" />
     <ClCompile Include="cPlayerCombo2.cpp" />

@@ -453,6 +453,9 @@
     <ClCompile Include="cPlayerCombo4.cpp">
       <Filter>EachWorks\MW\PlayerState</Filter>
     </ClCompile>
+    <ClCompile Include="cPlayerBackRun.cpp">
+      <Filter>EachWorks\MW\PlayerState</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cAction.h">
@@ -917,6 +920,9 @@
       <Filter>EachWorks\MW\PlayerState</Filter>
     </ClInclude>
     <ClInclude Include="cPlayerCombo4.h">
+      <Filter>EachWorks\MW\PlayerState</Filter>
+    </ClInclude>
+    <ClInclude Include="cPlayerBackRun.h">
       <Filter>EachWorks\MW\PlayerState</Filter>
     </ClInclude>
   </ItemGroup>
