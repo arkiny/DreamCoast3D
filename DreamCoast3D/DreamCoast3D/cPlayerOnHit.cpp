@@ -5,8 +5,8 @@
 
 cPlayerOnHit::cPlayerOnHit()
 {
-	m_nCurrentStateType = 5;	//3번 (장)Combo1
-	m_IsRestart = false;
+	m_nCurrentStateType = 11;	//11번 (장)피격
+	SetIsRestart(false);
 	SetIsDoing(false);
 	SetStateGroup(ESTATEGROUP::E_STATEGROUP_PASSIVE);
 
@@ -22,7 +22,6 @@ cPlayerOnHit::cPlayerOnHit()
 
 }
 
-
 cPlayerOnHit::~cPlayerOnHit()
 {
 }
@@ -35,7 +34,9 @@ void cPlayerOnHit::Start(cGamePlayableObject* pPlayer)
 
 void cPlayerOnHit::Execute(cGamePlayableObject* pPlayer, float fDelta)
 {
-	cPlayerCommon::Execute(pPlayer, fDelta);
+	//Common을 안쓰고 이 동작의 독자적인 흐름을 설계하려면 시간흐름과 동작종료를 처리해줘야한다.
+	//cPlayerCommon::Execute(pPlayer, fDelta);
+
 	float fWeight = 0.5f; // 애니메이션 빨리 끝나는 속도
 	//float fAniSpeed = 2.0f;// 애니메이션의 속도
 	pPlayer->SetStatePassedTime(fDelta + pPlayer->GetStatePassedTime());
@@ -50,7 +51,7 @@ void cPlayerOnHit::Execute(cGamePlayableObject* pPlayer, float fDelta)
 	pPlayer->SetPosition(newPos);
 
 	if (pPlayer->GetStatePassedTime() > pPlayer->GetSkinnedMesh()->GetCurrentAnimationPeriodTime() * fWeight){
-		pPlayer->ChangeState(pPlayer->EPLAYABLESTATE_IDLE);
+		Exit(pPlayer);
 		return;
 	}
 }

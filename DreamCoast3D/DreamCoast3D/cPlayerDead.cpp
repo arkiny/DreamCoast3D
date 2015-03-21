@@ -6,7 +6,7 @@
 cPlayerDead::cPlayerDead()
 	: m_fDeadAccumTime(0.f)
 {
-	m_nCurrentStateType = 6;	//3번 (장)Combo1
+	m_nCurrentStateType = 12;	//12번 (장)사망
 	m_IsRestart = false;
 	SetIsDoing(false);
 	SetStateGroup(ESTATEGROUP::E_STATEGROUP_END);//사망하면 끝

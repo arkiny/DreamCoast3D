@@ -21,28 +21,27 @@ cPlayerCommon::~cPlayerCommon()
 }
 void cPlayerCommon::Start(cGamePlayableObject* pPlayer)
 {
+	SetIsDoing(true);
 	pPlayer->GetSkinnedMesh()->SetAnimationIndex(m_nCurrentStateType);
 	pPlayer->SetStatePassedTime(0.0f);
-	//m_IsDoing = true;
-	SetIsDoing(true);
 }
 void cPlayerCommon::Execute(cGamePlayableObject* pPlayer, float fDelta)
 {
-	if (pPlayer->GetStatInfo()->fCurrentHp <= 0)
-	{
-		pPlayer->ChangeState(pPlayer->EPLAYABLESTATE_DEAD);
+	//if (pPlayer->GetStatInfo()->fCurrentHp <= 0)
+	//{
+	//	pPlayer->ChangeState(pPlayer->EPLAYABLESTATE_DEAD);
 
-		// 들어가면 이부분 지워도됨
-		m_fDeadAccumTime += fDelta;
-		if (m_fDeadAccumTime >= 2.0f)
-		{
-			m_fDeadAccumTime = 0.f;
+	//	// 들어가면 이부분 지워도됨
+	//	m_fDeadAccumTime += fDelta;
+	//	if (m_fDeadAccumTime >= 2.0f)
+	//	{
+	//		m_fDeadAccumTime = 0.f;
 
-			pPlayer->GetEventDelegate()->DeadScene(true);
-		}
-		///////////////////////////////////////////////////////
-		return;
-	}
+	//		pPlayer->GetEventDelegate()->DeadScene(true);
+	//	}
+	//	///////////////////////////////////////////////////////
+	//	return;
+	//}
 	//스킬사용
 	if (g_pControlManager->GetInputInfo('C'))
 	{
@@ -81,14 +80,15 @@ void cPlayerCommon::Execute(cGamePlayableObject* pPlayer, float fDelta)
 	//흘러간 시간이 애니메이션 구간길이를 초과하면 애니메이션 종료. 마지막에 fDelta를 더해주는건 조금 애니메이션이 잘리겠지만 안튀게 하기 위한 임시방편
 	if (pPlayer->GetSkinnedMesh()->GetCurrentAnimationPeriodTime() <= pPlayer->GetStatePassedTime() + DBL_EPSILON + fDelta*2)
 	{
-		SetIsDoing(false);	//애니메이션 종료 선언
+		//SetIsDoing(false);
 		Exit(pPlayer);		//애니메이션 종료시키기
 	}
 }
 void cPlayerCommon::Exit(cGamePlayableObject* pPlayer)
 {
+	SetIsDoing(false);
 	//재시작되는 동작이면 재시작하고(반복)
-	if (m_IsRestart)
+	if (GetIsRestart() == true)
 	{
 		Start(pPlayer);
 	}

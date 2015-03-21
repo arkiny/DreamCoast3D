@@ -20,7 +20,7 @@
 //cGameObjLoader 383 내가 주석처리. SetIsLoop관련인데 블렌딩할때 자세히 처리
 //애니메이션간 전환 조건은 잘 달성되어 있다.
 //REAR_CANCEL 부분 채워넣어야된다
-//희동이한테 무기 로딩
+//(완료)희동이한테 무기 로딩
 //만수한테 캐릭터 이동에 따른 카메라와 동작종료후 좌표이동
 //그리고 블렌딩 적용시키면 완료.
 //나머지는 리소스+클래스복붙 작업
@@ -62,7 +62,6 @@ void cGamePlayableObject::Setup(
 	m_vecStates[EPLAYABLESTATE::EPLAYABLESTATE_ONHIT] = new cPlayerOnHit;
 	m_vecStates[EPLAYABLESTATE::EPLAYABLESTATE_DEAD] = new cPlayerDead;
 
-
 	m_pCurrentState = m_vecStates[EPLAYABLESTATE::EPLAYABLESTATE_IDLE];
 	m_pCurrentState->Start(this);
 }
@@ -75,21 +74,23 @@ void cGamePlayableObject::Setup(
 	, std::string sFileTexture){
 	cGameSMeshBodyObject::Setup(sFolder, sFile, sFolderHead, sFileHead, sFolderHair, sFileHair, sFolderWeapon, sFileWeapon, sFileTexture);
 
-	
-
 	m_vecStates.resize(EPLAYABLESTATE::EPLAYABLESTATE_MAX);
 	m_vecStates[EPLAYABLESTATE::EPLAYABLESTATE_UNARMEDWAIT] = new cPlayerUnarmedWait;
 	m_vecStates[EPLAYABLESTATE::EPLAYABLESTATE_IDLE] = new cPlayerIdle;
 	m_vecStates[EPLAYABLESTATE::EPLAYABLESTATE_RUN] = new cPlayerRun;
 	m_vecStates[EPLAYABLESTATE::EPLAYABLESTATE_COMBO1] = new cPlayerCombo1;
 	m_vecStates[EPLAYABLESTATE::EPLAYABLESTATE_COMBO1R] = new cPlayerCombo1R;
+	m_vecStates[EPLAYABLESTATE::EPLAYABLESTATE_COMBO2] = new cPlayerCombo1;
+	m_vecStates[EPLAYABLESTATE::EPLAYABLESTATE_COMBO2R] = new cPlayerCombo1R;
+	m_vecStates[EPLAYABLESTATE::EPLAYABLESTATE_COMBO3] = new cPlayerCombo1;
+	m_vecStates[EPLAYABLESTATE::EPLAYABLESTATE_COMBO3R] = new cPlayerCombo1R;
+	m_vecStates[EPLAYABLESTATE::EPLAYABLESTATE_COMBO4] = new cPlayerCombo1;
+	m_vecStates[EPLAYABLESTATE::EPLAYABLESTATE_TUMBLING] = new cPlayerUnarmedWait;
 	m_vecStates[EPLAYABLESTATE::EPLAYABLESTATE_ONHIT] = new cPlayerOnHit;
 	m_vecStates[EPLAYABLESTATE::EPLAYABLESTATE_DEAD] = new cPlayerDead;
 
-
-	//m_pCurrentState = m_vecStates[EPLAYABLESTATE::EPLAYABLESTATE_IDLE];
-	m_pCurrentState = m_vecStates[EPLAYABLESTATE::EPLAYABLESTATE_COMBO1];
-
+	m_pCurrentState = m_vecStates[EPLAYABLESTATE::EPLAYABLESTATE_IDLE];
+	
 	m_pCurrentState->Start(this);
 }
 
@@ -111,6 +112,15 @@ void cGamePlayableObject::Update(float fDelta){
 		m_fPlayerInvincibleCool = 2.0f;
 	}
 }
+
+//void cGamePlayableObject::ChangeState(EPLAYABLESTATE eNewState){
+//	if (m_pCurrentState != m_vecStates[eNewState]){
+//		m_pCurrentState->Exit(this);
+//		m_pCurrentState = m_vecStates[eNewState];
+//		m_fStatePassedTime = 0.0f;
+//	}	
+//	m_pCurrentState->Start(this);
+//}
 
 void cGamePlayableObject::ChangeState(EPLAYABLESTATE eNewState){
 		//if (m_pCurrentState != m_vecStates[eNewState])
@@ -147,12 +157,13 @@ bool cGamePlayableObject::JudgeChange(ESTATEGROUP eNewStateGroup)
 	//CANCEL_CANT
 	if (m_pCurrentState->GetCancelInfo()[eNewStateGroup] == ECANCELTYPE::E_CANCEL_CANTCANCEL)
 	{
-
+		return false;
 	}
 	//CANCEL_REAR
 	else if (m_pCurrentState->GetCancelInfo()[eNewStateGroup] == ECANCELTYPE::E_CANCEL_REAR)
 	{
-		//return true;
+		//일단 임시로 false
+		return false;
 	}
 	//CANCEL_FORCE
 	else if (m_pCurrentState->GetCancelInfo()[eNewStateGroup] == ECANCELTYPE::E_CANCEL_FORCE)

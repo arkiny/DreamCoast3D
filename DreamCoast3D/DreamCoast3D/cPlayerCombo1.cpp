@@ -7,7 +7,7 @@
 cPlayerCombo1::cPlayerCombo1()
 {
 	m_nCurrentStateType = 3;	//3번 (장)Combo1
-	m_IsRestart = false;
+	SetIsRestart(false);
 	SetIsDoing(false);
 	SetStateGroup(ESTATEGROUP::E_STATEGROUP_ATTACK);
 	
@@ -117,6 +117,8 @@ void cPlayerCombo1::Execute(cGamePlayableObject* pPlayer, float fDelta)
 void cPlayerCombo1::Exit(cGamePlayableObject* pPlayer)
 {
 	//cPlayerCommon::Exit(pPlayer);
+
+	SetIsDoing(false);
 	//재시작되는 동작이면 재시작하고(반복)
 	if (m_IsRestart)
 	{
