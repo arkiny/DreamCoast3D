@@ -30,6 +30,7 @@ cPlayerDead::~cPlayerDead()
 
 void cPlayerDead::Start(cGamePlayableObject* pPlayer)
 {
+	pPlayer->SetComboCount(0);	//평타 번호 초기화
 }
 
 void cPlayerDead::Execute(cGamePlayableObject* pPlayer, float fDelta)

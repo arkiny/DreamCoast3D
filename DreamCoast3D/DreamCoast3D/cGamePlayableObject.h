@@ -14,37 +14,29 @@ __interface iPlayableCharacter{
 class cGamePlayableObject : public cGameSMeshBodyObject
 {
 public:
-	//enum EPLAYABLESTATE
-	//{
-	//	EPLAYABLESTATE_IDLE,
-	//	EPLAYABLESTATE_MOVE,
-	//	EPLAYABLESTATE_ATTACK,
-	//	EPLAYABLESTATE_ONHIT,
-	//	EPLAYABLESTATE_DEAD,
-	//	EPLAYABLESTATE_MAX
-	//};
+
 	public:
 	enum EPLAYABLESTATE
 	{
 		EPLAYABLESTATE_UNARMEDWAIT = 0,		//(해제)가만히 서있기
-		EPLAYABLESTATE_IDLE,			//(장착)대기
-		EPLAYABLESTATE_RUN,				//(장착)무기를 들고 달리기
-		EPLAYABLESTATE_COMBO1,			//(장착)평타1
-		EPLAYABLESTATE_COMBO1R,			//(장착)평타1종료
-		EPLAYABLESTATE_COMBO2,			//(장착)평타1
-		EPLAYABLESTATE_COMBO2R,			//(장착)평타1종료
-		EPLAYABLESTATE_COMBO3,			//(장착)평타1
-		EPLAYABLESTATE_COMBO3R,			//(장착)평타1종료
-		EPLAYABLESTATE_COMBO4,			//(장착)평타1
-		EPLAYABLESTATE_TUMBLING,
-		EPLAYABLESTATE_ONHIT,			//(장착)피격
-		EPLAYABLESTATE_DEAD,			//(장착)사망
+		EPLAYABLESTATE_IDLE,				//(장착)대기
+		EPLAYABLESTATE_RUN,					//(장착)무기를 들고 달리기
+		EPLAYABLESTATE_COMBO1,				//(장착)평타1
+		EPLAYABLESTATE_COMBO1R,				//(장착)평타1종료
+		EPLAYABLESTATE_COMBO2,				//(장착)평타2
+		EPLAYABLESTATE_COMBO2R,				//(장착)평타2종료
+		EPLAYABLESTATE_COMBO3,				//(장착)평타3
+		EPLAYABLESTATE_COMBO3R,				//(장착)평타3종료
+		EPLAYABLESTATE_COMBO4,				//(장착)평타4
+		EPLAYABLESTATE_TUMBLING,			//(장착)덤블링(회피)
+		EPLAYABLESTATE_ONHIT,				//(장착)피격
+		EPLAYABLESTATE_DEAD,				//(장착)사망
 		EPLAYABLESTATE_MAX
 	};
 
-
 protected:
 	SYNTHESIZE(EPLAYABLESTATE, m_ePlayableState, PlayableState);//플레이어 상태 Enum을 가지고 있어야지
+	SYNTHESIZE(size_t, m_nComboCount, ComboCount);				//평타 번호
 	ST_STAT_INFO* m_pPlayerStatInfo;
 
 	SYNTHESIZE(D3DXVECTOR3, m_vecFront, Front);

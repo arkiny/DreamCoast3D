@@ -38,6 +38,7 @@ cPlayerIdle::~cPlayerIdle()
 void cPlayerIdle::Start(cGamePlayableObject* pPlayer)
 {
 	cPlayerCommon::Start(pPlayer);
+	pPlayer->SetComboCount(0);	//평타 번호 초기화
 	//pPlayer->GetSkinnedMesh()->SetAnimationIndex(pPlayer->EPLAYABLESTATE_IDLE);
 }
 

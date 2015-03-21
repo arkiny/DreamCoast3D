@@ -28,13 +28,14 @@ cPlayerUnarmedWait::~cPlayerUnarmedWait()
 }
 void cPlayerUnarmedWait::Start(cGamePlayableObject* pPlayer)
 {
-	pPlayer->GetSkinnedMesh()->SetAnimationIndex(pPlayer->EPLAYABLESTATE_UNARMEDWAIT);
+	cPlayerCommon::Start(pPlayer);
+	pPlayer->SetComboCount(0);	//평타 번호 초기화
 }
 void cPlayerUnarmedWait::Execute(cGamePlayableObject* pPlayer, float fDelta)
 {
-
+	cPlayerCommon::Execute(pPlayer, fDelta);
 }
 void cPlayerUnarmedWait::Exit(cGamePlayableObject* pPlayer)
 {
-
+	cPlayerCommon::Exit(pPlayer);
 }

@@ -69,10 +69,10 @@ void cPlayerCommon::Execute(cGamePlayableObject* pPlayer, float fDelta)
 	//왼클릭이 눌러지면 평타로 전환을 시도한다
 	if (g_pControlManager->GetInputInfo(VK_LBUTTON))
 	{
-		//if (pPlayer->GetPlayableState() != pPlayer->EPLAYABLESTATE_COMBO1)//연타공격 전 임시
-		{
-			pPlayer->ChangeState(pPlayer->EPLAYABLESTATE_COMBO1);
-		}
+		//플레이어가 지금 몇번째 평타를 써야하는지 받아옴
+		size_t nComboCount = pPlayer->GetComboCount();
+		if (nComboCount == 0)	{ pPlayer->ChangeState(pPlayer->EPLAYABLESTATE_COMBO1); }
+		else if (nComboCount == 1)	{ pPlayer->ChangeState(pPlayer->EPLAYABLESTATE_COMBO2); }
 		//return;
 	}
 	

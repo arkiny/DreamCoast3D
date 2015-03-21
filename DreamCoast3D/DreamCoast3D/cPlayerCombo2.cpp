@@ -1,20 +1,21 @@
 #include "stdafx.h"
-#include "cPlayerCombo1.h"
+#include "cPlayerCombo2.h"
 #include "cGamePlayableObject.h"
 #include "cSkinnedMesh.h"
 
 //RootFrame이 이동하는 거리에 따라서 캐릭터의 실제 좌표도 영향을 받아야 되고 카메라도 영향을 받아야 한다.
-cPlayerCombo1::cPlayerCombo1()
+cPlayerCombo2::cPlayerCombo2()
 {
-	m_nCurrentStateType = cGamePlayableObject::EPLAYABLESTATE::EPLAYABLESTATE_COMBO1;	//3번 (장)Combo1
+	//cGamePlayableObject::EPLAYABLESTATE::EPLAYABLESTATE_COMBO2;
+	m_nCurrentStateType = cGamePlayableObject::EPLAYABLESTATE::EPLAYABLESTATE_COMBO2;	//5번 (장)Combo2
 	SetIsRestart(false);
 	SetIsDoing(false);
 	SetStateGroup(ESTATEGROUP::E_STATEGROUP_ATTACK);
 	
 	/*m_mapCancelInfo[cGamePlayableObject::EPLAYABLESTATE::EPLAYABLESTATE_IDLE] = E_CANCEL_CANTCANCEL;
 	m_mapCancelInfo[cGamePlayableObject::EPLAYABLESTATE::EPLAYABLESTATE_RUN] = E_CANCEL_REAR;
-	m_mapCancelInfo[cGamePlayableObject::EPLAYABLESTATE::EPLAYABLESTATE_COMBO1] = E_CANCEL_CANTCANCEL;
-	m_mapCancelInfo[cGamePlayableObject::EPLAYABLESTATE::EPLAYABLESTATE_COMBO1R] = E_CANCEL_CANTCANCEL;*/
+	m_mapCancelInfo[cGamePlayableObject::EPLAYABLESTATE::EPLAYABLESTATE_Combo2] = E_CANCEL_CANTCANCEL;
+	m_mapCancelInfo[cGamePlayableObject::EPLAYABLESTATE::EPLAYABLESTATE_Combo2R] = E_CANCEL_CANTCANCEL;*/
 
 	m_mapCancelInfo[ESTATEGROUP::E_STATEGROUP_IDLE] = E_CANCEL_CANTCANCEL;	//공격중 대기로 즉시 전환 불가
 	m_mapCancelInfo[ESTATEGROUP::E_STATEGROUP_MOVE] = E_CANCEL_REAR;		//공격중 이동은 후딜캔슬
@@ -28,20 +29,20 @@ cPlayerCombo1::cPlayerCombo1()
 
 }
 
-cPlayerCombo1::~cPlayerCombo1()
+cPlayerCombo2::~cPlayerCombo2()
 {
 }
-void cPlayerCombo1::Start(cGamePlayableObject* pPlayer)
+void cPlayerCombo2::Start(cGamePlayableObject* pPlayer)
 {
 	cPlayerCommon::Start(pPlayer);
-	pPlayer->SetComboCount(pPlayer->GetComboCount()+1);	//평타 번호 증가
+	pPlayer->SetComboCount(0);	//평타 번호 초기화
 	g_pSoundManager->executeAttack();
 
-	//pPlayer->GetSkinnedMesh()->SetAnimationIndex(pPlayer->EPLAYABLESTATE_COMBO1);
+	//pPlayer->GetSkinnedMesh()->SetAnimationIndex(pPlayer->EPLAYABLESTATE_Combo2);
 }
-void cPlayerCombo1::Execute(cGamePlayableObject* pPlayer, float fDelta)
+void cPlayerCombo2::Execute(cGamePlayableObject* pPlayer, float fDelta)
 {
-	cPlayerCommon::Execute(pPlayer, fDelta*3);
+	cPlayerCommon::Execute(pPlayer, fDelta);
 	//pPlayer->SetStatePassedTime(pPlayer->GetStatePassedTime() + fDelta);
 
 	//std::map<std::string, ST_BOUNDING_SPHERE>* pSp = pPlayer->GetAttackSpheres();
@@ -115,7 +116,7 @@ void cPlayerCombo1::Execute(cGamePlayableObject* pPlayer, float fDelta)
 		pPlayer->ChangeState(pPlayer->EPLAYABLESTATE_IDLE);
 	}
 }
-void cPlayerCombo1::Exit(cGamePlayableObject* pPlayer)
+void cPlayerCombo2::Exit(cGamePlayableObject* pPlayer)
 {
 	//cPlayerCommon::Exit(pPlayer);
 
@@ -127,6 +128,6 @@ void cPlayerCombo1::Exit(cGamePlayableObject* pPlayer)
 	}
 	else
 	{
-		pPlayer->ChangeState(pPlayer->EPLAYABLESTATE_COMBO1R);
+		pPlayer->ChangeState(pPlayer->EPLAYABLESTATE_COMBO2R);
 	}
 }

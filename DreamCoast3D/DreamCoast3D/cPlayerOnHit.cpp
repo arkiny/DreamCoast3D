@@ -29,6 +29,7 @@ cPlayerOnHit::~cPlayerOnHit()
 void cPlayerOnHit::Start(cGamePlayableObject* pPlayer)
 {
 	cPlayerCommon::Start(pPlayer);
+	//pPlayer->SetComboCount(0);	//평타 번호 초기화 하려고 했는데 현재 상황상 나머지 평타를 쓰지도 못해서; 일단 초기화 하지 않음
 	//pPlayer->GetSkinnedMesh()->SetAnimationIndex(pPlayer->EPLAYABLESTATE_ONHIT);
 }
 

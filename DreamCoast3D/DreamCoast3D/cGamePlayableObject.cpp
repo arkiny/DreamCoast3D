@@ -12,6 +12,9 @@
 #include "cPlayerUnarmedWait.h"
 #include "cPlayerCombo1.h"
 #include "cPlayerCombo1R.h"
+#include "cPlayerCombo2.h"
+#include "cPlayerCombo2R.h"
+
 
 //지금 나는
 //시작 씬을 7번으로 바꿔서 쓰고있고 cSceneManager.cpp/Start() 
@@ -31,7 +34,8 @@ cGamePlayableObject::cGamePlayableObject()
 	m_fPlayerAngleDegree(0.0f),
 	m_fPlayerInvincibleTime(0.5f),
 	m_fPlayerInvincibleCool(1.0f),
-	m_pPlayerStatInfo(NULL)
+	m_pPlayerStatInfo(NULL),
+	m_nComboCount(0)
 {
 	m_eGameObjectType = eGameObjectType::E_PLAYABLE;
 	m_fMoveSpeed = 10.0f;
@@ -59,6 +63,12 @@ void cGamePlayableObject::Setup(
 	m_vecStates[EPLAYABLESTATE::EPLAYABLESTATE_RUN] = new cPlayerRun;
 	m_vecStates[EPLAYABLESTATE::EPLAYABLESTATE_COMBO1] = new cPlayerCombo1;
 	m_vecStates[EPLAYABLESTATE::EPLAYABLESTATE_COMBO1R] = new cPlayerCombo1R;
+	m_vecStates[EPLAYABLESTATE::EPLAYABLESTATE_COMBO2] = new cPlayerCombo2;
+	m_vecStates[EPLAYABLESTATE::EPLAYABLESTATE_COMBO2R] = new cPlayerCombo2R;
+	m_vecStates[EPLAYABLESTATE::EPLAYABLESTATE_COMBO3] = new cPlayerCombo1;
+	m_vecStates[EPLAYABLESTATE::EPLAYABLESTATE_COMBO3R] = new cPlayerCombo1R;
+	m_vecStates[EPLAYABLESTATE::EPLAYABLESTATE_COMBO4] = new cPlayerCombo1;
+	m_vecStates[EPLAYABLESTATE::EPLAYABLESTATE_TUMBLING] = new cPlayerUnarmedWait;
 	m_vecStates[EPLAYABLESTATE::EPLAYABLESTATE_ONHIT] = new cPlayerOnHit;
 	m_vecStates[EPLAYABLESTATE::EPLAYABLESTATE_DEAD] = new cPlayerDead;
 
@@ -80,8 +90,8 @@ void cGamePlayableObject::Setup(
 	m_vecStates[EPLAYABLESTATE::EPLAYABLESTATE_RUN] = new cPlayerRun;
 	m_vecStates[EPLAYABLESTATE::EPLAYABLESTATE_COMBO1] = new cPlayerCombo1;
 	m_vecStates[EPLAYABLESTATE::EPLAYABLESTATE_COMBO1R] = new cPlayerCombo1R;
-	m_vecStates[EPLAYABLESTATE::EPLAYABLESTATE_COMBO2] = new cPlayerCombo1;
-	m_vecStates[EPLAYABLESTATE::EPLAYABLESTATE_COMBO2R] = new cPlayerCombo1R;
+	m_vecStates[EPLAYABLESTATE::EPLAYABLESTATE_COMBO2] = new cPlayerCombo2;
+	m_vecStates[EPLAYABLESTATE::EPLAYABLESTATE_COMBO2R] = new cPlayerCombo2R;
 	m_vecStates[EPLAYABLESTATE::EPLAYABLESTATE_COMBO3] = new cPlayerCombo1;
 	m_vecStates[EPLAYABLESTATE::EPLAYABLESTATE_COMBO3R] = new cPlayerCombo1R;
 	m_vecStates[EPLAYABLESTATE::EPLAYABLESTATE_COMBO4] = new cPlayerCombo1;
@@ -134,8 +144,7 @@ void cGamePlayableObject::ChangeState(EPLAYABLESTATE eNewState){
 	ESTATEGROUP eStateGroup = m_vecStates[eNewState]->GetCurrentStateGroup();
 	if (JudgeChange(eStateGroup))
 	{
-		//여기서부터 캔슬 정보를 잘 제어하도록 수정해야함.
-		//m_pCurrentState->GetCancelInfo()
+		//m_pCurrentState->Exit(this);
 		SetPlayableState(eNewState);
 		m_pCurrentState = m_vecStates[eNewState];
 		m_pCurrentState->Start(this);
@@ -153,7 +162,7 @@ bool cGamePlayableObject::JudgeChange(ESTATEGROUP eNewStateGroup)
 	{
 		return true;
 	}
-	
+	//여기서부터 캔슬 정보를 잘 제어하도록 수정해야함.
 	//CANCEL_CANT
 	if (m_pCurrentState->GetCancelInfo()[eNewStateGroup] == ECANCELTYPE::E_CANCEL_CANTCANCEL)
 	{

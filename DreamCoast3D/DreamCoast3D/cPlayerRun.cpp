@@ -35,7 +35,7 @@ cPlayerRun::~cPlayerRun()
 void cPlayerRun::Start(cGamePlayableObject* pPlayer)
 {
 	cPlayerCommon::Start(pPlayer);
-	//pPlayer->GetSkinnedMesh()->SetAnimationIndex(pPlayer->EPLAYABLESTATE_RUN);
+	pPlayer->SetComboCount(0);	//평타 번호 초기화
 }
 void cPlayerRun::Execute(cGamePlayableObject* pPlayer, float fDelta)
 {

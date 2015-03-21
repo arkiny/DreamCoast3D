@@ -438,6 +438,12 @@
     </ClCompile>
     <ClCompile Include="cStaticMesh.cpp" />
     <ClCompile Include="cUICredit.cpp" />
+    <ClCompile Include="cPlayerCombo2.cpp">
+      <Filter>EachWorks\MW\PlayerState</Filter>
+    </ClCompile>
+    <ClCompile Include="cPlayerCombo2R.cpp">
+      <Filter>EachWorks\MW\PlayerState</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cAction.h">
@@ -889,6 +895,12 @@
     </ClInclude>
     <ClInclude Include="cUICredit.h" />
     <ClInclude Include="cStaticMesh.h" />
+    <ClInclude Include="cPlayerCombo2.h">
+      <Filter>EachWorks\MW\PlayerState</Filter>
+    </ClInclude>
+    <ClInclude Include="cPlayerCombo2R.h">
+      <Filter>EachWorks\MW\PlayerState</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="DreamCoast3D.ico">
