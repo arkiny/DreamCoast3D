@@ -21,6 +21,8 @@ public:
 	void executeOnDie(int);
 
 	void ExecuteSound(std::string sSoundPath, bool isLoop);
+	void ExecuteEffect(std::string sSoundPath);
+
 	void StopSound();
 
 

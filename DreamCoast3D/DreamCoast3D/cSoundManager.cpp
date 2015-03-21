@@ -99,6 +99,12 @@ void cSoundManager::ExecuteSound(std::string sSoundPath, bool isLoop){
 	}
 }
 
+void cSoundManager::ExecuteEffect(std::string sSoundPath){
+	if (m_init){
+		engine->play2D(sSoundPath.c_str(), false);
+	}
+}
+
 void cSoundManager::StopSound(){
 	if (m_init){
 		engine->removeSoundSource(m_sCurrentPlayBGM.c_str());
