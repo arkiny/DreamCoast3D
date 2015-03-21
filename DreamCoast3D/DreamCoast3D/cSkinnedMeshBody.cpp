@@ -80,7 +80,7 @@ cSkinnedMeshBody::cSkinnedMeshBody(std::string sFolder, std::string sFile,
 	m_pWeapon = g_pStaticMeshManager->GetStaticMesh(sFolderWeapon + sFileWeapon);
 	m_pTexture = g_pTextureManager->GetTexture(sFolder + sFileTexture);
 
-	//m_mapAttackSphere["Weapon"] = ST_BOUNDING_SPHERE(D3DXVECTOR3(0, 10, 0), 20.0f);
+	m_mapAttackSphere["Weapon"] = ST_BOUNDING_SPHERE(D3DXVECTOR3(0, 0, 2), 20.0f);
 
 	m_sMainCollisionSphere = "FxCenter";
 	m_fMianColisionSphereRadius = 6.f;
@@ -452,28 +452,62 @@ void cSkinnedMeshBody::Render(ST_BONE* pBone /*= NULL*/)
 
 		RenderDebugUpdateSphereBody(pBone, m_mapDebugUpdateSphereBody);
 
-		for (auto p : m_mapAttackSphere)
+	for (auto p : m_mapAttackSphere)
 		{
-			std::string s = p.first.c_str();
-			if (pBone->Name != nullptr && std::string(pBone->Name) == p.first.c_str()){
+			if (pBone->Name == nullptr || pBone->Name != p.first) { continue; }
+			if (pBone->Name == nullptr || pBone->Name == std::string("FxCenter")) { continue; }
 
-				g_pD3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
-				g_pD3DDevice->SetTransform(D3DTS_WORLD, &pBone->CombinedTransformationMatrix);
-
-				m_pATMesh->DrawSubset(0);
-
-				g_pD3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
-			}
-
-		}
-
-		/*if (pBone->Name != nullptr && std::string(pBone->Name) == std::string("FxHand01"))
-		{
-			g_pD3DDevice->SetTransform(D3DTS_WORLD, &pBone->CombinedTransformationMatrix);
+			g_pD3DDevice->SetTexture(0, NULL);
+			g_pD3DDevice->SetRenderState(D3DRS_LIGHTING, false);
 			g_pD3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
 			
+			D3DXMATRIXA16 mat;
+			D3DXMatrixScaling(&mat, p.second.m_fRadius, p.second.m_fRadius, p.second.m_fRadius);
+			mat = mat * pBone->CombinedTransformationMatrix;
+			g_pD3DDevice->SetTransform(D3DTS_WORLD, &mat);
+
+			m_pATMesh->DrawSubset(0);
+			
+			g_pD3DDevice->SetRenderState(D3DRS_LIGHTING, true);
 			g_pD3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
-		}*/
+		}
+
+	
+
+	}
+
+	if (pBone->Name == nullptr || pBone->Name == std::string("FxCenter")){
+
+		D3DXMATRIXA16 matI;
+		D3DXMatrixIdentity(&matI);
+		g_pD3DDevice->SetTransform(D3DTS_WORLD, &matI);
+
+		g_pD3DDevice->SetTexture(0, NULL);
+		g_pD3DDevice->SetRenderState(D3DRS_LIGHTING, false);
+		g_pD3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
+
+		D3DXMATRIXA16 mat;
+		D3DXMatrixTranslation(
+			&mat,
+			30,
+			0,
+			0);
+
+		D3DXMATRIXA16 matscl;
+		D3DXMatrixScaling(&matscl,
+			m_mapAttackSphere["Weapon"].m_fRadius,
+			m_mapAttackSphere["Weapon"].m_fRadius,
+			m_mapAttackSphere["Weapon"].m_fRadius);
+
+		mat = matscl * mat * pBone->CombinedTransformationMatrix;
+
+
+		g_pD3DDevice->SetTransform(D3DTS_WORLD, &mat);
+
+		m_pATMesh->DrawSubset(0);
+
+		g_pD3DDevice->SetRenderState(D3DRS_LIGHTING, true);
+		g_pD3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
 	}
 
 	if (pBone->Name != nullptr && std::string(pBone->Name) == std::string("Bip01-Neck"))

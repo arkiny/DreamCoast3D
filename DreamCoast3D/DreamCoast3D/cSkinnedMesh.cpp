@@ -164,7 +164,7 @@ void cSkinnedMesh::SetAttackVectors(
 	if (!m_mapAttackSphere.empty()){
 		SAFE_RELEASE(m_pATMesh);
 		D3DXCreateSphere(g_pD3DDevice,
-			m_mapAttackSphere.begin()->second.m_fRadius,
+			1.0f,
 			10, 10, &m_pATMesh, NULL);
 	}
 }
@@ -373,13 +373,35 @@ void cSkinnedMesh::Update(ST_BONE* pCurrent, D3DXMATRIXA16* pmatParent)
 	for (auto p : m_mapAttackSphere){
 		if (pCurrent->Name != nullptr && std::string(pCurrent->Name) == p.first)
 		{
-			D3DXVECTOR3 pos;
-			D3DXVec3TransformCoord(
-				&pos,
-				&D3DXVECTOR3(0, 0, 0),
-				&pCurrent->CombinedTransformationMatrix
-				);
-			m_mapAttackSphere[p.first].m_vCenter = pos;
+			if (pCurrent->Name == std::string("FxCenter")){
+				D3DXVECTOR3 pos;
+				D3DXMATRIXA16 mat;
+				D3DXMatrixTranslation(
+					&mat,
+					30,
+					0,
+					0);
+
+				D3DXMATRIXA16 matscl;
+				D3DXMatrixScaling(&matscl,
+					m_mapAttackSphere["Weapon"].m_fRadius,
+					m_mapAttackSphere["Weapon"].m_fRadius,
+					m_mapAttackSphere["Weapon"].m_fRadius);
+
+				mat = matscl * mat * pCurrent->CombinedTransformationMatrix;
+
+				D3DXVec3TransformCoord(&pos, &D3DXVECTOR3(0, 0, 0), &mat);
+				m_mapAttackSphere["Weapon"].m_vCenter = pos;
+			}
+			else{
+				D3DXVECTOR3 pos;
+				D3DXVec3TransformCoord(
+					&pos,
+					&D3DXVECTOR3(0, 0, 0),
+					&pCurrent->CombinedTransformationMatrix
+					);
+				m_mapAttackSphere[p.first].m_vCenter = pos;
+			}
 		}
 	}
 
@@ -408,7 +430,13 @@ void cSkinnedMesh::Render(ST_BONE* pBone /*= NULL*/)
 			g_pD3DDevice->SetTexture(0, NULL);
 			g_pD3DDevice->SetRenderState(D3DRS_LIGHTING, false);
 			g_pD3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_WIREFRAME);
-			g_pD3DDevice->SetTransform(D3DTS_WORLD, &pBone->CombinedTransformationMatrix);
+			
+			D3DXMATRIXA16 mat;
+			D3DXMatrixScaling(&mat, p.second.m_fRadius, p.second.m_fRadius, p.second.m_fRadius);
+			mat = mat * pBone->CombinedTransformationMatrix;
+			g_pD3DDevice->SetTransform(D3DTS_WORLD, &mat);
+
+
 			m_pATMesh->DrawSubset(0);
 			
 			g_pD3DDevice->SetRenderState(D3DRS_LIGHTING, true);
@@ -1007,6 +1035,11 @@ void cSkinnedMesh::RenderDebugUpdateSphereBody(
 		// matW *= pBone->CombinedTransformationMatrix;
 		g_pD3DDevice->SetTransform(D3DTS_WORLD, &pBone->CombinedTransformationMatrix);
 		m_pDebugSphereBody->DrawSubset(0);
+
+
+
+
+
 		g_pD3DDevice->SetRenderState(D3DRS_LIGHTING, true);
 		g_pD3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
 	}
