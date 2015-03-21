@@ -66,7 +66,7 @@ void cEffectPotion::Setup(){
 		m_vecMoveInfo[i] = stP;
 	}
 
-	m_pTexture = g_pTextureManager->GetTexture("../Resources/Effect/Flag_of_the_Red_Cross.png");
+	m_pTexture = g_pTextureManager->GetTexture("../Resources/Effect/Flag_of_the_White_Cross.png");
 }
 
 void cEffectPotion::Start(){
