@@ -30,3 +30,11 @@ Weapon
 02 run
 03 combo1
 04 combo1R
+05 combo2
+06 combo2R
+07 combo3
+08 combo3R
+09 combo4
+10 tumbling
+11 sReaction
+12 Death
