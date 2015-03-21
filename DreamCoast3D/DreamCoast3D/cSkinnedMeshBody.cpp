@@ -472,10 +472,6 @@ void cSkinnedMeshBody::Render(ST_BONE* pBone /*= NULL*/)
 			g_pD3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
 		}
 
-	
-
-	}
-
 	if (pBone->Name == nullptr || pBone->Name == std::string("FxCenter")){
 
 		D3DXMATRIXA16 matI;
@@ -509,6 +505,10 @@ void cSkinnedMeshBody::Render(ST_BONE* pBone /*= NULL*/)
 		g_pD3DDevice->SetRenderState(D3DRS_LIGHTING, true);
 		g_pD3DDevice->SetRenderState(D3DRS_FILLMODE, D3DFILL_SOLID);
 	}
+
+	}
+
+	
 
 	if (pBone->Name != nullptr && std::string(pBone->Name) == std::string("Bip01-Neck"))
 	{
