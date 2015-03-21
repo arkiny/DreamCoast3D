@@ -32,7 +32,7 @@ void cItemConsume::Activate(
 				D3DXVECTOR3 pos = pGameObjgDeligate->GetPlayerData()->GetPosition();
 				pos.y = pos.y + 1.0f;
 				pEffectDelegate->AddEffect(3, pos);
-				g_pSoundManager->ExecuteEffect(std::string("../Resources/Sounds/Effect/potion.mp3"));
+				g_pSoundManager->ExecuteEffect(std::string("../Resources/Sounds/Effect/potion.wav"));
 			}
 		}
 		if (m_eConsumeType == E_CONSUME_MP_UP){
