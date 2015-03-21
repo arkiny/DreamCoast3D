@@ -28,7 +28,7 @@ cCamera::cCamera(void)
 
 	m_ptPrevMouse = { -0.f, 0.f };
 
-	m_nCustomAngle = 8;
+	m_nCustomAngle = 16;	//원래는 8. 앞이 안보이니까 불편해서.. : 민우
 	ptSave = { 0, 0 };
 
 	m_isTrap = false;

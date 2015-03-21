@@ -61,29 +61,29 @@ void cPlayerIdle::Execute(cGamePlayableObject* pPlayer, float fDelta)
 		return;
 	}*/
 
-	//if (g_pControlManager->GetInputInfo('Q')){
-	//	D3DXMATRIXA16 matR;
-	//	float angle = pPlayer->GetPlayerAngle();
-	//	angle -= fDelta* 3.0f;
-	//	pPlayer->SetPlayerAngle(angle);
-	//	D3DXMatrixRotationY(&matR, angle);
-	//	D3DXVECTOR3 vDir = D3DXVECTOR3(0, 0, -1.f);
-	//	D3DXVec3TransformNormal(&vDir, &vDir, &matR);
-	//	pPlayer->SetFront(vDir);
-	//	pPlayer->SetYangle(angle);
-	//}
+	if (g_pControlManager->GetInputInfo('Q')){
+		D3DXMATRIXA16 matR;
+		float angle = pPlayer->GetPlayerAngle();
+		angle -= fDelta* 3.0f;
+		pPlayer->SetPlayerAngle(angle);
+		D3DXMatrixRotationY(&matR, angle);
+		D3DXVECTOR3 vDir = D3DXVECTOR3(0, 0, -1.f);
+		D3DXVec3TransformNormal(&vDir, &vDir, &matR);
+		pPlayer->SetFront(vDir);
+		pPlayer->SetYangle(angle);
+	}
 
-	//if (g_pControlManager->GetInputInfo('E')){
-	//	D3DXMATRIXA16 matR;
-	//	float angle = pPlayer->GetPlayerAngle();
-	//	angle += fDelta* 3.0f;
-	//	pPlayer->SetPlayerAngle(angle);
-	//	D3DXMatrixRotationY(&matR, angle);
-	//	D3DXVECTOR3 vDir = D3DXVECTOR3(0, 0, -1.f);
-	//	D3DXVec3TransformNormal(&vDir, &vDir, &matR);
-	//	pPlayer->SetFront(vDir);
-	//	pPlayer->SetYangle(angle);
-	//}
+	if (g_pControlManager->GetInputInfo('E')){
+		D3DXMATRIXA16 matR;
+		float angle = pPlayer->GetPlayerAngle();
+		angle += fDelta* 3.0f;
+		pPlayer->SetPlayerAngle(angle);
+		D3DXMatrixRotationY(&matR, angle);
+		D3DXVECTOR3 vDir = D3DXVECTOR3(0, 0, -1.f);
+		D3DXVec3TransformNormal(&vDir, &vDir, &matR);
+		pPlayer->SetFront(vDir);
+		pPlayer->SetYangle(angle);
+	}
 
 	// do nothing
 
