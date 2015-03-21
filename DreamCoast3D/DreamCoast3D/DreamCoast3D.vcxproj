@@ -184,6 +184,9 @@
     <ClInclude Include="cPlayerCombo1R.h" />
     <ClInclude Include="cPlayerCombo2.h" />
     <ClInclude Include="cPlayerCombo2R.h" />
+    <ClInclude Include="cPlayerCombo3.h" />
+    <ClInclude Include="cPlayerCombo3R.h" />
+    <ClInclude Include="cPlayerCombo4.h" />
     <ClInclude Include="cPlayerCommon.h" />
     <ClInclude Include="cPlayerDead.h" />
     <ClInclude Include="cPlayerDead_Origin.h" />
@@ -338,6 +341,9 @@
     <ClCompile Include="cPlayerCombo1R.cpp" />
     <ClCompile Include="cPlayerCombo2.cpp" />
     <ClCompile Include="cPlayerCombo2R.cpp" />
+    <ClCompile Include="cPlayerCombo3.cpp" />
+    <ClCompile Include="cPlayerCombo3R.cpp" />
+    <ClCompile Include="cPlayerCombo4.cpp" />
     <ClCompile Include="cPlayerCommon.cpp" />
     <ClCompile Include="cPlayerDead.cpp" />
     <ClCompile Include="cPlayerDead_Origin.cpp" />

@@ -14,6 +14,9 @@
 #include "cPlayerCombo1R.h"
 #include "cPlayerCombo2.h"
 #include "cPlayerCombo2R.h"
+#include "cPlayerCombo3.h"
+#include "cPlayerCombo3R.h"
+#include "cPlayerCombo4.h"
 
 
 //지금 나는
@@ -65,9 +68,9 @@ void cGamePlayableObject::Setup(
 	m_vecStates[EPLAYABLESTATE::EPLAYABLESTATE_COMBO1R] = new cPlayerCombo1R;
 	m_vecStates[EPLAYABLESTATE::EPLAYABLESTATE_COMBO2] = new cPlayerCombo2;
 	m_vecStates[EPLAYABLESTATE::EPLAYABLESTATE_COMBO2R] = new cPlayerCombo2R;
-	m_vecStates[EPLAYABLESTATE::EPLAYABLESTATE_COMBO3] = new cPlayerCombo1;
-	m_vecStates[EPLAYABLESTATE::EPLAYABLESTATE_COMBO3R] = new cPlayerCombo1R;
-	m_vecStates[EPLAYABLESTATE::EPLAYABLESTATE_COMBO4] = new cPlayerCombo1;
+	m_vecStates[EPLAYABLESTATE::EPLAYABLESTATE_COMBO3] = new cPlayerCombo3;
+	m_vecStates[EPLAYABLESTATE::EPLAYABLESTATE_COMBO3R] = new cPlayerCombo3R;
+	m_vecStates[EPLAYABLESTATE::EPLAYABLESTATE_COMBO4] = new cPlayerCombo4;
 	m_vecStates[EPLAYABLESTATE::EPLAYABLESTATE_TUMBLING] = new cPlayerUnarmedWait;
 	m_vecStates[EPLAYABLESTATE::EPLAYABLESTATE_ONHIT] = new cPlayerOnHit;
 	m_vecStates[EPLAYABLESTATE::EPLAYABLESTATE_DEAD] = new cPlayerDead;
@@ -92,9 +95,9 @@ void cGamePlayableObject::Setup(
 	m_vecStates[EPLAYABLESTATE::EPLAYABLESTATE_COMBO1R] = new cPlayerCombo1R;
 	m_vecStates[EPLAYABLESTATE::EPLAYABLESTATE_COMBO2] = new cPlayerCombo2;
 	m_vecStates[EPLAYABLESTATE::EPLAYABLESTATE_COMBO2R] = new cPlayerCombo2R;
-	m_vecStates[EPLAYABLESTATE::EPLAYABLESTATE_COMBO3] = new cPlayerCombo1;
-	m_vecStates[EPLAYABLESTATE::EPLAYABLESTATE_COMBO3R] = new cPlayerCombo1R;
-	m_vecStates[EPLAYABLESTATE::EPLAYABLESTATE_COMBO4] = new cPlayerCombo1;
+	m_vecStates[EPLAYABLESTATE::EPLAYABLESTATE_COMBO3] = new cPlayerCombo3;
+	m_vecStates[EPLAYABLESTATE::EPLAYABLESTATE_COMBO3R] = new cPlayerCombo3R;
+	m_vecStates[EPLAYABLESTATE::EPLAYABLESTATE_COMBO4] = new cPlayerCombo4;
 	m_vecStates[EPLAYABLESTATE::EPLAYABLESTATE_TUMBLING] = new cPlayerUnarmedWait;
 	m_vecStates[EPLAYABLESTATE::EPLAYABLESTATE_ONHIT] = new cPlayerOnHit;
 	m_vecStates[EPLAYABLESTATE::EPLAYABLESTATE_DEAD] = new cPlayerDead;

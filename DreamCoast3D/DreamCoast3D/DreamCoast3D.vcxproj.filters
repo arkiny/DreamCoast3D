@@ -444,6 +444,15 @@
     <ClCompile Include="cPlayerCombo2R.cpp">
       <Filter>EachWorks\MW\PlayerState</Filter>
     </ClCompile>
+    <ClCompile Include="cPlayerCombo3.cpp">
+      <Filter>EachWorks\MW\PlayerState</Filter>
+    </ClCompile>
+    <ClCompile Include="cPlayerCombo3R.cpp">
+      <Filter>EachWorks\MW\PlayerState</Filter>
+    </ClCompile>
+    <ClCompile Include="cPlayerCombo4.cpp">
+      <Filter>EachWorks\MW\PlayerState</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cAction.h">
@@ -899,6 +908,15 @@
       <Filter>EachWorks\MW\PlayerState</Filter>
     </ClInclude>
     <ClInclude Include="cPlayerCombo2R.h">
+      <Filter>EachWorks\MW\PlayerState</Filter>
+    </ClInclude>
+    <ClInclude Include="cPlayerCombo3.h">
+      <Filter>EachWorks\MW\PlayerState</Filter>
+    </ClInclude>
+    <ClInclude Include="cPlayerCombo3R.h">
+      <Filter>EachWorks\MW\PlayerState</Filter>
+    </ClInclude>
+    <ClInclude Include="cPlayerCombo4.h">
       <Filter>EachWorks\MW\PlayerState</Filter>
     </ClInclude>
   </ItemGroup>

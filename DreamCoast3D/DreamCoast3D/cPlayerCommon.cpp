@@ -73,6 +73,8 @@ void cPlayerCommon::Execute(cGamePlayableObject* pPlayer, float fDelta)
 		size_t nComboCount = pPlayer->GetComboCount();
 		if (nComboCount == 0)	{ pPlayer->ChangeState(pPlayer->EPLAYABLESTATE_COMBO1); }
 		else if (nComboCount == 1)	{ pPlayer->ChangeState(pPlayer->EPLAYABLESTATE_COMBO2); }
+		else if (nComboCount == 2)	{ pPlayer->ChangeState(pPlayer->EPLAYABLESTATE_COMBO3); }
+		else if (nComboCount == 3)	{ pPlayer->ChangeState(pPlayer->EPLAYABLESTATE_COMBO4); }
 		//return;
 	}
 	
