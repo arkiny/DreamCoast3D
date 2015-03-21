@@ -118,6 +118,8 @@ void cPlayerCombo3::Execute(cGamePlayableObject* pPlayer, float fDelta)
 void cPlayerCombo3::Exit(cGamePlayableObject* pPlayer)
 {
 	//cPlayerCommon::Exit(pPlayer);
+	//모션이 위치를 이동하는 경우 좌표 동기화
+	SyncAfterAnimPos(pPlayer);
 
 	SetIsDoing(false);
 	//재시작되는 동작이면 재시작하고(반복)

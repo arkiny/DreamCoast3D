@@ -113,12 +113,16 @@ void cPlayerCombo1::Execute(cGamePlayableObject* pPlayer, float fDelta)
 	/*if (pPlayer->GetSkinnedMesh()->GetCurrentAnimationPeriodTime() < pPlayer->GetStatePassedTime()){
 		pPlayer->ChangeState(pPlayer->EPLAYABLESTATE_IDLE);
 	}*/
+
 	cPlayerCommon::Execute(pPlayer, fDelta);
 }
 void cPlayerCombo1::Exit(cGamePlayableObject* pPlayer)
 {
 	//cPlayerCommon::Exit(pPlayer);
-
+	
+	//모션이 위치를 이동하는 경우 좌표 동기화
+	SyncAfterAnimPos(pPlayer);
+	
 	SetIsDoing(false);
 	//재시작되는 동작이면 재시작하고(반복)
 	if (m_IsRestart)

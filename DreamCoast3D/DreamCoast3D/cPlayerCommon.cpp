@@ -100,3 +100,11 @@ void cPlayerCommon::Exit(cGamePlayableObject* pPlayer)
 		pPlayer->ChangeState(pPlayer->EPLAYABLESTATE_IDLE);
 	}
 }
+
+//모션이 위치를 이동하는 경우 종료시 좌표 동기화
+//위치값을 2개를 가지고 더 개선할 수 있는 아이디어가 있다. 하지만 시간이...ㅠ
+void cPlayerCommon::SyncAfterAnimPos(cGamePlayableObject* pPlayer)
+{
+	D3DXVECTOR3 vCenter = pPlayer->GetUpdatedDetailedSphere()->at("FxBottom").m_vCenter;
+	pPlayer->SetPosition(vCenter);
+}

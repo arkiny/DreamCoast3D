@@ -34,6 +34,8 @@ public:
 	virtual ESTATEGROUP GetCurrentStateGroup() { return m_eStateGroup; }
 	virtual void SetStateGroup(ESTATEGROUP eStateGroup){ m_eStateGroup = eStateGroup; }
 
+	virtual void SyncAfterAnimPos(cGamePlayableObject* pPlayer);
+
 private:
 	float m_fDeadAccumTime;
 

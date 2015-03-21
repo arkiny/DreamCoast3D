@@ -36,6 +36,9 @@ void cPlayerCombo3R::Execute(cGamePlayableObject* pPlayer, float fDelta)
 void cPlayerCombo3R::Exit(cGamePlayableObject* pPlayer)
 {
 	pPlayer->SetComboCount(0);	//평타 번호 초기화
+	//모션이 위치를 이동하는 경우 좌표 동기화
+	SyncAfterAnimPos(pPlayer);
+
 	cPlayerCommon::Exit(pPlayer);
 	
 }
