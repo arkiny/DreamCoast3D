@@ -436,8 +436,6 @@
     <ClCompile Include="cEffectTrail.cpp">
       <Filter>FrameWork\Effects</Filter>
     </ClCompile>
-    <ClCompile Include="cStaticMesh.cpp" />
-    <ClCompile Include="cUICredit.cpp" />
     <ClCompile Include="cPlayerCombo2.cpp">
       <Filter>EachWorks\MW\PlayerState</Filter>
     </ClCompile>
@@ -455,6 +453,12 @@
     </ClCompile>
     <ClCompile Include="cPlayerBackRun.cpp">
       <Filter>EachWorks\MW\PlayerState</Filter>
+    </ClCompile>
+    <ClCompile Include="cUICredit.cpp">
+      <Filter>FrameWork\Object\UIObject</Filter>
+    </ClCompile>
+    <ClCompile Include="cStaticMesh.cpp">
+      <Filter>FrameWork\Object</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -905,8 +909,6 @@
     <ClInclude Include="cEffectTrail.h">
       <Filter>FrameWork\Effects</Filter>
     </ClInclude>
-    <ClInclude Include="cUICredit.h" />
-    <ClInclude Include="cStaticMesh.h" />
     <ClInclude Include="cPlayerCombo2.h">
       <Filter>EachWorks\MW\PlayerState</Filter>
     </ClInclude>
@@ -924,6 +926,12 @@
     </ClInclude>
     <ClInclude Include="cPlayerBackRun.h">
       <Filter>EachWorks\MW\PlayerState</Filter>
+    </ClInclude>
+    <ClInclude Include="cUICredit.h">
+      <Filter>FrameWork\Object\UIObject</Filter>
+    </ClInclude>
+    <ClInclude Include="cStaticMesh.h">
+      <Filter>FrameWork\Object</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

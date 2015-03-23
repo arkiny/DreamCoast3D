@@ -312,13 +312,13 @@ bool cGameObjManager::isGameAttackSphereCollided(
 	cGameObject* pFrom,
 	ST_BOUNDING_SPHERE stAttackSphere)
 {
-	int nAttackRange = 10;
+	/*int nAttackRange = 3;
 	D3DXVECTOR3 vFrom;
 	vFrom = pFrom->GetPosition();
 	std::vector<cGameObject*> vecGameObject;
-	vecGameObject = m_pGridTileSystem->GetAdjObjectCustomer((int)vFrom.x, (int)vFrom.z, nAttackRange);
+	vecGameObject = m_pGridTileSystem->GetAdjObjectCustomer((int)vFrom.x, (int)vFrom.z, nAttackRange);*/
 
-	for (auto p : vecGameObject){
+	for (auto p : m_setGameObjects){
 		if (p == pFrom){
 			continue;
 		}
@@ -440,7 +440,7 @@ std::vector<cGameObject*> cGameObjManager::GetInSightObject(ST_BOUNDING_SPHERE s
 }
 
 void cGameObjManager::AttackMobToPlayer(cGameAIObject* pFrom){
-	int nAttackRange = 10;
+	int nAttackRange = 4;
 	D3DXVECTOR3 vFrom;
 	vFrom = pFrom->GetPosition();
 	std::vector<cGameObject*> vecGameObject;
