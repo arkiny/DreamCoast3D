@@ -1,5 +1,0 @@
-0 Wait		대기
-1 run		달리기
-2 atk01		공격
-3 flinch	피격
-4 Death		죽음

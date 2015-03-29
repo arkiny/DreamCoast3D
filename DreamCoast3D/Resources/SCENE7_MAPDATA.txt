@@ -1,8 +1,0 @@
-*GAME_MAP_INFO {
-	*GAME_MAP_COUNT 1
-	*HEIGHT_MAP 0 {
-		*GAME_MAP_HEIGHT_RAW_FILE "../Resources/Map/main.raw"
-		*GAME_MAP_HEIGHT_TEXTURE_PATH "../Resources/Map/blackmap.png"
-		*GAME_MAP_DATA_PATH "../Resources/Map/Map1.txt"
-	}
-}
